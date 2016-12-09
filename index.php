@@ -136,6 +136,9 @@ try {
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
+            case 'feedbackListRetrive':
+            	include_once CONTROL_DIR . "feedbackListRetrive.php";
+            	break;
             case 'cercaAnnunci':
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "CercaAnnunci.php";

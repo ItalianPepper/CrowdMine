@@ -23,6 +23,8 @@
         }
 
     </style>
+
+
 </head>
 <body>
 <div class="app app-default">
@@ -956,6 +958,7 @@
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+
                 <?php
 
                 if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
