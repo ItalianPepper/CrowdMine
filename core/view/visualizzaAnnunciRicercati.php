@@ -4,16 +4,19 @@
  * @author Vincenzo Russo
  * @version 1.0
  * @since 30/05/16
+
  */
+include_once MODEL_DIR . "/Annuncio.php";
 include_once VIEW_DIR . 'header.php';
-include_once CONTROL_DIR . 'ricercaAnnuncio.php';
+include_once CONTROL_DIR . "/ricercaAnnuncio.php";
 
-if (isset($_SESSION['cercati'])) {
-    echo "set";
+$searched = array();
+if (isset($_SESSION["searched"])){
+    $searched = $_SESSION["searched"];
+    unset($_SESSION["searched"]);
 } else {
-    echo "notset";
+    echo "no!";
 }
-
 
 
 ?>
@@ -192,9 +195,8 @@ if (isset($_SESSION['cercati'])) {
 
     <div class="col-md-12 col-sm-12 app-container">
         <?php
-        echo count($searched);
+
         for ($i = 0; $i < count($searched); $i++) {
-            echo $searched[$i]->getTitolo();
         ?>
         <div class="row" style="margin-right: 20%; height: auto; margin-bottom: 5%">
 
@@ -213,7 +215,7 @@ if (isset($_SESSION['cercati'])) {
                         </div>
 
                         <div class="offerta col-md-12 col-sm-12">
-                            <h1><?php echo $searched[$i]->getTitolo();?></h1>
+                            <h1><?php echo $searched[$i]->getTitolo()?></h1>
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-2 preferites">
@@ -278,7 +280,7 @@ if (isset($_SESSION['cercati'])) {
 
                 <div class="row col-md-12 col-sm-12 col-xs-12 card-body" style="margin-left: 0%">
                     <div class="media-body comment more">
-                        <?php echo $searched[$i]->getDescrizione();?>
+
                     </div>
 
                 </div>
@@ -286,8 +288,8 @@ if (isset($_SESSION['cercati'])) {
                 <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%">
                     <span class="label label-warning">Informatica</span>
                     <span class="label label-default">Web Developer</span>
-                    <span class="label label-info"><?php echo $searched[$i]->getLuogo();?></span>
-                    <span class="label label-primary"><?php echo $searched[$i]->getRetribuzione();?></span>
+                    <span class="label label-info"></span>
+                    <span class="label label-primary"></span>
                 </div>
 
                 <div class="media-comment" style="">
