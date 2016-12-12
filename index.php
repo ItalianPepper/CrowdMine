@@ -18,6 +18,10 @@ define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
+define('ATTIVO',"attivo");
+define('SEGNALATO',"segnalato");
+define('ELIMINATO',"eliminato");
+define('AMMINISTRATORE',"amministratore");
 define('DEBUG', true);
 
 try {
@@ -145,6 +149,9 @@ try {
                 break;
             case 'inserisciFeedback':
                 include_once CONTROL_DIR . "inserisciFeedbackControl.php";
+                break;
+            case 'feedbackSegnalation':
+                include_once CONTROL_DIR . "feedbackSegnalation.php";
                 break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";

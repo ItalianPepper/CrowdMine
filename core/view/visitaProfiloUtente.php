@@ -316,7 +316,8 @@
                                 <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Annunci</a>
                             </li>
                             <li role="tab3">
-                                <a href="#tab3" id="feedback-tab-3" aria-controls="tab3" role="tab" data-toggle="tab" id="feedback-tab">Feedback</a>
+                                <a href="#tab3" id="feedback-tab-3" aria-controls="tab3" role="tab" data-toggle="tab"
+                                   id="feedback-tab">Feedback</a>
                             </li>
                             <li role="tab4">
                                 <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Statistiche</a>
@@ -577,7 +578,7 @@
                             </div>
                             <!-- out of form -->
                             <div class="row" style="margin-top: 3%" id="feedback-list-destination">
-                               <!-- <div class="col-lg-12 col-md-12 col-xs-12">
+                                <!-- <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="section">
                                         <div class="media social-post">
                                             <div class="media-left">
@@ -877,73 +878,74 @@
                                     </div>
                                 </div>
                             </div> -->
-                        </div>
-                        <!--Statistiche-->
-                        <div role="tabpanel" class="tab-pane" id="tab4">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-12">
-                                    <div class="section">
-                                        <div class="section-title">
-                                            Your user name
-                                        </div>
-                                        <div class="section-body __indent">
-                                            <img src="http://placehold.it/100x100"
-                                                 class="img-responsive">
+                            </div>
+                            <!--Statistiche-->
+                            <div role="tabpanel" class="tab-pane" id="tab4">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="section">
+                                            <div class="section-title">
+                                                Your user name
+                                            </div>
+                                            <div class="section-body __indent">
+                                                <img src="http://placehold.it/100x100"
+                                                     class="img-responsive">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                                    <div class="section">
-                                        <div class="section-title">Statistica Feedback Totale</div>
-                                        <div class="section-body">
-                                            <div class="ct-chart-pie ct-perfect-fourth"></div>
-                                            <div class="col-sm-4">
-                                                <ul class="chart-label">
-                                                    <li class="ct-label ct-series-a">Feedback
-                                                        positivi
-                                                    </li>
-                                                    <li class="ct-label ct-series-b">Feedback
-                                                        negativi
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <table class="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Micro Categoria</th>
-                                                        <th>Feedback positivi</th>
-                                                        <th>Feedback Negativi</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Larry</td>
-                                                        <td>the Bird</td>
-                                                        <td>@twitter</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">4</th>
-                                                        <td>Larry</td>
-                                                        <td>the Bird</td>
-                                                        <td>@twitter</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="section">
+                                            <div class="section-title">Statistica Feedback Totale</div>
+                                            <div class="section-body">
+                                                <div class="ct-chart-pie ct-perfect-fourth"></div>
+                                                <div class="col-sm-4">
+                                                    <ul class="chart-label">
+                                                        <li class="ct-label ct-series-a">Feedback
+                                                            positivi
+                                                        </li>
+                                                        <li class="ct-label ct-series-b">Feedback
+                                                            negativi
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Micro Categoria</th>
+                                                            <th>Feedback positivi</th>
+                                                            <th>Feedback Negativi</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>Mark</td>
+                                                            <td>Otto</td>
+                                                            <td>@mdo</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">2</th>
+                                                            <td>Jacob</td>
+                                                            <td>Thornton</td>
+                                                            <td>@fat</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">3</th>
+                                                            <td>Larry</td>
+                                                            <td>the Bird</td>
+                                                            <td>@twitter</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">4</th>
+                                                            <td>Larry</td>
+                                                            <td>the Bird</td>
+                                                            <td>@twitter</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -951,31 +953,33 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+                    <script type="text/javascript"
+                            src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
+                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+                    <script type="text/javascript"
+                            src="<?php echo STYLE_DIR; ?>assets\js\feedbackSegnalation.js"></script>
 
-                <?php
-
-                if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-                    ?>
-                    <script>
-                        $(document).ready(function () {
-                            "use strict";
-                            $("#feedback-tab").click();
-                            $("#feedback-collapse-panel").click();
-                        });
-                        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-                    </script>
                     <?php
-                    unset($_SESSION['toast-type']);
-                    unset($_SESSION['toast-message']);
-                }
-                ?>
+
+                    if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+                        ?>
+                        <script>
+                            $(document).ready(function () {
+                                "use strict";
+                                $("#feedback-tab").click();
+                                $("#feedback-collapse-panel").click();
+                            });
+                            toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+                        </script>
+                        <?php
+                        unset($_SESSION['toast-type']);
+                        unset($_SESSION['toast-message']);
+                    }
+                    ?>
 
 
 </body>

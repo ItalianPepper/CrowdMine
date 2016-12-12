@@ -18,7 +18,7 @@ $(document).ready(function () {
                 console.log(destination);
 
                 console.log(data);
-                for (var i=0 ;i<data.length;i++) {
+                for (var i in data) {
                     var feedbackListObj = [];
                     feedbackListObj.feedbackID = data[i].feedbackID;
                     feedbackListObj.feedbackTitle = data[i].feedbackTitle;
@@ -125,7 +125,7 @@ function feedbackRowToString(feedbackListObj) {
         '                                                                                <div class="media-content">' + feedbackListObj.feedbackDesc  +
         '                                                                                </div>' +
         '                                                                                <div class="media-action">' +
-        '                                                                                    <button class="btn btn-link"><i' +//add here a on click function
+        '                                                                                    <button onclick="segnalaFeedback(' + feedbackListObj.feedbackID + ')" class="btn btn-link"><i' +//add here a on click function
         '                                                                                            class="fa fa-exclamation-circle"></i>' +
         '                                                                                        Segnala' +
         '                                                                                    </button>' +
