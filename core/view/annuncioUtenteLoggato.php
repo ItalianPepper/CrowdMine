@@ -42,10 +42,14 @@ include_once VIEW_DIR . 'header.php';
 <style>
     h1 {
         font-size: 1rem;
+
     }
 
     @media (min-width: 1px) {
         h1 {
+            font-size: xx-small;
+        }
+        h5 {
             font-size: xx-small;
         }
     }
@@ -54,17 +58,26 @@ include_once VIEW_DIR . 'header.php';
         h1 {
             font-size: 13px;
         }
+        h5 {
+            font-size: xx-small;
+        }
     }
 
     @media (min-width: 970px) {
         h1 {
             font-size: x-large;
         }
+        h5 {
+            font-size: x-small;
+        }
     }
 
     @media (min-width: 1200px) {
         h1 {
             font-size: xx-large;
+        }
+        h5 {
+            font-size: small;
         }
     }
 
@@ -258,7 +271,7 @@ include_once VIEW_DIR . 'header.php';
                     </div>
                 </div>
 
-                <div class="row col-md-12 col-sm-12 col-xs-12 card-body" style="margin-left: 0%">
+                <div class="row col-md-12 col-sm-12 col-xs-12 card-body" style="margin-left: 0; border-bottom: 1px solid #eee; padding-bottom: 2%">
                     <div class="media-body comment more">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Vestibulum laoreet, nunc eget laoreet sagittis,
@@ -278,12 +291,20 @@ include_once VIEW_DIR . 'header.php';
 
                 </div>
 
-                <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%">
-                    <span class="label label-primary">Informatica</span>
-                    <span class="label label-warning">Web Developer</span>
-                    <span class="label label-primary">Fisciano</span>
-                    <span class="label label-primary">2000€</span>
+                <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; display: flex">
+                    <h5>Macro:<span class="label label-primary">Informatica</span></h5>
+                    <h5>Micro: <span class="label label-warning">Web Developer</span></h5>
+                    <h5>Luogo:<span class="label label-primary">Fisciano</span></h5>
+                    <h5>Retribuzione:<span class="label label-primary">2000€</span></h5><br>
+
                 </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%; display: flex">
+                    <h5>Data:<span class="label label-primary">22-12-2016</span></h5>
+                    <h5>Tipologia: <span class="label label-primary">Offerta</span></h5>
+
+
+                </div>
+
 
                 <div class="media-comment" style="">
                     <button class="btn btn-link">
