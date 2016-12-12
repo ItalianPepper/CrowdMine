@@ -10,9 +10,13 @@
 include_once MODEL_DIR . 'Annuncio.php';
 include_once MODEL_DIR . 'Candidatura.php';
 include_once MANAGER_DIR . 'manager.php';
-include_once FILTER_DIR . "SearchByUserIdFilter.php";
+
 include_once FILTER_DIR . "FilterUtils.php";
 include_once FILTER_DIR ."SearchByIdFilter.php";
+include_once FILTER_DIR . "SearchByUserIdFilter.php";
+include_once FILTER_DIR . "SearchByMicroFilter.php";
+include_once FILTER_DIR . "OrderByDateFilter.php";
+
 
 /**
  * Class AnnuncioManager
@@ -86,8 +90,6 @@ class AnnuncioManager
         }
 
         if (!Manager::getDB()->multi_query($query)) {
-
-            echo Manager::getDB()->errno;
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
     }
@@ -101,13 +103,13 @@ class AnnuncioManager
      * @param string $data
      * @param String $title Title
      * @param String $location Location
-     * @param string[] $microcat An array of microcategory IDs
      * @param String $remuneration Indicative remuneration.
      * @param String $type Type (domanda,offerta).
      * @param String $description description
+     * @param string[] $microcat An array of microcategory IDs
      * @return Annuncio A model instance of the updated Annuncio.
      */
-    public function updateAnnuncio($id, $userid, $date, $title, $location, $microcat = null, $remuneration, $type, $description)
+    public function updateAnnuncio($id, $userid, $date, $title, $location, $remuneration, $type, $description, $microcat = null)
     {
 
         $UPDATE_ANNUNCIO = "UPDATE `Annuncio` SET `data` = '%s', `titolo` = '%s', `luogo` = '%s', `stato` = '%s', `retribuzione` = '%s', `tipo` = '%s', `descrizione` = '%s', `id_utente` = '%s' WHERE `id` = '%s' ";
@@ -168,12 +170,11 @@ class AnnuncioManager
 
         $query = sprintf(self::$GET_ALL_ANNUNCI);
         FilterUtils::applyFilters($filters, $query);
-        //echo $query."||<br>";
         $res = Manager::getDB()->query($query);
         $annunci = array();
         if ($res) {
             while ($obj = $res->fetch_assoc()) {
-                $annuncio = new Annuncio($obj['id'], $obj['id_utente'], $obj['data'], $obj['titolo'], $obj['luogo'], $obj['stato'], $obj['retribuzione'], $obj['tipo'], $obj['descrizione']);
+                $annuncio = new Annuncio($obj['id'], $obj['id_utente'], $obj['data'], $obj['titolo'], $obj['descrizione'], $obj['luogo'], $obj['stato'], $obj['retribuzione'], $obj['tipo']);
                 $annunci[] = $annuncio;
             }
         }
@@ -272,12 +273,33 @@ class AnnuncioManager
 
     /**
      * Get the HomePage's list of announcements
+     *  (method called by logged User)
      *
      * @return Annuncio[] A list of Annuncio elements.
      */
-    public function getAnnunciHomePage()
+    public function getAnnunciHomePageUtenteLoggato($microcat=null)
     {
-        return $this->searchAnnuncio(null);
+        $filters = array();
+
+        for ($i = 0; $i < count($microcat); $i++) {
+            $filters[] = new SearchByMicroFilter($microcat[$i]);
+        }
+
+        if(count($microcat)>0)
+            $filters[] = new OrderByDateFilter(OrderType::DESC);
+
+        return $this->searchAnnuncio($filters);
+    }
+
+    /**
+     * Get the HomePage's list of announcements
+     * (method called by not logged User)
+     *
+     * @return Annuncio[] A list of Annuncio elements.
+     */
+    public function getAnnunciHomePageUtenteVisitatore()
+    {
+        return $this->searchAnnuncio(Array(new OrderByDateFilter(OrderType::DESC)));
     }
 
     /**
@@ -498,7 +520,6 @@ class AnnuncioManager
                   ON annuncio.id = f.id
                   ORDER BY f.avgFeedback DESC";
 
-        echo $query;
         $res = Manager::getDB()->query($query);
         $annunci = array();
         if ($res) {
