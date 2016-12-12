@@ -28,15 +28,15 @@
         <nav class="navbar navbar-default" id="navbar">
             <div class="container-fluid">
                 <div class="navbar-collapse collapse in">
-                    <form class="nav navbar-nav navbar-right" id="formAuth">
+                    <form class="nav navbar-nav navbar-right" method="post" action="effettuaLogin" id="formAuth">
                         <div class="col-md-12 col-xs-12">
                             <div class="form-group col-md-5 col-xs-5">
-                                <label class="sr-only" for="exampleInputEmail3">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                                <label class="sr-only" for="inputEmail">Email address</label>
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                             </div>
                             <div class="form-group col-md-5 col-xs-5">
-                                <label class="sr-only" for="exampleInputPassword3">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                                <label class="sr-only" for="inputPassword">Password</label>
+                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
                                 <a href="#" class="text-center ">Hai dimenticato la password? Clicca qui!</a>
                             </div>
                             <button type="submit" class="btn btn-success col-md-2 col-xs-2">Sign in</button>
@@ -67,7 +67,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="col-md-1"></div>
             <div class="card col-md-10">            
-                <form id="modulo" name="modulo">
+                <form method="post" action="effettuaRegistrazione" id="modulo" name="modulo">
                     <h1 class="text-black text-center">Iscriviti</h1>
                     <h4 class="text-black text-center">Il mondo del lavoro &egrave a portata di click!</h4>
                     <br>
@@ -154,7 +154,7 @@
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label>
-                                        <input type="radio" name="tipologia" value="Cliente" class="flat-red" checked> Società
+                                        <input type="radio" name="tipologia" value="Cliente" class="flat-red"> Società
                                     </label>
                                 </div>
                                 <div class="col-md-6">

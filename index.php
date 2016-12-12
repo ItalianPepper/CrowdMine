@@ -116,7 +116,7 @@ try {
                 break;
             case 'effettuaRegistrazione':
                 StringUtils::checkPermission("not_logged");
-                include_once CONTROL_DIR . "login-registrazione.php";
+                include_once CONTROL_DIR . "RegisterCM.php";
                 break;
             case 'inserimentoEsperienza':
                 StringUtils::checkPermission("all");
@@ -124,7 +124,7 @@ try {
                 break;
             case 'effettuaLogin':
                 StringUtils::checkPermission("not_logged");
-                include_once CONTROL_DIR . "login-registrazione.php";
+				include_once CONTROL_DIR . "LoginCM.php";
                 break;
             case 'logout':
                 StringUtils::checkPermission("all");
