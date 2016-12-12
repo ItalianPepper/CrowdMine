@@ -301,7 +301,7 @@ include_once VIEW_DIR . 'header.php';
                         <div class="col-md-7 annuncioTitle" style="width: 100%;">
 
                             <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
-                                <h1><?php echo "Nome" ?></h1>
+                                <h1><?php echo "Nome del proprietario" ?></h1>
                             </div>
 
                             <div class="offerta col-md-12 col-sm-12">
@@ -317,7 +317,7 @@ include_once VIEW_DIR . 'header.php';
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="cancellaAnnuncio?id=<?php echo $annunci[$i]->getId(); ?>" >Cancella annuncio</a></li>
-                                        <li><a href="modificaAnnuncio"<?php $_SESSION["annuncio"]=serialize($annunci[$i]);?>>Modifica annuncio</a></li>
+                                        <li><a href="modificaAnnuncio?id=<?php echo $annunci[$i]->getId(); ?>" >Modifica annuncio</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -332,7 +332,7 @@ include_once VIEW_DIR . 'header.php';
                     </div>
 
                     <div class="row col-md-12 col-sm-12 col-xs-12 media-categories"
-                         style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%">
+                         style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%;">
                         <span class="label label-warning">Informatica</span>
                         <span class="label label-default">Web Developer</span>
                         <span class="label label-info"><?php echo $annunci[$i]->getLuogo();?></span>
@@ -341,9 +341,9 @@ include_once VIEW_DIR . 'header.php';
 
                     <div class="media-comment" style="">
                         <button class="btn btn-link<?php echo $annunci[$i]->getId();?>">
-                            <i class="fa fa-comments-o"></i> 10 Comments
+                            <i class="fa fa-comments-o"></i> <?php echo count($listaCommenti[$i])?> commenti
                         </button>
-                        <button type="button" class="btn btn-warning<?php echo $annunci[$i]->getId();?>">Candidature</button>
+                        <button type="button" class="btn btn-warning<?php echo $annunci[$i]->getId();?>"><?php echo count($listaCandidature[$i])?> candidature</button>
                     </div>
 
 
@@ -364,11 +364,20 @@ include_once VIEW_DIR . 'header.php';
                                     echo $listaCommenti[$i][$z]->getData();
                                     ?></h5>
                             </div>
+                            <div class="col-md-5 col-sm-5 options"
+                                 style="float: right; margin-top: -8%; margin-right: -23%">
+                                <a href="segnalaCommento?id=<?php echo $listaCommenti[$i][$z]->getId(); ?>">
+                                    <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </a>
+                            </div>
                             <div class="media-content">
                                 <?php
                                 echo $listaCommenti[$i][$z]->getCorpo();
                                 ?>
                             </div>
+
                         </div>
                     <?php } ?>
                     </div>
@@ -387,9 +396,16 @@ include_once VIEW_DIR . 'header.php';
                                 <h4 class="title" style="margin-top: 3%">Scott White</h4>
                                 <div class="col-md-5 col-sm-5 options"
                                      style="float: right; margin-top: -8%; margin-right: -23%">
-                                    <i class="fa fa-check"></i>
-                                    <i class="fa fa-close"></i>
-                                    <i class="fa fa-mail-reply-all"></i>
+                                    <a href="">
+                                    <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                        <i class="fa fa-mail-reply-all"></i>
+                                    </button>
+                                    </a>
+                                    <a href="rimuoviCandidatura?id=<?php echo $listaCandidature[$i][$z]->getId();?>">
+                                    <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                    </a>
                                 </div>
                                 <div class="media-content">
                                     <?php echo $listaCandidature[$i][$z]->getCorpo(); ?>

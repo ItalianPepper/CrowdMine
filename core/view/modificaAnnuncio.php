@@ -13,7 +13,6 @@ include_once MODEL_DIR . 'annuncio.php';
 <?php
 if(isset($_SESSION["annuncio"])){
     $annuncio = unserialize($_SESSION["annuncio"]);
-    unset($_SESSION["annuncio"]);
 } else {
     header("Location: " . DOMINIO_SITO . "/annunciProprietari");
 }
@@ -296,7 +295,7 @@ include_once VIEW_DIR . 'header.php';
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                                    <button type="submit" class="btn btn-sm btn-success">Conferma</button>
+                                                    <button id="whenCancel" type="submit" class="btn btn-sm btn-success">Conferma</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -383,6 +382,7 @@ include_once VIEW_DIR . 'header.php';
             unset($_SESSION['toast-message']);
         }
         ?>
+
 </body>
 
 </html>

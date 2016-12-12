@@ -1,5 +1,6 @@
 <?php
 include_once MANAGER_DIR ."/AnnuncioManager.php";
+include_once MANAGER_DIR . "UtenteManager.php";
 include_once MODEL_DIR . "/Candidatura.php";
 include_once MODEL_DIR . "/Commento.php";
 

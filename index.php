@@ -183,6 +183,9 @@ try {
             case 'visualizzaAnnunciProprietari';
                 include_once VIEW_DIR. "annuncioProprietario.php";
                 break;
+            case 'rimuoviCandidatura';
+                include_once CONTROL_DIR. "rimuoviCandidatura.php";
+                break;
             case 'inserisciAnnuncio';
                 include_once CONTROL_DIR . "inserisciAnnuncio.php";
                 break;
