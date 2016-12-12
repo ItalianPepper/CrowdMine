@@ -183,13 +183,6 @@ class UtenteManager extends Manager{
         return $users;
     }
 
-    public function findBestUerByMicrocategoria($micorcategoria){
-        $FIND_BEST_USER_BY_MICROCATEGORIA = "SELECT utente.id, COUNT(competente.id_utente)".
-        "FROM utente, competente".
-        "WHERE utente.id = competente.id_utente".
-        "GROUP BY id_microcategoria='%s';";
-    }
-
     public function checkEmail($email){
         $CHECK_EMAIL = "SELECT * FROM utente WHERE email='%s';";
         $query = sprintf($CHECK_EMAIL, $email);
@@ -243,5 +236,6 @@ class UtenteManager extends Manager{
             return $user;
         }
     }
+
 
 }

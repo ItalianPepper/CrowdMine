@@ -107,5 +107,27 @@ class MicrocategoriaManager extends Manager
         return $listaMicro;
     }
 
+    /**
+     * Return array formed by two values: the name of microcategoria associated with macorcategoria param
+     * and the count of this microcategoria
+     *
+     * @return array $lista
+     */
+    public function findBestMicrocategoria($macrocategoria){
+        $lista = array();
+        $FIND_BEST_USER_BY_MICROCATEGORIA =
+            "SELECT microcategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto
+             FROM microcategoria, competente
+             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
+             GROUP BY competente.id_microcategoria;";
+        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria);
+        $result = self::getDB()->query($query);
+        if(result != 0){
+            foreach($result->fetch_assoc() as $l){
+                array_push($lista, $l);
+            }return $lista;
+        }return false;
+    }
+
 
 }
