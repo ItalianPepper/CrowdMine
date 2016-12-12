@@ -279,9 +279,9 @@ include_once VIEW_DIR . 'header.php';
                 </div>
 
                 <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%">
-                    <span class="label label-warning">Informatica</span>
-                    <span class="label label-default">Web Developer</span>
-                    <span class="label label-info">Fisciano</span>
+                    <span class="label label-primary">Informatica</span>
+                    <span class="label label-warning">Web Developer</span>
+                    <span class="label label-primary">Fisciano</span>
                     <span class="label label-primary">2000€</span>
                 </div>
 

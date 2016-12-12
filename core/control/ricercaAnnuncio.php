@@ -1,63 +1,41 @@
 <?php
 include_once MANAGER_DIR . 'AnnuncioManager.php';
-include_once CONTROL_DIR . "ControlUtils.php";
-include_once EXCEPTION_DIR . "IllegalArgumentException.php";
-include_once MODEL_DIR . 'Utente.php';
-include_once MODEL_DIR . 'Annuncio.php';
-include_once CONTROL_DIR . 'HomeController.php';
-
-class ricercaAnnuncio extends Controller
-{
-    static $GET_ALL_ANNUNCI = "SELECT * FROM `annuncio`";
-    static $GET_ANNUNCI_ID = "SELECT * FROM `annuncio` WHERE `id_utente` = '%s'";
-    static $GET_SEARCHED_ANNUNCI = "SELECT * FROM `annuncio` WHERE `id_utente`= '%s' || `data` = '%s' || `titolo` = '%s' || `luogo` = '%s'";
-
-    function searchAnnunci()
-    {
-        $filters = array();
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-            $titolo = $_POST['titolo'];
-
-            array_push($filters, $titolo);
-
-            $data = $_POST['data'];
-
-            array_push($filters, $data);
-
-            $luogo = $_POST['luogo'];
-
-            array_push($filters, $luogo);
+include_once MANAGER_DIR . 'UtenteManager.php';
+include_once FILTER_DIR . 'SearchByTitleFilter.php';
+include_once FILTER_DIR . 'SearchByDateInterval.php';
 
 
-            $idUtente = $_POST['utente'];
 
-            array_push($filters, $idUtente);
+$manager = new AnnuncioManager();
+$utenteObj = new UtenteManager();
+$filters = array();
 
 
-            for ($i = 0; $i < count($filters); $i++) {
-                echo $filters[$i];
-            }
-            $query = sprintf(self::$GET_SEARCHED_ANNUNCI, $filters[3], $filters[1], $filters[0], $filters[2]);
-            echo $query;
-            $res = Controller::getDB()->query($query);
-            $annunci = array();
-            if ($res) {
-                while ($obj = $res->fetch_assoc()) {
-                    $annuncio = new Annuncio($obj['id'], $obj['id_utente'], $obj['data'], $obj['titolo'], $obj['descrizione'], $obj['luogo'], $obj['tipo'], $obj['retribuzione'], $obj['stato']);
-                    array_push($annunci, $annuncio);
-                }
-            }
-            return $annunci;
-        }
-    }
-
+if (isset($_POST['titolo'])) {
+    $titleObj = new SearchByTitleFilter($_POST['titolo']);
+    array_push($filters, $titleObj);
 }
 
-$manager = new ricercaAnnuncio();
-$array = $manager->searchAnnunci();
+if (isset($_POST['data'])) {
+    $dataObj = new SearchByDateInterval("", $_POST['data']);
+    array_push($filters, $dataObj);
+}
 
-$_SESSION['cercati'] = $array;
+if (isset($_POST['utente'])) {
+    echo $_POST['utente'];
+    //$user = $utenteObj->getUtenteByName($_POST['utente']); Query ricerca utente
+    $user = new Utente(1, "Severino", "Ammirati", "3333", "", "Striano", "", "", "", "", "");
+    $userObj = new SearchByUserIdFilter($user->getId());
+    array_push($filters, $userObj->setUserId($user->getId()));
+}
+
+$annunci = $manager->searchAnnuncio($filters);
+$_SESSION['searched'] = $annunci;
+header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
+
+
+
+
 
 
 
