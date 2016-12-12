@@ -2,14 +2,6 @@
 include_once MODEL_DIR . "/Annuncio.php";
 include_once MODEL_DIR . "/Candidatura.php";
 include_once MODEL_DIR . "/Commento.php";
-/**
- *
- * @author Vincenzo Russo
- * @version 1.0
- * @since 30/05/16
- */
-include_once VIEW_DIR . 'header.php';
-
 $idUtente="1";
 if (isset($_SESSION["lista"])){
     $annunci = unserialize($_SESSION["lista"]);
@@ -19,8 +11,9 @@ if (isset($_SESSION["lista"])){
     unset($_SESSION["listaCandidature"]);
     unset($_SESSION["listaCommenti"]);
 } else {
-    header("Location: " . DOMINIO_SITO);
+    header("Location: " . DOMINIO_SITO . "/annunciProprietari");
 }
+include_once VIEW_DIR . 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -324,7 +317,7 @@ if (isset($_SESSION["lista"])){
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="cancellaAnnuncio?id=<?php echo $annunci[$i]->getId(); ?>" >Cancella annuncio</a></li>
-                                        <li><a href="modificaAnnuncio"<?php $_SESSION["id"]=serialize($annunci[$i]->getId());?>">Modifica annuncio</a></li>
+                                        <li><a href="modificaAnnuncio"<?php $_SESSION["annuncio"]=serialize($annunci[$i]);?>>Modifica annuncio</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -367,7 +360,9 @@ if (isset($_SESSION["lista"])){
                             </div>
                             <div class="media-heading">
                                 <h4 class="title">Scott White</h4>
-                                <h5 class="timeing">20 mins ago</h5>
+                                <h5 class="timeing"><?php
+                                    echo $listaCommenti[$i][$z]->getData();
+                                    ?></h5>
                             </div>
                             <div class="media-content">
                                 <?php

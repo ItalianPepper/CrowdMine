@@ -5,7 +5,7 @@
  * @version 1.0
  * @since 30/05/16
  */
-include_once VIEW_DIR . 'header.php';
+
 include_once MODEL_DIR . 'annuncio.php';
 
 
@@ -14,7 +14,12 @@ include_once MODEL_DIR . 'annuncio.php';
 if(isset($_SESSION["annuncio"])){
     $annuncio = unserialize($_SESSION["annuncio"]);
     unset($_SESSION["annuncio"]);
+} else {
+    header("Location: " . DOMINIO_SITO . "/annunciProprietari");
 }
+
+
+include_once VIEW_DIR . 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -228,7 +233,7 @@ if(isset($_SESSION["annuncio"])){
     <div class="col-md-12 col-sm-12 app-container">
 
         <div class="row" style="margin-right: 20%;">
-            <form method="POST" action="modificaAnnuncio">
+            <form method="POST" action="modificaAnnuncioControl">
             <div class="col-md-12">
                 <div class="card" style="width auto;">
 

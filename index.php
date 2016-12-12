@@ -195,6 +195,9 @@ try {
             case 'modificaAnnuncio';
                 include_once CONTROL_DIR . "modificaAnnuncio.php";
                 break;
+            case 'modificaAnnuncioControl';
+                include_once CONTROL_DIR . "getDatiAnnuncioModificato.php";
+                break;
             case 'visualizzaModificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
                 break;
