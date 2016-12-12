@@ -24,7 +24,6 @@ class MacroCategoriaManager extends Manager
 
     /**
      * create a new persistent macroCategoria
-     *
      * @param $id
      * @param $nome
      * @return MacroCategoria
@@ -77,6 +76,17 @@ class MacroCategoriaManager extends Manager
             }
         }
         return $macro;
+    }
+
+    public function getMacroByName($nome){
+        $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE nome='$nome'";
+        $rs = Manager::getDB()->query($GET_MACRO_BY_NAME);
+        if($rs){
+            $obj = mysqli_fetch_assoc($rs);
+            $macro = new MacroCategoria(null,$obj['nome']);
+        }
+        return $macro;
+
     }
 
     /**

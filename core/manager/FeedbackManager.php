@@ -89,6 +89,27 @@ class FeedbackManager extends Manager
         }
     }
 
+
+    public function getFeedbackById($id){
+        $GET_FEEDBACK_BY_NAME="SELECT feedback.* FROM feedback WHERE feedback.id=$id";
+        $resSet = self::getDB()->query($GET_FEEDBACK_BY_NAME);
+        if(!$resSet){
+            $obj = mysqli_fetch_assoc($resSet);
+            $f = new Feedback($obj['id'], $obj['id_annuncio'], $obj['id_utente'], $obj['id_valutato'], $obj['corpo'], $obj['data'], $obj['stato'], $obj['valutazione'], $obj['titolo']);
+        }
+        return $f;
+    }
+
+    public function setStatus($id,$stato){
+        $UPDATE_STATUS="UPDATE feedback SET stato=$stato WHERE feedback.id=$id";
+        $resSet = self::getDB()->query($UPDATE_STATUS);
+        if($resSet)
+            return true;
+        else
+            return false;
+    }
+
+
     /**
      * return a collection of Feedback about an User
      * @param $idUtente
@@ -152,7 +173,11 @@ class FeedbackManager extends Manager
     public function removeFeedback($idFeedback){
         $stato = StatoFeedback::ELIMINATO;
         $SET_DELETE_FEEDBACK_STATUS = "UPDATE feedback SET feedback.stato = $stato WHERE feedback.id = $idFeedback ";
-        self::getDB()->query($SET_DELETE_FEEDBACK_STATUS);
+        $rs = self::getDB()->query($SET_DELETE_FEEDBACK_STATUS);
+        if($rs)
+            return true;
+        else
+            return false;
     }
 
     private function feedbackToArray($resSet){
