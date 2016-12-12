@@ -249,7 +249,7 @@ include_once VIEW_DIR . 'header.php';
                                     <input type="text" name ="titolo" placeholder="<?php echo $annuncio->getTitolo(); ?>" class="form-control" aria-describedby="basic-addon1" value="">
                                 </div>
                                 <textarea name="descrizione" placeholder="<?php echo $annuncio->getDescrizione(); ?>" rows="3" class="form-control" ></textarea>
-                                <input type="text" name="luogo" class="form-control" aria-describedby="basic-addon1" value="">
+                                <input type="text" name="luogo" placeholder="<?php echo $annuncio->getLuogo(); ?>" class="form-control" aria-describedby="basic-addon1" value="">
 
                             </div>
 
@@ -268,15 +268,15 @@ include_once VIEW_DIR . 'header.php';
                                 <div class="input-group" style="margin-top: 3%">
                                     <span class="input-group-addon" id="basic-addon1">
                                          <i class="fa fa-money" aria-hidden="true"></i></span>
-                                    <input type="text" name="retribuzione" class="form-control" value="">
+                                    <input type="text" name="retribuzione" placeholder="<?php echo $annuncio->getRetribuzione(); ?>" class="form-control" value="">
                                 </div>
                                 <div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="tipologia" id="radio5" value="domanda">
+                                        <input type="radio" name="tipologia" id="radio5" value="domanda" <?php if($annuncio->getTipologia()=="domanda") echo "checked"; ?>>
                                         <label for="radio5">Domanda</label>
                                     </div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="tipologia" id="radio6" value="offerta">
+                                        <input type="radio" name="tipologia" id="radio6" value="offerta" <?php if($annuncio->getTipologia()=="offerta") echo "checked"; ?>>
                                         <label for="radio6">Offerta</label>
                                     </div>
                                 </div>
