@@ -128,7 +128,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         $managerAnnuncio->createAnnuncio($idUtente, $data, $titolo, $luogo, $listaMicrocategorie, $retribuzione, $tipologia, $descrizione);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "L'annuncio è in fase di lavorazione";
-        header("Location:" . DOMINIO_SITO . "/annuncioProprietario");
+        header("Location:" . DOMINIO_SITO . "/annunciProprietari");
     } catch(ApplicationException $a){
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Problemi con l'inserimento dell'annuncio";

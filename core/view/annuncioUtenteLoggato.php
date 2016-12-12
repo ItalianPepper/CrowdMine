@@ -37,11 +37,6 @@ include_once VIEW_DIR . 'header.php';
             });
         });
     </script>
-    <script type="text/javascript">
-        function caricaAnnunciRicercati(){
-
-        }
-    </script>
 </head>
 
 <style>
@@ -305,7 +300,8 @@ include_once VIEW_DIR . 'header.php';
                             </div>
                             <form action="aggiungiCandidaturaControl" method="post">
                             <div class="modal-body">Inserisci una descrizione per candidarti
-                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
+                                <?php $_SESSION["idAnnuncio"] = serialize(15); ?>
+                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.." value=""></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>

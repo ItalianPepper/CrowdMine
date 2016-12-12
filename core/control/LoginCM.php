@@ -47,5 +47,10 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         throw new IllegalArgumentException("Password non inserita");
     }
     
-    $utenteManager->forwardsLogin($userMail, $userPassword);
+    $user = $utenteManager->forwardsLogin($userMail, $userPassword);
+    
+    if($user != null){
+        $_SESSION['user'] = serialize($user);
+        $_SESSION['loggedin'] = true;        
+    }
 }

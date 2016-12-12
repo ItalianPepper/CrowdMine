@@ -1,5 +1,7 @@
 <?php
 include_once MODEL_DIR . "/Annuncio.php";
+include_once MODEL_DIR . "/Candidatura.php";
+include_once MODEL_DIR . "/Commento.php";
 /**
  *
  * @author Vincenzo Russo
@@ -11,7 +13,11 @@ include_once VIEW_DIR . 'header.php';
 $idUtente="1";
 if (isset($_SESSION["lista"])){
     $annunci = unserialize($_SESSION["lista"]);
+    $listaCandidature = unserialize($_SESSION["listaCandidature"]);
+    $listaCommenti = unserialize($_SESSION["listaCommenti"]);
     unset($_SESSION["lista"]);
+    unset($_SESSION["listaCandidature"]);
+    unset($_SESSION["listaCommenti"]);
 } else {
     header("Location: " . DOMINIO_SITO);
 }
@@ -38,16 +44,35 @@ if (isset($_SESSION["lista"])){
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $(".btn.btn-link").click(function(){
-                $(".row.col-md-12.col-sm-12.card.contenitore").toggle(250);
-                $(".row.col-md-12.col-sm-12.card.candidature").hide(250);
+    <?php
+    for ($i = 0; $i < count($annunci); $i++) {
+        $id = $annunci[$i]->getId();
+        echo "<script>";
+        echo "$(document).ready(function(){";
+        echo "$(\".btn.btn-link$id\").click(function(){";
+        echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").toggle(250);";
+        echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").hide(250);";
+        echo "});";
+        echo "});";
+        echo "</script>";
+    }
+    ?>
+
+    <?php
+    for ($i = 0; $i < count($annunci); $i++) {
+        $id = $annunci[$i]->getId();
+        echo "<script>";
+        echo "$(document).ready(function(){";
+        echo "$(\".btn.btn-warning$id\").click(function(){";
+        echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").toggle(250);";
+        echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").hide(250);";
+        echo "});";
+        echo "});";
+        echo "</script>";
+    }
+    ?>
 
 
-            });
-        });
-    </script>
     <script>
         $(document).ready(function(){
             $(".btn.btn-warning").click(function(){
@@ -322,15 +347,17 @@ if (isset($_SESSION["lista"])){
                     </div>
 
                     <div class="media-comment" style="">
-                        <button class="btn btn-link">
+                        <button class="btn btn-link<?php echo $annunci[$i]->getId();?>">
                             <i class="fa fa-comments-o"></i> 10 Comments
                         </button>
-                        <button type="button" class="btn btn-warning">Candidature</button>
+                        <button type="button" class="btn btn-warning<?php echo $annunci[$i]->getId();?>">Candidature</button>
                     </div>
 
 
-                    <div class="row col-md-12 col-sm-12 card contenitore" style="margin-left: 0; display: none">
-
+                    <div class="row col-md-12 col-sm-12 card contenitore<?php echo $annunci[$i]->getId();?>" style="margin-left: 0; display: none">
+                        <?php
+                        for($z=0;$z<count($listaCommenti[$i]); $z++){
+                        ?>
                         <div class="row col-md-12 col-sm-12 comment-body"
                              style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
                             <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
@@ -342,42 +369,20 @@ if (isset($_SESSION["lista"])){
                                 <h4 class="title">Scott White</h4>
                                 <h5 class="timeing">20 mins ago</h5>
                             </div>
-                            <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                                scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-                                tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.
+                            <div class="media-content">
+                                <?php
+                                echo $listaCommenti[$i][$z]->getCorpo();
+                                ?>
                             </div>
                         </div>
-                        <div class="row col-md-12 col-sm-12 comment-body"
-                             style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
-                            <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
-                                <a href="#">
-                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
-                                </a>
-                            </div>
-                            <div class="media-heading">
-                                <h4 class="title">Scott White</h4>
-                                <h5 class="timeing">20 mins ago</h5>
-                            </div>
-                            <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                                scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-                                tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 form-commento">
-
-                            <div class="col-md-10 input-comment">
-                                <input type="text" class="form-control" placeholder="Scrivi un commento...">
-                            </div>
-
-                            <div class="col-md-2 btn-comment">
-                                <button type="button" class="btn btn-info">Commenta</button>
-                            </div>
-                        </div>
+                    <?php } ?>
                     </div>
 
-                    <div class="row col-md-12 col-sm-12 card candidature" style="margin-left: 0; display: none">
+                    <div class="row col-md-12 col-sm-12 card candidature<?php echo $annunci[$i]->getId();?>" style="margin-left: 0; display: none">
 
+                        <?php
+                                for($z=0;$z<count($listaCandidature[$i]); $z++){
+                            ?>
                         <div class="row col-md-12 col-sm-12 candidature-body" style="margin-left: 0">
 
                             <div class="media-left col-md-12 col-sm-12 candidato-body"
@@ -391,117 +396,14 @@ if (isset($_SESSION["lista"])){
                                     <i class="fa fa-close"></i>
                                     <i class="fa fa-mail-reply-all"></i>
                                 </div>
-                                <div class="media-body comment more">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
-                                </div>
-
-                            </div>
-
-                            <div class="media-left col-md-12 col-sm-12 candidato-body"
-                                 style="margin-left: 0; border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%;">
-                                <img class="col-md-2 col-sm-2" src="<?php echo STYLE_DIR; ?>img\logojet.jpg"
-                                     style="margin-left: -5%">
-                                <h4 class="title" style="margin-top: 3%">Scott White</h4>
-                                <div class="col-md-5 col-sm-5 options"
-                                     style="float: right; margin-top: -8%; margin-right: -23%">
-                                    <i class="fa fa-check"></i>
-                                    <i class="fa fa-close"></i>
-                                    <i class="fa fa-mail-reply-all"></i>
-                                </div>
-                                <div class="media-body comment more">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
-                                </div>
-
-                            </div>
-
-                            <div class="media-left col-md-12 col-sm-12 candidato-body"
-                                 style="margin-left: 0; border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%;">
-                                <img class="col-md-2 col-sm-2" src="<?php echo STYLE_DIR; ?>img\logojet.jpg"
-                                     style="margin-left: -5%">
-                                <h4 class="title" style="margin-top: 3%">Scott White</h4>
-                                <div class="col-md-5 col-sm-5 options"
-                                     style="float: right; margin-top: -8%; margin-right: -23%">
-                                    <i class="fa fa-check"></i>
-                                    <i class="fa fa-close"></i>
-                                    <i class="fa fa-mail-reply-all"></i>
-                                </div>
-                                <div class="media-body comment more">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
-                                </div>
-
-                            </div>
-
-                            <div class="media-left col-md-12 col-sm-12 candidato-body"
-                                 style="margin-left: 0; border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%;">
-                                <img class="col-md-2 col-sm-2" src="<?php echo STYLE_DIR; ?>img\logojet.jpg"
-                                     style="margin-left: -5%">
-                                <h4 class="title" style="margin-top: 3%">Scott White</h4>
-                                <div class="col-md-5 col-sm-5 options"
-                                     style="float: right; margin-top: -8%; margin-right: -23%">
-                                    <i class="fa fa-check"></i>
-                                    <i class="fa fa-close"></i>
-                                    <i class="fa fa-mail-reply-all"></i>
-                                </div>
-                                <div class="media-body comment more">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Vestibulum laoreet, nunc eget laoreet sagittis,
-                                    quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                                    Duis eget nisl orci. Aliquam mattis purus non mauris
-                                    blandit id luctus felis convallis.
-                                    Integer varius egestas vestibulum.
-                                    Nullam a dolor arcu, ac tempor elit. Donec.
+                                <div class="media-content">
+                                    <?php echo $listaCandidature[$i][$z]->getCorpo(); ?>
                                 </div>
 
                             </div>
 
                         </div>
-
+                        <?php } ?>
 
                     </div
 
