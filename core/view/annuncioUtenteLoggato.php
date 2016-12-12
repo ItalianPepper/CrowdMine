@@ -301,6 +301,7 @@ include_once VIEW_DIR . 'header.php';
                 <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%; display: flex">
                     <h5>Data:<span class="label label-primary">22-12-2016</span></h5>
                     <h5>Tipologia: <span class="label label-primary">Offerta</span></h5>
+                    <h5>Stato: <span class="label label-primary">attivo</span></h5>
 
 
                 </div>
