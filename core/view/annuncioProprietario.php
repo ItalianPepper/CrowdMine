@@ -309,7 +309,6 @@ include_once VIEW_DIR . 'header.php';
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-2 preferites">
-                            <i class="fa fa-star-o" style="font-size: 200%;"></i>
                             <ul class="card-action">
                                 <li class="dropdown">
                                     <a href="/" class="dropdown-toggle" data-toggle="dropdown">
