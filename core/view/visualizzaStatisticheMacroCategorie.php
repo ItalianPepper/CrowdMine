@@ -310,44 +310,40 @@
     $(document).ready(function () {
         $.ajax({
             type: "POST",
-            url: "control/StatisticheMacroCategorie.php",
+            url: "macroCategorieStat",
             dataType: "json",
             data: {},
-            success: drawMacroChart(response),
+            success:function(response){
+                drawMacroChart(response)
+            }
         });
     });
 
 
-    function drawMacroChart(var response){
-        //va fatto il parsing della response per poter creare il grafico
+    function drawMacroChart(result){
+
         var ctx = document.getElementById("statisticheMacro").getContext("2d");
 
-        /*per ogni macro categoria restituita va aggiunta una struttara specificando  i valori e le relative proprietà*/
-
-        var grafics =
-
-            for(var i=0; i<response.size();i++){
-
-                {   label:[response[i]],//nome macro ---> chiave
-                    data: [response[i]],//valore macro --->valore
-                    backgroundColor: randomRGBAColors(),
-                    borderColor: randomRGBAColors(),
+        function createElements() {
+           var allElement = [];
+            for (var key in result) {
+                var grafics = {
+                    label: [key],
+                    data: [result[key]],
+                    backgroundColor: ["rgba(0, 255, 0, 0.3)"],
+                    borderColor: ["rgba(0, 255, 0, 0.3)"],
                     borderWidth: 1,
-                    }
-
-                    if(i < (response.size() - 1)){
-                        <?php echo ","?>
-                    }
-
                 }
-
+                allElement.push(grafics);
+            }
+            return allElement;
+        };
 
         var macroChartData = {
             labels:[], //va lasciato vuoto
-            datasets: [grafics] //array di macrocategorie sotto forma di grafico
+            datasets: createElements()
         };
 
-        /*creazione del grafico */
         var macroChart = new Chart.Bar(ctx, {
             data: macroChartData,
             options: {
@@ -361,14 +357,6 @@
                 tooltipTemplate: "<%= label %>  -  <%= value %>"
             }
         });
-    }
-
-
-    function randomRGBAColors(){
-        var r = function () { return Math.floor(Math.random()*256) };
-        var fourth = Math.random();
-
-        return "rgba("+r+","+r+","+r+","+String.parse(fourth)+"),";
     }
 </script>
 

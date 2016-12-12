@@ -3,91 +3,80 @@
  *  a) Controllo sugli accessi con un oggetto session (da discutere)
  *  b) metodi dei manager (da discutere)
  */
-include_once MANAGER_DIR ."AnnuncioManager.php";
+/*include_once MANAGER_DIR ."AnnuncioManager.php";
 include_once MANAGER_DIR ."MacroCategoriaManager.php";
-include_once MANAGER_DIR ."MicroCategoriaManager.php";
+include_once MANAGER_DIR ."MicroCategoriaManager.php";*/
 
-$utente = unserialize($_SESSION["user"]); //da rivedere
+/*$utente = unserialize($_SESSION["user"]); //da rivedere
 $permission = $utente->getTipologia();
 
-if ($permission == "admin") {
+if ($permission == "admin") {}*/
 
-    if ($SERVER["REQUEST_METHOD"] == "POST" && $_POST["microInfoDate"] == "microInfoDate") {
-        $jsonRequest = $_POST;
+if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        $datesofmicro = array();
+    if (isset($_POST["fromdatemicro"]) && isset($_POST["atdatemicro"])) {
 
-        $dateofmicro = json_decode($jsonRequest, true);
+        //$fromdatemicro = new DateTime($_POST["fromdatemicro"]);
+        //$atdatemicro = new DateTime($_POST["atdatemicro"]);
 
-        $fromdatemicro = new DateTime($dateofmicro["fromdatemicro"]);
-        $atdatemicro = new DateTime($datesofmicro["atdatemicro"]);
+        //$annuncioManager = new AnnuncioManager();
+        //$resultMicro = $annuncioManager->getListAnnunci("MICRO_CATEGORIA", $fromdatemicro, $atdatemicro); //da rivedere
 
-        $resultMarco = array();
-        $annuncioManager = new AnnuncioManager();
-        $result = $annuncioManager->getListAnnunci("MICRO_CATEGORIA", $fromdatemicro, $atdatemicro); //da rivedere
-
-        var_dump($fromdatemicro);
-        var_dump($atdatemicro);
-        var_dump($jsonRequest);
-        var_dump($annuncioManager);
-
-
-        header("Content-Type: application/json");
-        echo json_encode($resultMacro);
-
-    } else if ($SERVER["REQUEST_METHOD"] == "POST" && $_POST["macroInfoDate"] == "macroInfoDate") {
-        $jsonRequest = $_POST;
-
-        $datesofmacro = array();
-
-        $dateofmacro = json_decode($jsonRequest, true);
-
-        $fromdatemacro = new DateTime($dateofmacro["fromdatemacro"]);
-        $atdatemacro = new DateTime($dateofmacro["atdatemacro"]);
-
-        $annuncioManager = new AnnuncioManager();
-        $resultMicro = array();
-        $resultMicro = $annuncioManager->getListAnnunci("MACRO_CATEOGORIA", $fromdatemicro, $atdatemicro); // da rivedere
-
-        var_dump($fromdatemacro);
-        var_dump($atdatemacro);
-        var_dump($jsonRequest);
-        var_dump($annuncioManager);
-
-        header("Content-Type: application/json");
+        $resultMicro = stubMicroDate();
+        header("Content-Type : application/json");
         echo json_encode($resultMicro);
 
-    } else if ($SERVER["REQUEST_METHOD"] == "POST") {
+    } else if (isset($_POST["fromdatemacro"]) && isset($_POST["atdatemacro"])) {
 
-        $jsonRequest = $_POST;
+        //$fromdatemacro = new DateTime($_POST["fromdatemacro"]);
+        //$atdatemacro = new DateTime($_POST["atdatemacro"]);
 
-        $option = json_decode($jsonRequest);
+        //$annuncioManager = new AnnuncioManager();
+        //$resultMacro = $annuncioManager->getListAnnunci("MACRO_CATEOGORIA", $fromdatemicro, $atdatemicro);
 
-        if ($option == "selectMicro") {
+        $resultMacro = stubMacroDate();
+        header("Content-Type : application/json");
+        echo json_encode($resultMacro);
 
-            $microCategoriaManager = new MicrocategoriaManager();
+    } else if (isset($_POST["option"])) {
 
-            $listMicroOptions = $microCategoriaManager->getListaMicrocategoria();
-            var_dump($jsonRequest);
-            var_dump($option);
-            var_dump($microCategoriaManager);
+        if ($_POST["option"] == "selectMacro") {
 
-            header("Content-Type: application/json");
+            // $macroCategoriaManager = new MacroCategoriaManager();
+            //$listMacroOptions = $macroCategoriaManager->getListMacroCategoria();
+
+            $listMacroOptions = stubMacroCategoria();
+            header("Content-Type : application/json");
+            echo json_encode($listMacroOptions);
+
+        } else if ($_POST["option"] == "selectMicro") {
+
+            //$microCategoriaManager = new MicrocategoriaManager();
+            //$listMicroOptions = $microCategoriaManager->getListaMicrocategoria();
+
+            $listMicroOptions = stubMicroCategoria();
+            header("Content-Type : application/json");
             echo json_encode($listMicroOptions);
-
-        } else if ($option == "selectMacro") {
-
-            $macroCategoriaManager = new MacroCategoriaManager();
-            $listMacroOptions = $macroCategoriaManager->getListMacroCategoria();
-
-            var_dump($jsonRequest);
-            var_dump($option);
-            var_dump($macroCategoriaManager);
-
-            header("Content-Type: application/json");
-            echo json_decode($listMacroOptions);
         }
-
-
     }
+}
+
+function stubMicroCategoria(){
+    $microsName = array("PHP", "C", "JAVA", "C++");
+    return $microsName;
+}
+
+function stubMacroCategoria(){
+    $macrosName = array("Informatica", "Matematica", "Ristorazione");
+    return $macrosName;
+}
+
+function stubMacroDate(){
+    $macroValues = array("21/12/2016" => 22, "22/12/2016" => 54, "23/12/2016" => 37);
+    return $macroValues;
+}
+
+function stubMicroDate(){
+    $microValues = array("21/12/2016" => 10, "22/12/2016" =>27, "23/12/2016" =>45);
+    return $microValues;
 }

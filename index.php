@@ -133,6 +133,18 @@ try {
             case 'livesearch':
                 include_once CONTROL_DIR . "SearchController.php";
                 break;
+            case 'macroCategorieStat':
+                include_once CONTROL_DIR . "StatisticheMacroCategorie.php";
+                break;
+            case 'tabGenerale':
+                include_once CONTROL_DIR . "TabGenerale.php";
+                break;
+            case 'tabAnnunci':
+                include_once CONTROL_DIR . "TabAnnunci.php";
+                break;
+            case 'tabUtenti':
+                include_once CONTROL_DIR . "TabUtenti.php";
+                break;
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;

@@ -13,9 +13,9 @@
 class Config {
 
     public static $DB_URL = "localhost";
-    public static $DB_NAME = "socialhelp";
+    public static $DB_NAME = "crowdmine";
     public static $DB_USER = "root";
-    public static $DB_PASS = "";
+    public static $DB_PASS = "root";
 
     public static $PERMA_COOKIE = "permaCookie";
 

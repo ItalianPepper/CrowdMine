@@ -311,6 +311,10 @@
                                             <div class="container-canvas">
                                                 <canvas id="graficoGeneraleAnnunci"/>
                                             </div>
+                                            <br>
+                                            <div>
+                                                Numero di Annunci pubblicati oggi:<span id="adsNumber"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -324,10 +328,11 @@
                                             <div class="section">
                                                 <div class="section-title">Macro Categorie</div>
                                                 <div class="section-body">
-                                                    <form method="post" action="StatisticheAdmin.php" name="macroInfoDate"><!--action da cambiare-->
+                                                   <!-- <form method="post" action="tabAnnunci" name="macroInfoDate"><!--action da cambiare-->
                                                         <div class="row">
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <select id="selectMacro"style="width:100%" class="select2">
+                                                                <select id="selectMacro" style="width:100%"
+                                                                        class="select2">
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -346,13 +351,13 @@
                                                         <div class="row">
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                 <div class="form-group">
-                                                                    <button id="submitMacro" type="submit"
+                                                                    <button id="submitMacro"
                                                                             class="btn btn-primary">Mostra Risultati
                                                                     </button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </form>
+                                                    <!--</form>-->
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <!--Da definire -->
@@ -373,10 +378,11 @@
                                             <div class="section">
                                                 <div class="section-title">Micro Categorie</div>
                                                 <div class="section-body">
-                                                    <form method="post" action=TabAnnunci.php" name="microInfoDate">
+                                                   <!-- <form method="post" action=tabAnnunci" name="microInfoDate">-->
                                                         <div class="row">
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <select id="selectMicro" style="width:100%" class="select2">
+                                                                <select id="selectMicro" style="width:100%"
+                                                                        class="select2">
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -395,12 +401,12 @@
                                                         <div class="row">
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                 <div class="form-group">
-                                                                    <button id="submitMicro" type="submit"
+                                                                    <button id="submitMicro"
                                                                             class="btn btn-primary">Mostra Risultati
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                    </form>
+                                                   <!-- </form>-->
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
@@ -419,9 +425,9 @@
                             </div>
                         </div>
                     </div><!--Fine tab2-->
-                    <div role="tabpanel" class="tab-pane" id="tab3"><!--Inizio tab3-->
-                        <div class="row"><!--tabella macro-->
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div role="tabpanel" class="tab-pane" id="tab3">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="section">
                                     <div class="section-title">Macro Categorie Preferite Dagli Utenti</div>
                                     <div class="section-body">
@@ -433,41 +439,23 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="section">
+                                    <div class="section-title">Macro Categorie Offerte Degli Annunci</div>
+                                    <div class="section-body">
+                                        <table id= "macroAnnunci" class="table">
+                                            <thead>
                                             <tr>
-                                                <th scope="row">1</th>
-                                                <td><a href="#">
-                                                        <button type="button" class="btn btn-info">Macro Categoria
-                                                        </button>
-                                                    </a>
-                                                </td>
+                                                <th>#</th>
+                                                <th>Macro Categoria</th>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>
-                                                    <a href="#">
-                                                        <button type="button" class="btn btn-info">Macro Categoria
-                                                        </button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>
-                                                    <a href="#">
-                                                        <button type="button" class="btn btn-info">Macro Categoria
-                                                        </button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">4</th>
-                                                <td>
-                                                    <a href="#">
-                                                        <button type="button" class="btn btn-info">Macro Categoria
-                                                        </button>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            </thead>
+                                            <tbody>
                                             </tbody>
                                         </table>
                                     </div>
@@ -475,15 +463,12 @@
                             </div>
                         </div><!--fine row tabella macro-->
                         <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12col-xs-12">
                                 <div class="section">
-                                    <div class="section-title">Micro Categorie di Nome Macro Categoria &nbsp; &nbsp;
-                                        &nbsp;
-                                        <span><a href="#"><i class="fa fa-level-up"></i>Torna alle Macro Categorie</a></span>
-                                    </div>
+                                    <div class="section-title"><p id="labelMacro"></p></div>
                                     <div class="section-body">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <table  id="microUtenti" class="table" cellspacing="0" width="100%">
+                                            <table  id="micro" class="table" cellspacing="0" width="100%">
                                             <thead>
                                             <tr>
                                                 <th>#</th>
@@ -491,22 +476,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Lorem</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Lorem</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Lorem</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">4</th>
-                                                <td>Lorem</td>
-                                            </tr>
+
                                             </tbody>
                                             </table>
                                         </div>
@@ -535,7 +505,8 @@
                                 </div>
                             </div>
                         </div><!--Fine row tabella micro-->
-                    </div><!--Fine tab3-->
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -554,56 +525,58 @@
     $("#tab1").ready(function () {
         $.ajax({
             type: "POST",
-            url: "control/TabGenerale.php",
+            url: "tabGenerale",
             dataType: "json",
-            data: {},
-            success: drawGeneralChart(response)
+            data: {option:"graphics"},
+            success: function(response){
+                var dates = $.map(response, function(value,key){return key});
+                var values = $.map(response, function(value, key){return value});
+                drawGeneralChart(dates,values);
+            }
         });
     });
 
-    //caricamento TabGenerale nell'eventualità che si ritorni sulla pagina
-    $("#tab1").click(function () {
+    $("#tab1").ready(function () {
         $.ajax({
             type: "POST",
-            url: "control/TabGenerale.php",
+            url:"tabGenerale",
             dataType: "json",
-            data: {},
-            success: drawGeneralChart(response)
-        });
+            data:  {option:"adsNumber"},
+            success: function(response){
+                $("#adsNumber").text(" "+response);
+            }
+        })
     });
 
-    //caricamento dinamico ComboBox Macro Categoria
-    $("#selectMacro").change(function () {
+///////////////////////////////////////////////////////////////// TAB 2 ///////////////////////////////////////////////
+
+    $("#tab2").ready(function () {
         $.ajax({
             type: "POST",
-            url: "control/TabAnnunci.php",
+            url: "tabAnnunci",
             dataType: "json",
-            data: "selectMacro",
+            data: {option:"selectMacro"},
             success: function (response) {
                 var arrayMacroElements = $.map(response, function (el) {
                     return el;
                 });
-                appendMacroElements(arrayMacroElements);
-
-
+                appendMacroElements(arrayMacroElements)
             }
         })
     });
 
     function appendMacroElements(arrayMacroElements) {
-        $.each(arrayMacroElements, function(el){
-            $("#selectMacro").append(new Option(el, el))
-        });
-
+      $.each(arrayMacroElements, function (i,item){
+          $("#selectMacro").append($("<option>").text(item).attr("value",item));
+      });
     }
 
-    //caricamento dinamico ComboBox Micro Categoria
-    $("#selectMicro").change(function () {
+    $("#tab2").ready(function () {
         $.ajax({
             type: "POST",
-            url: "control/TabAnnunci.php",
+            url: "tabAnnunci",
             dataType: "json",
-            data: "selectMicro",
+            data: {option:"selectMicro"},
             success: function (response) {
                 var arrayMicroElements = $.map(response, function (el) {
                     return el;
@@ -614,107 +587,167 @@
     });
 
     function appendMicroElements(arrayMicroElements) {
-        $.each(arrayMicroElements, function (el) {
-            $("#selectMicro").append(new Option(el, el))
+        $.each(arrayMicroElements, function (i,item){
+            $("#selectMicro").append($("<option>").text(item).attr("value",item));
         });
     }
-        //caricamento Macro
-        $("#submitMacro").click(function () {
 
-            var fromdatemacrovalue = $("#fromdatemacro").val();
-            var atdatemacrovalue = $("#atdatemacro").val();
-            var dataJSON = JSON.stringify({"fromdatemacro": fromdatemacrovalue, "atdatemacro": atdatemacrovalue});
+    $("#submitMacro").click(function () {
 
-            $.ajax({
-                type: "POST",
-                url: "control/TabAnnunci.php",
-                dataType: "json",
-                data: dataJSON,
-                success: drawMacroDateChart(response)
-            });
-        });
+        var from = $("#fromdatemacro").val();
+        var at = $("#atdatemacro").val();
 
-        //caricamento Micro
-        $("#submitMicro").click(function () {
-
-            var fromdatemaicrovalue = $("#fromdatemicro").val();
-            var atdatemicrovalue = $("#atdatemicro").val();
-            var dataJSON = JSON.stringify({"fromdatemicro": fromdatemaicrovalue, "atdatemicro": atdatemicrovalue});
-
-            $.ajax({
-                type: "POST",
-                url: "control/TabAnnunci.php", //controller della pagina
-                dataType: "json",
-                data: dataJSON,
-                success: drawMicroDateChart(response)
-            });
-        });
-
-        //check date macro
-        $("#fromdatemacro, #atdatemacro").change(function () {
-
-            //funzione da attivare ogni qualvolta si seleziona una data.
-            var fromDate = $("#fromdatemacro").val();
-            var atDate = $("#atdatemacro").val();
-
-            if (fromDate != "" && atDate != "") {
-                if (Date.parse(fromDate) > Date.parse(atDate)) {
-                    $("#submitMacro").attr("disabled", "true");
-                } else {
-                    $("#submitMacro").removeAttr("disabled");
-                }
+        $.ajax({
+            type: "POST",
+            url: "tabAnnunci",
+            dataType: "json",
+            data: {fromdatemacro:from, atdatemacro:at},
+            success: function(response){
+                var dates = $.map(response, function(value,key){return key});
+                var values = $.map(response, function(value, key){return value});
+                drawMacroDateChart(dates,values);
             }
         });
+    });
 
-        //check date micro
-        $("#fromdatemicro, #atdatemicro").change(function () {
 
-            //funzione da attivare ogni qualvolta si seleziona una data.
-            var fromDate = $("#fromdatemicro").val();
-            var atDate = $("#atdatemicro").val();
+    $("#submitMicro").click(function () {
 
-            if (fromDate != "" && atDate != "") {
+        var from = $("#fromdatemicro").val();
+        var at = $("#atdatemicro").val();
 
-                if (Date.parse(fromDate) > Date.parse(atDate)) {
-                    $("#submitMicro").attr("disabled", "true");
-                } else {
-                    $("#submitMicro").removeAttr("disabled");
-                }
+        $.ajax({
+            type: "POST",
+            url: "tabAnnunci", //controller della pagina
+            dataType: "json",
+            data: {fromdatemicro:from, atdatemicro:at},
+            success: function(response){
+                    var dates = $.map(response, function(value,key){return key});
+                    var values = $.map(response, function(value, key){return value});
+                drawMicroDateChart(dates,values);
             }
         });
+    });
 
 
-        //caricamento macro in tabMacro preferite dall'utenti
-        $("#tab3").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "control/TabMacro.php",
-                dataType: "json",
-                data: {"option:macrocategorie"},
-                success: function (response) {
-                    var arrayMacro = $.map(response, function (el) {
-                        return el;
-                    });
+    $("#fromdatemacro,#atdatemacro").change(function () {
 
-                    appendMacroToTable(arrayMacro);
-                }
-            });
+        //funzione da attivare ogni qualvolta si seleziona una data.
+        var fromDate = $("#fromdatemacro").val();
+        var atDate = $("#atdatemacro").val();
+
+        if (fromDate != "" && atDate != "") {
+            if (Date.parse(fromDate) > Date.parse(atDate)) {
+                $("#submitMacro").attr("disabled", "true");
+            } else {
+                $("#submitMacro").removeAttr("disabled");
+            }
+        }
+    });
+
+
+    $("#fromdatemicro,#atdatemicro").change(function () {
+
+        //funzione da attivare ogni qualvolta si seleziona una data.
+        var fromDate = $("#fromdatemicro").val();
+        var atDate = $("#atdatemicro").val();
+
+        if (fromDate != "" && atDate != "" ) {
+
+            if (Date.parse(fromDate) > Date.parse(atDate)) {
+                $("#submitMicro").attr("disabled", "true");
+            } else {
+                $("#submitMicro").removeAttr("disabled");
+            }
+        }
+
+    });
+/////////////////////////////////////////////TAB 3////////////////////////////////////////////////////////
+
+    $("#tab3").ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "tabUtenti",
+            dataType: "json",
+            data: {macrocategorie:"utenti"},
+            success: function (response) {
+                var arrayMacroUtenti = $.map(response, function (el) {
+                    return el;
+                });
+                appendMacroUtentiToTable(arrayMacroUtenti);
+            }
         });
+    });
 
-    function appendMacroToTable(arrayMacro) {
-        $.each(arrayMacro, function (el) {
+    function appendMacroUtentiToTable(arrayMacroUtenti) {
+        $.each(arrayMacroUtenti, function (i,el) {
             $("#macroUtenti").find("tbody")
                 .append($("<tr>")
-                    .append($("<th>").attr("scope", "row")
-                        .append($("<td>")
-                            .append($("<a>").attr("href", "idMacro") //id macro è da prendere dai valori restituiti
-                                .append($("<button>")
-                                    .attr("type", "button")
-                                    .attr("class", "btn btn-info")
-                                    .attr("onclick", "bufferingMicroTable(" + el + ")") //da verificare
-                                    .attr("text", el)
-                                )
-                            )
+                    .append($("<th></th>")
+                        .attr("scope", "row")
+                        .text(i))
+                    .append($("<td>")
+                        .append($("<button>")
+                            .attr("id",el)
+                            .attr("type", "button")
+                            .attr("class", "btn btn-info")
+                            .attr("onclick", "bufferingMicroUtentiTable(this)")
+                            .text(el)
+                        )
+                    )
+                );
+        });
+
+    }
+
+
+    function bufferingMicroUtentiTable(buttonSelected) {
+
+        var nameButton = buttonSelected.id;
+        $.ajax({
+            type: "POST",
+            url: "tabUtenti",
+            dataType: "json",
+            data:{macroCategoriaUtenti: nameButton},
+            success: function (response) {
+                var arrayMicro = $.map(response, function (el) {
+                    return el;
+                });
+
+                appendMicroToTable(nameButton, arrayMicro);
+            }
+        });
+    }
+
+    $("#tab3").ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "tabUtenti",
+            dataType: "json",
+            data: {macrocategorie:"annunci"},
+            success: function (response) {
+                var arrayMacroAnnunci = $.map(response, function (el) {
+                    return el;
+                });
+                appendMacroAnnunciToTable(arrayMacroAnnunci);
+            }
+        });
+    });
+
+    function appendMacroAnnunciToTable(arrayMacroAnnunci) {
+        $.each(arrayMacroAnnunci, function (i,el) {
+            $("#macroAnnunci").find("tbody")
+                .append($("<tr>")
+                    .append($("<th></th>")
+                        .attr("scope", "row")
+                        .text(i))
+                    .append($("<td>")
+                        .append($("<button>")
+                            .attr("id",el)
+                            .attr("type", "button")
+                            .attr("class", "btn btn-info")
+                            .attr("onclick", "bufferingMicroAnnunciTable(this)") //da verificare
+                            .text(el)
                         )
                     )
                 );
@@ -722,62 +755,58 @@
     }
 
 
-    //caricamento micro categorie riferite alla macro categorie selezionata
-    function bufferingMicroTable(nameButton) {
-        var dataJSON = JSON.stringify({"option": "microcategorie", "macrocategoria": nameButton});
-
+    function bufferingMicroAnnunciTable(button){
+        var nameButton = button.id;
         $.ajax({
             type: "POST",
-            url: "control/TabMacro.php",
+            url: "tabUtenti",
             dataType: "json",
-            data: dataJSON,
+            data:{macroCategoriaAnnunci: nameButton},
             success: function (response) {
+                console.log(response);
                 var arrayMicro = $.map(response, function (el) {
                     return el;
                 });
 
-                appendMicroToTable(arrayMicro);
+                appendMicroToTable(nameButton,arrayMicro);
             }
         });
     }
 
-    function appendMicroToTable(arrayMicro) {
-        $.each(arrayMicro, function (el) {
-                $("#microUtenti").find("tbody")
-                    .append($("<tr>")
-                        .append($("<th>").attr("scope", "row")
-                            .append($("<td>").attr("text", el)
-                            )
-                        )
-                    );
 
-            });
+    function appendMicroToTable(nameMacro,arrayMicro) {
+       $("#micro tr").remove();
+        $("#labelMacro").text(nameMacro);
+        $.each(arrayMicro, function (i,el) {
+            $("#micro").find("tbody")
+                .append($("<tr>")
+                    .append($("<th></th>").text(i))
+                    .append($("<td>").text(el)
+                    )
+                );
+
+        });
     }
 
 
-    }
+    function drawGeneralChart(dates, values) {
 
-
-
-    function drawGeneralChart(response) {
-
-        //va fatto il parsing di "response" per poter creare il grafico
         var ctxGenerale = document.getElementById("graficoGeneraleAnnunci").getContext("2d");
 
         var generaleData = {
-            labels: [],
+            labels: dates,
             datasets: [
                 {
-                    label: ["Numero annunci pubblicati oggi"],
-                    data: [], //numero di annunci
-                    backgroundColor: "rgba(255, 99, 132, 0.2)",
-                    borderColor: "rgba(255,99,132,1)",
+                    label:"Generale",
+                    data: values, //numero di annunci
+                    backgroundColor: "rgba(0, 255, 0, 0.3)",
+                    borderColor: "rgba(0, 255, 0, 0.3)",
                     borderWidth: 1
                 }
             ]
         };
 
-        var generaleChart = new Chart.Bar(ctxGenerale, {
+        var generaleChart = new Chart.Line(ctxGenerale, {
             data: generaleData,
             options: {
                 pointHitRadius: 3,
@@ -794,19 +823,18 @@
     }
 
 
-    function drawMacroDateChart(response) {
+    function drawMacroDateChart(dates, values) {
 
-        //va fatto il parsing di "response" per poter creare il grafico
-        var ctxMacro = document.getElementById("macroCateogiraGrafico").getContext("2d");
+        var ctxMacro = document.getElementById("macroCategoriaGrafico").getContext("2d");
 
         var macroData = {
-            labels: [], //date
+            labels: dates,
             datasets: [
                 {
-                    label: "", //nome macro
-                    data: [], //dati macro
-                    backgroundColor: "rgba(255, 99, 132, 0.2)",
-                    borderColor: "rgba(255,99,132,1)",
+                    label:$("#selectMacro").val(),
+                    data: values,
+                    backgroundColor: "rgba(255, 0, 0, 0.3)",
+                    borderColor: "rgba(255, 0, 0, 0.3)",
                     borderWidth: 1
                 }
             ]
@@ -829,19 +857,18 @@
     }
 
 
-    function drawMicroDateChart(response) {
+    function drawMicroDateChart(dates,values) {
 
-        //va fatto il parsing di "response" per poter creare il grafico
         var ctxMicro = document.getElementById("microCategoriaGrafico").getContext("2d");
 
         var microData = {
-            labels: [], //date
+            labels: dates,
             datasets: [
                 {
-                    label: "", //nome micro
-                    data: [], //dati micro
-                    backgroundColor: "rgba(255, 99, 132, 0.2)",
-                    borderColor: "rgba(255,99,132,1)",
+                    label: $("#selectMicro").val(),
+                    data: values, //dati micro
+                    backgroundColor: "rgba(0, 0, 255, 0.3)",
+                    borderColor: "rgba(0, 0, 255, 0.3)",
                     borderWidth: 1
                 }
             ]
