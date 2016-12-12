@@ -214,6 +214,12 @@
 										</a>
 									</div>
 									<div class="section">
+                                        <?php
+                                        include_once CONTROL_DIR  .  'UtentiSegnalatiControl.php';
+                                        $s_Obj = $_SESSION['utentiSegnalati'];
+                                        $utentiSegnalati = unserialize($s_Obj);
+                                        foreach ($utentiSegnalati as $utente) {
+                                        ?>
 										<div class="section-body">
 											<div class="media-body">
 												<div class="pull-left">
@@ -241,6 +247,7 @@
 								</div>
 							</div>
 						</div>
+                        <?php } ?>
 						<div class="row">
 							<div class="overlined-row">
 								<div class="media social-post">
