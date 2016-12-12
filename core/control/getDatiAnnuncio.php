@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Angelo
- * Date: 01/12/2016
- * Time: 18:37
+ * Date: 12/12/2016
+ * Time: 09:45
  */
 
 include_once MANAGER_DIR . 'AnnuncioManager.php';
@@ -11,7 +11,7 @@ include_once CONTROL_DIR . "ControlUtils.php";
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
-
+    $id = $_POST["id"];
     $titolo = null;
     $descrizione = null;
     $luogo = null;
@@ -28,14 +28,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo titolo annuncio non settato";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo titolo annuncio non settato");
     }
 
     if (empty($titolo) || !preg_match(Patterns::$NAME_GENERIC, $titolo)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo titolo annuncio contiene caratteri speciali o è vuoto";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo titolo non corretto");
     }
 
@@ -44,14 +44,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo descrizione annuncio non settato";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo descrizione annuncio non settato");
     }
 
     if (empty($descrizione) || !preg_match(Patterns::$NAME_GENERIC, $descrizione)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo descrizione annuncio contiene caratteri speciali o è vuoto";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo descrizione non corretto");
     }
 
@@ -60,14 +60,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo luogo annuncio non settato";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo luogo annuncio non settato");
     }
 
     if (empty($luogo) || !preg_match(Patterns::$NAME_GENERIC, $luogo)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo luogo annuncio contiene caratteri speciali o è vuoto";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo luogo non corretto");
     }
 
@@ -76,14 +76,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo retribuzione annuncio non settato";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo retribuzione annuncio non settato");
     }
 
     if (empty($retribuzione) || !preg_match(Patterns::$REMUNERATION, $retribuzione)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo retribuzione annuncio contiene caratteri di testo o è vuoto";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo retribuzione non corretto");
     }
 
@@ -92,14 +92,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo tipologia annuncio non settato";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo tipologia annuncio non settato");
     }
 
     if (empty($tipologia) || !preg_match(Patterns::$NAME_GENERIC, $tipologia)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo tipologia annuncio contiene caratteri speciali o è vuoto";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo tipologia non corretto");
     }
 
@@ -109,14 +109,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo microcategorie annuncio non settato";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo microcategorie annuncio non settato");
     }
 
     if (empty($listaMicrocategorie)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo listaMicrocategorie annuncio è vuoto";
-        header("Location:" . DOMINIO_SITO . "/modificaAnnuncio");
+        header("Location:" . DOMINIO_SITO . "/inserisciAnnuncio");
         throw new IllegalArgumentException("Campo listaMicrocategorie non corretto");
     }
 
@@ -125,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     $managerAnnuncio = new AnnuncioManager();
 
     try{
-        $managerAnnuncio->updateAnnuncio(15,$idUtente, $data, $titolo, $luogo, $listaMicrocategorie, $retribuzione, $tipologia, $descrizione);
+        $managerAnnuncio->createAnnuncio($idUtente, $data, $titolo, $luogo, $listaMicrocategorie, $retribuzione, $tipologia, $descrizione);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "L'annuncio è in fase di lavorazione";
         header("Location:" . DOMINIO_SITO . "/annuncioProprietario");
@@ -134,11 +134,5 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         $_SESSION['toast-message'] = "Problemi con l'inserimento dell'annuncio";
     }
 
-} else {
-    $idAnnuncio = $_SESSION["id"];
-    $managerAnnuncio = new AnnuncioManager();
-    $ann = $managerAnnuncio->getAnnuncio(15);
-    $_SESSION["annuncio"] = serialize($ann);
-    header("Location: ". DOMINIO_SITO . "/visualizzaModificaAnnuncio");
 }
 ?>

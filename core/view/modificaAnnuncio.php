@@ -7,13 +7,14 @@
  */
 include_once VIEW_DIR . 'header.php';
 include_once MODEL_DIR . 'annuncio.php';
-//include_once MANAGER_DIR .'AnnuncioManager.php';
 
-$id = $_GET["id"];
-if(!isset($id)){
-    header("Location:" . DOMINIO_SITO . "/annuncioProprietario");
+
+?>
+<?php
+if(isset($_SESSION["annuncio"])){
+    $annuncio = unserialize($_SESSION["annuncio"]);
+    unset($_SESSION["annuncio"]);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +29,7 @@ if(!isset($id)){
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\Annuncio\annuncioUtenteLoggato.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -38,16 +40,17 @@ if(!isset($id)){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function caricaDatiAnnuncio(id){
-            var stringa = "modificaAnnuncio";
+        function caricaMacro() {
+            var stringa = "macro";
             $.ajax({
                 type: "GET",
                 url: "asynAnnunci",
-                data: {nome: stringa, idAnnuncio:id},
+                data: {nome: stringa},
                 cache: false,
-                async: false,
+                asyn: false,
                 success: function (data) {
-                    alert(data);
+                    var sel = document.getElementById("macro");
+                    sel.innerHTML = data;
                 },
 
                 error: function () {
@@ -56,13 +59,25 @@ if(!isset($id)){
             });
         }
 
-    <?php
-        if(isset($_SESSION["annuncio"])){
-            $annuncio = unserialize($_SESSION["annuncio"]);
-            unset($_SESSION["annuncio"]);
+        function caricaMicro(){
+            var stringa = "micro";
+            var index = document.getElementById("macro").options[document.getElementById("macro").selectedIndex].value;
+            $.ajax({
+                type: "GET",
+                url: "asynAnnunci",
+                data: {nome:stringa,idMacro:index},
+                cache: false,
+
+                success: function (data){
+                    var sel = document.getElementById("micro");
+                    sel.innerHTML = data;
+                }
+            });
         }
-    ?>
+
+
     </script>
+
 </head>
 
 <style>
@@ -114,7 +129,7 @@ if(!isset($id)){
 </style>
 
 
-<body onload="caricaDatiAnnuncio(<?php echo $id ?>)">
+<body onload="caricaMacro()">
 <div class="app app-default">
 
     <aside class="app-sidebar" id="sidebar">
@@ -213,9 +228,8 @@ if(!isset($id)){
     <div class="col-md-12 col-sm-12 app-container">
 
         <div class="row" style="margin-right: 20%;">
-
+            <form method="POST" action="modificaAnnuncio">
             <div class="col-md-12">
-
                 <div class="card" style="width auto;">
 
                     <div class="card-header">Modifica Annuncio</div>
@@ -228,26 +242,21 @@ if(!isset($id)){
                                 <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1">
                                          <i class="fa fa-certificate" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" placeholder=<?php echo $annuncio->getTitolo() ?> aria-describedby="basic-addon1" value="">
+                                    <input type="text" name ="titolo" placeholder="<?php echo $annuncio->getTitolo(); ?>" class="form-control" aria-describedby="basic-addon1" value="">
                                 </div>
-                                <textarea name="name" rows="3" class="form-control" placeholder=<?php echo $annuncio->getDescrizione() ?>></textarea>
-                                <input type="text" name="luogo" class="form-control" placeholder="<?php echo $annuncio->getLuogo() ?>" aria-describedby="basic-addon1" value="">
+                                <textarea name="descrizione" placeholder="<?php echo $annuncio->getDescrizione(); ?>" rows="3" class="form-control" ></textarea>
+                                <input type="text" name="luogo" class="form-control" aria-describedby="basic-addon1" value="">
 
                             </div>
 
                             <div class="col-md-6">
 
                                 <select id="macro" onchange="caricaMicro()" name="macrocategorie">
-                                    <option>I love Steve Jobs</option>
-                                    <option>PHP is awesome</option>
-                                    <option>I'm a Developer</option>
+                                    <option>Seleziona la macro categoria</option>
                                 </select>
 
                                 <select id="micro" name="microcategorie" style="margin-top: 3%">
-                                    <option selected="selected"></option>
-                                    <option>I love Steve Jobs</option>
-                                    <option>PHP is awesome</option>
-                                    <option>I'm a Developer</option>
+                                    <option selected="selected">Seleziona prima la macro</option>
                                 </select>
 
 
@@ -255,15 +264,15 @@ if(!isset($id)){
                                 <div class="input-group" style="margin-top: 3%">
                                     <span class="input-group-addon" id="basic-addon1">
                                          <i class="fa fa-money" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" placeholder=<?php echo $annuncio->getRetribuzione() ?> aria-describedby="basic-addon1" value="">
+                                    <input type="text" name="retribuzione" class="form-control" value="">
                                 </div>
                                 <div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="radio2" id="radio5" value="option1" <?php if($annuncio->getTipologia()=="domanda") echo checked; ?>>
+                                        <input type="radio" name="tipologia" id="radio5" value="domanda">
                                         <label for="radio5">Domanda</label>
                                     </div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="radio2" id="radio6" value="option2" <?php if($annuncio->getTipologia()=="offerta") echo checked; ?>>
+                                        <input type="radio" name="tipologia" id="radio6" value="offerta">
                                         <label for="radio6">Offerta</label>
                                     </div>
                                 </div>
@@ -282,7 +291,7 @@ if(!isset($id)){
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                                    <button type="button" class="btn btn-sm btn-success">Conferma</button>
+                                                    <button type="submit" class="btn btn-sm btn-success">Conferma</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -298,13 +307,14 @@ if(!isset($id)){
                 </div>
 
             </div>
-
+            </form>
         </div>
 
 
 
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
         <script type="text/javascript">
             function toggleMe(a){
                 var e=document.getElementById(a);
@@ -356,6 +366,18 @@ if(!isset($id)){
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+        <?php
+
+        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+            ?>
+            <script>
+                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+            </script>
+            <?php
+            unset($_SESSION['toast-type']);
+            unset($_SESSION['toast-message']);
+        }
+        ?>
 </body>
 
 </html>

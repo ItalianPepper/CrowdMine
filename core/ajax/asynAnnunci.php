@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
             $array[1] = new MacroCategoria(2,"Economia");
             $array[2] = new MacroCategoria(3,"Finanza");
 
-            $toReturn = "<option value=0 selected>seleziona</option>";
+            $toReturn = "<option value=0 selected>Seleziona la macro categoria</option>";
             foreach ($array as $a){
                 $toReturn = $toReturn . "<option value=".$a->getId().">" . $a->getNome()."</option>";
             }

@@ -11,7 +11,7 @@ $manager = new AnnuncioManager(); /* Declaration and initialization a manager va
 $dataAggiuntaAiPreferiti = new DateTime();
 $data = $dataAggiuntaAiPreferiti->format("Y-m-d H:i:s");
 try{
-    $manager->addToFavorites($idAnnuncio,$idUtente, $data);
+    $manager->addToFavorites(15,1, $data);
     $_SESSION['toast-type'] = "success";
     $_SESSION['toast-message'] = "L'annuncio è stato aggiunto ai preferiti";
     header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");

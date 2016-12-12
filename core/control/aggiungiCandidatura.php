@@ -1,6 +1,5 @@
 <?php
 
-echo "Aggiunta candidatura: ";
 echo $message = $_POST['descrizione'];
 
 $manager = new AnnuncioManager(); /* Declaration and initialization a manager variable */
