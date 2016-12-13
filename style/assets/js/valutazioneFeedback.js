@@ -1,8 +1,8 @@
 /**
  * Created by LongSky on 13/12/2016.
  */
-
 function deleteFeedback(id){
+    clearjQueryCache();
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
@@ -11,41 +11,53 @@ function deleteFeedback(id){
         async: true,
         success: function (data) {
             toastr[data["toastType"]](data["toastMessage"]);
-            divToDelete = $("#id");
+            divToDelete = $("#"+id+"");
             destination = $("#feedback-list-destination");
-            destination.removeChild(divToDelete);
+            divToDelete.remove();
+        },
+        error: function(data){
+            toastr[data["toastType"]](data["toastMessage"]);
         }
     });
 }
 
 function confirmFeedback(id){
+    clearjQueryCache();
+    console.log("evento catturato");
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
-        data: {'id': id, 'stato':"attivo"},
+        data: {'id': id ,'stato':"attivo"},
         dataType: 'json',
         async: true,
         success: function (data) {
             toastr[data["toastType"]](data["toastMessage"]);
-            divToDelete = $("#id");
+            divToDelete = $("#"+id+"");
             destination = $("#feedback-list-destination");
-            destination.removeChild(divToDelete);
+            divToDelete.remove();
+        },
+        error: function(data){
+            toastr[data["toastType"]](data["toastMessage"]);
         }
     });
 }
 
 function sendFeedbackToAdmin(id){
+    clearjQueryCache();
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
-        data: {'id': id, 'stato':"admin"},
+        data: {'id': id, 'stato':"amministratore"},
         dataType: 'json',
         async: true,
         success: function (data) {
             toastr[data["toastType"]](data["toastMessage"]);
-            divToDelete = $("#id");
+            divToDelete = $("#"+id+"");
             destination = $("#feedback-list-destination");
-            destination.removeChild(divToDelete);
+            divToDelete.remove();
+        },
+        error: function(data){
+            toastr[data["toastType"]](data["toastMessage"]);
         }
     });
 }

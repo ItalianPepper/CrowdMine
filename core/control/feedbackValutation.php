@@ -16,6 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             'toastType' => "success",
             'toastMessage' => "Feedback risolto con successo"
         );
+        echo json_encode($return);
     }
     else{
         $return =array(

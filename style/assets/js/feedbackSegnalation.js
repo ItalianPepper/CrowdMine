@@ -12,9 +12,9 @@ function segnalaFeedback(feedbackID) {
             dataType: 'json',
             async: true,
             success: function (data) {
-
+                console.log(data);
                 toastr[data["toastType"]](data["toastMessage"]);
-
+                console.log("dopo toast err");
             }
 
         })

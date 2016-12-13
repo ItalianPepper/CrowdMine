@@ -963,6 +963,8 @@
                     <script type="text/javascript"
                             src="<?php echo STYLE_DIR; ?>assets\js\feedbackSegnalation.js"></script>
 
+                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+
                     <?php
 
                     if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
