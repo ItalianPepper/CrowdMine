@@ -1,15 +1,20 @@
 <?php
+include_once MANAGER_DIR ."/AnnuncioManager";
+$managerAnnuncio = new AnnuncioManager(); /* Declaration and initialization a manager variable */
+//$idAnnuncio = $_POST["idAnnuncio"]; /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to annuncio's info, given from session */
+$idAnnuncio = 15;
+try{
+    $managerAnnuncio->reportAnnuncio($idAnnuncio);
+    $_SESSION['toast-type'] = "success";
+    $_SESSION['toast-message'] = "L'annuncio è stato segnalato";
+    header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");
 
-echo "Annuncio Segnalato: ";
-echo $message = $_POST['descrizione'];
+} catch (ApplicationException $a){
+    $_SESSION['toast-type'] = "error";
+    $_SESSION['toast-message'] = "Problemi con la segnalazione";
+    header("Location: " . DOMINIO_SITO ."/annuncioUtenteLoggato");
+}
 
-$manager = new AnnuncioManager(); /* Declaration and initialization a manager variable */
-
-$utente = unserialize($_SESSION['utente']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to user's info, given from session*/
-$idUtente = $utente->getId(); /* Declaration and initialization a user variable contain the user id */
-$idAnnuncio = unserialize($_SESSION['idAnnuncio']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to annuncio's info, given from session */
-
-//$manager->reportAnnuncio($idAnnuncio, $idUtente, $message);
 
 
 ?>

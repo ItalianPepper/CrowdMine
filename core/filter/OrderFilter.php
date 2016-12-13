@@ -10,18 +10,18 @@
 include_once "Filter.php";
 
 /**
- * OrderByDateFilter
- * NOTE: Always call as last Filter!
+ * OrderByDateFilter abstract class modelling filters for orderby statements
+ * NOTE: Always call after other Filters!
  */
 class OrderType{
     const DESC = "DESC";
-    const CRESC = "CRESC";
+    const ASC = "ASC";
 }
 
 /**
  * @param $orderType
  */
-abstract class OrderFilter
+abstract class OrderFilter extends Filter
 {
     public function setFilter(&$query){
         $query.=" ORDER BY ".$this->filterString;

@@ -183,6 +183,9 @@ try {
             case 'visualizzaAnnunciProprietari';
                 include_once VIEW_DIR. "annuncioProprietario.php";
                 break;
+            case 'visualizzaAnnunciPreferiti';
+                include_once VIEW_DIR. "annunciPreferiti.php";
+                break;
             case 'rimuoviCandidatura';
                 include_once CONTROL_DIR. "rimuoviCandidatura.php";
                 break;
@@ -214,7 +217,7 @@ try {
                 include_once CONTROL_DIR . "ricercaAnnuncio.php";
                 break;
             case 'annunciPreferiti';
-                include_once VIEW_DIR . "annunciPreferiti.php";
+                include_once CONTROL_DIR . "visualizzaPreferiti.php";
                 break;
             case 'formRicercaAnnunci';
                 include_once VIEW_DIR . "ricercaAnnuncio.php";
