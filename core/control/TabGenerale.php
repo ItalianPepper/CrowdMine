@@ -1,10 +1,6 @@
 <?php
 
-/** a) Controllo sugli accessi con un oggetto session (da discutere)
- *  b) metodi dei manager (da discutere)
- */
-/*
-$utente = unserialize($_SESSION["user"]); //da rivedere
+/*$utente = unserialize($_SESSION["user"]); //da rivedere
 $permission = $utente->getTipologia();*/
 
 //if ($permission == "admin") {}

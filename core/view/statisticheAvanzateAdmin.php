@@ -307,8 +307,7 @@
                                     <div class="section">
                                         <div class="section-title">Generale</div>
                                         <div class="section-body">
-                                            <!--Da definire-->
-                                            <div class="container-canvas">
+                                            <div>
                                                 <canvas id="graficoGeneraleAnnunci"/>
                                             </div>
                                             <br>
@@ -319,16 +318,15 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!--Fine tab1-->
-                        <div role="tabpanel" class="tab-pane" id="tab2"><!--Inizio tab2-->
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab2">
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><!--Macro Categorie-->
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="section">
                                                 <div class="section-title">Macro Categorie</div>
                                                 <div class="section-body">
-                                                   <!-- <form method="post" action="tabAnnunci" name="macroInfoDate"><!--action da cambiare-->
                                                         <div class="row">
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                 <select id="selectMacro" style="width:100%"
@@ -357,28 +355,24 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    <!--</form>-->
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <!--Da definire -->
-                                                            <div class="container-canvas">
+                                                            <div>
                                                                 <canvas id="macroCategoriaGrafico"/>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div><!--Fine Macro Categorie-->
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> <!--Micro Categorie-->
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="section">
                                                 <div class="section-title">Micro Categorie</div>
                                                 <div class="section-body">
-                                                   <!-- <form method="post" action=tabAnnunci" name="microInfoDate">-->
                                                         <div class="row">
                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                 <select id="selectMicro" style="width:100%"
@@ -406,25 +400,21 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                   <!-- </form>-->
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                                            <!-- classe da Da definire -->
-                                                            <div class="container-canvas">
+                                                            <div>
                                                                 <canvas id="microCategoriaGrafico"/>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div><!--Fine Micro Categorie-->
+                                </div>
                             </div>
                         </div>
-                    </div><!--Fine tab2-->
+                    </div>
                     <div role="tabpanel" class="tab-pane" id="tab3">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -461,28 +451,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!--fine row tabella macro-->
+                        </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12col-xs-12">
                                 <div class="section">
                                     <div class="section-title"><p id="labelMacro"></p></div>
                                     <div class="section-body">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <table  id="micro" class="table" cellspacing="0" width="100%">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Micro Categoria</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                            </table>
+                                            <div id="container-micro">
+                                            </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <nav>
-                                                <ul class="pagination">
+                                            <nav id="pagination">
+                                               <!-- <ul class="pagination">
                                                     <li>
                                                         <a href="#" aria-label="Previous">
                                                             <span aria-hidden="true">&laquo;</span>
@@ -498,14 +479,13 @@
                                                             <span aria-hidden="true">&raquo;</span>
                                                         </a>
                                                     </li>
-                                                </ul>
+                                                </ul>-->
                                             </nav>
                                         </div>
                                     </div>
-                                </div>
+                               </div>
                             </div>
-                        </div><!--Fine row tabella micro-->
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -549,6 +529,11 @@
     });
 
 ///////////////////////////////////////////////////////////////// TAB 2 ///////////////////////////////////////////////
+    $("#tab2").ready(function(){
+        $("#submitMacro").attr("disabled", "true");
+        $("#submitMicro").attr("disabled", "true");
+    });
+
 
     $("#tab2").ready(function () {
         $.ajax({
@@ -685,13 +670,13 @@
                 .append($("<tr>")
                     .append($("<th></th>")
                         .attr("scope", "row")
-                        .text(i))
+                        .text(i+1))
                     .append($("<td>")
                         .append($("<button>")
                             .attr("id",el)
                             .attr("type", "button")
                             .attr("class", "btn btn-info")
-                            .attr("onclick", "bufferingMicroUtentiTable(this)")
+                            .attr("onclick", "bufferingMicroUtentiTable(this,1)")
                             .text(el)
                         )
                     )
@@ -700,21 +685,21 @@
 
     }
 
-
-    function bufferingMicroUtentiTable(buttonSelected) {
+    function bufferingMicroUtentiTable(buttonSelected,initialPage) {
 
         var nameButton = buttonSelected.id;
+
         $.ajax({
             type: "POST",
             url: "tabUtenti",
             dataType: "json",
-            data:{macroCategoriaUtenti: nameButton},
+            data:{macroCategoriaUtenti: nameButton,page:initialPage},
             success: function (response) {
                 var arrayMicro = $.map(response, function (el) {
                     return el;
                 });
 
-                appendMicroToTable(nameButton, arrayMicro);
+                appendMicroToTable("Utenti - "+nameButton, arrayMicro);
             }
         });
     }
@@ -740,13 +725,13 @@
                 .append($("<tr>")
                     .append($("<th></th>")
                         .attr("scope", "row")
-                        .text(i))
+                        .text(i+1))
                     .append($("<td>")
                         .append($("<button>")
                             .attr("id",el)
                             .attr("type", "button")
                             .attr("class", "btn btn-info")
-                            .attr("onclick", "bufferingMicroAnnunciTable(this)") //da verificare
+                            .attr("onclick", "bufferingMicroAnnunciTable(this,1)")
                             .text(el)
                         )
                     )
@@ -755,39 +740,49 @@
     }
 
 
-    function bufferingMicroAnnunciTable(button){
-        var nameButton = button.id;
+    function bufferingMicroAnnunciTable(buttonSelected,initialPage){
+        var nameButton = buttonSelected.id;
         $.ajax({
             type: "POST",
             url: "tabUtenti",
             dataType: "json",
-            data:{macroCategoriaAnnunci: nameButton},
+            data:{macroCategoriaAnnunci:nameButton,page:initialPage},
             success: function (response) {
-                console.log(response);
                 var arrayMicro = $.map(response, function (el) {
                     return el;
                 });
-
-                appendMicroToTable(nameButton,arrayMicro);
+                appendMicroToTable("Annunci - "+nameButton,arrayMicro);
             }
         });
     }
 
+    function appendMicroToTable(labelMacro,arrayMicro) {
+        $("#container-micro table").remove();
 
-    function appendMicroToTable(nameMacro,arrayMicro) {
-       $("#micro tr").remove();
-        $("#labelMacro").text(nameMacro);
+        $("#container-micro").append($("<table>")
+                .attr("id", "micro")
+                .attr("class", "datatable table")
+                .attr("cellspacing", "0")
+                .attr("width", "100%")
+            .append($("<thead>"))
+            .append($("<tbody>")));
+
+        $("#labelMacro").text(labelMacro);
+
+        $("#micro").find("thead")
+            .append($("<tr>")
+                .append($("<th></th>").text("#"))
+                .append($("<th></th>").text("Micro Categorie")));
+
         $.each(arrayMicro, function (i,el) {
             $("#micro").find("tbody")
                 .append($("<tr>")
-                    .append($("<th></th>").text(i))
+                    .append($("<th></th>").text(i+1))
                     .append($("<td>").text(el)
                     )
                 );
-
         });
     }
-
 
     function drawGeneralChart(dates, values) {
 
@@ -798,7 +793,7 @@
             datasets: [
                 {
                     label:"Generale",
-                    data: values, //numero di annunci
+                    data: values,
                     backgroundColor: "rgba(0, 255, 0, 0.3)",
                     borderColor: "rgba(0, 255, 0, 0.3)",
                     borderWidth: 1

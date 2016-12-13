@@ -1,7 +1,4 @@
 <?php
-/** a) Controllo sugli accessi con un oggetto session (da discutere)
- *  b) metodi dei manager (da discutere)
- */
 /*include_once MANAGER_DIR ."UtenteManager.php";
 
 $utente = unserialize($_SESSION["user"]); //da rivedere
@@ -30,23 +27,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Content-Type:application/json");
             echo json_encode($resultMacroAnnunci);
         }
-    } else if (isset($_POST["macroCategoriaUtenti"])) {
+
+    } else if (isset($_POST["macroCategoriaUtenti"]) && isset($_POST["page"])) {
 
         //$utenteManager = new UtenteManager();
 
         //$resultMicro = array();
 
         //$resultMicro = $utenteManager->getListTopRatedMicroCategorie($macroCategoriaSelected);
+
         $resultMicroUtenti = stubMicroUtenti();
 
         header("Content-Type:application/json");
         echo json_encode($resultMicroUtenti);
 
-    } else if (isset($_POST["macroCategoriaAnnunci"])) {
+    } else if (isset($_POST["macroCategoriaAnnunci"]) && isset($_POST["page"])) {
 
         $resultMicroAnnunci = stubMicroAnnunci();
         header("Content-Type:application/json");
         echo json_encode($resultMicroAnnunci);
+
+    } else if(isset($_POST["pagination"])){
+
+        if($_POST["pagination"]=="maxpage") {
+
+           $maxPage = stubMaxPage();
+           header("Content-Type:application/json");
+           echo json_encode($maxPage);
+       }
     }
 }
 
@@ -67,5 +75,9 @@ function stubMicroUtenti(){
 function stubMicroAnnunci(){
     $arrayTestUtenti = array("Agricoltura", "Edilizia", "Monachesimo", "Ascetismo");
     return $arrayTestUtenti;
+}
 
+function stubMaxPage(){
+    $testMaxPage = 7;
+    return $testMaxPage;
 }

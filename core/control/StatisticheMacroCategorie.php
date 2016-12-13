@@ -1,9 +1,5 @@
 <?php
 
-/** a) Controllo sugli accessi con un oggetto session (da discutere)
- *  b) metodi dei manager (da discutere)
- */
-
 //include_once MANAGER_DIR . "AnnuncioManager.php";
 
 
@@ -12,20 +8,21 @@ $permission = $utente->getTipologia();
 
 if ($permission == "admin") {}*/
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        //$macroCategoriaManager = new AnnuncioManager();
+    //$macroCategoriaManager = new AnnuncioManager();
 
-       // $result = $macroCategoriaManager->getListMacroCategorie();
+    // $result = $macroCategoriaManager->getListMacroCategorie();
 
-        $result = stubMacroCategorie();
+    $result = stubMacroCategorie();
 
-        header("Content-Type: application/json");
-        echo json_encode($result);
+    header("Content-Type: application/json");
+    echo json_encode($result);
 
 }
 
-function stubMacroCategorie(){
-    $arrayTest = array("Informatica"=>120,"Ristorazione"=>87, "Bancario" =>113);
+function stubMacroCategorie()
+{
+    $arrayTest = array("Informatica" => 120, "Ristorazione" => 87, "Bancario" => 113);
     return $arrayTest;
 }
