@@ -5,6 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+include_once MODEL_DIR."Commento.php";
 
 class Feedback extends Commento
 {

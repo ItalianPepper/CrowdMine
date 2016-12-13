@@ -1,3 +1,14 @@
+<?php
+include_once CONTROL_DIR  .  'UtentiSegnalatiControl.php';
+
+if (isset($_SESSION["utentiSegnalati"])){
+    $utentiSegnalati = unserialize($_SESSION['utentiSegnalati']);
+    unset($_SESSION["utentiSegnalati"]);
+} else {
+    header("Location: " . DOMINIO_SITO . "/visualizzaUtentiSegnalati");
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -210,72 +221,81 @@
 								<div class="media social-post">
 									<div class="media-left">
 										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
+<!--											<img src="<?php /*echo STYLE_DIR; */?>assets\images\profile.png"/>
+-->										</a>
 									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="pull-left">
-														<div class="media-heading">
-															<h4 class="title">Scott White</h4>
-															<h5 class="timeing"> Segnalato dal 12/10/2012</h5>
-														</div>
-												</div>
-												<div class="pull-right" style="margin-top: 1px">
-													<a href="#" data-toggle="tooltip" data-placement="left" title="10 Segnalazioni">
-														<span class="label label-warning"><i class="fa fa-exclamation-triangle"></i> 10 </span>
-													</a>
-												</div>
-												
-												<div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
-													<div class="media-action">
-														<a href="banUtente" class="btn btn-link"> <i class="fa fa-check"></i> Conferma</a>
-														<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-														<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="overlined-row">
-								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
-									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="pull-left">
-													<div class="media-heading">
-														<h4 class="title">Paolo de Filippo</h4>
-														<h5 class="timeing"> Segnalato dal 12/10/2012</h5>
-													</div>
-												</div>
-												<div class="pull-right" style="margin-top: 1px">
-													<a href="#" data-toggle="tooltip" data-placement="left" title="120 Segnalazioni">
-														<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> 120 </span>
-													</a>
-												</div>
-												<div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
-													<div class="media-action">
-														<button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-														<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-														<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                                    <div class="section">
+                                        <?php
+                                        $start = true;
+                                        foreach ($utentiSegnalati as $utente) {
+                                            if ($start){
+                                            $start=false;
+                                            ?>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <div class="media social-post">
+                                                        <div class="media-left">
+                                                            <a href="#">
+                                                                <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                                            </a>
+                                                        </div>
+                                                        <div class="section">
+                                                            <div class="section-body">
+                                                                <div class="media-body">
+                                                                    <div class="pull-left">
+                                                                        <div class="media-heading">
+                                                                            <h4 class="title"><?php echo $utente->getNome() ?></h4>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
+                                                                        <div class="media-action">
+                                                                            <button class="btn btn-link" id="conferma-check"><i class="fa fa-check"></i> Conferma</button>
+                                                                            <button class="btn btn-link" id="elimina-check"><i class="fa fa-close"></i> Elimina</button>
+                                                                            <button class="btn btn-link" id="elimina-check"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                        else {
+                                        ?>
+                                        <div class="row">
+                                            <div class="overlined-row">
+                                                <div class="media social-post">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="section">
+                                                        <div class="section-body">
+                                                            <div class="media-body">
+                                                                <div class="pull-left">
+                                                                    <div class="media-heading">
+                                                                        <h4 class="title"><?php echo $utente->getNome() ?></h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
+                                                                    <div class="media-action">
+                                                                        <button class="btn btn-link" name="conferma-check"><i class="fa fa-check"></i> Conferma</button>
+                                                                        <button class="btn btn-link" id="elimina-check"><i class="fa fa-close"></i> Elimina</button>
+                                                                        <button class="btn btn-link" id="elimina-check"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                        <?php } }  ?>
+
 					</div>
 				</div>
 			</div>
@@ -289,5 +309,18 @@
 		$("#segnalazioni").toggleClass("active");
 		$('[data-toggle="tooltip"]').tooltip(); 
 	</script>
+
+    <script type="text/javascript">
+        document.getElementById("conferma-check").onclick = function () {
+             location.href = "ConfermaSegnalazioneUtenteControl";
+        };
+    </script>
+
+    <script type="text/javascript">
+        document.getElementById("elimina-check").onclick = function () {
+            location.href = "EliminaSegnalazioneUtenteControl";
+        };
+    </script>
+
 </body>
 </html>

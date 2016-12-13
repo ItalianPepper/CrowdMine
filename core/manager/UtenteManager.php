@@ -4,6 +4,8 @@ include_once MODEL_DIR . 'Annuncio.php';
 include_once MODEL_DIR . 'Microcategoria.php';
 include_once MANAGER_DIR."Manager.php";
 include_once MODEL_DIR . 'Macrocategoria.php';
+include_once MANAGER_DIR . 'Manager.php';
+
 /**
  * Created by PhpStorm.
  * User: Andrea Sarto

@@ -8,6 +8,7 @@
  */
 
 include_once MODEL_DIR . 'Feedback.php';
+include_once MANAGER_DIR . 'Manager.php';
 
 /**
  * Class FeedbackManager

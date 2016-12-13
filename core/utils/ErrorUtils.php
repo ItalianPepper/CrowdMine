@@ -34,6 +34,8 @@ class ErrorUtils {
     public static $UTENTE_NON_TROVATO = "Utente non trovato";
     public static $EMAIL_NON_VALIDA = "L'email inserita non è corretta";
     public static $PASS_CORTA = "Lunghezza password non valida";
+    public static $PASS_NON_SETTATA = "La password non è stata settata";
+    public static $PASS_MALFORMATA = "La password non rispetta il format stabilito";
     public static $MATRICOLA_INESISTENTE = "Matricola inesistente";
     public static $NOME_NON_VALIDO = "Nome non valido";
     public static $CONGNOME_NON_VALIDO = "Cognome non valido";

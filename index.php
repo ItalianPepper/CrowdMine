@@ -116,7 +116,7 @@ try {
                 break;
             case 'effettuaRegistrazione':
                 StringUtils::checkPermission("not_logged");
-                include_once CONTROL_DIR . "login-registrazione.php";
+                include_once CONTROL_DIR . "RegisterCM.php";
                 break;
             case 'inserimentoEsperienza':
                 StringUtils::checkPermission("all");
@@ -124,7 +124,7 @@ try {
                 break;
             case 'effettuaLogin':
                 StringUtils::checkPermission("not_logged");
-                include_once CONTROL_DIR . "login-registrazione.php";
+				include_once CONTROL_DIR . "LoginCM.php";
                 break;
             case 'logout':
                 StringUtils::checkPermission("all");
@@ -136,6 +136,9 @@ try {
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
+            case 'feedbackListRetrive':
+            	include_once CONTROL_DIR . "feedbackListRetrive.php";
+            	break;
             case 'cancellaAccount':
                 include_once CONTROL_DIR . "CancellazioneAccount.php";
                 break;
@@ -148,6 +151,22 @@ try {
             case 'cercaAnnunci':
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "CercaAnnunci.php";
+                break;
+            case 'inserisciFeedback':
+                include_once CONTROL_DIR . "inserisciFeedbackControl.php";
+                break;
+            case 'modificaPassword':
+                include_once CONTROL_DIR . "CambiaPasswordControl.php";
+                break;
+            case 'EliminaSegnalazioneUtenteControl':
+                include_once MODEL_DIR . "Utente.php";
+                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
+                include_once CONTROL_DIR . "EliminaSegnalazioneUtenteControl.php";
+                break;
+            case 'ConfermaSegnalazioneUtenteControl':
+                include_once MODEL_DIR . "Utente.php";
+                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
+                include_once CONTROL_DIR . "ConfermaSegnalazioneUtenteControl.php";
                 break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
