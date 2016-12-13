@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base src="<?php echo STYLE_DIR; ?>" />
+    <base src="<?php echo STYLE_DIR; ?>"/>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -499,7 +499,8 @@
                                                                 </div>
                                                                 <div class="section-body __indent">
                                                                     <img src="http://placehold.it/100x100"
-                                                                         class="img-responsive"> <!--Put here use profile image-->
+                                                                         class="img-responsive">
+                                                                    <!--Put here use profile image-->
                                                                 </div>
 
                                                                 <div class="section-title">
@@ -553,10 +554,15 @@
                                                         </div>
                                                         <div class="col-md-7 col-xs-12 simple-row">
                                                             <input name="feedback-name" type="text" class="form-control"
-                                                                   required id="feedback-title"  placeholder="Inserisci il titolo del feedback">
-                                                            <input name="annuncio-id" value="" style="display: none"> <!-- id annuncio -->
-                                                            <input name="user-annuncio-id" value="" style="display: none"> <!--id utente che lascia l'annuncio-->
-                                                            <input name="user-submit-id" value="" style="display: none"><!--id utente che lasci il feedback-->
+                                                                   required id="feedback-title"
+                                                                   placeholder="Inserisci il titolo del feedback">
+                                                            <input name="annuncio-id" value="" style="display: none">
+                                                            <!-- id annuncio -->
+                                                            <input name="user-annuncio-id" value=""
+                                                                   style="display: none">
+                                                            <!--id utente che lascia l'annuncio-->
+                                                            <input name="user-submit-id" value="" style="display: none">
+                                                            <!--id utente che lasci il feedback-->
 
                                                             <textarea name="feedback-textArea" rows="3"
                                                                       class="form-control" required
@@ -581,374 +587,88 @@
                             </div>
                             <!-- out of form -->
                             <div class="row" style="margin-top: 3%" id="feedback-list-destination">
-                                <!-- <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="card-body __loading">
+                                    <div class="loader-container text-center">
+                                        <div class="icon">
+                                            <div class="sk-wave">
+                                                <div class="sk-rect sk-rect1"></div>
+                                                <div class="sk-rect sk-rect2"></div>
+                                                <div class="sk-rect sk-rect3"></div>
+                                                <div class="sk-rect sk-rect4"></div>
+                                                <div class="sk-rect sk-rect5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="title">Caricamento</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Statistiche-->
+                        <div role="tabpanel" class="tab-pane" id="tab4">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-12">
                                     <div class="section">
-                                        <div class="media social-post">
-                                            <div class="media-left">
-                                                <a href="#">
-                                                    <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-                                                </a>
-                                            </div>
-                                            <div class="section">
-                                                <div class="section-body">
-                                                    <div class="media-body">
-                                                        <div class="media-heading">
-                                                            <h4 class="title">Scott White</h4>
-                                                        </div>
-                                                        <div class="rating-content" onclick="return false;">
-                                                            <div class="rating">
-                                                                <input type="radio" id="star5" name="rating0"
-                                                                       value="5"/><label
-                                                                    class="full" for="star5"
-                                                                    title="Awesome - 5 stars"></label>
-                                                                <input type="radio" id="star4half" name="rating0"
-                                                                       value="4.5"/><label
-                                                                    class="half" for="star4half"
-                                                                    title="Pretty good - 4.5 stars"></label>
-                                                                <input type="radio" id="star4" name="rating0"
-                                                                       value="4"/><label
-                                                                    class="full" for="star4"
-                                                                    title="Pretty good - 4 stars"></label>
-                                                                <input type="radio" id="star3half" name="rating0"
-                                                                       value="3.5" checked/><label
-                                                                    class="half" for="star3half"
-                                                                    title="Meh - 3.5 stars"></label>
-                                                                <input type="radio" id="star3" name="rating0"
-                                                                       value="3"/><label
-                                                                    class="full" for="star3"
-                                                                    title="Meh - 3 stars"></label>
-                                                                <input type="radio" id="star2half" name="rating0"
-                                                                       value="2.5"/><label
-                                                                    class="half" for="star2half"
-                                                                    title="Kinda bad - 2.5 stars"></label>
-                                                                <input type="radio" id="star2" name="rating0"
-                                                                       value="2"/><label
-                                                                    class="full" for="star2"
-                                                                    title="Kinda bad - 2 stars"></label>
-                                                                <input type="radio" id="star1half" name="rating0"
-                                                                       value="1.5"/><label
-                                                                    class="half" for="star1half"
-                                                                    title="Meh - 1.5 stars"></label>
-                                                                <input type="radio" id="star1" name="rating0"
-                                                                       value="1"/><label
-                                                                    class="full" for="star1"
-                                                                    title="Sucks big time - 1 star"></label>
-                                                                <input type="radio" id="starhalf" name="rating0"
-                                                                       value="0.5"/><label
-                                                                    class="half" for="starhalf"
-                                                                    title="Sucks big time - 0.5 stars"></label>
-                                                            </div>
-                                                        </div>
-                                                        <h5 style="margin-top: 0px"><b>Feedback Title</b></h5>
-                                                        <div class="media-content">
-                                                            Lorem ipsum dolor sit amet, consectetuer adipiscing
-                                                            elit. Aenean commodo
-                                                            ligula
-                                                            eget dolor. Aenean massa. Cum sociis natoque penatibus
-                                                            et magnis dis
-                                                            parturient
-                                                            montes, nascetur ridiculus mus. Donec quam felis,
-                                                            ultricies nec,
-                                                            pellentesque
-                                                            eu, pretium quis, sem. Nulla consequat massa quis enim.
-                                                            Donec.
-                                                        </div>
-                                                        <div class="media-action">
-                                                            <button class="btn btn-link"><i
-                                                                    class="fa fa-exclamation-circle"></i>
-                                                                Segnala
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="section-title">
+                                            Your user name
                                         </div>
-
-                                        <div class="row" style="margin-top: 3%">
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <div class="section">
-                                                    <div class="media social-post">
-                                                        <div class="media-left">
-                                                            <a href="#">
-                                                                <img
-                                                                    src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-                                                            </a>
-                                                        </div>
-                                                        <div class="section">
-                                                            <div class="section-body">
-                                                                <div class="media-body">
-                                                                    <div class="media-heading">
-                                                                        <h4 class="title">Scott White</h4>
-                                                                    </div>
-                                                                    <div class="rating-content" onclick="return false;">
-                                                                        <div class="rating">
-                                                                            <input type="radio" id="star5"
-                                                                                   name="rating1"
-                                                                                   value="5"/><label
-                                                                                class="full" for="star5"
-                                                                                title="Awesome - 5 stars"></label>
-                                                                            <input type="radio" id="star4half"
-                                                                                   name="rating1"
-                                                                                   value="4.5"/><label
-                                                                                class="half" for="star4half"
-                                                                                title="Pretty good - 4.5 stars"></label>
-                                                                            <input type="radio" id="star4"
-                                                                                   name="rating1"
-                                                                                   value="4"/><label
-                                                                                class="full" for="star4"
-                                                                                title="Pretty good - 4 stars"></label>
-                                                                            <input type="radio" id="star3half"
-                                                                                   name="rating1"
-                                                                                   value="3.5" checked/><label
-                                                                                class="half" for="star3half"
-                                                                                title="Meh - 3.5 stars"></label>
-                                                                            <input type="radio" id="star3"
-                                                                                   name="rating1"
-                                                                                   value="3"/><label
-                                                                                class="full" for="star3"
-                                                                                title="Meh - 3 stars"></label>
-                                                                            <input type="radio" id="star2half"
-                                                                                   name="rating1"
-                                                                                   value="2.5"/><label
-                                                                                class="half" for="star2half"
-                                                                                title="Kinda bad - 2.5 stars"></label>
-                                                                            <input type="radio" id="star2"
-                                                                                   name="rating1"
-                                                                                   value="2"/><label
-                                                                                class="full" for="star2"
-                                                                                title="Kinda bad - 2 stars"></label>
-                                                                            <input type="radio" id="star1half"
-                                                                                   name="rating1"
-                                                                                   value="1.5"/><label
-                                                                                class="half" for="star1half"
-                                                                                title="Meh - 1.5 stars"></label>
-                                                                            <input type="radio" id="star1"
-                                                                                   name="rating1"
-                                                                                   value="1"/><label
-                                                                                class="full" for="star1"
-                                                                                title="Sucks big time - 1 star"></label>
-                                                                            <input type="radio" id="starhalf"
-                                                                                   name="rating1"
-                                                                                   value="0.5"/><label
-                                                                                class="half" for="starhalf"
-                                                                                title="Sucks big time - 0.5 stars"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h5 style="margin-top: 0px"><b>Feedback Title</b>
-                                                                    </h5>
-                                                                    <div class="media-content">
-                                                                        Lorem ipsum dolor sit amet, consectetuer
-                                                                        adipiscing
-                                                                        elit. Aenean commodo
-                                                                        ligula
-                                                                        eget dolor. Aenean massa. Cum sociis natoque
-                                                                        penatibus
-                                                                        et magnis dis
-                                                                        parturient
-                                                                        montes, nascetur ridiculus mus. Donec quam
-                                                                        felis,
-                                                                        ultricies nec,
-                                                                        pellentesque
-                                                                        eu, pretium quis, sem. Nulla consequat massa
-                                                                        quis enim.
-                                                                        Donec.
-                                                                    </div>
-                                                                    <div class="media-action">
-                                                                        <button class="btn btn-link"><i
-                                                                                class="fa fa-exclamation-circle"></i>
-                                                                            Segnala
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="row" style="margin-top: 3%">
-                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            <div class="section">
-                                                                <div class="media social-post">
-                                                                    <div class="media-left">
-                                                                        <a href="#">
-                                                                            <img
-                                                                                src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="section">
-                                                                        <div class="section-body">
-                                                                            <div class="media-body">
-                                                                                <div class="media-heading">
-                                                                                    <h4 class="title">Scott White</h4>
-                                                                                </div>
-                                                                                <div class="rating-content"
-                                                                                     onclick="return false;">
-                                                                                    <div class="rating">
-                                                                                        <input type="radio" id="star5"
-                                                                                               name="rating2"
-                                                                                               value="5"/><label
-                                                                                            class="full" for="star5"
-                                                                                            title="Awesome - 5 stars"></label>
-                                                                                        <input type="radio"
-                                                                                               id="star4half"
-                                                                                               name="rating2"
-                                                                                               value="4.5"/><label
-                                                                                            class="half" for="star4half"
-                                                                                            title="Pretty good - 4.5 stars"></label>
-                                                                                        <input type="radio" id="star4"
-                                                                                               name="rating2"
-                                                                                               value="4"/><label
-                                                                                            class="full" for="star4"
-                                                                                            title="Pretty good - 4 stars"></label>
-                                                                                        <input type="radio"
-                                                                                               id="star3half"
-                                                                                               name="rating2"
-                                                                                               value="3.5"
-                                                                                               checked/><label
-                                                                                            class="half" for="star3half"
-                                                                                            title="Meh - 3.5 stars"></label>
-                                                                                        <input type="radio" id="star3"
-                                                                                               name="rating2"
-                                                                                               value="3"/><label
-                                                                                            class="full" for="star3"
-                                                                                            title="Meh - 3 stars"></label>
-                                                                                        <input type="radio"
-                                                                                               id="star2half"
-                                                                                               name="rating2"
-                                                                                               value="2.5"/><label
-                                                                                            class="half" for="star2half"
-                                                                                            title="Kinda bad - 2.5 stars"></label>
-                                                                                        <input type="radio" id="star2"
-                                                                                               name="rating2"
-                                                                                               value="2"/><label
-                                                                                            class="full" for="star2"
-                                                                                            title="Kinda bad - 2 stars"></label>
-                                                                                        <input type="radio"
-                                                                                               id="star1half"
-                                                                                               name="rating2"
-                                                                                               value="1.5"/><label
-                                                                                            class="half" for="star1half"
-                                                                                            title="Meh - 1.5 stars"></label>
-                                                                                        <input type="radio" id="star1"
-                                                                                               name="rating2"
-                                                                                               value="1"/><label
-                                                                                            class="full" for="star1"
-                                                                                            title="Sucks big time - 1 star"></label>
-                                                                                        <input type="radio"
-                                                                                               id="starhalf"
-                                                                                               name="rating2"
-                                                                                               value="0.5"/><label
-                                                                                            class="half" for="starhalf"
-                                                                                            title="Sucks big time - 0.5 stars"></label>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <h5 style="margin-top: 0px"><b>Feedback
-                                                                                        Title</b></h5>
-                                                                                <div class="media-content">
-                                                                                    Lorem ipsum dolor sit amet,
-                                                                                    consectetuer adipiscing
-                                                                                    elit. Aenean commodo
-                                                                                    ligula
-                                                                                    eget dolor. Aenean massa. Cum sociis
-                                                                                    natoque penatibus
-                                                                                    et magnis dis
-                                                                                    parturient
-                                                                                    montes, nascetur ridiculus mus.
-                                                                                    Donec quam felis,
-                                                                                    ultricies nec,
-                                                                                    pellentesque
-                                                                                    eu, pretium quis, sem. Nulla
-                                                                                    consequat massa quis enim.
-                                                                                    Donec.
-                                                                                </div>
-                                                                                <div class="media-action">
-                                                                                    <button class="btn btn-link"><i
-                                                                                            class="fa fa-exclamation-circle"></i>
-                                                                                        Segnala
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                        <div class="section-body __indent">
+                                            <img src="http://placehold.it/100x100"
+                                                 class="img-responsive">
                                         </div>
                                     </div>
-                                </div>-->
-                            </div>
-                            </div>
-                            <!--Statistiche-->
-                            <div role="tabpanel" class="tab-pane" id="tab4">
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-12">
-                                        <div class="section">
-                                            <div class="section-title">
-                                                Your user name
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="section">
+                                        <div class="section-title">Statistica Feedback Totale</div>
+                                        <div class="section-body">
+                                            <div class="ct-chart-pie ct-perfect-fourth"></div>
+                                            <div class="col-sm-4">
+                                                <ul class="chart-label">
+                                                    <li class="ct-label ct-series-a">Feedback
+                                                        positivi
+                                                    </li>
+                                                    <li class="ct-label ct-series-b">Feedback
+                                                        negativi
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="section-body __indent">
-                                                <img src="http://placehold.it/100x100"
-                                                     class="img-responsive">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                                        <div class="section">
-                                            <div class="section-title">Statistica Feedback Totale</div>
-                                            <div class="section-body">
-                                                <div class="ct-chart-pie ct-perfect-fourth"></div>
-                                                <div class="col-sm-4">
-                                                    <ul class="chart-label">
-                                                        <li class="ct-label ct-series-a">Feedback
-                                                            positivi
-                                                        </li>
-                                                        <li class="ct-label ct-series-b">Feedback
-                                                            negativi
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Micro Categoria</th>
-                                                            <th>Feedback positivi</th>
-                                                            <th>Feedback Negativi</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">3</th>
-                                                            <td>Larry</td>
-                                                            <td>the Bird</td>
-                                                            <td>@twitter</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">4</th>
-                                                            <td>Larry</td>
-                                                            <td>the Bird</td>
-                                                            <td>@twitter</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Micro Categoria</th>
+                                                        <th>Feedback positivi</th>
+                                                        <th>Feedback Negativi</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">1</th>
+                                                        <td>Mark</td>
+                                                        <td>Otto</td>
+                                                        <td>@mdo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">2</th>
+                                                        <td>Jacob</td>
+                                                        <td>Thornton</td>
+                                                        <td>@fat</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">3</th>
+                                                        <td>Larry</td>
+                                                        <td>the Bird</td>
+                                                        <td>@twitter</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">4</th>
+                                                        <td>Larry</td>
+                                                        <td>the Bird</td>
+                                                        <td>@twitter</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -956,35 +676,36 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-                    <script type="text/javascript"
-                            src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
-                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
-                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
-                    <script type="text/javascript"
-                            src="<?php echo STYLE_DIR; ?>assets\js\feedbackSegnalation.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+                <script type="text/javascript"
+                        src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+                <script type="text/javascript"
+                        src="<?php echo STYLE_DIR; ?>assets\js\feedbackSegnalation.js"></script>
 
-                    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
 
-                    <?php
+                <?php
 
-                    if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-                        ?>
-                        <script>
-                            $(document).ready(function () {
-                                "use strict";
-                                $("#feedback-tab").click();
-                                $("#feedback-collapse-panel").click();
-                            });
-                            toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-                        </script>
-                        <?php
-                        unset($_SESSION['toast-type']);
-                        unset($_SESSION['toast-message']);
-                    }
+                if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
                     ?>
+                    <script>
+                        $(document).ready(function () {
+                            "use strict";
+                            $("#feedback-tab").click();
+                            $("#feedback-collapse-panel").click();
+                        });
+                        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+                    </script>
+                    <?php
+                    unset($_SESSION['toast-type']);
+                    unset($_SESSION['toast-message']);
+                }
+                ?>
 
 
 </body>

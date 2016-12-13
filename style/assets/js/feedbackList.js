@@ -14,10 +14,8 @@ $(document).ready(function () {
             dataType: 'json',
             async: true,
             success: function (data) {
-                var destination = $("#feedback-list-destination")
-                console.log(destination);
-
-                console.log(data);
+                var destination = $("#feedback-list-destination");
+                destination.empty();
                 for (var i in data) {
                     var feedbackListObj = [];
                     feedbackListObj.feedbackID = data[i].feedbackID;
@@ -28,12 +26,13 @@ $(document).ready(function () {
                     feedbackListObj.userProfileImage = data[i].userProfileImage;
                     feedbackListObj.feedbackRating = data[i].feedbackRating;
 
-                    destination.append(feedbackRowToString(feedbackListObj, "moderator"));
+                    destination.append(feedbackRowToString(feedbackListObj, "user"));
                     setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
-
-
                 }
 
+            },
+            error: function (data) {
+                toastr[data["toastType"]](data["toastMessage"]);
             }
 
 

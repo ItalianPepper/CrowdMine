@@ -23,13 +23,14 @@
             $feedbackListObjArray = $feedbackManger->getListaFeedback(1);
 
             echo json_encode($feedbackListObjArray);
-          //  echo "ok";
+
 
        } else {
-            $_SESSION['toast-type'] = "error";
-            $_SESSION['toast-message'] = "Errore nel caricamento della lista dei feedback ci scusiamo per il disagio";
-           header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
-            throw new IllegalArgumentException("Errore nel caricamento della lista dei feedback ci scusiamo per il disagio");
+            $return =array(
+                'toastType' => "error",
+                'toastMessage' => "Errore nella lista feedback ci scusiamo per il disagio"
+            );
+            echo json_encode($return);
        }
 
     }
