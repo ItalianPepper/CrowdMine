@@ -171,6 +171,7 @@ class AnnuncioManager
         $query = sprintf(self::$GET_ALL_ANNUNCI);
         FilterUtils::applyFilters($filters, $query);
         $res = Manager::getDB()->query($query);
+        echo $query;
         $annunci = array();
         if ($res) {
             while ($obj = $res->fetch_assoc()) {
@@ -366,6 +367,36 @@ class AnnuncioManager
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
     }
+
+    /**
+     *  Search a comment by the idAnnuncio
+     *
+     * @param string $idAnnuncio id of Annuncio
+     * return array of commments
+     * @throws ApplicationException
+     */
+    public function getCommentsbyId($idAnnuncio) {
+
+        $SEARCH_COMMENT_BY_ID = "SELECT * FROM `commento` WHERE `id_annuncio` = '$idAnnuncio'";
+
+        $query = sprintf($SEARCH_COMMENT_BY_ID);
+        $res = Manager::getDB()->query($query);
+        $commenti = array();
+        if ($res) {
+            while ($obj = $res->fetch_assoc()) {
+                $commento = new Commento($obj['id'], $obj['id_annuncio'], $obj['id_utente'], $obj['corpo'], $obj['data'], $obj['stato']);
+                $commenti[] = $commento;
+            }
+        }
+        return $commenti;
+    }
+
+
+
+
+
+
+
 
 
     /**

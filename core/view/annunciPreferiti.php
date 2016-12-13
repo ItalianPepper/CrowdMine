@@ -6,6 +6,14 @@
  * @since 30/05/16
  */
 include_once VIEW_DIR . 'header.php';
+include_once MODEL_DIR . "/Annuncio.php";
+
+if(isset($_SESSION["listaAnnunciPreferiti"])){
+    $listaAnnunciPreferiti = unserialize($_SESSION["listaAnnunciPreferiti"]);
+    unset($_SESSION["listaAnnunciPreferiti"]);
+} else {
+    header("Location: " . DOMINIO_SITO . "");
+}
 
 ?>
 <!DOCTYPE html>
@@ -176,6 +184,10 @@ include_once VIEW_DIR . 'header.php';
 
     <div class="col-md-12 col-sm-12 app-container">
 
+        <?php
+        for ($i = 0; $i < count($listaAnnunciPreferiti); $i++) {
+
+        ?>
         <div class="row" style="margin-right: 20%; height: auto; margin-bottom: 5%">
 
             <div class="card">
@@ -189,11 +201,11 @@ include_once VIEW_DIR . 'header.php';
                     <div class="col-md-7 annuncioTitle" style="width: 100%;">
 
                         <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
-                            <h1>JetBrains</h1>
+                            <h1>Nome Utente da Array</h1>
                         </div>
 
                         <div class="offerta col-md-12 col-sm-12">
-                            <h1>Offerta Programmatore PHP</h1>
+                            <h1> <?php echo $listaAnnunciPreferiti[$i]->getTitolo(); ?></h1>
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-2 preferites">
@@ -223,14 +235,18 @@ include_once VIEW_DIR . 'header.php';
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">×</span></button>
                                     <h4 class="modal-title">Rimuovere dai preferiti</h4>
                                 </div>
                                 <form action="rimuoviPreferitiControl" method="post">
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                    <button type="submit" class="btn btn-sm btn-danger">Rimuovi</button>
-                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                            Chiudi
+                                        </button>
+                                        <input name="idAnnuncio" style="display:none" value="<?php echo $listaAnnunciPreferiti[$i]->getId(); ?>">
+                                        <button type="submit" class="btn btn-sm btn-danger">Rimuovi</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -240,15 +256,18 @@ include_once VIEW_DIR . 'header.php';
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
                                 <h4 class="modal-title">Conferma candidatura</h4>
                             </div>
-                            <form action="aggiungiPreferitiControl" method="post">
+                            <form action="aggiungiCandidaturaControl" method="post">
                                 <div class="modal-body">Inserisci una descrizione per candidarti
-                                    <textarea name="Descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
+                                    <textarea name="Descrizione" rows="3" class="form-control"
+                                              placeholder="Descrizione.."></textarea>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi
+                                    </button>
                                     <button type="submit" class="btn btn-sm btn-success">Conferma</button>
                                 </div>
                             </form>
@@ -258,25 +277,13 @@ include_once VIEW_DIR . 'header.php';
 
                 <div class="row col-md-12 col-sm-12 col-xs-12 card-body" style="margin-left: 0%">
                     <div class="media-body comment more">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Vestibulum laoreet, nunc eget laoreet sagittis,
-                        quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                        Duis eget nisl orci. Aliquam mattis purus non mauris
-                        blandit id luctus felis convallis.
-                        Integer varius egestas vestibulum.
-                        Nullam a dolor arcu, ac tempor elit. Donec.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Vestibulum laoreet, nunc eget laoreet sagittis,
-                        quam ligula sodales orci, congue imperdiet eros tortor ac lectus.
-                        Duis eget nisl orci. Aliquam mattis purus non mauris
-                        blandit id luctus felis convallis.
-                        Integer varius egestas vestibulum.
-                        Nullam a dolor arcu, ac tempor elit. Donec.
+                        <?php echo $listaAnnunciPreferiti[$i]->getDescrizione(); ?>
                     </div>
 
                 </div>
 
-                <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%">
+                <div class="row col-md-12 col-sm-12 col-xs-12 media-categories"
+                     style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%">
                     <span class="label label-warning">Informatica</span>
                     <span class="label label-default">Web Developer</span>
                     <span class="label label-info">Fisciano</span>
@@ -287,21 +294,26 @@ include_once VIEW_DIR . 'header.php';
                     <button class="btn btn-link">
                         <i class="fa fa-comments-o"></i> 10 Comments
                     </button>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal1">Candidati</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal1">
+                        Candidati
+                    </button>
                 </div>
                 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
                                 <h4 class="modal-title">Conferma candidatura</h4>
                             </div>
                             <form action="aggiungiPreferitiControl" method="post">
                                 <div class="modal-body">Inserisci una descrizione per candidarti
-                                    <textarea name="Descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
+                                    <textarea name="Descrizione" rows="3" class="form-control"
+                                              placeholder="Descrizione.."></textarea>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi
+                                    </button>
                                     <button type="submit" class="btn btn-sm btn-success">Conferma</button>
                                 </div>
                             </form>
@@ -310,10 +322,10 @@ include_once VIEW_DIR . 'header.php';
                 </div>
 
 
-
                 <div class="row col-md-12 col-sm-12 card contenitore" style="margin-left: 0; display: none">
 
-                    <div class="row col-md-12 col-sm-12 comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                    <div class="row col-md-12 col-sm-12 comment-body"
+                         style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
                         <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
                             <a href="#">
                                 <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
@@ -323,9 +335,13 @@ include_once VIEW_DIR . 'header.php';
                             <h4 class="title">Scott White</h4>
                             <h5 class="timeing">20 mins ago</h5>
                         </div>
-                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.</div>
+                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+                            scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus
+                            viverra turpis. Fusce condimentum nunc ac nisi vulputate.
+                        </div>
                     </div>
-                    <div class="row col-md-12 col-sm-12 comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                    <div class="row col-md-12 col-sm-12 comment-body"
+                         style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
                         <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
                             <a href="#">
                                 <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
@@ -335,7 +351,10 @@ include_once VIEW_DIR . 'header.php';
                             <h4 class="title">Scott White</h4>
                             <h5 class="timeing">20 mins ago</h5>
                         </div>
-                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.</div>
+                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+                            scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus
+                            viverra turpis. Fusce condimentum nunc ac nisi vulputate.
+                        </div>
                     </div>
 
                     <div class="col-md-12 form-commento">
@@ -351,10 +370,14 @@ include_once VIEW_DIR . 'header.php';
                 </div>
 
 
-
             </div>
         </div>
 
+    </div>
+    <?php
+    }
+
+    ?>
 
 
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>

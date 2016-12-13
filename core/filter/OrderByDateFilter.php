@@ -11,7 +11,7 @@ include_once "OrderFilter.php";
 
 
 /**
- * @param $orderType
+ * OrderByDateFilter
  */
 class OrderByDateFilter extends OrderFilter
 {
@@ -30,7 +30,7 @@ class OrderByDateFilter extends OrderFilter
     public function setOrder($orderType)
     {
         parent::setFilterString(" 
-           annuncio.data ".$orderType."  
+           annuncio.data = '$orderType' 
         ");
     }
 

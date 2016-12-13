@@ -1,14 +1,37 @@
 <?php
 
-echo "Annuncio Commentato: ";
-echo $message = $_POST['commento'];
+include_once MANAGER_DIR ."/AnnuncioManager.php";
+include_once MODEL_DIR . "/Commento.php";
 
-$manager = new AnnuncioManager(); /* Declaration and initialization a manager variable */
 
-$utente = unserialize($_SESSION['utente']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to user's info, given from session*/
-$idUtente = $utente->getId(); /* Declaration and initialization a user variable contain the user id */
-$idAnnuncio = unserialize($_SESSION['idAnnuncio']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to annuncio's info, given from session */
+if($_SERVER["REQUEST_METHOD"]=="POST") {
 
-//$manager->commentAnnuncio($idAnnuncio, $idUtente, $message);
+    $manager = new AnnuncioManager();
+    echo $idAnnuncio = $_POST['idAnnuncio'];
+    echo $message = $_POST['commento'];
+
+
+    if (isset($_SESSION["listaCommenti"])) {
+        $commenti = unserialize($_SESSION["listaCommenti"]);
+        unset($_SESSION["listaCommenti"]);
+        for ($i = 0; $i < count($commenti); $i++) {
+            for ($j = 0; $j < count($commenti[$i]); $j++){
+                if ($idAnnuncio == $commenti[$i][$j]->getIdAnnuncio()) {
+                    $manager->commentAnnuncio($idAnnuncio, "1", $message, date("Y-m-d"));
+                    header("Location: " . DOMINIO_SITO . "/getHome");
+                    exit();
+                } else {
+                    $manager->commentAnnuncio($idAnnuncio, "1", $message, date("Y-m-d"));
+                    header("Location: " . DOMINIO_SITO . "/getHome");
+                    exit();
+                }
+            }
+        }
+    }
+}
+
+
+
+
 
 ?>
