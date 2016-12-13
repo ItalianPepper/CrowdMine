@@ -63,6 +63,7 @@ class FeedbackManager extends Manager
      * @param $titolo
      * @return Feedback
      */
+
     public function createFeedback($id=null,$idUtente,$idAnnuncio,$idValutato,$valutazione,$corpo,$data,$stato,$titolo){
         return new Feedback($id, $idAnnuncio, $idUtente, $idValutato, $corpo, $data, $stato, $valutazione, $titolo);
     }

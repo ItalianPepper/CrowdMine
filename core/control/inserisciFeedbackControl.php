@@ -116,12 +116,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
 
-    if($feedbackManager->checkCollaboration($userSubID,$adsID))
-    {
+    //if($feedbackManager->checkCollaboration($userSubID,$adsID))
+    //{
         $data =  date("Y-m-d H:i:s");
-        $feedback = $feedbackManager->createFeedback(null,$userSubID,$adsID,$userValId,$feedbackRating,$feedbackDescription,$data,ATTIVO,$feedbackName);
-
-    }
+        $feedbackManager->insertFeedback(null,$userSubID,$adsID,$userValId,$feedbackRating,$feedbackDescription,$data,ATTIVO,$feedbackName);
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "Feedback inserito con successo";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+    //}
 
 
 
