@@ -18,7 +18,7 @@ define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
-define('ATTIVO',"attivato");
+define('ATTIVATO',"attivato");
 define('SEGNALATO',"segnalato");
 define('ELIMINATO',"eliminato");
 define('AMMINISTRATORE',"amministratore");

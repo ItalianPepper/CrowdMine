@@ -23,11 +23,10 @@ function deleteFeedback(id) {
 
 function confirmFeedback(id) {
     clearjQueryCache();
-    console.log("evento catturato");
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
-        data: {'id': id, 'stato': "attivo"},
+        data: {'id': id ,'stato':"attivato"},
         dataType: 'json',
         async: true,
         success: function (data) {
