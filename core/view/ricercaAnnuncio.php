@@ -240,7 +240,7 @@ include_once VIEW_DIR . 'header.php';
                                     <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1">
                                          <i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                                        <input type="date" name="data" class="form-control" placeholder="Titolo.." aria-describedby="basic-addon1" value="">
+                                        <input type="datetime-local" name="data" class="form-control" placeholder="Titolo.." aria-describedby="basic-addon1" value="">
                                     </div>
                                     <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1">

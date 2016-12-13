@@ -234,6 +234,9 @@ try {
             case 'annunciProprietari';
                 include_once CONTROL_DIR . "visualizzaAnnunci.php";
                 break;
+            case 'getHome';
+                include_once CONTROL_DIR . "visualizzaHome.php";
+                break;
             case 'asynAnnunci';
                 include_once AJAX_DIR . "asynAnnunci.php";
                 break;
