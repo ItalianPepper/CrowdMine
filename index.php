@@ -13,6 +13,7 @@ define('VIEW_DIR', CORE_DIR . "view" . DIRECTORY_SEPARATOR); //ecc
 define('TEMPLATE_DIR', CORE_DIR . "template" . DIRECTORY_SEPARATOR); //ecc
 define('EXCEPTION_DIR', CORE_DIR . "exception" . DIRECTORY_SEPARATOR);
 define('MODEL_DIR', CORE_DIR . "model" . DIRECTORY_SEPARATOR);
+define('MANAGER_DIR', CORE_DIR . "manager" . DIRECTORY_SEPARATOR);
 define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
@@ -120,6 +121,9 @@ try {
             case 'inserimentoEsperienza':
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "InserisciEsperienza.php";
+                break;
+            case 'listaNotificheControl':
+                include_once CONTROL_DIR . "listaNotificheControl.php";
                 break;
             case 'effettuaLogin':
                 StringUtils::checkPermission("not_logged");

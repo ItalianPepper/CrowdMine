@@ -132,38 +132,16 @@
             </ul>
           </div>
         </li>
-        <li class="dropdown notification danger">
+        <li id="menu-notifica" class="dropdown notification danger">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
             <div class="title">System Notifications</div>
             <div class="count">10</div>
           </a>
           <div class="dropdown-menu">
-            <ul>
+            <ul id="lista-notifiche">
               <li class="dropdown-header">Notification</li>
-              <li>
-                <a href="#">
-                  <span class="badge badge-danger pull-right">8</span>
-                  <div class="message">
-                    <div class="content">
-                      <div class="title">New Order</div>
-                      <div class="description">$400 total</div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="badge badge-danger pull-right">14</span>
-                  Inbox
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="badge badge-danger pull-right">5</span>
-                  Issues Report
-                </a>
-              </li>
+
               <li class="dropdown-footer">
                 <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
               </li>
@@ -208,3 +186,20 @@
     </div>
   </div>
 </nav>
+    <script type="text/javascript">
+        $('menu-notifica').on('hover', function(e){
+            e.preventDefault();
+            var url = "listaNotificheControl";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                async: true;
+                success: function(data){
+                    var destination = $('lista-notifiche');
+                    console.log(destination);
+
+                }
+            })
+        })
+    </script>
