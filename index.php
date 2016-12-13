@@ -195,6 +195,9 @@ try {
             case 'inserisciAnnuncioControl';
                 include_once CONTROL_DIR . "getDatiAnnuncio.php";
                 break;
+            case 'ricercaAnnuncioControl';
+                include_once CONTROL_DIR . "getDatiAnnuncioRicercato.php";
+                break;
             case 'modificaAnnuncio';
                 include_once CONTROL_DIR . "modificaAnnuncio.php";
                 break;
@@ -208,13 +211,13 @@ try {
                 include_once CONTROL_DIR . "aggiungiPreferiti.php";
                 break;
             case 'ricercaAnnuncio';
-                include_once VIEW_DIR . "ricercaAnnuncio.php";
-                break;
-            case 'ricercaAnnuncioControl';
                 include_once CONTROL_DIR . "ricercaAnnuncio.php";
                 break;
             case 'annunciPreferiti';
                 include_once VIEW_DIR . "annunciPreferiti.php";
+                break;
+            case 'formRicercaAnnunci';
+                include_once VIEW_DIR . "ricercaAnnuncio.php";
                 break;
             case 'rimuoviPreferitiControl';
                 include_once CONTROL_DIR . "rimuoviPreferiti.php";

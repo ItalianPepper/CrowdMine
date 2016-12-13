@@ -191,6 +191,12 @@ include_once VIEW_DIR . 'header.php';
 
     <div class="col-md-12 col-sm-12 app-container">
 
+
+
+
+
+
+
         <div class="row" style="margin-right: 20%; height: auto; margin-bottom: 5%">
 
             <div class="card">
@@ -379,6 +385,25 @@ include_once VIEW_DIR . 'header.php';
 
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

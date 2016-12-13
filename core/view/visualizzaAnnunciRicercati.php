@@ -1,23 +1,15 @@
 <?php
-/**
- *
- * @author Vincenzo Russo
- * @version 1.0
- * @since 30/05/16
-
- */
 include_once MODEL_DIR . "/Annuncio.php";
-include_once VIEW_DIR . 'header.php';
-include_once CONTROL_DIR . "/ricercaAnnuncio.php";
+include_once MODEL_DIR . "/Candidatura.php";
+include_once MODEL_DIR . "/Commento.php";
 
-$searched = array();
-if (isset($_SESSION["searched"])){
-    $searched = $_SESSION["searched"];
-    unset($_SESSION["searched"]);
+if (isset($_SESSION["annunciRicercati"])) {
+    $annunci = unserialize($_SESSION["annunciRicercati"]);
+    unset($_SESSION["annunciRicercati"]);
 } else {
-    echo "no!";
+    echo "nulla è giunto";
 }
-
+include_once VIEW_DIR . 'header.php';
 
 ?>
 
@@ -33,6 +25,7 @@ if (isset($_SESSION["searched"])){
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\Annuncio\annuncioUtenteLoggato.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -48,16 +41,19 @@ if (isset($_SESSION["searched"])){
             });
         });
     </script>
-
 </head>
 
 <style>
     h1 {
         font-size: 1rem;
+
     }
 
     @media (min-width: 1px) {
         h1 {
+            font-size: xx-small;
+        }
+        h5 {
             font-size: xx-small;
         }
     }
@@ -66,17 +62,26 @@ if (isset($_SESSION["searched"])){
         h1 {
             font-size: 13px;
         }
+        h5 {
+            font-size: xx-small;
+        }
     }
 
     @media (min-width: 970px) {
         h1 {
             font-size: x-large;
         }
+        h5 {
+            font-size: x-small;
+        }
     }
 
     @media (min-width: 1200px) {
         h1 {
             font-size: xx-large;
+        }
+        h5 {
+            font-size: small;
         }
     }
 
@@ -92,7 +97,7 @@ if (isset($_SESSION["searched"])){
 
 </style>
 
-<body>
+<body onload="caricaAnnunciRicercati()">
 <div class="app app-default">
 
     <aside class="app-sidebar" id="sidebar">
@@ -188,188 +193,243 @@ if (isset($_SESSION["searched"])){
         </div>
     </script>
 
-
-
-
-
-
     <div class="col-md-12 col-sm-12 app-container">
+
+
+
+
         <?php
+        for ($i = 0; $i < count($annunci); $i++) {
 
-        for ($i = 0; $i < count($searched); $i++) {
-        ?>
-        <div class="row" style="margin-right: 20%; height: auto; margin-bottom: 5%">
+            ?>
 
-            <div class="card">
+            <div class="row" style="margin-right: 20%; height: auto; margin-bottom: 5%">
 
-                <div class="row col-md-12 col-sm-12 col-xs-12 card-header" style="margin-left: 0%">
-                    <div class="col-md-3 col-sm-3 media-left">
-                        <a href="#">
-                            <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
-                        </a>
-                    </div>
-                    <div class="col-md-7 annuncioTitle" style="width: 100%;">
+                <div class="card">
 
-                        <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
-                            <h1>JetBrains</h1>
+                    <div class="row col-md-12 col-sm-12 col-xs-12 card-header" style="margin-left: 0%">
+                        <div class="col-md-3 col-sm-3 media-left">
+                            <a href="#">
+                                <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                            </a>
                         </div>
+                        <div class="col-md-7 annuncioTitle" style="width: 100%;">
 
-                        <div class="offerta col-md-12 col-sm-12">
-                            <h1><?php echo $searched[$i]->getTitolo()?></h1>
+                            <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
+                                <h1>JetBrains</h1>
+                            </div>
+
+                            <div class="offerta col-md-12 col-sm-12">
+                                <h1><?php echo $annunci[$i]->getTitolo();?></h1>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-1 col-sm-2 preferites">
-                        <a>
-                            <button style="
+                        <div class="col-md-1 col-sm-2 preferites">
+                            <a>
+                                <button style="
                                 background-color: Transparent;
                                 background-repeat:no-repeat;
                                 border: none;
                                 cursor:pointer;
                                 overflow: hidden;
                                 outline:none;">
-                                <i class="fa fa-star-o" style="font-size: 200%;" data-toggle="modal" data-target="#myModal2"></i>
-                            </button>
-                        </a>
-                        <ul class="card-action">
-                            <li class="dropdown">
-                                <a href="/" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-cog" style="font-size: 200%;"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" data-toggle="modal" data-target="#myModal">Segnala</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                                    <i class="fa fa-star-o" style="font-size: 200%;" data-toggle="modal"
+                                       data-target="#myModal2"></i>
+                                </button>
+                            </a>
+                            <ul class="card-action">
+                                <li class="dropdown">
+                                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-cog" style="font-size: 200%;"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" data-toggle="modal" data-target="#myModal">Segnala</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title">Conferma segnalazione</h4>
+                                    </div>
+                                    <form action="segnalaAnnuncioControl" method="post">
+                                        <div class="modal-body">Inserisci una descrizione per segnalare
+                                            <textarea name="descrizione" rows="3" class="form-control"
+                                                      placeholder="Descrizione.."></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                                Chiudi
+                                            </button>
+                                            <button type="submit" class="btn btn-sm btn-danger">Segnala</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title">Conferma segnalazione</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">Aggiungere ai preferiti?</h4>
                                 </div>
-                                <form action="segnalaAnnuncioControl" method="post">
-                                    <div class="modal-body">Inserisci una descrizione per segnalare
-                                        <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
-                                    </div>
+                                <form action="aggiungiPreferitiControl" method="post">
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                        <button type="submit" class="btn btn-sm btn-danger">Segnala</button>
+                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                            Chiudi
+                                        </button>
+                                        <button type="submit" class="btn btn-sm btn-success">Aggiungi</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                <h4 class="modal-title">Aggiungere ai preferiti?</h4>
-                            </div>
-                            <form action="aggiungiPreferitiControl" method="post">
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                    <button type="submit" class="btn btn-sm btn-success">Aggiungi</button>
+
+                    <div class="row col-md-12 col-sm-12 col-xs-12 card-body"
+                         style="margin-left: 0; border-bottom: 1px solid #eee; padding-bottom: 2%">
+                        <div class="media-body comment more">
+                            <?php echo $annunci[$i]->getDescrizione();?>
+                        </div>
+
+                    </div>
+
+                    <div class="row col-md-12 col-sm-12 col-xs-12 media-categories"
+                         style="margin-left: 2%; margin-bottom: 2%; display: flex">
+                        <h5>Macro:<span class="label label-primary">Informatica</span></h5>
+                        <h5>Micro: <span class="label label-warning">Web Developer</span></h5>
+                        <h5>Luogo:<span class="label label-primary"><?php echo $annunci[$i]->getLuogo();?></span></h5>
+                        <h5>Retribuzione:<span class="label label-primary"><?php echo $annunci[$i]->getRetribuzione();?>€</span></h5><br>
+
+                    </div>
+                    <div class="row col-md-12 col-sm-12 col-xs-12 media-categories"
+                         style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%; display: flex">
+                        <h5>Data:<span class="label label-primary"><?php echo $annunci[$i]->getData();?></span></h5>
+                        <h5>Tipologia: <span class="label label-primary"><?php echo $annunci[$i]->getTipologia();?></span></h5>
+                        <h5>Stato: <span class="label label-primary"><?php echo $annunci[$i]->getStato();?></span></h5>
+
+
+                    </div>
+
+
+                    <div class="media-comment" style="">
+                        <button class="btn btn-link">
+                            <i class="fa fa-comments-o"></i> 10 Comments
+                        </button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal1">
+                            Candidati
+                        </button>
+                    </div>
+                    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">Conferma candidatura</h4>
                                 </div>
-                            </form>
+                                <form action="aggiungiCandidaturaControl" method="post">
+                                    <div class="modal-body">Inserisci una descrizione per candidarti
+                                        <?php $_SESSION["idAnnuncio"] = serialize(15); ?>
+                                        <textarea name="descrizione" rows="3" class="form-control"
+                                                  placeholder="Descrizione.." value=""></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                            Chiudi
+                                        </button>
+                                        <button type="submit" class="btn btn-sm btn-success">Conferma</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row col-md-12 col-sm-12 col-xs-12 card-body" style="margin-left: 0%">
-                    <div class="media-body comment more">
 
-                    </div>
+                    <div class="row col-md-12 col-sm-12 card contenitore" style="margin-left: 0; display: none">
 
-                </div>
-
-                <div class="row col-md-12 col-sm-12 col-xs-12 media-categories" style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%">
-                    <span class="label label-warning">Informatica</span>
-                    <span class="label label-default">Web Developer</span>
-                    <span class="label label-info"></span>
-                    <span class="label label-primary"></span>
-                </div>
-
-                <div class="media-comment" style="">
-                    <button class="btn btn-link">
-                        <i class="fa fa-comments-o"></i> 10 Comments
-                    </button>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal1">Candidati</button>
-                </div>
-                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                <h4 class="modal-title">Conferma candidatura</h4>
+                        <div class="row col-md-12 col-sm-12 comment-body"
+                             style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                            <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
+                                <a href="#">
+                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                </a>
                             </div>
-                            <form action="aggiungiCandidaturaControl" method="post">
-                                <div class="modal-body">Inserisci una descrizione per candidarti
-                                    <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
+                            <div class="media-heading">
+                                <h4 class="title">Scott White</h4>
+                                <h5 class="timeing">20 mins ago</h5>
+                            </div>
+                            <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+                                scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+                                tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.
+                            </div>
+                        </div>
+                        <div class="row col-md-12 col-sm-12 comment-body"
+                             style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                            <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
+                                <a href="#">
+                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                </a>
+                            </div>
+                            <div class="media-heading">
+                                <h4 class="title">Scott White</h4>
+                                <h5 class="timeing">20 mins ago</h5>
+                            </div>
+                            <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+                                scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+                                tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-commento">
+                            <form action="commentaAnnuncioControl" method="post">
+                                <div class="col-md-10 input-comment">
+                                    <input type="text" class="form-control" placeholder="Scrivi un commento..."
+                                           name="commento">
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                    <button type="submit" class="btn btn-sm btn-success">Conferma</button>
+                                <div class="col-md-2 btn-comment">
+                                    <button type="submit" class="btn btn-info">Commenta</button>
                                 </div>
-                            </form>
                         </div>
-                    </div>
-                </div>
+                        </form>
 
-
-
-                <div class="row col-md-12 col-sm-12 card contenitore" style="margin-left: 0; display: none">
-
-                    <div class="row col-md-12 col-sm-12 comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
-                        <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
-                            </a>
-                        </div>
-                        <div class="media-heading">
-                            <h4 class="title">Scott White</h4>
-                            <h5 class="timeing">20 mins ago</h5>
-                        </div>
-                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.</div>
                     </div>
-                    <div class="row col-md-12 col-sm-12 comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
-                        <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
-                            </a>
-                        </div>
-                        <div class="media-heading">
-                            <h4 class="title">Scott White</h4>
-                            <h5 class="timeing">20 mins ago</h5>
-                        </div>
-                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate.</div>
-                    </div>
-                    <div class="col-md-12 form-commento">
-                        <form action="commentaAnnuncioControl" method="post">
-                            <div class="col-md-10 input-comment">
-                                <input type="text" class="form-control" placeholder="Scrivi un commento..." name="commento">
-                            </div>
-                            <div class="col-md-2 btn-comment">
-                                <button type="submit" class="btn btn-info">Commenta</button>
-                            </div>
-                    </div>
+
 
                 </div>
-
-
-
             </div>
-        </div>
-            <?php
 
+            <?php
         }
+
         ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
         <script type="text/javascript">
             function toggleMe(a){
                 var e=document.getElementById(a);
@@ -420,7 +480,20 @@ if (isset($_SESSION["searched"])){
             });
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <?php
+
+        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+            ?>
+            <script>
+                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+            </script>
+            <?php
+            unset($_SESSION['toast-type']);
+            unset($_SESSION['toast-message']);
+        }
+        ?>
 
 </body>
 
 </html>
+
