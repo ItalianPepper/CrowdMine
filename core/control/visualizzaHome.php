@@ -26,7 +26,6 @@ try {
     $annunci = $managerAnnunci->searchAnnuncio($filters);
     for ($i=0; $i<count($annunci); $i++) {
         array_push($arrayCommenti, $managerAnnunci->getCommentsbyId($annunci[$i]->getId()));
-        echo count($arrayCommenti[$i]);
     }
 
 
