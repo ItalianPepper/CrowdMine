@@ -97,7 +97,7 @@ class FeedbackManager extends Manager
         $GET_FEEDBACK_BY_USER = "SELECT feedback.id,feedback.titolo,feedback.corpo,
             feedback.valutazione,utente.nome,utente.cognome,utente.immagine_profilo 
             FROM feedback, utente WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente
-                AND (feedback.stato='".ATTIVO."' OR feedback.stato='".SEGNALATO."')";
+                AND (feedback.stato='".ATTIVATO."' OR feedback.stato='".SEGNALATO."')";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER);
         $us = array();
