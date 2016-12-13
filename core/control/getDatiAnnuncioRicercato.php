@@ -5,6 +5,7 @@ include_once CONTROL_DIR . "ControlUtils.php";
 include_once FILTER_DIR . 'SearchByTitleFilter.php';
 include_once FILTER_DIR . 'SearchByUserIdFilter.php';
 include_once FILTER_DIR . 'SearchByLocationFilter.php';
+include_once FILTER_DIR . 'SearchByTypeFilter.php';
 include_once FILTER_DIR . 'SearchByDateInterval.php';
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 
@@ -30,6 +31,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         $luogo = null;
     }
 
+    if(($_POST['tipologia']) != null){
+        echo $_POST['tipologia'];
+        $tipologia = $_POST['tipologia'];
+        $tipologiaObj = new SearchByTypeFilter($tipologia);
+        array_push($filters, $tipologiaObj);
+    } else {
+        $tipologia = null;
+    }
+
+
     if (!isset($_POST['utente'])) {                      //attendiamo il manager Utente
         $utenteName =  $_POST['utente'];
         $idUtente = "1";
@@ -38,6 +49,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } else {
         $idUtente = null;
     }
+
+
 
     if(($_POST['data']) != null) {
         $dataPost = $_POST['data'];
