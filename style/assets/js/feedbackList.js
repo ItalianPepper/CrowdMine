@@ -76,7 +76,7 @@ function feedbackRowToString(feedbackListObj, role) {
         '                                                                <div class="media social-post">' +
         '                                                                    <div class="media-left">' +
         '                                                                        <a href="#">' +
-        '                                                                         <img src="CrowdMine&bsol;style&bsol;assets&bsol;images'+ feedbackListObj.userProfileImage + '"> ' +
+        '                                                                         <img src="style&sol;assets&sol;images&sol;'+ feedbackListObj.userProfileImage + '"> ' +
         '                                                                        </a>' +
         '                                                                    </div>' +
         '                                                                    <div class="section">' +

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <base src="<?php echo STYLE_DIR; ?>" />
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -497,8 +498,8 @@
                                                                     Put here the session variable and user name logged
                                                                 </div>
                                                                 <div class="section-body __indent">
-                                                                    <img src="http://placehold.it/100x100" <!--Put here use profile image-->
-                                                                         class="img-responsive">
+                                                                    <img src="http://placehold.it/100x100"
+                                                                         class="img-responsive"> <!--Put here use profile image-->
                                                                 </div>
 
                                                                 <div class="section-title">
@@ -552,9 +553,11 @@
                                                         </div>
                                                         <div class="col-md-7 col-xs-12 simple-row">
                                                             <input name="feedback-name" type="text" class="form-control"
-                                                                   required id="feedback-title"
+                                                                   required id="feedback-title"  placeholder="Inserisci il titolo del feedback">
+                                                            <input name="annuncio-id" value="" style="display: none"> <!-- id annuncio -->
+                                                            <input name="user-annuncio-id" value="" style="display: none"> <!--id utente che lascia l'annuncio-->
+                                                            <input name="user-submit-id" value="" style="display: none"><!--id utente che lasci il feedback-->
 
-                                                                   placeholder="Inserisci il titolo del feedback">
                                                             <textarea name="feedback-textArea" rows="3"
                                                                       class="form-control" required
                                                                       id="feedback-textarea"
