@@ -18,8 +18,7 @@ if($idUtente == null) {//in futuro sarà di sessione
     $annunci = $managerAnnunci->getAnnunciHomePageUtenteLoggato();
     echo "x";
 } else {
-    $dataPost = "2016-11-04";
-    $dataObj = new SearchByDateInterval($dataPost ,date("Y-m-d"));
+    $dataObj = new OrderByDateFilter(date("Y-m-d"));
     array_push($filters, $dataObj);
 
 try {
@@ -34,7 +33,6 @@ try {
     $_SESSION['listaCommenti'] = serialize($arrayCommenti);
     $_SESSION['annunciHome'] = serialize($annunci);
     header("Location:" . DOMINIO_SITO . "/home");
-    //header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");
 } catch (ApplicationException $e) {
 
 }

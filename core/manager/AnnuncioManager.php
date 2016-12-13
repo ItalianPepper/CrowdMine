@@ -171,6 +171,7 @@ class AnnuncioManager
         $query = sprintf(self::$GET_ALL_ANNUNCI);
         FilterUtils::applyFilters($filters, $query);
         $res = Manager::getDB()->query($query);
+        echo $query;
         $annunci = array();
         if ($res) {
             while ($obj = $res->fetch_assoc()) {
