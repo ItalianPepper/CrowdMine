@@ -140,18 +140,9 @@ try {
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
-            case 'feedbackListRetrive':
-            	include_once CONTROL_DIR . "feedbackListRetrive.php";
-            	break;
             case 'cercaAnnunci':
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "CercaAnnunci.php";
-                break;
-            case 'inserisciFeedback':
-                include_once CONTROL_DIR . "inserisciFeedbackControl.php";
-                break;
-            case 'feedbackSegnalation':
-                include_once CONTROL_DIR . "feedbackSegnalation.php";
                 break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
