@@ -494,10 +494,10 @@
                                                         <div class="col-md-3 col-xs-12 simple-row">
                                                             <div class="section">
                                                                 <div class="section-title">
-                                                                    Your user name
+                                                                    Put here the session variable and user name logged
                                                                 </div>
                                                                 <div class="section-body __indent">
-                                                                    <img src="http://placehold.it/100x100"
+                                                                    <img src="http://placehold.it/100x100" <!--Put here use profile image-->
                                                                          class="img-responsive">
                                                                 </div>
 
@@ -876,8 +876,8 @@
 
                                         </div>
                                     </div>
-                                </div>
-                            </div> -->
+                                </div>-->
+                            </div>
                             </div>
                             <!--Statistiche-->
                             <div role="tabpanel" class="tab-pane" id="tab4">

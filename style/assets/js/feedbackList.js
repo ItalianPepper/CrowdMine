@@ -28,7 +28,7 @@ $(document).ready(function () {
                     feedbackListObj.userProfileImage = data[i].userProfileImage;
                     feedbackListObj.feedbackRating = data[i].feedbackRating;
 
-                    destination.append(feedbackRowToString(feedbackListObj));
+                    destination.append(feedbackRowToString(feedbackListObj, "moderator"));
                     setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
 
 
@@ -42,23 +42,48 @@ $(document).ready(function () {
 });
 
 
-function feedbackRowToString(feedbackListObj) {
+function feedbackRowToString(feedbackListObj, role) {
     "use strict";
+    var buttonGroup = "";
+    console.log(role);
+    if (role == "user") {
 
-    var html = '<div class="row" style="margin-top: 3%" id="'+ feedbackListObj.feedbackID + '">' +
+
+        buttonGroup = '<div class="media-action">' +
+            '   <button onclick="segnalaFeedback(' + feedbackListObj.feedbackID + ')" class="btn btn-link"><i' +
+            '   class="fa fa-exclamation-circle"></i>' +
+            '   Segnala' +
+            '   </button>' +
+            '  </div>';
+    }
+    else if (role == "moderator") {
+        buttonGroup = '<div class="media-action">' +
+            '<button onclick="deleteFeedback(' + feedbackListObj.feedbackID,this+ ')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
+            '<button onclick="confirmFeedback(' +feedbackListObj.feedbackID,this+ ')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
+            '<button onclick="sendFeedbackToAdmin(' +feedbackListObj.feedbackID,this+ ')" class="btn btn-link"><i class="fa fa-exclamation"></i> Invia all\' Amministratore</button>' +
+            '                                                                                </div>';
+    }
+    else if (role == "admin") {
+        buttonGroup = '<div class="media-action">' +
+            '<button onclick="deleteFeedback(' +feedbackListObj.feedbackID,this+ ')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
+            '<button onclick="confirmFeedback(' +feedbackListObj.feedbackID,this+ ')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
+            '                                                                                </div>';
+
+    }
+    var html = '<div class="row" style="margin-top: 3%" id="' + feedbackListObj.feedbackID + '">' +
         '                                                        <div class="col-lg-12 col-md-12 col-xs-12">' +
         '                                                            <div class="section">' +
         '                                                                <div class="media social-post">' +
         '                                                                    <div class="media-left">' +
         '                                                                        <a href="#">' +
-        '                                                                         <img src="<?php echo STYLE_DIR; ?>assets\images\ ' +  feedbackListObj.userProfileImage + '"> ' +
+        '                                                                         <img src="CrowdMine&bsol;style&bsol;assets&bsol;images'+ feedbackListObj.userProfileImage + '"> ' +
         '                                                                        </a>' +
         '                                                                    </div>' +
         '                                                                    <div class="section">' +
         '                                                                        <div class="section-body">' +
         '                                                                            <div class="media-body">' +
         '                                                                                <div class="media-heading">' +
-        '                                                                                    <h4 class="title">' +  feedbackListObj.userFirstName + ' ' +  feedbackListObj.userLastName  + '</h4>' +
+        '                                                                                    <h4 class="title">' + feedbackListObj.userFirstName + ' ' + feedbackListObj.userLastName + '</h4>' +
         '                                                                                </div>' +
         '                                                                                <div class="rating-content"' +
         '                                                                                     onclick="return false;">' +
@@ -122,14 +147,8 @@ function feedbackRowToString(feedbackListObj) {
         '                                                                                    </div>' +
         '                                                                                </div>' +
         '                                                                                <h5 style="margin-top: 0px"><b>' + feedbackListObj.feedbackTitle + '</b></h5>' +
-        '                                                                                <div class="media-content">' + feedbackListObj.feedbackDesc  +
-        '                                                                                </div>' +
-        '                                                                                <div class="media-action">' +
-        '                                                                                    <button onclick="segnalaFeedback(' + feedbackListObj.feedbackID + ')" class="btn btn-link"><i' +//add here a on click function
-        '                                                                                            class="fa fa-exclamation-circle"></i>' +
-        '                                                                                        Segnala' +
-        '                                                                                    </button>' +
-        '                                                                                </div>' +
+        '                                                                                <div class="media-content">' + feedbackListObj.feedbackDesc +
+        '                                                                                </div>' + buttonGroup +
         '                                                                            </div>' +
         '                                                                        </div>' +
         '                                                                    </div>' +
