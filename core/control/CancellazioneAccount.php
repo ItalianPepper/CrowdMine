@@ -23,11 +23,14 @@ $manager = new UtenteManager();
 
 if(isset($_SESSION['user'])){
 
-    $user = $_SESSION['user'];
-    //$stamp = $manager->deleteUserData();
-    $stamp ="quello che voglio io";
-    var_dump($stamp);
+   $user = $_SESSION['user'];
+    $manager->deleteUserData();
+    header("/home.php");
 }
 else{
     header("/home.php");
 }
+
+
+
+

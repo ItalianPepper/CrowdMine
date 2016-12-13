@@ -12,7 +12,7 @@ $manager = new MicrocategoriaManager();
 
 if(isset($_SESSSION['user'])){
     $microCategoria = $_SESSSION['microCategoria'];
-    $$manager->editMicrocategoria($microCategoria);
+    $manager->editMicrocategoria($microCategoria);
     //Lo reindirizzo al control per visualizzare la pagina del profilo personale in modo che viene aggiornapa perchè ricaricata.
     header("/VisualizzaProfiloPersonale.php");
 }

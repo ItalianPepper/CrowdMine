@@ -61,7 +61,7 @@ class UtenteManager extends Manager
      * Delete data user
      */
     public function deleteUserData(){
-        return "ELIMINATO";
+
     }
 
     /**
@@ -71,9 +71,7 @@ class UtenteManager extends Manager
      * @param String $password
      */
     public function banUser($UserId, $password){
-        if($password=="cap e cazz"){
-            return "UTENTE BANNATO";
-        }
+
 
     }
 

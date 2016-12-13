@@ -2,7 +2,13 @@
 <html>
 <?php
 include_once MODEL_DIR."Utente.php";
-$utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta", "email", "password", "stato", "ruolo", "immagineProfilo");
+
+if(isset($_SESSSION['user'])){
+    $utente = $_SESSION['user'];
+}
+else{
+    header("/home.php");
+}
 
 ?>
 <head>
@@ -294,7 +300,6 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
                             <div class="title"><span class="highlight"><?php echo $utente->getNome()." ".$utente->getCognome()?></span></div>
-                            <div class="description">Frontend Developer</div>
                         </div>
                     </div>
                 </div>
@@ -383,38 +388,6 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																	</div>
 																</form>
 															</div>
-															<div class="row" id="add-mail">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<a onclick="$('#add-mail').toggleWith('#mail-input')" >
-																	<i class="fa fa-plus"></i>
-																		Aggiungi indirizzo email
-																	</a>
-																</div>
-															</div>
-															<!-- FORM INSERIMENTO !-->
-															<div class="row">
-																<form class="form form-horizontal" id="mail-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-envelope" aria-hidden="true"></i>
-																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova Email" aria-describedby="basic-addon1" value="">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#mail-input').toggleWith('#add-mail')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
 														</div>
 													</div>
 												</div>
@@ -423,9 +396,9 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 												<a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse2">
 													<div class="panel-heading">
 														<h4 class="media-heading">
-															Numeri di telefono
+															Numero di telefono
 														</h4>
-														<p>Modifica o aggiungi numeri di telefono</p>
+														<p>Modifica numero di telefono</p>
 													</div>
 												</a>
 												<div id="profile-collapse2" class="panel-collapse collapse">
@@ -436,7 +409,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																	Tel.
 																</div>
 																<div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-																	<?php $utente->getTelefono();?>
+																	<?php echo $utente->getTelefono();?>
 																</div>
 																
 																<div class="dropdown corner-dropdown">
@@ -461,45 +434,13 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-phone" aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="+39 333456789">
+																			<input id="numberTelephoneChange" type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="<?php echo $utente->getTelefono()?>">
 																		</div>
 																		<div class="form-footer">
 																				<div class="form-group">
 																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
+																						<button type="submit" class="btn btn-primary pull-right" >Save</button>
 																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-tel-input').toggleWith('#edit-tel')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="add-tel">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<a onclick="$('#add-tel').toggleWith('#tel-input')" >
-																	<i class="fa fa-plus"></i>
-																		Aggiungi numero di telefono
-																	</a>
-																</div>
-															</div>
-															<!-- FORM INSERIMENTO !-->
-															<div class="row">
-																<form class="form form-horizontal" id="tel-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-phone" aria-hidden="true"></i>
-																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#tel-input').toggleWith('#add-tel')">Cancel</button>
 																					</div>
 																				 </div>
 																		</div>
@@ -583,7 +524,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																	Nome
 																</div>
 																<div class="col-lg-9 col-md-9 col-xs-8 simple-row">
-																	Scott
+																	<?php echo $utente->getNome() ?>
 																</div>
 																
 																<div class="dropdown corner-dropdown">
@@ -607,7 +548,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Nome" aria-describedby="basic-addon1" value="Scott">
+																			<input type="text" class="form-control" placeholder="Nuovo Nome" aria-describedby="basic-addon1" value="<?php echo $utente->getNome() ?>">
 																		</div>
 																		<div class="form-footer">
 																				<div class="form-group">
@@ -625,7 +566,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																	Cognome
 																</div>
 																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	White
+                                                                    <?php echo $utente->getCognome() ?>
 																</div>
 																
 																<div class="dropdown corner-dropdown">
@@ -649,7 +590,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Cognome" aria-describedby="basic-addon1" value="White">
+																			<input type="text" class="form-control" placeholder="Nuovo Cognome" aria-describedby="basic-addon1" value="<?php echo $utente->getCognome() ?>">
 																		</div>
 																		<div class="form-footer">
 																				<div class="form-group">
@@ -662,58 +603,12 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																	</div>
 																</form>
 															</div>
-															<div class="row" id="edit-profess">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Professione
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	Web Designer
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-profess').toggleWith('#edit-profess-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-profess-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-user" aria-hidden="true"></i>
-																			</span>
-																			
-																			<select class="form-control select2">
-																				<option value="AL">Alabama</option>
-																				<option value="WY">Wyoming</option>
-																			</select>
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-profess-input').toggleWith('#edit-profess')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
 															<div class="row" id="edit-birthdate">
 																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
 																	Data di nascita
 																</div>
 																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	22/04/1989
+                                                                    <?php echo $utente->getDataNascita() ?>
 																</div>
 																
 																<div class="dropdown corner-dropdown">
@@ -737,7 +632,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-calendar" aria-hidden="true"></i>
 																			</span>
-																			<input type="date" class="form-control" aria-describedby="basic-addon1" value="1989-04-22">
+																			<input type="date" class="form-control" aria-describedby="basic-addon1" value="<?php echo $utente->getDataNascita() ?>">
 																		</div>
 																		<div class="form-footer">
 																				<div class="form-group">
@@ -755,7 +650,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																	Localit&agrave;
 																</div>
 																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	Fisciano
+                                                                    <?php echo $utente->getCitta() ?>
 																</div>
 																
 																<div class="dropdown corner-dropdown">
@@ -779,140 +674,13 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-map-marker" aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova Localit&agrave;" aria-describedby="basic-addon1" value="Fisciano">
+																			<input type="text" class="form-control" placeholder="Nuova Localit&agrave;" aria-describedby="basic-addon1" value="<?php echo $utente->getCitta() ?>">
 																		</div>
 																		<div class="form-footer">
 																				<div class="form-group">
 																					<div class="col-lg-12 col-md-12 col-xs-12">
 																						<button type="submit" class="btn btn-primary pull-right">Save</button>
 																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-location-input').toggleWith('#edit-location')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															
-															<div class="row" id="edit-cap">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	CAP
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	84048
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-cap').toggleWith('#edit-cap-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-cap-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-map-marker" aria-hidden="true"></i>
-																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Cap;" aria-describedby="basic-addon1" value="84048">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-cap-input').toggleWith('#edit-cap')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-iva">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Partita Iva
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	12345678912
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-iva').toggleWith('#edit-iva-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-iva-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-user" aria-hidden="true"></i>
-																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova partita iva" aria-describedby="basic-addon1" value="12345678912">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-iva-input').toggleWith('#edit-iva')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-web">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Sito Web
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	www.fakesite.com
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-web').toggleWith('#edit-web-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-web-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-globe" aria-hidden="true"></i>
-																			</span>
-																			<input type="text" class="form-control" placeholder="Sito Web";" aria-describedby="basic-addon1" value="www.fakesite.com">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-web-input').toggleWith('#edit-web')">Cancel</button>
 																					</div>
 																				 </div>
 																		</div>
@@ -1368,6 +1136,7 @@ $utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta"
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+
 
 <script>
 
