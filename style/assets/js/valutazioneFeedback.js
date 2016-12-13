@@ -2,7 +2,7 @@
  * Created by LongSky on 13/12/2016.
  */
 
-function deleteFeedback(id, deleteBtn){
+function deleteFeedback(id){
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
@@ -10,12 +10,15 @@ function deleteFeedback(id, deleteBtn){
         dataType: 'json',
         async: true,
         success: function (data) {
-
+            toastr[data["toastType"]](data["toastMessage"]);
+            divToDelete = $("#id");
+            destination = $("#feedback-list-destination");
+            destination.removeChild(divToDelete);
         }
     });
 }
 
-function confirmFeedback(id, confirmBtn){
+function confirmFeedback(id){
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
@@ -23,12 +26,15 @@ function confirmFeedback(id, confirmBtn){
         dataType: 'json',
         async: true,
         success: function (data) {
-
+            toastr[data["toastType"]](data["toastMessage"]);
+            divToDelete = $("#id");
+            destination = $("#feedback-list-destination");
+            destination.removeChild(divToDelete);
         }
     });
 }
 
-function sendFeedbackToAdmin(id, adminBtn){
+function sendFeedbackToAdmin(id){
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
@@ -36,7 +42,10 @@ function sendFeedbackToAdmin(id, adminBtn){
         dataType: 'json',
         async: true,
         success: function (data) {
-
+            toastr[data["toastType"]](data["toastMessage"]);
+            divToDelete = $("#id");
+            destination = $("#feedback-list-destination");
+            destination.removeChild(divToDelete);
         }
     });
 }

@@ -12,6 +12,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $feedback_manager = new FeedbackManager();
     if(isset($_POST["id"]) && isset($_POST["stato"])){
         $feedback_manager->setStatus($_POST["id"],$_POST["stato"]);
+        $return =array(
+            'toastType' => "success",
+            'toastMessage' => "Feedback risolto con successo"
+        );
     }
     else{
         $return =array(
