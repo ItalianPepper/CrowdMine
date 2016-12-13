@@ -6,8 +6,6 @@ include_once MODEL_DIR . "/Commento.php";
 if (isset($_SESSION["annunciRicercati"])) {
     $annunci = unserialize($_SESSION["annunciRicercati"]);
     unset($_SESSION["annunciRicercati"]);
-} else {
-    echo "nulla è giunto";
 }
 include_once VIEW_DIR . 'header.php';
 

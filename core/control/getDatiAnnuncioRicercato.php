@@ -30,8 +30,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         $luogo = null;
     }
 
-
-    if (isset($_POST['utente'])) {
+    if (!isset($_POST['utente'])) {                      //attendiamo il manager Utente
         $utenteName =  $_POST['utente'];
         $idUtente = "1";
         $utenteObj = new SearchByUserIdFilter($idUtente);
@@ -42,19 +41,28 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 
     if(($_POST['data']) != null) {
         $dataPost = $_POST['data'];
-        $currentDate = new DateTime();
-        $currentDate->format('Y-m-d H:i:s');
-        $dataObj = new SearchByDateInterval($dataPost, $currentDate->getTimestamp());
+        $dataObj = new SearchByDateInterval($dataPost, date("Y-m-d"));
         array_push($filters, $dataObj);
     } else {
         $data = null;
     }
 
 
+
+
+
+
+
+
     try {
-        $annunci = $managerAnnuncio->searchAnnuncio($filters); //fino a qui la ricerca funziona
-        $_SESSION['annunciRicercati'] = serialize($annunci);
-        header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
+        $annunci = $managerAnnuncio->searchAnnuncio($filters);
+        if (count($annunci) != 0) {
+            $_SESSION['annunciRicercati'] = serialize($annunci);
+            header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
+        } else {
+            header("Location:" . DOMINIO_SITO . "/nothingFound");
+        }
+
     } catch (ApplicationException $e) {
 
     }

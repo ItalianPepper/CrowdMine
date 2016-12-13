@@ -243,6 +243,9 @@ try {
             case 'visualizzaAnnunciRicercati';
                 include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
                 break;
+            case 'nothingFound';
+                include_once VIEW_DIR . "nothingFound.php";
+                break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;

@@ -221,6 +221,10 @@ include_once VIEW_DIR . 'header.php';
 
             <div class="col-md-12">
 
+                <div class="card">
+                    <div class="card-header" style="margin-bottom: 3%">Spiacenti, nessun annuncio trovato. Riprova!</div>
+                </div>
+
                 <div class="card" style="width auto;">
                     <form action="ricercaAnnuncioControl" method="post">
                         <div class="card-header">Ricerca un Annuncio</div>
