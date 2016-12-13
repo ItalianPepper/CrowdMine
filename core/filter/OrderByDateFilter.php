@@ -7,21 +7,13 @@
  * Time: 10:12
  */
 
-include_once "Filter.php";
+include_once "OrderFilter.php";
 
-/**
- * OrderByDateFilter
- * NOTE: Always call as last Filter!
- */
-class OrderType{
-    const DESC = "DESC";
-    const CRESC = "CRESC";
-}
 
 /**
  * @param $orderType
  */
-class OrderByDateFilter extends Filter
+class OrderByDateFilter extends OrderFilter
 {
     /**
      * OrderByDateFilter constructor.
@@ -38,7 +30,7 @@ class OrderByDateFilter extends Filter
     public function setOrder($orderType)
     {
         parent::setFilterString(" 
-           ORDER BY annuncio.data ".$orderType."  
+           annuncio.data ".$orderType."  
         ");
     }
 
