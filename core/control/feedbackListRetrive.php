@@ -14,11 +14,12 @@
     include_once MODEL_DIR."FeedbackListObject.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $feedbackManger = new FeedbackManager();
-        $userManager = new UtenteManager();
+      $userManager = new UtenteManager();
 
-        if (isset($_POST["username"])) {
-            //$user = $userManager->getUtente($_POST["username"]);
+        if (isset($_POST["id"])) {
+            //$user = $userManager->getUtente($_POST["id"]);
             $feedbackListObjArray = array();
+            //$feedbackListObjArray = $feedbackManger->getListaFeedback($user->getId());
             $feedbackListObjArray = $feedbackManger->getListaFeedback(1);
 
             echo json_encode($feedbackListObjArray);

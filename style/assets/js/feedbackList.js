@@ -5,12 +5,12 @@
 
 $(document).ready(function () {
     "use strict";
-    var username = "ciao";
+    var id = 1;
     $("#feedback-tab-3").click(function () {
         $.ajax({
             url: "feedbackListRetrive",
             type: "POST",
-            data: {'username': username},
+            data: {'id': id},
             dataType: 'json',
             async: true,
             success: function (data) {
