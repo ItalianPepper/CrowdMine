@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -285,7 +286,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body app-heading">
-                        <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                        <img class="profile-img" src=assets\images\profile.png">
                         <div class="app-title">
                             <div class="title"><span class="highlight">Scott White</span></div>
                             <div class="description">Frontend Developer</div>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <base src="<?php echo STYLE_DIR; ?>" />
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
