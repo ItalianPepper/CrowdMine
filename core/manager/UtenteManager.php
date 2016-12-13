@@ -2,6 +2,7 @@
 
 include_once MODEL_DIR . 'Annuncio.php';
 include_once MODEL_DIR . 'Microcategoria.php';
+include_once MANAGER_DIR."Manager.php";
 include_once MODEL_DIR . 'Macrocategoria.php';
 /**
  * Created by PhpStorm.
@@ -15,8 +16,7 @@ class UtenteManager extends Manager
     /**
      * UtenteManager constructor.
      */
-    public function __construct()
-    {
+    public function __construct(){
 
     }
      /**
@@ -59,7 +59,7 @@ class UtenteManager extends Manager
      * Delete data user
      */
     public function deleteUserData(){
-
+        return "ELIMINATO";
     }
 
     /**
@@ -69,6 +69,9 @@ class UtenteManager extends Manager
      * @param String $password
      */
     public function banUser($UserId, $password){
+        if($password=="cap e cazz"){
+            return "UTENTE BANNATO";
+        }
 
     }
 

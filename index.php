@@ -13,6 +13,7 @@ define('VIEW_DIR', CORE_DIR . "view" . DIRECTORY_SEPARATOR); //ecc
 define('TEMPLATE_DIR', CORE_DIR . "template" . DIRECTORY_SEPARATOR); //ecc
 define('EXCEPTION_DIR', CORE_DIR . "exception" . DIRECTORY_SEPARATOR);
 define('MODEL_DIR', CORE_DIR . "model" . DIRECTORY_SEPARATOR);
+define('MANAGER_DIR', CORE_DIR . "manager" . DIRECTORY_SEPARATOR);
 define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
@@ -134,6 +135,15 @@ try {
                 break;
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
+                break;
+            case 'cancellaAccount':
+                include_once CONTROL_DIR . "CancellazioneAccount.php";
+                break;
+            case 'banUtente':
+                include_once CONTROL_DIR . "BanUtente.php";
+                break;
+            case 'visualizzaProfiloPersonale':
+                include_once CONTROL_DIR . "VisualizzaProfiloPersonale.php";
                 break;
             case 'cercaAnnunci':
                 StringUtils::checkPermission("all");

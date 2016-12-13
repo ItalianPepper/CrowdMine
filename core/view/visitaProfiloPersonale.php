@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+<?php
+include_once MODEL_DIR."Utente.php";
+$utente = new Utente("id", "nome", "cognome", "telefono", "dataNascita", "citta", "email", "password", "stato", "ruolo", "immagineProfilo");
+
+?>
 <head>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
@@ -287,7 +292,7 @@
                     <div class="card-body app-heading">
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
-                            <div class="title"><span class="highlight">Scott White</span></div>
+                            <div class="title"><span class="highlight"><?php echo $utente->getNome()." ".$utente->getCognome()?></span></div>
                             <div class="description">Frontend Developer</div>
                         </div>
                     </div>
@@ -339,7 +344,7 @@
 																	Email
 																</div>
 																<div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-																	fakemail@gmail.com
+																	<?php echo $utente->getEmail();?>
 																</div>
 																
 																<div class="dropdown corner-dropdown">
@@ -430,7 +435,7 @@
 																	Tel.
 																</div>
 																<div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-																	+39 333456789
+																	<?php $utente->getTelefono();?>
 																</div>
 																
 																<div class="dropdown corner-dropdown">
@@ -1129,7 +1134,7 @@
 																			</div>
 																			<div class="media-body">
 																				<div class="media-heading">
-																				<h4 class="title">Scott White</h4>
+																				<h4 class="title"><?php  ?></h4>
 																			</div>
 																		</div>
 																	</div>
@@ -1317,7 +1322,7 @@
 																</div>
 															</div>
 															<div class="row">
-																<form class="form form-horizontal" id="tel-input">
+																<form action="cancellaAccount" class="form form-horizontal" id="tel-input">
 																	<div class="col-lg-12 col-md-12 col-xs-12 simple-row">
 																		<div class="form-footer">
 																				<div class="form-group">

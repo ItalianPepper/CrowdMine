@@ -230,7 +230,7 @@
 												
 												<div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
 													<div class="media-action">
-														<button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
+														<a href="banUtente" class="btn btn-link"> <i class="fa fa-check"></i> Conferma</a>
 														<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
 														<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
 													</div>
