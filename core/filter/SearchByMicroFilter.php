@@ -26,7 +26,7 @@ class SearchByMicroFilter extends Filter
             annuncio.id IN (
                 SELECT DISTINCT riferito.id_annuncio
                 FROM riferito
-                WHERE riferito.id_annuncio = id AND riferito.id_microcategoria = '".$idMacro."'
+                WHERE riferito.id_annuncio = id AND riferito.id_microcategoria = '".$idMicro."'
             )
         ");
     }

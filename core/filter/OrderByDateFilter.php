@@ -11,7 +11,7 @@ include_once "OrderFilter.php";
 
 
 /**
- * @param $orderType
+ * OrderByDateFilter
  */
 class OrderByDateFilter extends OrderFilter
 {
