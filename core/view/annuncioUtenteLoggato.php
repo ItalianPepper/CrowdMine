@@ -248,11 +248,9 @@ include_once VIEW_DIR . 'header.php';
                                     <h4 class="modal-title">Conferma segnalazione</h4>
                                 </div>
                                 <form action="segnalaAnnuncioControl" method="post">
-                                <div class="modal-body">Inserisci una descrizione per segnalare
-                                    <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
-                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <input name="idAnnuncio" style="display: none" value="qui ci vuole la stampa php dell id annuncio">
                                     <button type="submit" class="btn btn-sm btn-danger">Segnala</button>
                                 </div>
                                 </form>
@@ -270,6 +268,7 @@ include_once VIEW_DIR . 'header.php';
                             <form action="aggiungiPreferitiControl" method="post">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <input name="idAnnuncio" style="display:none;" value="<?php echo "15"; ?>">
                                     <button type="submit" class="btn btn-sm btn-success">Aggiungi</button>
                                 </div>
                             </form>
