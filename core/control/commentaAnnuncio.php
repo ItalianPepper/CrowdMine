@@ -1,14 +1,35 @@
 <?php
 
-echo "Annuncio Commentato: ";
-echo $message = $_POST['commento'];
+include_once MANAGER_DIR ."/AnnuncioManager.php";
+include_once MODEL_DIR . "/Commento.php";
 
-$manager = new AnnuncioManager(); /* Declaration and initialization a manager variable */
 
-$utente = unserialize($_SESSION['utente']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to user's info, given from session*/
-$idUtente = $utente->getId(); /* Declaration and initialization a user variable contain the user id */
-$idAnnuncio = unserialize($_SESSION['idAnnuncio']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to annuncio's info, given from session */
 
-//$manager->commentAnnuncio($idAnnuncio, $idUtente, $message);
+if($_SERVER["REQUEST_METHOD"]=="POST") {
+
+    $idAnnuncio = $_POST['idAnnuncio'];
+    $message = $_POST['commento'];
+    if (isset($_SESSION["listaCommenti"])) {
+        echo "ok!";
+        $arrComm = unserialize($_SESSION["listaCommenti"]);
+        unset($_SESSION["listaCommenti"]);
+    }
+}
+
+
+$arrayCommenti = array();
+array_push($arrComm,  new Commento(1,$idAnnuncio,1,$message,"2016-12-12 00:00:00"));
+array_push($arrayCommenti, $arrComm);
+$_SESSION["listaCommenti"] = serialize($arrayCommenti);
+$_SESSION['toast-type'] = "success";
+$_SESSION['toast-message'] = "Annuncio Commentato";
+for ($i = 0; $i<count($arrComm); $i++) {
+    echo $arrComm[$i]->getCorpo();
+}
+echo count($arrComm);
+//header("Location: " . DOMINIO_SITO . "/home");
+
+
+
 
 ?>

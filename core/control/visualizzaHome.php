@@ -3,18 +3,42 @@
 include_once MANAGER_DIR . 'AnnuncioManager.php';
 include_once CONTROL_DIR . "ControlUtils.php";
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
+include_once FILTER_DIR . 'SearchByDateInterval.php';
+include_once MODEL_DIR . "/Commento.php";
 
 $idUtente = "1";
 $managerAnnunci = new AnnuncioManager();
 $filters = array();
+$commenti = array();
+$arrayCommenti = array();
+
 $utenteObj = new SearchByUserIdFilter($idUtente);
-array_push($filters, $utenteObj);
 
 if($idUtente == null) {//in futuro sarà di sessione
     $annunci = $managerAnnunci->getAnnunciHomePageUtenteLoggato();
     echo "x";
 } else {
-    $annunci = $managerAnnunci->getAnnunciHomePageUtenteVisitatore($filters);
+    $dataPost = "2016-11-04";
+    $dataObj = new SearchByDateInterval($dataPost ,date("Y-m-d"));
+    array_push($filters, $dataObj);
+
+try {
+    $annunci = $managerAnnunci->searchAnnuncio($filters);
+    for ($i=0; $i<count($annunci); $i++) {
+        array_push($arrayCommenti, $managerAnnunci->getCommentsbyId($annunci[$i]->getId()));
+        echo count($arrayCommenti[$i]);
+    }
+
+
+
+
+    $_SESSION['listaCommenti'] = serialize($arrayCommenti);
+    $_SESSION['annunciHome'] = serialize($annunci);
+    header("Location:" . DOMINIO_SITO . "/home");
+    //header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");
+} catch (ApplicationException $e) {
+
+}
 
 }
 
