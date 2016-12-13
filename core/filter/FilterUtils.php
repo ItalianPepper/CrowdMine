@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /**
  * Created by PhpStorm.
@@ -8,6 +8,7 @@
  */
 
 include_once "Filter.php";
+include_once "OrderFilter.php";
 
 class FilterUtils
 {
@@ -16,20 +17,22 @@ class FilterUtils
      * @param array $filters
      * @param string $query
      */
-    public static function applyFilters($filters, &$query = "")
+    public static function applyFilters($filters,&$query = "")
     {
 
         $size = count($filters);
-
         //start where clause
         $query .= " WHERE ";
 
-        if ($size > 0 && $filters[0] instanceof Filter){
+        if($size > 0 ){
+
+            if($filters[0] instanceof OrderFilter){
+                $query.= " 1 ";
+            }
             $filters[0]->setFilter($query);
-        } else {
-            //search all by default
+
+        }else{
             $query.= " 1 ";
-            return;
         }
 
         for($i=1;$i<$size;$i++){
@@ -39,4 +42,5 @@ class FilterUtils
             }
         }
     }
+
 }
