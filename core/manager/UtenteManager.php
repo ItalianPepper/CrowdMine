@@ -44,7 +44,7 @@ class UtenteManager extends Manager{
      * @param $user
      */
     private function insertUtente($user){
-        $INSERT_UTENTE = "INSERT INTO 'utente' (nome, cognome, telefono, dataNascita, citta, email, password, stato, ruolo, immagineProfilo) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,);";
+        $INSERT_UTENTE = "INSERT INTO 'utente' (nome, cognome, telefono, dataNascita, citta, email, password, stato, ruolo, immagineProfilo) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
         $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(), $user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
         self::getDB()->query($query);
     }
@@ -68,7 +68,7 @@ class UtenteManager extends Manager{
      */
     public function findUtenteById($userId){
         $connection = self::getDB();
-        $CERCA_UTENTE = "SELECT * FROM 'utente' WHERE id='%s';";
+        $CERCA_UTENTE = "SELECT * FROM utente WHERE id='%s';";
         $query = sprintf($CERCA_UTENTE, $userId);
         $result = $connection->query($query);
         $row = $result->fetch_assoc();
@@ -103,7 +103,7 @@ class UtenteManager extends Manager{
      */
     private function findUtenteByLogin($email, $password){
         $connection = self::getDB();
-        $GET_UTENTE_BY_LOGIN = "SELECT * FROM 'utente' WHERE email='%s' AND password='%s'";
+        $GET_UTENTE_BY_LOGIN = "SELECT * FROM utente WHERE email='%s' AND password='%s';";
         $query = sprintf($GET_UTENTE_BY_LOGIN, $email, $password);
         $result = $connection->query($query);
         $row = $result->fetch_assoc();
@@ -114,6 +114,11 @@ class UtenteManager extends Manager{
         }
     }
 
+    /**
+     * @param $microCategoria
+     * @param $numStelle
+     * @return array
+     */
     public function findUserByMicroAvgOverRatio($microCategoria, $numStelle){
         $mc = $microCategoria->getId();
         $GET_USER_BY_RATIO = "SELECT utente.id, AVG(feedback.valutazione) AS Media
@@ -135,6 +140,9 @@ class UtenteManager extends Manager{
         return $users;
     }
 
+    /**
+     * @return array
+     */
     public function findAll(){
         $users = array();
         $FIND_ALL = "SELECT * FROM utente;";
@@ -145,9 +153,12 @@ class UtenteManager extends Manager{
         }return $users;
     }
 
+    /**
+     * @return array
+     */
     public function getReportedUtente(){
         $connection = self::getDB();
-        $GET_UTENTI_SEGNALATI = "SELECT * FROM 'utente' WHERE stato='%s'";
+        $GET_UTENTI_SEGNALATI = "SELECT * FROM utente WHERE stato='%s'";
         $query = sprintf($GET_UTENTI_SEGNALATI, StatoUtente::SEGNALATO);
         $result = $connection->query($query);
         $users = array();
@@ -158,9 +169,12 @@ class UtenteManager extends Manager{
         return $users;
     }
 
+    /**
+     * @return array
+     */
     public function getBannedUtente(){
         $connection = self::getDB();
-        $GET_UTENTI_BANNATI = "SELECT * FROM 'utente' WHERE stato='%s'";
+        $GET_UTENTI_BANNATI = "SELECT * FROM utente WHERE stato='%s'";
         $query = sprintf($GET_UTENTI_BANNATI, StatoUtente::BANNATO);
         $result = $connection->query($query);
         $users = array();
@@ -171,6 +185,9 @@ class UtenteManager extends Manager{
         return $users;
     }
 
+    /**
+     * @return array
+     */
     public function getAppealUtente(){
         $users = array();
         $GET_APPEAL_USERS = "SELECT * FROM 'utente' WHERE stato='%s'";
@@ -183,6 +200,10 @@ class UtenteManager extends Manager{
         return $users;
     }
 
+    /**
+     * @param $email
+     * @return bool
+     */
     public function checkEmail($email){
         $CHECK_EMAIL = "SELECT * FROM utente WHERE email='%s';";
         $query = sprintf($CHECK_EMAIL, $email);
@@ -194,6 +215,11 @@ class UtenteManager extends Manager{
         }
     }
 
+    /**
+     * @param $userId
+     * @param $password
+     * @return bool
+     */
     public function checkPassword($userId, $password){
         $CHECK_PSWD = "SELECT * FROM utente WHERE id='%s' AND password='%s';";
         $query = sprintf($CHECK_PSWD, $userId, $password);
@@ -205,18 +231,31 @@ class UtenteManager extends Manager{
         }
     }
 
+    /**
+     * @param $user
+     * @param $microcategoria
+     */
     public function addMicroCategoria($user,$microcategoria){
         $ADD_MICROCATEGORIA = "INSERT INTO competente (id_microcategoria, id_utente) VALUES('%s', '%s');";
         $query = sprintf($ADD_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
         self::getDB()->query($query);
     }
 
+    /**
+     * @param $user
+     * @param $microcategoria
+     */
     public function removeMicroCategoria($user, $microcategoria){
         $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
         $query = sprintf($REMOVE_MICROCATEGORIA, $user, $microcategoria);
         self::getDB()->query($query);
     }
 
+    /**
+     * @param $email
+     * @param $password
+     * @return bool|Utente
+     */
     public function login($email, $password){
         if(!($user = $this->findUtenteByLogin($email, $password))){
             return false;
@@ -225,15 +264,23 @@ class UtenteManager extends Manager{
         }
     }
 
+    /**
+     * @param $user
+     */
     public function register($user){
         $this->insertUtente($user);
     }
 
+    /**
+     * @param $nome
+     * @param $cognome
+     * @return array|bool
+     */
     public function searchUtente($nome, $cognome){
-        if(!$user = $this->findUtenteByUserName($nome, $cognome)){
+        if(!$users = $this->findUtenteByUserName($nome, $cognome)){
             return false;
         }else{
-            return $user;
+            return $users;
         }
     }
 
