@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.7
+-- version 4.4.15.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dic 02, 2016 alle 23:28
--- Versione del server: 5.6.33-log
--- PHP Version: 5.3.10
+-- Creato il: Dic 10, 2016 alle 18:12
+-- Versione del server: 5.6.30
+-- Versione PHP: 5.5.35
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,20 +14,20 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `my_crowdmine`
+-- Database: `MyCrowdMine`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Annuncio`
+-- Struttura della tabella `annuncio`
 --
 
-CREATE TABLE IF NOT EXISTS `Annuncio` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `annuncio` (
+  `id` bigint(20) NOT NULL,
   `id_utente` bigint(20) NOT NULL,
   `data` datetime NOT NULL,
   `titolo` varchar(255) NOT NULL,
@@ -35,220 +35,187 @@ CREATE TABLE IF NOT EXISTS `Annuncio` (
   `stato` enum('revisione','attivo','segnalato','disattivato','ricorso','eliminato','amministratore','revisione_modifica') NOT NULL,
   `retribuzione` int(11) DEFAULT NULL,
   `tipo` enum('domanda','offerta') NOT NULL,
-  `descrizione` text NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_utente` (`id_utente`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `descrizione` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Bloccato`
+-- Struttura della tabella `bloccato`
 --
 
-CREATE TABLE IF NOT EXISTS `Bloccato` (
+CREATE TABLE IF NOT EXISTS `bloccato` (
   `id_utente` bigint(20) NOT NULL,
-  `id_utente_bloccato` bigint(20) NOT NULL,
-  PRIMARY KEY (`id_utente`,`id_utente_bloccato`),
-  UNIQUE KEY `id_utente` (`id_utente`),
-  UNIQUE KEY `id_utente_bloccato` (`id_utente_bloccato`)
+  `id_utente_bloccato` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Candidatura`
+-- Struttura della tabella `candidatura`
 --
 
-CREATE TABLE IF NOT EXISTS `Candidatura` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `candidatura` (
+  `id` int(11) NOT NULL,
   `id_utente` bigint(20) NOT NULL,
   `id_annuncio` bigint(20) NOT NULL,
   `corpo` text NOT NULL,
   `data_risposta` datetime DEFAULT NULL,
-  `data_inviata` datetime NOT NULL,
+  `data_inviata` datetime DEFAULT NULL,
   `richiesta_inviata` enum('inviata','non_inviata','non_valutata') NOT NULL,
-  `richiesta_accettata` enum('non_valutato','accettato','rifiutato') NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_utente` (`id_utente`),
-  UNIQUE KEY `id_annuncio` (`id_annuncio`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `richiesta_accettata` enum('non_valutato','accettato','rifiutato') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Commento`
+-- Struttura della tabella `commento`
 --
 
-CREATE TABLE IF NOT EXISTS `Commento` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `commento` (
+  `id` bigint(20) NOT NULL,
   `id_annuncio` bigint(20) NOT NULL,
   `id_utente` bigint(20) NOT NULL,
   `corpo` text NOT NULL,
   `data` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_annuncio` (`id_annuncio`),
-  UNIQUE KEY `id_utente` (`id_utente`),
-  FULLTEXT KEY `corpo` (`corpo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `stato` enum('attivato','segnalato','eliminato','amministratore') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Competente`
+-- Struttura della tabella `competente`
 --
 
-CREATE TABLE IF NOT EXISTS `Competente` (
+CREATE TABLE IF NOT EXISTS `competente` (
   `id_utente` bigint(20) NOT NULL,
-  `id_microcategoria` bigint(20) NOT NULL,
-  UNIQUE KEY `id_utente` (`id_utente`),
-  UNIQUE KEY `id_microcategoria` (`id_microcategoria`)
+  `id_microcategoria` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Dispatcher_notifica`
+-- Struttura della tabella `dispatcher_notifica`
 --
 
-CREATE TABLE IF NOT EXISTS `Dispatcher_notifica` (
+CREATE TABLE IF NOT EXISTS `dispatcher_notifica` (
   `id_utente` bigint(11) NOT NULL,
-  `id_notifica` bigint(20) NOT NULL,
-  PRIMARY KEY (`id_notifica`),
-  UNIQUE KEY `id_notifica` (`id_notifica`),
-  UNIQUE KEY `id_utente` (`id_utente`)
+  `id_notifica` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Feedback`
+-- Struttura della tabella `feedback`
 --
 
-CREATE TABLE IF NOT EXISTS `Feedback` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` bigint(20) NOT NULL,
   `id_utente` bigint(20) NOT NULL,
   `id_annuncio` bigint(20) NOT NULL,
-  `valutazione` decimal(1,1) NOT NULL,
+  `id_valutato` bigint(20) NOT NULL,
+  `valutazione` float NOT NULL,
   `corpo` text,
   `data` datetime NOT NULL,
   `stato` enum('attivato','segnalato','eliminato','amministratore') NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_utente` (`id_utente`),
-  UNIQUE KEY `id_annuncio` (`id_annuncio`),
-  FULLTEXT KEY `corpo` (`corpo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `titolo` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Interesse`
+-- Struttura della tabella `interesse`
 --
 
-CREATE TABLE IF NOT EXISTS `Interesse` (
+CREATE TABLE IF NOT EXISTS `interesse` (
   `id_utente` bigint(20) NOT NULL,
-  `id_microcategoria` bigint(20) NOT NULL,
-  UNIQUE KEY `id_utente` (`id_utente`),
-  UNIQUE KEY `id_microcategoria` (`id_microcategoria`)
+  `id_microcategoria` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Macrocategoria`
+-- Struttura della tabella `macrocategoria`
 --
 
-CREATE TABLE IF NOT EXISTS `Macrocategoria` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `macrocategoria` (
+  `id` bigint(20) NOT NULL,
+  `nome` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Messaggio`
+-- Struttura della tabella `messaggio`
 --
 
-CREATE TABLE IF NOT EXISTS `Messaggio` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `corpo` varchar(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS `messaggio` (
+  `id` bigint(20) NOT NULL,
+  `corpo` text NOT NULL,
   `data` date NOT NULL,
   `letto` tinyint(1) NOT NULL,
   `id_utente_mittente` bigint(20) NOT NULL,
   `id_utente_destinatario` bigint(20) NOT NULL,
-  `stato` enum('attivato','segnalato','eliminato','amministratore') NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_utente_mittente` (`id_utente_mittente`),
-  UNIQUE KEY `id_utente_destinatario` (`id_utente_destinatario`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `stato` enum('attivato','segnalato','eliminato','amministratore') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Microcategoria`
+-- Struttura della tabella `microcategoria`
 --
 
-CREATE TABLE IF NOT EXISTS `Microcategoria` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `microcategoria` (
+  `id` bigint(20) NOT NULL,
   `nome` varchar(255) NOT NULL,
-  `id_macrocategoria` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_macrocategoria` (`id_macrocategoria`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `id_macrocategoria` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Notifica`
+-- Struttura della tabella `notifica`
 --
 
-CREATE TABLE IF NOT EXISTS `Notifica` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `notifica` (
+  `id` bigint(20) NOT NULL,
   `date` date NOT NULL,
   `tipo` enum('decisione','risoluzione','inserimento') NOT NULL,
   `letto` tinyint(1) NOT NULL,
-  `info` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `info` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Preferito`
+-- Struttura della tabella `preferito`
 --
 
-CREATE TABLE IF NOT EXISTS `Preferito` (
+CREATE TABLE IF NOT EXISTS `preferito` (
   `id_utente` bigint(20) NOT NULL,
   `id_annuncio` bigint(20) NOT NULL,
-  `data_aggiunta` datetime NOT NULL,
-  PRIMARY KEY (`id_utente`,`id_annuncio`),
-  UNIQUE KEY `id_utente` (`id_utente`),
-  UNIQUE KEY `id_annuncio` (`id_annuncio`)
+  `data_aggiunta` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Riferito`
+-- Struttura della tabella `riferito`
 --
 
-CREATE TABLE IF NOT EXISTS `Riferito` (
-  `id_utente` bigint(20) NOT NULL,
-  `id_microcategoria` bigint(20) NOT NULL,
-  PRIMARY KEY (`id_utente`,`id_microcategoria`),
-  UNIQUE KEY `id_utente` (`id_utente`),
-  UNIQUE KEY `id_microcategoria` (`id_microcategoria`)
+CREATE TABLE IF NOT EXISTS `riferito` (
+  `id_annuncio` bigint(20) NOT NULL,
+  `id_microcategoria` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Utente`
+-- Struttura della tabella `utente`
 --
 
-CREATE TABLE IF NOT EXISTS `Utente` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `utente` (
+  `id` bigint(20) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `cognome` varchar(255) NOT NULL,
   `telefono` varchar(15) DEFAULT NULL,
@@ -259,95 +226,259 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   `ruolo` enum('utente','moderatore','amministratore') NOT NULL,
   `stato` enum('revisione','attivo','segnalato','disattivato','ricorso','bannato','amministratore','revisione_modifica') NOT NULL,
   `immagine_profilo` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `partita_iva` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
+--
+-- Indici per le tabelle scaricate
+--
+
+--
+-- Indici per le tabelle `annuncio`
+--
+ALTER TABLE `annuncio`
+  ADD PRIMARY KEY (`id`,`id_utente`),
+  ADD KEY `id_utente` (`id_utente`);
+
+--
+-- Indici per le tabelle `bloccato`
+--
+ALTER TABLE `bloccato`
+  ADD PRIMARY KEY (`id_utente`,`id_utente_bloccato`),
+  ADD KEY `id_utente_bloccato` (`id_utente_bloccato`);
+
+--
+-- Indici per le tabelle `candidatura`
+--
+ALTER TABLE `candidatura`
+  ADD PRIMARY KEY (`id`,`id_utente`,`id_annuncio`),
+  ADD KEY `id_utente` (`id_utente`),
+  ADD KEY `id_annuncio` (`id_annuncio`);
+
+--
+-- Indici per le tabelle `commento`
+--
+ALTER TABLE `commento`
+  ADD PRIMARY KEY (`id`,`id_annuncio`,`id_utente`),
+  ADD KEY `id_utente` (`id_utente`),
+  ADD KEY `commento_ibfk_1` (`id_annuncio`);
+
+--
+-- Indici per le tabelle `competente`
+--
+ALTER TABLE `competente`
+  ADD PRIMARY KEY (`id_utente`,`id_microcategoria`),
+  ADD KEY `competente_ibfk_2` (`id_microcategoria`);
+
+--
+-- Indici per le tabelle `dispatcher_notifica`
+--
+ALTER TABLE `dispatcher_notifica`
+  ADD PRIMARY KEY (`id_utente`,`id_notifica`),
+  ADD KEY `dispatcher_notifica_ibfk_2` (`id_notifica`);
+
+--
+-- Indici per le tabelle `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`,`id_utente`,`id_annuncio`,`id_valutato`),
+  ADD KEY `id_utente` (`id_utente`),
+  ADD KEY `id_annuncio` (`id_annuncio`),
+  ADD KEY `feedback_ibfk_3` (`id_valutato`);
+
+--
+-- Indici per le tabelle `interesse`
+--
+ALTER TABLE `interesse`
+  ADD PRIMARY KEY (`id_utente`,`id_microcategoria`),
+  ADD KEY `interesse_ibfk_2` (`id_microcategoria`);
+
+--
+-- Indici per le tabelle `macrocategoria`
+--
+ALTER TABLE `macrocategoria`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nome` (`nome`);
+
+--
+-- Indici per le tabelle `messaggio`
+--
+ALTER TABLE `messaggio`
+  ADD PRIMARY KEY (`id`,`id_utente_mittente`,`id_utente_destinatario`),
+  ADD KEY `id_utente_mittente` (`id_utente_mittente`),
+  ADD KEY `id_utente_destinatario` (`id_utente_destinatario`);
+
+--
+-- Indici per le tabelle `microcategoria`
+--
+ALTER TABLE `microcategoria`
+  ADD PRIMARY KEY (`id`,`id_macrocategoria`),
+  ADD UNIQUE KEY `nome` (`nome`),
+  ADD KEY `microcategoria_ibfk_1` (`id_macrocategoria`);
+
+--
+-- Indici per le tabelle `notifica`
+--
+ALTER TABLE `notifica`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indici per le tabelle `preferito`
+--
+ALTER TABLE `preferito`
+  ADD PRIMARY KEY (`id_utente`,`id_annuncio`),
+  ADD KEY `preferito_ibfk_2` (`id_annuncio`);
+
+--
+-- Indici per le tabelle `riferito`
+--
+ALTER TABLE `riferito`
+  ADD PRIMARY KEY (`id_annuncio`,`id_microcategoria`),
+  ADD KEY `riferito_ibfk_2` (`id_microcategoria`);
+
+--
+-- Indici per le tabelle `utente`
+--
+ALTER TABLE `utente`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `partita_iva` (`partita_iva`);
+
+--
+-- AUTO_INCREMENT per le tabelle scaricate
+--
+
+--
+-- AUTO_INCREMENT per la tabella `annuncio`
+--
+ALTER TABLE `annuncio`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT per la tabella `candidatura`
+--
+ALTER TABLE `candidatura`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT per la tabella `commento`
+--
+ALTER TABLE `commento`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT per la tabella `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT per la tabella `macrocategoria`
+--
+ALTER TABLE `macrocategoria`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT per la tabella `messaggio`
+--
+ALTER TABLE `messaggio`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT per la tabella `microcategoria`
+--
+ALTER TABLE `microcategoria`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT per la tabella `notifica`
+--
+ALTER TABLE `notifica`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT per la tabella `utente`
+--
+ALTER TABLE `utente`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- Limiti per le tabelle scaricate
 --
 
 --
--- Limiti per la tabella `Annuncio`
+-- Limiti per la tabella `annuncio`
 --
-ALTER TABLE `Annuncio`
-  ADD CONSTRAINT `Annuncio_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `annuncio`
+  ADD CONSTRAINT `annuncio_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `Bloccato`
+-- Limiti per la tabella `bloccato`
 --
-ALTER TABLE `Bloccato`
-  ADD CONSTRAINT `Bloccato_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Bloccato_ibfk_2` FOREIGN KEY (`id_utente_bloccato`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `bloccato`
+  ADD CONSTRAINT `bloccato_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `bloccato_ibfk_2` FOREIGN KEY (`id_utente_bloccato`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `Candidatura`
+-- Limiti per la tabella `candidatura`
 --
-ALTER TABLE `Candidatura`
-  ADD CONSTRAINT `Candidatura_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Candidatura_ibfk_2` FOREIGN KEY (`id_annuncio`) REFERENCES `Annuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `candidatura`
+  ADD CONSTRAINT `candidatura_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `candidatura_ibfk_2` FOREIGN KEY (`id_annuncio`) REFERENCES `annuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `Commento`
+-- Limiti per la tabella `commento`
 --
-ALTER TABLE `Commento`
-  ADD CONSTRAINT `Commento_ibfk_1` FOREIGN KEY (`id_annuncio`) REFERENCES `Annuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Commento_ibfk_2` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `commento`
+  ADD CONSTRAINT `commento_ibfk_1` FOREIGN KEY (`id_annuncio`) REFERENCES `annuncio` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `commento_ibfk_2` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `Competente`
+-- Limiti per la tabella `competente`
 --
-ALTER TABLE `Competente`
-  ADD CONSTRAINT `Competente_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Competente_ibfk_2` FOREIGN KEY (`id_microcategoria`) REFERENCES `Microcategoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `competente`
+  ADD CONSTRAINT `competente_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `competente_ibfk_2` FOREIGN KEY (`id_microcategoria`) REFERENCES `microcategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `Dispatcher_notifica`
+-- Limiti per la tabella `dispatcher_notifica`
 --
-ALTER TABLE `Dispatcher_notifica`
-  ADD CONSTRAINT `Dispatcher_notifica_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Dispatcher_notifica_ibfk_2` FOREIGN KEY (`id_notifica`) REFERENCES `Notifica` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `dispatcher_notifica`
+  ADD CONSTRAINT `dispatcher_notifica_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `dispatcher_notifica_ibfk_2` FOREIGN KEY (`id_notifica`) REFERENCES `notifica` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `Feedback`
+-- Limiti per la tabella `feedback`
 --
-ALTER TABLE `Feedback`
-  ADD CONSTRAINT `Feedback_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Feedback_ibfk_2` FOREIGN KEY (`id_annuncio`) REFERENCES `Annuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`id_annuncio`) REFERENCES `annuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `feedback_ibfk_3` FOREIGN KEY (`id_valutato`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `Interesse`
+-- Limiti per la tabella `interesse`
 --
-ALTER TABLE `Interesse`
-  ADD CONSTRAINT `Interesse_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Interesse_ibfk_2` FOREIGN KEY (`id_microcategoria`) REFERENCES `Microcategoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `interesse`
+  ADD CONSTRAINT `interesse_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `interesse_ibfk_2` FOREIGN KEY (`id_microcategoria`) REFERENCES `microcategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `Messaggio`
+-- Limiti per la tabella `messaggio`
 --
-ALTER TABLE `Messaggio`
-  ADD CONSTRAINT `Messaggio_ibfk_1` FOREIGN KEY (`id_utente_mittente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Messaggio_ibfk_2` FOREIGN KEY (`id_utente_destinatario`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `messaggio`
+  ADD CONSTRAINT `messaggio_ibfk_1` FOREIGN KEY (`id_utente_mittente`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `messaggio_ibfk_2` FOREIGN KEY (`id_utente_destinatario`) REFERENCES `utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `Microcategoria`
+-- Limiti per la tabella `microcategoria`
 --
-ALTER TABLE `Microcategoria`
-  ADD CONSTRAINT `Microcategoria_ibfk_1` FOREIGN KEY (`id_macrocategoria`) REFERENCES `Macrocategoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `microcategoria`
+  ADD CONSTRAINT `microcategoria_ibfk_1` FOREIGN KEY (`id_macrocategoria`) REFERENCES `macrocategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `Preferito`
+-- Limiti per la tabella `preferito`
 --
-ALTER TABLE `Preferito`
-  ADD CONSTRAINT `Preferito_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Preferito_ibfk_2` FOREIGN KEY (`id_annuncio`) REFERENCES `Annuncio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `preferito`
+  ADD CONSTRAINT `preferito_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `preferito_ibfk_2` FOREIGN KEY (`id_annuncio`) REFERENCES `annuncio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `Riferito`
+-- Limiti per la tabella `riferito`
 --
-ALTER TABLE `Riferito`
-  ADD CONSTRAINT `Riferito_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `Utente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `Riferito_ibfk_2` FOREIGN KEY (`id_microcategoria`) REFERENCES `Microcategoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `riferito`
+  ADD CONSTRAINT `riferito_ibfk_2` FOREIGN KEY (`id_microcategoria`) REFERENCES `microcategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `riferito_ibfk_3` FOREIGN KEY (`id_annuncio`) REFERENCES `annuncio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

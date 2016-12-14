@@ -24,13 +24,14 @@ class Commento
      * @param $corpo
      * @param $data
      */
-    public function __construct($id, $idAnnuncio, $idUtente, $corpo, $data)
+    public function __construct($id="", $idAnnuncio, $idUtente, $corpo, $data, $stato)
     {
         $this->id = $id;
         $this->idAnnuncio = $idAnnuncio;
         $this->idUtente = $idUtente;
         $this->corpo = $corpo;
         $this->data = $data;
+        $this->stato = $stato;
     }
 
     /**
