@@ -5,7 +5,7 @@
 
 $(document).ready(function () {
     "use strict";
-    var id = 1;
+    var id = $("#user-feedback-id").attr("value");
     $("#feedback-tab-3").click(function () {
         $.ajax({
             url: "feedbackListRetrive",
