@@ -250,9 +250,15 @@ if (isset($_SESSION["utentiSegnalati"])){
 
                                                                     <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
                                                                         <div class="media-action">
-                                                                            <button class="btn btn-link" id="conferma-check"><i class="fa fa-check"></i> Conferma</button>
-                                                                            <button class="btn btn-link" id="elimina-check"><i class="fa fa-close"></i> Elimina</button>
-                                                                            <button class="btn btn-link" id="elimina-check"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                            <a href="ConfermaSegnalazioneUtenteControl">
+                                                                                <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
+                                                                            </a>
+                                                                            <a href="EliminaSegnalazioneUtenteControl">
+                                                                                <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
+                                                                            </a>
+                                                                            <a href="ConfermaSegnalazioneUtenteControl">
+                                                                                <button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                            </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -283,9 +289,15 @@ if (isset($_SESSION["utentiSegnalati"])){
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
                                                                     <div class="media-action">
-                                                                        <button class="btn btn-link" name="conferma-check"><i class="fa fa-check"></i> Conferma</button>
-                                                                        <button class="btn btn-link" id="elimina-check"><i class="fa fa-close"></i> Elimina</button>
-                                                                        <button class="btn btn-link" id="elimina-check"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                        <a href="ConfermaSegnalazioneUtenteControl">
+                                                                            <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
+                                                                        </a>
+                                                                        <a href="EliminaSegnalazioneUtenteControl">
+                                                                            <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
+                                                                        </a>
+                                                                        <a href="ConfermaSegnalazioneUtenteControl">
+                                                                            <button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                        </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -309,18 +321,6 @@ if (isset($_SESSION["utentiSegnalati"])){
 		$("#segnalazioni").toggleClass("active");
 		$('[data-toggle="tooltip"]').tooltip(); 
 	</script>
-
-    <script type="text/javascript">
-        document.getElementById("conferma-check").onclick = function () {
-             location.href = "ConfermaSegnalazioneUtenteControl";
-        };
-    </script>
-
-    <script type="text/javascript">
-        document.getElementById("elimina-check").onclick = function () {
-            location.href = "EliminaSegnalazioneUtenteControl";
-        };
-    </script>
 
 </body>
 </html>

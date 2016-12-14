@@ -34,6 +34,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         throw new IllegalArgumentException(ErrorUtils::$PASS_CORTA);
     }
 
+    if (isset($_POST['ConfermaNuovaPassword'])) {
+        $confPass = strip_tags(htmlspecialchars(addslashes($_POST['ConfermaNuovaPassword'])));
+    } else {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Campo Conferma Password non settato";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
+        throw new IllegalArgumentException("Campo Conferma Password non settato");
+    }
+
     if (empty($currPass)){
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Password corrente non inserita";
@@ -41,15 +50,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         throw new IllegalArgumentException("Password corrente malformata");
     }
 
-    if (empty($newPass) || !preg_match(Patterns::$PASSWORD, $newPass)){
+    if (empty($newPass) || !preg_match_all(Patterns::$PASSWORD, $newPass)){
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Password malformata";
         header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
         throw new IllegalArgumentException(ErrorUtils::$PASS_MALFORMATA);
     }
 
-    $userManager = new UtenteManager();
-    $res = $userManager->changePassword($currPass, $newPass);
+    if (empty($confPass) || $newPass!=$confPass){
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Nuova password non corretta";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
+        throw new IllegalArgumentException("Nuova password non corretta");
+    }
+
+    header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
+    // $userManager = new UtenteManager();
+    //$res = $userManager->changePassword($currPass, $newPass);
 
 }
 
