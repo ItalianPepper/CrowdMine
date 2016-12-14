@@ -147,6 +147,12 @@ try {
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "CercaAnnunci.php";
                 break;
+            
+             case 'stampaConversazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "stampaConversazione.php";
+                break;
+            
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;

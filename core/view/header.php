@@ -1,33 +1,23 @@
-<?php
-/**
- * 
- * @author Fabiano Pecorelli
- * @version 1.0
- * @since 30/05/16
- */
-
-?>
-
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
-  <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/vendor.css">
-  <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/flat-admin.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Theme -->
-  <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/blue-sky.css">
-  <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/blue.css">
-  <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/red.css">
-  <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/yellow.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/vendor.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/flat-admin.css">
 
-</head>
+        <!-- Theme -->
+        <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/blue-sky.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/blue.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/red.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/yellow.css">
+        
+    </head>
 <body>
-  <div class="app app-default">
 
-
+<div class="app app-default">
 
 <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
   <div class="dropdown-background">
@@ -37,59 +27,87 @@
     {{list}}
   </div>
 </script>
-<div class="app-container">
 
-  <nav class="navbar navbar-default" id="navbar">
-  <div class="container-fluid">
-    <div class="navbar-collapse collapse in">
-      <ul class="nav navbar-nav navbar-mobile">
-        <li>
-          <button type="button" class="sidebar-toggle">
-            <i class="fa fa-bars"></i>
-          </button>
-        </li>
+<div class="app-container" style="padding-left:0px">
+
+  <nav class="navbar navbar-default" id="navbar" style="padding: 0px; border-width: 0px; ">
+  <div class="container-fluid"  style="padding: 0px;">
+    <div class="navbar-collapse collapse in" style="background: rgba(16, 14, 23, 0.87);" >
+      
+      <ul class="nav navbar-nav navbar-mobile" style="padding-left: 0px;">
+        
+        <!-- logo su mobile -->
+        
         <li class="logo">
-          <a class="navbar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
+          <img class="img-responsive" style="height: 75%; " src="<?php echo STYLE_DIR ?>/img/Favicon_3.png" />  
+          <a class="navbar-brand" href="#"><span class="highlight">Alfredo Fiorillo</span></a>
         </li>
+        
         <li>
           <button type="button" class="navbar-toggle">
-            <img class="profile-img" src="<?php echo STYLE_DIR ?>/assets/images/profile.png">
+            <img class="profile-img" src="<?php echo STYLE_DIR ?>./assets/images/profile.png">
           </button>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-left">
-          <li class="navbar-title"><img width="50%" src="<?php echo STYLE_DIR ?>/img/crowdmine_logo_2.png" /></li> <!-- Logo qui -->
-        <li class="navbar-search hidden-sm">
-          <input id="search" type="text" placeholder="Search..">
-          <button class="btn-search"><i class="fa fa-search"></i></button>
-        </li>
+    
+      <ul class="nav navbar-nav navbar-left col-md-2" >
+          <!-- Logo su pc -->  
+          <li class="logo">
+                <img class="img-responsive" style="height: 55%; max-width: 100%" src="<?php echo STYLE_DIR ?>/img/Logo_Crowdmine_3.png" />
+            </li>                
+      </ul>  
+        
+      <ul class="nav navbar-nav navbar-center col-md-7">
+        <!--<li class="navbar-title">Dashboard</li>
+        <li class="logo">
+            <img class="img-responsive" style="height: 75%; width: 30%" src="<?php echo STYLE_DIR ?>/img/Logo_Crowdmine_2.png" />
+        </li>  
+         -->
+        <li class="navbar-search hidden-sm col-md-12">
+            
+          <input  class="search-form col-md-8" id="search" type="text" placeholder="Cerca annunci di lavoro..." > <!--style="height: 60%; padding-right: 0px; padding-left: 5px"-->
+
+          <button class="btn-search"><i class="fa fa-search"></i></button> 
+          <div class="col-md-2" style="padding-right: 0px; padding-left: 5px">
+                <!-- BARRA DI RICERCA->FORM->SCRITTA AVANZATE-->       
+                <div class="col-md-4" style="padding-right: 10px; padding-left: 10px; padding-top: 7px">
+                     <a href="#" class="text-center ">Avanzata</a>
+                </div>
+          </div>
+        </li>  
+        
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown notification">
+        
+      <ul class="nav navbar-nav navbar-right  col-md-3" >
+         <!-- MENU I MIEI ANNUNCI -->
+         <li class="dropdown notification">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
-                                    <div class="title">New Orders</div>
-                    <div class="count">0</div>
-                            </a>
+            <div class="icon"><i class="fa fa-folder-open-o" aria-hidden="true"></i></div>
+            <div class="title">I miei annunci</div>
+            <div class="count">0</div>
+          </a>
           <div class="dropdown-menu">
             <ul>
-              <li class="dropdown-header">Ordering</li>
-              <li class="dropdown-empty">No New Ordered</li>
+              <li class="dropdown-header">I miei annunci</li>
+              <li class="dropdown-empty">Nessun annuncio</li>
               <li class="dropdown-footer">
-                <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="#">Visualizza tutto <i class="fa fa-angle-right" aria-hidden="true"></i></a>
               </li>
             </ul>
           </div>
         </li>
+        
+        <!-- MENU MESSAGGI -->
         <li class="dropdown notification warning">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <div class="icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
-            <div class="title">Unread Messages</div>
+            <div class="title">Messaggi</div>
             <div class="count">99</div>
           </a>
+          
           <div class="dropdown-menu">
             <ul>
-              <li class="dropdown-header">Message</li>
+              <li class="dropdown-header">Messaggi</li>
               <li>
                 <a href="#">
                   <span class="badge badge-warning pull-right">10</span>
@@ -127,51 +145,87 @@
                 </a>
               </li>
               <li class="dropdown-footer">
-                <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                <a href="#">Visualizza tutti <i class="fa fa-angle-right" aria-hidden="true"></i></a>
               </li>
             </ul>
           </div>
+         
         </li>
-        <li id="menu-notifica" class="dropdown notification danger">
+       
+        
+        <!-- MENU NOTIFICHE -->
+        <li class="dropdown notification danger">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
-            <div class="title">System Notifications</div>
+            <div class="title">Notifiche</div>
             <div class="count">10</div>
           </a>
+            
+            
           <div class="dropdown-menu">
-            <ul id="lista-notifiche">
-              <li class="dropdown-header">Notification</li>
-
-              <li class="dropdown-footer">
-                <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <ul>
+              <li class="dropdown-header">Notifiche</li>
+              <!--<li>
+                <a href="#">
+                  <span class="badge badge-danger pull-right">8</span>
+                  <div class="message">
+                    <div class="content">
+                      <div class="title">I miei ordini</div>
+                      <div class="description">$400 total</div>
+                    </div>
+                  </div>
+                </a>
               </li>
-            </ul>
-          </div>
-        </li>
-        <li class="dropdown profile">
-          <a href="/html/pages/profile.html" class="dropdown-toggle"  data-toggle="dropdown">
-            <img class="profile-img" src="<?php echo STYLE_DIR ?>/assets/images/profile.png">
-            <div class="title">Profile</div>
-          </a>
-          <div class="dropdown-menu">
-            <div class="profile-info">
-              <h4 class="username">Scott White</h4>
-            </div>
-            <ul class="action">
               <li>
                 <a href="#">
-                  Profile
+                  <span class="badge badge-danger pull-right">14</span>
+                  Inbox
                 </a>
               </li>
               <li>
                 <a href="#">
                   <span class="badge badge-danger pull-right">5</span>
-                  My Inbox
+                  Issues Report
+                </a>
+              </li>
+              -->
+              <li class="dropdown-footer">
+                <a href="#">Visualizza tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        
+        
+         <!-- MEMU PROFILO -->
+        <li class="dropdown profile">
+          <a href="/html/pages/profile.html" class="dropdown-toggle"  data-toggle="dropdown">
+            <img class="profile-img" src="<?php echo STYLE_DIR ?>./assets/images/profile.png">
+            <div class="title">Profilo</div>
+          </a>
+          <div class="dropdown-menu">
+            <div class="profile-info">
+              <h4 class="username">Alfredo Fiorillo</h4>
+            </div>
+            <ul class="action">
+              <li>
+                <a href="#">
+                  Profilo
                 </a>
               </li>
               <li>
                 <a href="#">
-                  Setting
+                  I miei preferiti
+                </a>
+              </li>
+               <li>
+                <a href="#">
+                  Statistiche
+                </a>
+               </li>
+              <li>
+                <a href="#">
+                  Impostazioni
                 </a>
               </li>
               <li>
@@ -182,24 +236,15 @@
             </ul>
           </div>
         </li>
+        
+        
       </ul>
     </div>
   </div>
 </nav>
-    <script type="text/javascript">
-        $('menu-notifica').on('hover', function(e){
-            e.preventDefault();
-            var url = "listaNotificheControl";
 
-            $.ajax({
-                type: "POST",
-                url: url,
-                async: true;
-                success: function(data){
-                    var destination = $('lista-notifiche');
-                    console.log(destination);
 
-                }
-            })
-        })
-    </script>
+
+  
+  <script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/vendor.js"></script>
+  <script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/app.js"></script>
