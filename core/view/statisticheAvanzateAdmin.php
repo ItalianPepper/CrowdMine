@@ -688,18 +688,18 @@
     function bufferingMicroUtentiTable(buttonSelected,initialPage) {
 
         var nameButton = buttonSelected.id;
-
+        var type="Utenti";
         $.ajax({
             type: "POST",
             url: "tabUtenti",
             dataType: "json",
-            data:{macroCategoriaUtenti: nameButton,page:initialPage},
+            data:{macroCategoriaUtenti: nameButton,initpage:initialPage},
             success: function (response) {
                 var arrayMicro = $.map(response, function (el) {
                     return el;
                 });
 
-                appendMicroToTable("Utenti - "+nameButton, arrayMicro);
+                appendMicroToTable(type,nameButton, arrayMicro);
             }
         });
     }
@@ -742,21 +742,25 @@
 
     function bufferingMicroAnnunciTable(buttonSelected,initialPage){
         var nameButton = buttonSelected.id;
+        var type = "Annunci";
         $.ajax({
             type: "POST",
             url: "tabUtenti",
             dataType: "json",
-            data:{macroCategoriaAnnunci:nameButton,page:initialPage},
+            data:{macroCategoriaAnnunci:nameButton,initpage:initialPage},
             success: function (response) {
                 var arrayMicro = $.map(response, function (el) {
                     return el;
                 });
-                appendMicroToTable("Annunci - "+nameButton,arrayMicro);
+
+                appendMicroToTable(type,nameButton,arrayMicro);
             }
         });
     }
 
-    function appendMicroToTable(labelMacro,arrayMicro) {
+    function appendMicroToTable(type,nameButton,arrayMicro) {
+        var labelMacro = type+" - "+nameButton;
+        $("#pagination ul").remove();
         $("#container-micro table").remove();
 
         $("#container-micro").append($("<table>")
@@ -778,6 +782,73 @@
             $("#micro").find("tbody")
                 .append($("<tr>")
                     .append($("<th></th>").text(i+1))
+                    .append($("<td>").text(el)
+                    )
+                );
+        });
+        pagination(type,nameButton);
+    }
+
+    /*la paginazione - implementazione:
+    * 1 capire con quale evento far partire il meccanismo;
+    * 2 il numero di pagine totali;
+    * 3 creare una chiamata AJAX per il numero di pagine totali;
+    * 4 creare una funzione per creare la navbar con i "link" alle pagine;
+    * 5 applicare una funzione su ogni tasto a cui inviare
+    *   variabile se si riferisce a Annunci o Utente, nome della macro(DIFFICILE), numero della pagina;
+    * 6 creare una chiamata AJAX a cui passare le variabili per caricare la prossima pagina;
+    * 7 creare una funzione che cancelli le row vecchie e aggiunga le row nuove alla tabella;
+    * */
+
+    function pagination(type, nameMacro){
+        $.ajax({
+            type: "POST",
+            url: "tabUtenti",
+            dataType: "json",
+            data:{pagination:"maxPage"},
+            success:function (response) {
+                var dimensionPaging = response;
+                appendingPaging(dimensionPaging,type,nameMacro);
+            }
+        });
+    }
+
+    function appendingPaging(dimensionPaging, type, nameMacro) {
+        $("#pagination").append($("<ul>").attr("class", "pagination"));
+
+        for (var i = 1; i < dimensionPaging + 1; i++) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + i)
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+i+"'"+")")
+                    .append($("<a>").text(i)));
+        }
+    }
+
+
+    function goToPage(type,nameMacro,numberPage){
+        $.ajax({
+            type: "POST",
+            url: "tabUtenti",
+            dataType: "json",
+            data:{type:type, macrocategoria:nameMacro, pagination:numberPage},
+            success: function (response) {
+            var arrayMicroPage = $.map(response, function (el) {
+                return el;
+            });
+                updatePage(arrayMicroPage)
+            }
+        });
+    }
+
+
+    function updatePage(arrayMicroPage){
+        $("#micro tr").remove();
+
+        $.each(arrayMicroPage, function (i,el) {
+            $("#micro").find("tbody")
+                .append($("<tr>")
+                    .append($("<th></th>").text(i + 1))
                     .append($("<td>").text(el)
                     )
                 );
