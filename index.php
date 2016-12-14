@@ -162,11 +162,6 @@ try {
             case 'modificaPassword':
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
                 break;
-            case 'EliminaSegnalazioneUtenteControl':
-                include_once MODEL_DIR . "Utente.php";
-                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
-                include_once CONTROL_DIR . "EliminaSegnalazioneUtenteControl.php";
-                break;
             case 'ConfermaSegnalazioneUtenteControl':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);

@@ -18,6 +18,7 @@ if (isset($_SESSION["utentiSegnalati"])){
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -250,15 +251,15 @@ if (isset($_SESSION["utentiSegnalati"])){
 
                                                                     <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
                                                                         <div class="media-action">
-                                                                            <a href="ConfermaSegnalazioneUtenteControl">
-                                                                                <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-                                                                            </a>
-                                                                            <a href="EliminaSegnalazioneUtenteControl">
-                                                                                <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-                                                                            </a>
-                                                                            <a href="ConfermaSegnalazioneUtenteControl">
-                                                                                <button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-                                                                            </a>
+                                                                            <form action="ConfermaSegnalazioneUtenteControl" method="post">
+                                                                                <button class="btn btn-link" name="idUtenteConferma" type="submit" value="<?php echo $utente->getId()?>""><i class="fa fa-check"></i> Conferma</button>
+                                                                            </form>
+                                                                            <form action="ConfermaSegnalazioneUtenteControl" method="post">
+                                                                                <button class="btn btn-link" name="idUtenteElimina" type="submit" value="<?php echo $utente->getId()?>"><i class="fa fa-close"></i> Elimina</button>
+                                                                            </form>
+                                                                            <form action="ConfermaSegnalazioneUtenteControl" method="post">
+                                                                                <button class="btn btn-link" name="idUtenteConferma" type="submit" value="<?php echo $utente->getId()?>"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -289,15 +290,15 @@ if (isset($_SESSION["utentiSegnalati"])){
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
                                                                     <div class="media-action">
-                                                                        <a href="ConfermaSegnalazioneUtenteControl">
-                                                                            <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-                                                                        </a>
-                                                                        <a href="EliminaSegnalazioneUtenteControl">
-                                                                            <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-                                                                        </a>
-                                                                        <a href="ConfermaSegnalazioneUtenteControl">
-                                                                            <button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-                                                                        </a>
+                                                                        <form action="ConfermaSegnalazioneUtenteControl" method="post">
+                                                                            <button class="btn btn-link" name="idUtenteConferma" type="submit" value="<?php echo $utente->getId()?>""><i class="fa fa-check"></i> Conferma</button>
+                                                                        </form>
+                                                                        <form action="ConfermaSegnalazioneUtenteControl" method="post">
+                                                                            <button class="btn btn-link" name="idUtenteElimina" type="submit" value="<?php echo $utente->getId()?>"><i class="fa fa-close"></i> Elimina</button>
+                                                                        </form>
+                                                                        <form action="ConfermaSegnalazioneUtenteControl" method="post">
+                                                                            <button class="btn btn-link" name="idUtenteConferma" type="submit" value="<?php echo $utente->getId()?>"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -316,11 +317,25 @@ if (isset($_SESSION["utentiSegnalati"])){
 
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-	<script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+
+    <script>
 		/*evidenzio segnalazioni nella barra laterale*/
 		$("#segnalazioni").toggleClass("active");
 		$('[data-toggle="tooltip"]').tooltip(); 
 	</script>
+
+    <?php
+    if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+        ?>
+        <script>
+            toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+        </script>
+        <?php
+        unset($_SESSION['toast-type']);
+        unset($_SESSION['toast-message']);
+    }
+    ?>
 
 </body>
 </html>

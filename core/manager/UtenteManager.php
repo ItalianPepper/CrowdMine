@@ -1,7 +1,7 @@
 <?php
 
 include_once MODEL_DIR . 'Utente.php';
-include_once MANAGER_DIR . 'MicroCategoriaManager.php';
+include_once MANAGER_DIR . 'MicrocategoriaManager.php';
 include_once MODEL_DIR . 'Annuncio.php';
 
 /**
