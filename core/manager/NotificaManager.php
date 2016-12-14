@@ -25,6 +25,11 @@ class NotificaManager extends Manager
      * @param Double $idDestinatario
      */
 
+    public function createNotifica($id, $data, $tipo, $info, $letto){
+        $notifica = new Notifica($id, $data, $tipo, $info, $letto);
+        return $notifica;
+    }
+
     public function insertNotifica($id, $data, $tipo, $info, $letto){
         $INSERT_NOTIFICA = "INSERT INTO `Notifica` (`id`, `date`, `tipo`, `letto`, `info`) VALUES ('%s', '%s', '%s', '%s', '%s');";
         $query = sprintf($INSERT_NOTIFICA, $id, $data, $tipo, $info, $letto);
@@ -67,8 +72,22 @@ class NotificaManager extends Manager
      */
     public function getNotifica($idNotifica){
         $LOAD_NOTIFICHE= "SELECT * FROM `Notifica` WHERE `id` = $idNotifica;";
-        $queryNotifica = sprintf($LOAD_NOTIFICHE);
-        $resultNotifica = Manager::getDB()->query($queryNotifica);
+        $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
+        if ($resultNotifica) {
+            while ($obj = $resultNotifica->fetch_assoc()) {
+                $notifica = new Notifica($obj['id'], $obj['date'], $obj['tipo'], $obj['letto'], $obj['info']);
+            }
+        }
+        return $notifica;
+    }
+
+    /**
+     * @param $idNotifica
+     * @return Notifica
+     */
+    public function getNotificaNotVisualized($idNotifica, $letto){
+        $LOAD_NOTIFICHE= "SELECT * FROM `Notifica` WHERE `id` = $idNotifica AND `letto` = ;";
+        $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
         if ($resultNotifica) {
             while ($obj = $resultNotifica->fetch_assoc()) {
                 $notifica = new Notifica($obj['id'], $obj['date'], $obj['tipo'], $obj['letto'], $obj['info']);
@@ -85,8 +104,7 @@ class NotificaManager extends Manager
      */
     public function loadFromDispatcher($idUtente){
         $LOAD_DISPATCHER = "SELECT * FROM `Dispatcher_notifica` WHERE `id_utente` = $idUtente;";
-        $query = sprintf($LOAD_DISPATCHER);
-        $result = Manager::getDB()->query($query);
+        $result = Manager::getDB()->query($LOAD_DISPATCHER);
         $listIdNotifica = array();
         if ($result) {
             while ($obj = $result->fetch_assoc()) {
