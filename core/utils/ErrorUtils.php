@@ -6,6 +6,8 @@
  * @since 30/05/16
  */
 class ErrorUtils {
+
+    public static $VALORE_DUPLICATO = "Impossibile inserire nel database, riga gia esistente";
     public static $INSERIMENTO_FALLITO = "Impossibile inserire nel database";
     public static $AGGIORNAMENTO_FALLITO = "Impossibile aggiornare il database";
     public static $CANCELLAZIONE_FALLITA = "Impossibile cancellare dal database";

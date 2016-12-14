@@ -5,6 +5,23 @@
  * 26/11/16  00:40
  */
 
+class StatoAnnuncio{
+    const REVISIONE = "revisione";
+    const ATTIVO = "attivo";
+    const SEGNALATO = "segnalato";
+    const DISATTIVATO = "disattivato";
+    const RICORSO = "ricorso";
+    const ELIMINATO = "eliminato";
+    const AMMINISTRATORE = "amministratore";
+    const REVISIONE_MODIFICA = "revisione_modifica";
+}
+
+class TipoAnnuncio{
+    const DOMANDA = "domanda";
+    const OFFERTA = "offerta";
+}
+
+
 class Annuncio {
     
     private $id;
