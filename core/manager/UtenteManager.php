@@ -2,6 +2,7 @@
 
 include_once MODEL_DIR . 'Annuncio.php';
 include_once MODEL_DIR . 'Microcategoria.php';
+include_once MANAGER_DIR."Manager.php";
 include_once MODEL_DIR . 'Macrocategoria.php';
 include_once MANAGER_DIR . 'Manager.php';
 
@@ -17,8 +18,7 @@ class UtenteManager extends Manager
     /**
      * UtenteManager constructor.
      */
-    public function __construct()
-    {
+    public function __construct(){
 
     }
      /**
@@ -71,6 +71,7 @@ class UtenteManager extends Manager
      * @param String $password
      */
     public function banUser($UserId, $password){
+
 
     }
 

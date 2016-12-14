@@ -139,6 +139,15 @@ try {
             case 'feedbackListRetrive':
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
             	break;
+            case 'cancellaAccount':
+                include_once CONTROL_DIR . "CancellazioneAccount.php";
+                break;
+            case 'banUtente':
+                include_once CONTROL_DIR . "BanUtente.php";
+                break;
+            case 'visualizzaProfiloPersonale':
+                include_once CONTROL_DIR . "VisualizzaProfiloPersonale.php";
+                break;
             case 'cercaAnnunci':
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "CercaAnnunci.php";
