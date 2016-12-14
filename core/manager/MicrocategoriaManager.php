@@ -79,7 +79,11 @@ class MicrocategoriaManager extends Manager
     }
 
     public function findMicrocategoriaById($idMicro){
-        $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id=%s;";
+        $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id='%s';";
+        $query = sprintf($FIND_MICRO_BY_ID, $idMicro);
+        $result = self::getDB()->query($query);
+        $row = $result->fetch_assoc();
+        return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
 
     }
 
@@ -127,6 +131,23 @@ class MicrocategoriaManager extends Manager
                 array_push($lista, $l);
             }return $lista;
         }return false;
+    }
+
+    public function getListaMicrocategorieByIdMacroCategoria($idMacro){
+        $FIND_MICRO_BY_IDMACRO = "SELECT microcategoria.id AS id, microcategoria.nome AS nome, macrocategoria.id AS id_micro
+                                  FROM microcategoria, macrocategoria
+                                  WHERE microcategoria.id = macrocategoria.id";
+        $result = self::getDB()->query($FIND_MICRO_BY_IDMACRO);
+        if($result){
+            $toReturn = array();
+            while($m = $result->fetch_assoc()){
+                $micro = new MicroCategoria($m['id'], $m['id_micro'], $m['nome']);
+                array_push($toReturn,$micro);
+            }
+            return $toReturn;
+        } else {
+            return false;
+        }
     }
 
 

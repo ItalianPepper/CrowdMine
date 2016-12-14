@@ -4,37 +4,29 @@ include_once MANAGER_DIR . "UtenteManager.php";
 include_once MODEL_DIR . "/Candidatura.php";
 include_once MODEL_DIR . "/Commento.php";
 
-$manager = new AnnuncioManager();
+$managerAnnuncio = new AnnuncioManager();
 $idUtente = 1; // si deve prendere dalla sessione
-$lista = $manager->searchAnnunciUtente($idUtente);
+$listaAnnunci = $managerAnnuncio->searchAnnunciUtente($idUtente);
 
-//carico le candidature per ogni annuncio e le mando alla view
-/*for($i=0;$i<count($lista);$i++){
-    $arrayCandidature = array();
-    $ris = $manager->getAnnuncioWithCandidati($lista[$i]->getId());
-    array_push($arrayCandidature, $ris);
-}*/
-
+//carico le candidature per ogni annuncio e li mando alla view
 $arrayCandidature = array();
-$arr = array();
-$arr1 = array();
-array_push($arr,  new Candidatura(5,1,15,"ciao mi voglio candidare","0000-00-00 00:00:00","2016-12-12 00:00:00","inviata","non_valutato"));
-array_push($arr1,  new Candidatura(5,1,17,"ciao mammaaa","0000-00-00 00:00:00","2016-12-12 00:00:00","inviata","non_valutato"));
-array_push($arrayCandidature, $arr);
-array_push($arrayCandidature, $arr1);
+for($i=0;$i<count($listaAnnunci);$i++){
+    $ris = $managerAnnuncio->getAnnuncioWithCandidati($listaAnnunci[$i]->getId());
+    array_push($arrayCandidature, $ris);
+}
+
 
 //carico i commenti per ogni annuncio e li mando alla view
 $arrayCommenti = array();
-$arrComm = array();
-$arrComm1 = array();
-array_push($arrComm,  new Commento(1,15,1,"Sei buono","2016-12-12 00:00:00"));
-array_push($arrComm1,  new Commento(2,17,1,"Sei cattivo","2016-12-12 00:00:00"));
-array_push($arrayCommenti, $arrComm);
-array_push($arrayCommenti, $arrComm1);
+for ($i=0;$i<count($listaAnnunci);$i++){
+    $arr = $managerAnnuncio->getCommentsbyId($listaAnnunci[$i]->getId());
+    array_push($arrayCommenti,$arr);
+}
+
 
 $_SESSION["listaCandidature"] = serialize($arrayCandidature);
 $_SESSION["listaCommenti"] = serialize($arrayCommenti);
-$_SESSION["lista"] = serialize($lista);
+$_SESSION["lista"] = serialize($listaAnnunci);
 header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciProprietari");
 
 ?>

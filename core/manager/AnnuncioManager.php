@@ -16,6 +16,7 @@ include_once FILTER_DIR ."SearchByIdFilter.php";
 include_once FILTER_DIR . "SearchByUserIdFilter.php";
 include_once FILTER_DIR . "SearchByMicroFilter.php";
 include_once FILTER_DIR . "OrderByDateFilter.php";
+include_once FILTER_DIR . "SearchByNotStatus.php";
 
 
 /**
@@ -208,7 +209,7 @@ class AnnuncioManager
     public function searchAnnunciUtente($idUtente)
     {
         return $this->searchAnnuncio(
-            Array(new SearchByUserIdFilter($idUtente))
+            Array(new SearchByUserIdFilter($idUtente), new SearchByNotStatus(REVISIONE), new SearchByNotStatus(ELIMINATO))
         );
     }
 

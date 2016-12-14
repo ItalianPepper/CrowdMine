@@ -23,6 +23,7 @@ define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
 define('ATTIVO',"attivo");
 define('SEGNALATO',"segnalato");
 define('ELIMINATO',"eliminato");
+define('REVISIONE',"revisione");
 define('AMMINISTRATORE',"amministratore");
 define('DEBUG', true);
 

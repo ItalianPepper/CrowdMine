@@ -122,7 +122,8 @@ include_once EXCEPTION_DIR . "IllegalArgumentException.php";
     $managerAnnuncio = new AnnuncioManager();
 
     try{
-        $managerAnnuncio->updateAnnuncio(15,$idUtente, $data, $titolo, $luogo, $listaMicrocategorie, $retribuzione, $tipologia, $descrizione);
+        $idAnnuncio = unserialize($_SESSION["annuncio"]);
+        $managerAnnuncio->updateAnnuncio($idAnnuncio->getId(),$idUtente, $data, $titolo, $luogo, $retribuzione, $tipologia, $descrizione, $listaMicrocategorie);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "L'annuncio è in fase di lavorazione";
         header("Location:" . DOMINIO_SITO . "/annunciProprietari");

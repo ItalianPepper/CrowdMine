@@ -83,10 +83,40 @@ class MacroCategoriaManager extends Manager
         $rs = Manager::getDB()->query($GET_MACRO_BY_NAME);
         if($rs){
             $obj = mysqli_fetch_assoc($rs);
-            $macro = new MacroCategoria(null,$obj['nome']);
+            $macro = new MacroCategoria($obj["id"],$obj['nome']);
         }
         return $macro;
 
+    }
+
+    /**
+     * @param $id
+     * @return MacroCategoria
+     */
+    public function getMacroById($id){
+        $GET_MACRO_BY_ID = "SELECT * FROM macrocategoria WHERE nome='$id'";
+        $rs = Manager::getDB()->query($GET_MACRO_BY_ID);
+        if($rs){
+            $obj = mysqli_fetch_assoc($rs);
+            $macro = new MacroCategoria($obj["id"],$obj['nome']);
+        }
+        return $macro;
+
+    }
+
+    public function getListaMacrocategorie(){
+        $GET_ALL_MACRO = "SELECT * FROM macrocategoria";
+        $rs = Manager::getDB()->query($GET_ALL_MACRO);
+        if($rs){
+            $toReturn = array();
+            while($row = $rs->fetch_assoc()){
+                $macro = new MacroCategoria($row["id"],$row["nome"]);
+                array_push($toReturn,$macro);
+            }
+            return $toReturn;
+        } else {
+            return false;
+        }
     }
 
     /**
