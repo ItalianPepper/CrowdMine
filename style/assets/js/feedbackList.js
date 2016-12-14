@@ -16,20 +16,7 @@ $(document).ready(function () {
             success: function (data) {
                 var destination = $("#feedback-list-destination");
                 destination.empty();
-                for (var i in data) {
-                    var feedbackListObj = [];
-                    feedbackListObj.feedbackID = data[i].feedbackID;
-                    feedbackListObj.feedbackTitle = data[i].feedbackTitle;
-                    feedbackListObj.feedbackDesc = data[i].feedbackDesc;
-                    feedbackListObj.userFirstName = data[i].userFirstName;
-                    feedbackListObj.userLastName = data[i].userLastName;
-                    feedbackListObj.userProfileImage = data[i].userProfileImage;
-                    feedbackListObj.feedbackRating = data[i].feedbackRating;
-
-                    destination.append(feedbackRowToString(feedbackListObj, "user"));
-                    setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
-                }
-
+                generateFeedbackList(data,"user",destination)
             },
             error: function (data) {
                 toastr[data["toastType"]](data["toastMessage"]);
@@ -40,6 +27,22 @@ $(document).ready(function () {
     });
 });
 
+function generateFeedbackList(data,role,destination)
+{
+    for (var i in data) {
+        var feedbackListObj = [];
+        feedbackListObj.feedbackID = data[i].feedbackID;
+        feedbackListObj.feedbackTitle = data[i].feedbackTitle;
+        feedbackListObj.feedbackDesc = data[i].feedbackDesc;
+        feedbackListObj.userFirstName = data[i].userFirstName;
+        feedbackListObj.userLastName = data[i].userLastName;
+        feedbackListObj.userProfileImage = data[i].userProfileImage;
+        feedbackListObj.feedbackRating = data[i].feedbackRating;
+
+        destination.append(feedbackRowToString(feedbackListObj, role));
+        setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
+    }
+}
 
 function feedbackRowToString(feedbackListObj, role) {
     "use strict";

@@ -595,7 +595,7 @@
                                                 class="caret"></span></button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a id="option-1" name="data">Data</a></li>
-                                            <li><a id="option-2" name="name">Alfabetico</a></li>
+                                            <li><a id="option-2" name="nome">Alfabetico</a></li>
                                             <li><a id="option-3" name="valutazione">Valutazione</a></li>
                                         </ul>
                                     </div>

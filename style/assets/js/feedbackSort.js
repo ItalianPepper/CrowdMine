@@ -9,17 +9,21 @@
            var id = $("#user-feedback-id").attr("value");
            console.log(optionValue,id);
            $.ajax({
-               url: "",
+               url: "SortFeedback",
                type: "POST",
-               data: {'optionValue': optionValue},
+               data: {'optionValue': optionValue,'id':id},
                dataType: 'json',
                async: true,
-               success:function () {
+               success:function (data) {
 
+                   var destination = $("#feedback-list-destination");
+                   destination.empty();
+                   generateFeedbackList(data,"user",destination)
                },
-               error:function () {
-
+               error:function (data,textStatus, xhr) {
+                   console.log(xhr.status);
+                   toastr.error("Errore inaspettato durante l'ordinamento");
                }
            });
        })
-    })
+    });

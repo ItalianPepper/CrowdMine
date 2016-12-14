@@ -156,6 +156,9 @@ try {
             case 'feedbackValutation':
                 include_once CONTROL_DIR . "feedbackValutation.php";
                 break;
+            case 'SortFeedback':
+                include_once CONTROL_DIR . "SortFeedback.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
