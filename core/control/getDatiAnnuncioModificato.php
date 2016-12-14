@@ -8,7 +8,9 @@
 include_once MANAGER_DIR . 'AnnuncioManager.php';
 include_once CONTROL_DIR . "ControlUtils.php";
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
-
+if(isset($_SESSION["annuncio"])){
+    unset($_SESSION["annuncio"]);
+}
     $titolo = null;
     $descrizione = null;
     $luogo = null;

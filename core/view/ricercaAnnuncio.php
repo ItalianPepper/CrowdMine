@@ -256,16 +256,11 @@ include_once VIEW_DIR . 'header.php';
                                 <div class="col-md-6">
 
                                     <select id="macro" onchange="caricaMicro()" name="macrocategorie">
-                                        <option>I love Steve Jobs</option>
-                                        <option>PHP is awesome</option>
-                                        <option>I'm a Developer</option>
+                                        <option>Seleziona la macro categoria</option>
                                     </select>
 
-                                    <select id="micro" name="microcategorie" style="margin-top: 3%">
-                                        <option selected="selected"></option>
-                                        <option>I love Steve Jobs</option>
-                                        <option>PHP is awesome</option>
-                                        <option>I'm a Developer</option>
+                                    <select id="micro"  name="microcategorie" style="margin-top: 3%">
+                                        <option selected="selected">Seleziona prima la macro</option>
                                     </select>
 
                                     <div>

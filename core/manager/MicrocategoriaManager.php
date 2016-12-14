@@ -136,7 +136,7 @@ class MicrocategoriaManager extends Manager
     public function getListaMicrocategorieByIdMacroCategoria($idMacro){
         $FIND_MICRO_BY_IDMACRO = "SELECT microcategoria.id AS id, microcategoria.nome AS nome, macrocategoria.id AS id_micro
                                   FROM microcategoria, macrocategoria
-                                  WHERE microcategoria.id = macrocategoria.id";
+                                  WHERE microcategoria.id = '$idMacro'";
         $result = self::getDB()->query($FIND_MICRO_BY_IDMACRO);
         if($result){
             $toReturn = array();

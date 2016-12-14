@@ -2,14 +2,17 @@
 include_once MODEL_DIR . "/Annuncio.php";
 include_once MODEL_DIR . "/Candidatura.php";
 include_once MODEL_DIR . "/Commento.php";
+include_once MODEL_DIR . "/Utente.php";
 $idUtente="1";
 if (isset($_SESSION["lista"])){
     $annunci = unserialize($_SESSION["lista"]);
     $listaCandidature = unserialize($_SESSION["listaCandidature"]);
     $listaCommenti = unserialize($_SESSION["listaCommenti"]);
+    $listaUtentiCandidati = unserialize($_SESSION["listaUtentiCandidati"]);
     unset($_SESSION["lista"]);
     unset($_SESSION["listaCandidature"]);
     unset($_SESSION["listaCommenti"]);
+    unset($_SESSION["listaUtentiCandidati"]);
 } else {
     header("Location: " . DOMINIO_SITO . "/annunciProprietari");
 }
@@ -392,14 +395,17 @@ include_once VIEW_DIR . 'header.php';
                                  style="margin-left: 0; border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%;">
                                 <img class="col-md-2 col-sm-2" src="<?php echo STYLE_DIR; ?>img\logojet.jpg"
                                      style="margin-left: -5%">
-                                <h4 class="title" style="margin-top: 3%">Scott White</h4>
+                                <h4 class="title" style="margin-top: 3%"><?php echo $listaUtentiCandidati[$i][$z]->getNome(); ?></h4>
                                 <div class="col-md-5 col-sm-5 options"
                                      style="float: right; margin-top: -8%; margin-right: -23%">
-                                    <a href="">
-                                    <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                    <form method="POST" action="paginaAlfredo">
+                                        <input name="idAnnuncio" style="display: none" value="<?php echo $annunci[$i]->getId(); ?>">
+                                        <input name="idUtenteCandidato" style="display: none" value="<?php echo $listaUtentiCandidati[$i][$z]->getId(); ?>">
+                                        <input name="idUtenteProprietario" style="display: none" value="<?php echo $idUtente; ?>">
+                                        <button type="submit" style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
                                         <i class="fa fa-mail-reply-all"></i>
-                                    </button>
-                                    </a>
+                                        </button>
+                                    </form
                                     <a href="rimuoviCandidatura?id=<?php echo $listaCandidature[$i][$z]->getId();?>">
                                     <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
                                         <i class="fa fa-close"></i>

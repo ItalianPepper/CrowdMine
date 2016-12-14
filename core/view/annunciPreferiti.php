@@ -5,16 +5,14 @@
  * @version 1.0
  * @since 30/05/16
  */
-include_once VIEW_DIR . 'header.php';
 include_once MODEL_DIR . "/Annuncio.php";
-
 if(isset($_SESSION["listaAnnunciPreferiti"])){
     $listaAnnunciPreferiti = unserialize($_SESSION["listaAnnunciPreferiti"]);
     unset($_SESSION["listaAnnunciPreferiti"]);
 } else {
-    header("Location: " . DOMINIO_SITO . "");
+    header("Location: " . DOMINIO_SITO . "/annunciPreferiti");
 }
-
+include_once VIEW_DIR . 'header.php';
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">

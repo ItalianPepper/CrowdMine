@@ -257,6 +257,21 @@ class AnnuncioManager
         }
     }
 
+    public function getFavorite($UtenteId){
+        $LOAD_PREFERITI = "SELECT a.* FROM annuncio a, preferito p, utente u WHERE u.id = $UtenteId AND p.id_utente = u.id AND a.id = p.id_annuncio;";
+        $result = Manager::getDB()->query($LOAD_PREFERITI);
+        $listPreferiti = array();
+        if ($result) {
+            while ($obj = $result->fetch_assoc()) {
+                if(!$obj["stato"]!=ELIMINATO && !$obj["stato"]!=REVISIONE) {
+                    $annuncio = new Annuncio($obj['id'], $obj['id_utente'], $obj['data'], $obj['titolo'], $obj['luogo'], $obj['stato'], $obj['retribuzione'], $obj['tipo'], $obj['descrizione']);
+                    $listPreferiti[] = $annuncio;
+                }
+            }
+            return $listPreferiti;
+        }
+    }
+
     /**
      * Remove an Annuncio from the user's favorites list.
      *

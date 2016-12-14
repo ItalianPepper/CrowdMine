@@ -26,11 +26,15 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
             $idMacro = $_GET["idMacro"];
             $microManager = new MicrocategoriaManager();
             $array = $microManager->getListaMicrocategorieByIdMacroCategoria($idMacro);
-            $toReturn="<option value=0 selected>Seleziona la micro categoria</option>";
-            foreach ($array as $a){
-                $toReturn = $toReturn . "<option value=".$a->getId().">" . $a->getNome()."</option>";
+            if(count($array)>0) {
+                $toReturn = "<option value=0 selected>Seleziona la micro categoria</option>";
+                foreach ($array as $a) {
+                    $toReturn = $toReturn . "<option value=" . $a->getId() . ">" . $a->getNome() . "</option>";
+                }
+                echo $toReturn;
+            } else {
+               echo $toReturn = "<option value=0 selected>Seleziona prima la macro</option>";
             }
-            echo $toReturn;
         }
 
         if($_GET["nome"]=="idUtente"){

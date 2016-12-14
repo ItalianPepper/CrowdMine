@@ -257,9 +257,11 @@ include_once VIEW_DIR . 'header.php';
                             </a>
                             <ul class="card-action">
                                 <li class="dropdown">
+                                    <?php if(!$annunci[$i]->getStato()=="segnalato"){ ?>
                                     <a href="/" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="fa fa-cog" style="font-size: 200%;"></i>
                                     </a>
+                                    <?php } ?>
                                     <ul class="dropdown-menu">
                                         <li><a href="#" data-toggle="modal" data-target="#myModal">Segnala</a></li>
                                     </ul>
@@ -275,12 +277,9 @@ include_once VIEW_DIR . 'header.php';
                                         <h4 class="modal-title">Conferma segnalazione</h4>
                                     </div>
                                     <form action="segnalaAnnuncioControl" method="post">
-                                        <div class="modal-body">Inserisci una descrizione per segnalare
-                                            <textarea name="descrizione" rows="3" class="form-control"
-                                                      placeholder="Descrizione.."></textarea>
-                                        </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                            <input name="idAnnuncio" style="display: none" value="<?php echo $annunci[$i]->getId(); ?>">
+                                            <button type="submit" class="btn btn-sm btn-default" data-dismiss="modal">
                                                 Chiudi
                                             </button>
                                             <button type="submit" class="btn btn-sm btn-danger">Segnala</button>
@@ -300,6 +299,7 @@ include_once VIEW_DIR . 'header.php';
                                 </div>
                                 <form action="aggiungiPreferitiControl" method="post">
                                     <div class="modal-footer">
+                                        <input name="idAnnuncio" style="display: none" value="<?php echo $annunci[$i]->getId(); ?>">
                                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
                                             Chiudi
                                         </button>
