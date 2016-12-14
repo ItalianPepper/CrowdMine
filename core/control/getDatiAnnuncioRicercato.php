@@ -8,12 +8,14 @@ include_once FILTER_DIR . 'SearchByLocationFilter.php';
 include_once FILTER_DIR . 'SearchByTypeFilter.php';
 include_once FILTER_DIR . 'SearchByDateInterval.php';
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
+include_once MODEL_DIR . "/Commento.php";
 
-if($_SERVER["REQUEST_METHOD"]=="POST") {
     $managerAnnuncio = new AnnuncioManager();
     $filters = array();
+    $commenti = array();
+    $arrayCommenti = array();
 
-    if(($_POST['titolo']) != null){
+    if (($_POST['titolo']) != null) {
         $titolo = $_POST['titolo'];
         $titoloObj = new SearchByTitleFilter($titolo);
         array_push($filters, $titoloObj);
@@ -22,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         $titolo = null;
     }
 
-    if(($_POST['luogo']) != null){
+    if (($_POST['luogo']) != null) {
         $luogo = $_POST['luogo'];
         $luogoObj = new SearchByLocationFilter($luogo);
         array_push($filters, $luogoObj);
@@ -31,8 +33,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         $luogo = null;
     }
 
-    if(($_POST['tipologia']) != null){
-        echo $_POST['tipologia'];
+    if (($_POST['tipologia']) != null) {
         $tipologia = $_POST['tipologia'];
         $tipologiaObj = new SearchByTypeFilter($tipologia);
         array_push($filters, $tipologiaObj);
@@ -42,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 
 
     if (!isset($_POST['utente'])) {                      //attendiamo il manager Utente
-        $utenteName =  $_POST['utente'];
+        $utenteName = $_POST['utente'];
         $idUtente = "1";
         $utenteObj = new SearchByUserIdFilter($idUtente);
         array_push($filters, $utenteObj);
@@ -51,8 +52,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     }
 
 
-
-    if(($_POST['data']) != null) {
+    if (($_POST['data']) != null) {
         $dataPost = $_POST['data'];
         $dataObj = new SearchByDateInterval($dataPost, date("Y-m-d"));
         array_push($filters, $dataObj);
@@ -61,16 +61,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     }
 
 
-
-
-
-
-
-
     try {
         $annunci = $managerAnnuncio->searchAnnuncio($filters);
         if (count($annunci) != 0) {
+            for ($i = 0; $i < count($annunci); $i++) {
+                array_push($arrayCommenti, $managerAnnuncio->getCommentsbyId($annunci[$i]->getId()));
+            }
+            $_SESSION['listaCommenti'] = serialize($arrayCommenti);
             $_SESSION['annunciRicercati'] = serialize($annunci);
+            $_SESSION['provenienza'] = serialize("ricerca");
             header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
         } else {
             header("Location:" . DOMINIO_SITO . "/nothingFound");
@@ -79,6 +78,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     } catch (ApplicationException $e) {
 
     }
-}
+
 
 ?>

@@ -7,17 +7,7 @@ if (isset($_SESSION["annunciHome"])) {
     unset($_SESSION["annunciHome"]);
     if (isset($_SESSION['listaCommenti'])) {
         $commenti = unserialize($_SESSION['listaCommenti']);
-
-
-        //for ($i = 0; $i < count($annunci); $i++) {
-          //  for ($z = 0; $z < count($commenti[$i]); $z++) {
-            //    if ($annunci[$i]->getId() == $commenti[$i][$z]->getIdAnnuncio()) {
-
-              //  }
-            //}
-        //}
     }
-
 } else {
     header("Location:" . DOMINIO_SITO . "/getHome");
 }
