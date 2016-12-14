@@ -26,8 +26,8 @@ class MicrocategoriaManager extends Manager
      * @param String $nome
      * @return Microcategoria
      */
-    public function createMicrocategoria($nomeMicro, $idMacro){
-        return new Microcategoria($nomeMicro, $idMacro);
+    public function createMicrocategoria($id, $nomeMicro, $idMacro){
+        return new Microcategoria($id, $nomeMicro, $idMacro);
     }
 
     /**
@@ -36,16 +36,10 @@ class MicrocategoriaManager extends Manager
      * @param Microcategoria $microcategoria
      * @param Macrocategoria $macrocategoria
      */
-    public function addMicrocategoria($nomeMicro, $nomeMacro){
-        if($this->checkMicrocategoria($nomeMicro)){
-            return false;
-        }else{
-            $macroManager = new MacroCategoriaManager();
-            $macro = $macroManager->getMacrocategoriaByName($nomeMacro);
-            $AGGIUNGI_MICRO = "INSERT INTO 'microcategoria' (nome, id_macrocategoria) VALUES('%s', '%s')";
-            $query = sprintf($AGGIUNGI_MICRO, $nomeMicro, $macro->getId());
-            self::getDB()->query($query);
-        }
+    public function addMicrocategoria($microcategoria){
+        $AGGIUNGI_MICRO = "INSERT INTO 'microcategoria' (nome, id_macrocategoria) VALUES('%s', '%s')";
+        $query = sprintf($AGGIUNGI_MICRO, $microcategoria->getNome(), $microcategoria->getIdMacrocategoria());
+        self::getDB()->query($query);
     }
 
     /**
@@ -53,9 +47,9 @@ class MicrocategoriaManager extends Manager
      *
      * @param Microcategoria $microcategoria
      */
-    public function deleteMicrocategoria($nomeMicro){
-        $RIMUOVI_MICROCATEGORIA = "DELETE FROM 'microcategoria' WHERE nome = '%s'";
-        $query = sprintf($RIMUOVI_MICROCATEGORIA, $nomeMicro);
+    public function deleteMicrocategoria($microcategoria){
+        $RIMUOVI_MICROCATEGORIA = "DELETE FROM 'microcategoria' WHERE id = '%s'";
+        $query = sprintf($RIMUOVI_MICROCATEGORIA, $microcategoria->getId());
         self::getDB()->query($query);
     }
 
@@ -64,9 +58,9 @@ class MicrocategoriaManager extends Manager
      *
      * @param Microcategoria $microcategoria
      */
-    public function editMicrocategoria($vecchioNome, $nuovoNome){
-        $CHANGE_NOME_MICRO = "UPDATE 'microcategoria' SET nome='%s' WHERE nome='%s'";
-        $query = sprintf($CHANGE_NOME_MICRO, $nuovoNome, $vecchioNome);
+    public function editMicrocategoria($microcategoria){
+        $CHANGE_NOME_MICRO = "UPDATE 'microcategoria' SET nome='%s', id_macrocategoria='%s' WHERE id='%s'";
+        $query = sprintf($CHANGE_NOME_MICRO, $microcategoria->getNome(), $microcategoria->getIdMacrocategoria());
         self::getDB()->query($query);
     }
 
@@ -84,7 +78,12 @@ class MicrocategoriaManager extends Manager
             return false;
     }
 
-    public function getMicrocategoriaByNome($nome){
+    public function findMicrocategoriaById($idMicro){
+        $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id=%s;";
+
+    }
+
+    public function findMicrocategoriaByNome($nome){
         $GET_MICRO_BY_NOME = "SELECT * FROM 'microcategoria' WHERE nome  ='%s'";
         $query = sprintf($GET_MICRO_BY_NOME, $nome);
         $result = self::getDB()->query($query);
@@ -106,6 +105,28 @@ class MicrocategoriaManager extends Manager
             array_push($micro);
         }
         return $listaMicro;
+    }
+
+    /**
+     * Return array formed by two values: the name of microcategoria associated with macorcategoria param
+     * and the count of this microcategoria
+     *
+     * @return array $lista
+     */
+    public function findBestMicrocategoria($macrocategoria){
+        $lista = array();
+        $FIND_BEST_USER_BY_MICROCATEGORIA =
+            "SELECT microcategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto
+             FROM microcategoria, competente
+             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
+             GROUP BY competente.id_microcategoria;";
+        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria);
+        $result = self::getDB()->query($query);
+        if(result != 0){
+            foreach($result->fetch_assoc() as $l){
+                array_push($lista, $l);
+            }return $lista;
+        }return false;
     }
 
 

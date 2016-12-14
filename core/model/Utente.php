@@ -6,6 +6,22 @@
  * and open the template in the editor.
  */
 
+class StatoUtente{
+    const REVISIONE = "revisione";
+    const ATTIVO = "attivo";
+    const SEGNALATO = "segnalato";
+    const DISATTIVATO = "disattivato";
+    const RICORSO = "ricorso";
+    const BANNATO = "bannato";
+    const AMMINISTRATORE = "amministratore";
+    const REVISIONE_MODIFICA = "revisione_modifica";
+}
+
+class RuoloUtente{
+    const UTENTE = "utente";
+    const MODERATORE = "moderatore";
+    const AMMINISTRATORE = "amministratore";
+}
 
 class Utente {
 

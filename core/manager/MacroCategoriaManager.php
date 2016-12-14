@@ -24,7 +24,6 @@ class MacroCategoriaManager extends Manager
 
     /**
      * create a new persistent macroCategoria
-     *
      * @param $id
      * @param $nome
      * @return MacroCategoria
@@ -79,4 +78,32 @@ class MacroCategoriaManager extends Manager
         return $macro;
     }
 
+    public function getMacroByName($nome){
+        $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE nome='$nome'";
+        $rs = Manager::getDB()->query($GET_MACRO_BY_NAME);
+        if($rs){
+            $obj = mysqli_fetch_assoc($rs);
+            $macro = new MacroCategoria(null,$obj['nome']);
+        }
+        return $macro;
+
+    }
+
+    /**
+     * @return array|bool
+     */
+    public function findListMacorocategoria(){
+        $lista = array();
+        $FIND_LIST_MACROCATEGORIA =
+            "SELECT macrocategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto 
+             FROM macrocategoria, competente, microcategoria 
+             WHERE microcategoria.id = competente.id_microcategoria AND macrocategoria.id IN (SELECT microcategoria.id_macrocategoria FROM macrocategoria) 
+             GROUP BY macrocategoria.nome;";
+        $result = self::getDB()->query($FIND_LIST_MACROCATEGORIA);
+        if(result != 0){
+            foreach($result->fetch_assoc() as $l){
+                array_push($lista, $l);
+            }return $lista;
+        }return false;
+    }
 }
