@@ -476,12 +476,22 @@
                         <!--Feedback-->
                         <div role="tabpanel" class="tab-pane" id="tab3">
                             <div class="row">
-                                <div class="col-lg-3 col-md-5 col-xs-3">
-           
-                                </div>
-                                <div class="col-lg-3 col-md-5 col-xs-3">
+                                <div class="col-md-8">
 
-
+                                    <div class="btn-group open" style="margin-right: 20px">
+                                        <button type="button" class="btn btn-success"
+                                                data-toggle="dropdown" aria-expanded="true">Inserisci Feedback</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-info dropdown-toggle"
+                                                data-toggle="dropdown" aria-expanded="false">Ordina<span
+                                                class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Data</a></li>
+                                            <li><a href="#">Alfabetico</a></li>
+                                            <li><a href="#">Valutazione</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <!--<div class="row">
