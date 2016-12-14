@@ -112,7 +112,7 @@ class NotificaManager extends Manager
                 $listIdNotifica[] = $IdNotifica;
             }
         }
-        return $listNotifica;
+        return $listIdNotifica;
     }
 
 }

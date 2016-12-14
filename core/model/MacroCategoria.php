@@ -16,7 +16,7 @@ class MacroCategoria
      * @param $id
      * @param $nome
      */
-    public function __construct($id, $nome)
+    public function __construct($id=NULL,$nome)
     {
         $this->id = $id;
         $this->nome = $nome;

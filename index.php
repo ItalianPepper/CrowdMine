@@ -20,6 +20,10 @@ define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
 define('AJAX_DIR', CORE_DIR . DIRECTORY_SEPARATOR . "ajax" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
+define('ATTIVO',"attivo");
+define('SEGNALATO',"segnalato");
+define('ELIMINATO',"eliminato");
+define('AMMINISTRATORE',"amministratore");
 define('DEBUG', true);
 
 try {
