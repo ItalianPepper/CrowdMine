@@ -2089,23 +2089,23 @@ a:hover {
             font-weight: 400; }
         .navbar .navbar-collapse .navbar-nav > li.navbar-search input {
           border: none;
-          height: 32px;
+          height: 40px;
           padding: 0 20px;
           font-weight: 200;
-          border-top-left-radius: 5px;
-          border-bottom-left-radius: 5px;
-          border: 1px solid #f5f5f5;
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          border: 1px solid #dfe6e8;
           border-right: none;
-          background-color: #f5f5f5; }
+          background-color: transparent; }
         .navbar .navbar-collapse .navbar-nav > li.navbar-search .btn-search {
-          width: 50px;
-          height: 32px;
-          border-top-right-radius: 5px;
-          border-bottom-right-radius: 5px;
+          width: 40px;
+          height: 40px;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
           border: 1px solid #dfe6e8;
           border-left: none;
-          background-color: #777;
-          color: #f5f5f5;
+          background-color: transparent;
+          color: #dfe6e8;
           font-size: 1.4em; }
         .navbar .navbar-collapse .navbar-nav > li.dropdown:after {
           position: absolute;
@@ -2501,7 +2501,7 @@ a:hover {
           width: 100%;
           background-color: #FFF; }
         .app-container.__navbar .navbar .navbar-collapse .navbar-nav > li.navbar-search .btn-search {
-           }
+          background-color: #FFF; }
   .app-container.__navbar .navbar .navbar-collapse .navbar-mobile {
     height: 70px;
     -ms-flex-direction: row;
