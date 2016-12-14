@@ -94,12 +94,15 @@ try {
             case 'conversazionePrivata':
                 include_once VIEW_DIR . "conversazionePrivata.php";
                 break;
+            case 'footer':
+                include_once VIEW_DIR . "footer.php";
+                break;
             
             case 'inserisciEsperienza':
                 StringUtils::checkPermission("Cliente");
                 include_once VIEW_DIR . "inserisciEsperienza.php";
                 break;
-//             case 'standard':
+//          case 'standard':
 //                include_once "standard.html";
 //                break;
             case 'ricercaAnnuncio':
@@ -185,7 +188,7 @@ try {
                 break;
                 case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
-                break;
+                break;        
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;
