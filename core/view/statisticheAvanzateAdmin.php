@@ -789,17 +789,6 @@
         pagination(type,nameButton);
     }
 
-    /*la paginazione - implementazione:
-    * 1 capire con quale evento far partire il meccanismo;
-    * 2 il numero di pagine totali;
-    * 3 creare una chiamata AJAX per il numero di pagine totali;
-    * 4 creare una funzione per creare la navbar con i "link" alle pagine;
-    * 5 applicare una funzione su ogni tasto a cui inviare
-    *   variabile se si riferisce a Annunci o Utente, nome della macro(DIFFICILE), numero della pagina;
-    * 6 creare una chiamata AJAX a cui passare le variabili per caricare la prossima pagina;
-    * 7 creare una funzione che cancelli le row vecchie e aggiunga le row nuove alla tabella;
-    * */
-
     function pagination(type, nameMacro){
         $.ajax({
             type: "POST",

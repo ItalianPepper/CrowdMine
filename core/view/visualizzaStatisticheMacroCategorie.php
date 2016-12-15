@@ -327,11 +327,13 @@
         function createElements() {
            var allElement = [];
             for (var key in result) {
+              var  randomColor= rgbaRandom();
+
                 var grafics = {
                     label: [key],
                     data: [result[key]],
-                    backgroundColor: ["rgba(0, 255, 0, 0.3)"],
-                    borderColor: ["rgba(0, 255, 0, 0.3)"],
+                    backgroundColor: randomColor,
+                    borderColor: randomColor,
                     borderWidth: 1,
                 }
                 allElement.push(grafics);
@@ -357,6 +359,24 @@
                 tooltipTemplate: "<%= label %>  -  <%= value %>"
             }
         });
+    }
+
+
+    function rgbaRandom(){
+
+        var rgbaArray = ["rgba(255,255,255,0.7)","rgba(36,211,255,0.7)","rgba(185,255,20,0.7)","rgba(31,75,255,0.7)",
+                        "rgba(133,255,214,0.7)","rgba(255,232,20,0.7)","rgba(112,255,184,0.7)","rgba(255,23,38,0.7)",
+                        "rgba(120,255,79,0.7)","rgba(120,255,219,0.7)","rgba(255,146,51,0.7)","rgba(103,92,255,0.7)",
+                        "rgba(0, 255, 0, 0.7)", "rgba(255,239,92,0.7)","rgba(255,128,0,0.7)","rgba(161,252,255,0.7)",
+                        "rgba(10,255,182,0.7)","rgba(0,255,238,0.7)","rgba(255,0,0,0.7)","rgba(71,51,255,0.7)"];
+
+        var numberRandom = Math.floor(Math.random()*(rgbaArray.length-0));
+
+        for(var i=0; i<rgbaArray.length; i++){
+            if(i == numberRandom){
+                return rgbaArray[i];
+            }
+        }
     }
 </script>
 
