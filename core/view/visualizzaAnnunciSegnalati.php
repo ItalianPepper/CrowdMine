@@ -258,8 +258,8 @@ include_once VIEW_DIR . 'header.php';
                     <span class="label label-info"><?php echo $annunci[$i]->getLuogo();?></span>
                     <span class="label label-primary"><?php echo $annunci[$i]->getRetribuzione();?>€</span>
                     <div class="media-action">
-                        <button class="btn btn-link"><i class="fa fa-check" data-toggle="modal" data-target="#myModal2"></i> Attiva</button>
-                        <button class="btn btn-link"><i class="fa fa-close"></i> Disattiva</button>
+                        <button class="btn btn-link" data-toggle="modal" data-target="#myModal2" ><i class="fa fa-check"style="font-size: 200%;"></i> Attiva</button>
+                        <button class="btn btn-link" data-toggle="modal" data-target="#myModal3"><i class="fa fa-close" style="font-size: 200%;"></i> Disattiva</button>
                         <button class="btn btn-link"><i class="fa fa-check-circle"></i> Invia all'amministratore</button>
                     </div>
                 </div>
@@ -295,6 +295,7 @@ include_once VIEW_DIR . 'header.php';
                             </div>
                             <form action="disattivaAnnuncioControl" method="post">
                                 <div class="modal-footer">
+                                    <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
                                         Chiudi
                                     </button>
