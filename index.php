@@ -237,7 +237,13 @@ try {
                 include_once CONTROL_DIR . "aggiungiCandidatura.php";
                 break;
             case 'segnalaAnnuncioControl';
-                include_once CONTROL_DIR . "segnalaAnnuncio.php";
+            include_once CONTROL_DIR . "segnalaAnnuncio.php";
+            break;
+            case 'attivaAnnuncioControl';
+                include_once CONTROL_DIR . "attivaAnnuncio.php";
+                break;
+            case 'disattivaAnnuncioControl';
+                include_once CONTROL_DIR . "disattivaAnnuncio.php";
                 break;
             case 'commentaAnnuncioControl';
                 include_once CONTROL_DIR . "commentaAnnuncio.php";

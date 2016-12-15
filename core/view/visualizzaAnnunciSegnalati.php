@@ -75,6 +75,26 @@ include_once VIEW_DIR . 'header.php';
 </head>
 
 <style>
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-style: normal;
+        font-variant-ligatures: normal;
+        font-variant-caps: normal;
+        font-variant-numeric: normal;
+        font-weight: normal;
+        font-stretch: normal;
+        font-size: inherit;
+        line-height: 1;
+        font-family: FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    ////*****/////
+
     h1 {
         font-size: 1rem;
     }
@@ -237,10 +257,73 @@ include_once VIEW_DIR . 'header.php';
                     <span class="label label-default">Web Developer</span>
                     <span class="label label-info"><?php echo $annunci[$i]->getLuogo();?></span>
                     <span class="label label-primary"><?php echo $annunci[$i]->getRetribuzione();?>€</span>
+                    <div class="media-action">
+                        <button class="btn btn-link"><i class="fa fa-check" data-toggle="modal" data-target="#myModal2"></i> Attiva</button>
+                        <button class="btn btn-link"><i class="fa fa-close"></i> Disattiva</button>
+                        <button class="btn btn-link"><i class="fa fa-check-circle"></i> Invia all'amministratore</button>
+                    </div>
                 </div>
-                <button class="btn btn-link">
-                    <i class="fa fa-check">defew</i>
-                </button>
+
+                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                <h4 class="modal-title">Attivare l'annuncio?</h4>
+                            </div>
+                            <form action="attivaAnnuncioControl" method="post">
+                                <div class="modal-footer">
+                                    <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                        Chiudi
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-success">Attiva</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                <h4 class="modal-title">Disattivare l'annuncio?</h4>
+                            </div>
+                            <form action="disattivaAnnuncioControl" method="post">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                        Chiudi
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-success">Disattiva</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                <h4 class="modal-title">Inviare all'amministratore?</h4>
+                            </div>
+                            <form action="aggiungiPreferitiControl" method="post">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                        Chiudi
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-success">Invia</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
         </div>
 

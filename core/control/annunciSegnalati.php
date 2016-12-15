@@ -12,11 +12,11 @@ include_once MODEL_DIR . "/Candidatura.php";
 include_once MODEL_DIR . "/Commento.php";
 
 $manager = new AnnuncioManager();
-//$lista = $manager->getAnnunciSegnalati();
+$lista = $manager->getReportedAnnunci();
 
 /**
  * creo annunci come prova da inserire in una lista fittizia
- */
+
 
 $idUtenteAnnuncio=2;
 $data=date("d/m/Y");
@@ -33,8 +33,8 @@ $annuncio2= new Annuncio(1,$idUtenteAnnuncio, $data, $titolo, $luogo, $microcat,
 $listaProva= array();
 $listaProva[] = $annuncio1;
 $listaProva[] = $annuncio2;
-
-$_SESSION["annunciSegnalati"] = serialize($listaProva);
+ */
+$_SESSION["annunciSegnalati"] = serialize($lista);
 
 header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciSegnalati");
 
