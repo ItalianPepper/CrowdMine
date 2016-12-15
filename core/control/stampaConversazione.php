@@ -78,16 +78,22 @@
         
         <?php  
           
-            //l'utente destinatario si candida ad un annuncio di Alfredo_ Alfredo quindi può Inviare la Collaborazione, Rifiutare il candidato
+            //L'utente destinatario Simone si è candidato ad due annunci di Alfredo; Alfredo quindi può Inviare la Collaborazione o Rifiutare il candidato [tutto relativo a quell'annuncio]
             $lista_candidature = $manager_msg->isCandidato($utente_connesso->getId(), $id_utente_destinatario);
-            
-         
-   
+            if($lista_candidature!=null)
+                foreach ($lista_candidature as $indice => $value) {
+                    $id_candidatura = $lista_candidature[$indice]->getId();
+                    $id_annuncio = $lista_candidature[$indice]->getIdAnnuncio();
+
+                    echo '<div class="alert alert-info">';
+                    echo '<strong>'."Candidatura relativa all'annuncio con id: ".$id_annuncio.' </strong>';
+                    echo ' <button type="button" class="btn btn-primary btn-xs" id="'.$id_candidatura.'" onclick="inviaCollaborazione(event)">Invia collaborazione</button>';
+                    echo ' <button type="button" class="btn btn-primary btn-xs" id="'.$id_candidatura.'" onclick="rifiutaCandidato(event)">Rifiuta candidato</button>';
+                    echo '</div>';
+                }
         ?>
-            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Invia collaborazione</button>
-            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Accetta collaborazione</button>
-            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Rifiuta collaborazione</button>
-            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Elimina candidato</button>
+         
+        
     </div>
     
    

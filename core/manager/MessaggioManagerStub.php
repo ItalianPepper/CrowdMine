@@ -67,21 +67,40 @@ class MessaggioManagerStub extends Manager
     
     
     //l'id_utente è candidato ad un annuncio dell'utente id_Proprietario?
+    //primo scenario.  l'ID_proprietario Alfredo ha un annuncio. I suoi desintari Simone e Giancarlo sono candidati al suo annuncio ID=4     
+    //secondo scenario. l'ID_proprietario Alfredo ha due annunci ID=5; ID=6. Luca è candidato a tutti e due i suoi annunci     
+    //ritorna una lista di candidature relativo agli annunci in cui l'id utente è candidato
     public function isCandidato($id_Proprietario_annuncio, $id_Utente){
-        /*
-        //l'ID_proprietario Alfredo ha un annuncio. I suoi desintari Simone e Giancarlo sono candidati al suo annuncio ID=4     
-        if($id_Destinatario==1){
-            new Candidatura(1, $id_Utente, 4, "Ciao, vorrei candidarmi a questo annuncio", null, null, INVIATO, NON_VALUTATO);
-        }
-        //l'ID_proprietario Alfredo ha due annunci ID=5; ID=6. Luca è candidato a tutti e due i suoi annunci     
-        if($id_Destinatario==1){
-            new Candidatura(1, $id_Utente, 4, "Ciao, vorrei candidarmi a questo annuncio", null, null, INVIATO, NON_VALUTATO);
-        }
         
         
+        if($id_Utente==2){
+            //L'utente destintario SIMONE ha due candidature con Alfredo per l'annuncio 4 e l'annuncio 5
+            $lista_Candidature[0] = new Candidatura(1, $id_Utente, 4, "Ciao, vorrei candidarmi a questo annuncio", null, null, null, null); //L'annuncio ha id=4 e il proprietario è l'utente connesso: ALFREDO
+            $lista_Candidature[1] = new Candidatura(2, $id_Utente, 5, "Ciao, vorrei candidarmi a questo annuncio", null, null, null, null); //L'annuncio ha id=5 e il proprietario è l'utente connesso: ALFREDO
+        }else return null;
+       
         return $lista_Candidature; //ritorna un vettore di Candidature con tutti gli ID degli annunci in cui id_Utente è candidato
-        */
     }
-  
- 
+    
+    
+    //L'utente proprietario dell'annuncio ha inviato l'invito a collaborare
+     public function collaborazioneInviata($id_candidatura){
+         
+       return true;
+     }
+     
+     //L'utente proprietario dell'annuncio ha inviato l'invito a collaborare
+     public function rifiutaCandidato($id_candidatura){
+         
+       return true;
+     }
+     
+     //L'utente proprietario dell'annuncio ha inviato l'invito a collaborare
+     public function rifiutaCollaborazione($id_candidatura){
+         
+       return true;
+     }
+     
+     
+     
 }
