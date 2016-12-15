@@ -117,6 +117,10 @@ try {
                 StringUtils::checkPermission("not_logged");
                 include_once VIEW_DIR . "login-registrazione.php";
                 break;
+            case 'messaging':
+                include_once VIEW_DIR . "messaging.php";
+                break;
+           
             case 'register':
                 StringUtils::checkPermission("not_logged");
                 include_once VIEW_DIR . "login-registrazione.php";
@@ -151,9 +155,13 @@ try {
                 include_once CONTROL_DIR . "CercaAnnunci.php";
                 break;
             
-             case 'stampaConversazione':
+            case 'stampaConversazione':
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "stampaConversazione.php";
+                break;
+            case 'inviaMessaggio':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "inviaMessaggio.php";
                 break;
             
             case 'paginaPrincipaleModeratore':

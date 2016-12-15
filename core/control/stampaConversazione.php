@@ -3,65 +3,55 @@
 
     include_once MODEL_DIR . "Utente.php";
     include_once MODEL_DIR . "Messaggio.php";
-    //include_once("MessaggioManager.php");
+    include_once MANAGER_DIR . "MessaggioManagerStub.php";
+    include_once MANAGER_DIR . "UtenteManagerStub.php";
     //include_once("control_Messaggi.php");
    
+   ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
    // session_start();
-   
    // $utente = $_SESSION['utente'];
-    //$_SESSION['lista']= serialize($lista-utenti);
+   //$_SESSION['lista']= serialize($lista-utenti);
    $utente_connesso = new Utente(0, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-    
    // if ($utente == null)
    //     header("location:./index.php");
 
-    //$destinatari = new MessaggioManager();
-    //$lista_destinatari = $ga->lista_destinatari(); //array di utenti
     
-    ####### RECUPERA IL DESTINTARIO ###########
-    $id_utente_destinatario = $_GET['id'];
-    //ricerca utente con ID id_utente usando il manager dell'utente
-    $utente_destintario = null;
-    if($id_utente_destinatario==1)
-        $utente_destintario = new Utente(1, 'Simone', 'Giak', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-    else if($id_utente_destinatario==2)
-        $utente_destintario = new Utente(2, 'Giancarlo', 'Mannara', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-    else if($id_utente_destinatario==3)
-        $utente_destintario = new Utente(3, 'Luca', 'PM', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-    else if($id_utente_destinatario==4)
-        $utente_destintario = new Utente(4, 'Fabiano', 'Pecorelli', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
+    ## MANAGER ##
+    $manager_msg = new MessaggioManagerStub();
+    $manager_utente = new UtenteManagerStub();
     
-    ####### RECUPERA LA CONVERSAZIONE CON QUEL DESTINATARIO ###########
-    //recupera conversazione usando il manager di messaggi [ARRAY di MESSAGGI]
-    if($id_utente_destinatario==1){
-        $lista_messaggio[0] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(), "Ciao Simone", "16/04/2007", false );
-        $lista_messaggio[1] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Ciao Alfredo", "16/04/2007", false );
-        $lista_messaggio[2] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(), "Voglio lavorare per te", "16/04/2007", false );
+    ## RECUPERO IL DESTINATARIO DELLA CONVERSAZIONE ###
+    $id_utente_destinatario = $_POST["id"];
+    $utente_destinatario = $manager_utente->getUtenteByID($id_utente_destinatario);  //[STUB getUtentebyID]
     
-        
-    }else if($id_utente_destinatario==2){
-        $lista_messaggio[0] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Ciao Alfredo", "16/04/2007", false );
-        $lista_messaggio[1] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Io e te non abbiamo niente da dirci", "16/04/2007", false );
-         
-    }else if($id_utente_destinatario==3){
-        $lista_messaggio[0] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(), "Ciao Luca", "16/04/2007", false );
-        $lista_messaggio[1] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Ciao Alfredo", "16/04/2007", false );
-        $lista_messaggio[2] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(), "Voglio dirti una cosa:", "16/04/2007", false );
-        $lista_messaggio[3] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(), "Non vedo l'ora di chiamarti Dottore.", "16/04/2007", false );
-        $lista_messaggio[4] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(), "Ok?", "16/04/2007", false );
-        $lista_messaggio[5] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Sei Idiota?", "16/04/2007", false );
+    ## RECUPERA LA CONVERSAZIONE CON IL DESTINATARIO ##
+    $lista_messaggio = $manager_msg->getConversazione($utente_connesso->getId(), $id_utente_destinatario); 
     
-    }else if($id_utente_destinatario==4){
-        $lista_messaggio[0] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Ciao Alfredo", "16/04/2007", false );
-        $lista_messaggio[1] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(), "Ciao Fabiano", "16/04/2007", false );
-        $lista_messaggio[2] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Come hai detto scusa?", "16/04/2007", false );
-        $lista_messaggio[3] = new Messaggio(0, $utente_connesso->getId(), $utente_destintario->getId(),  "Cosa?", "16/04/2007", false );
-        $lista_messaggio[4] = new Messaggio(0, $utente_destintario->getId(), $utente_connesso->getId(), "Vaffanculo, scriverò sulla minuta che mi hai insultato.", "16/04/2007", false );   
-    }
-    
+ 
+?>    
+    <!-- INTESTAZIONE DEL MESSAGGIO -->
+     <div class="heading">
+          <div class="title">
+            <a class="btn-back" data-toggle="collapse" href="#collapseMessaging" aria-expanded="false" aria-controls="collapseMessaging">
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a>
+             
+             <?php echo $utente_destinatario->getNome()."    "; ?>  
+            
+              
+            
+          </div>
+          <div class="action"></div>
+        </div>
+        <ul class="chat">
+     
+            
+ <?php  
+ 
     foreach ($lista_messaggio as $indice => $value) {
-        
-        if($lista_messaggio[$indice]->getIdUtenteMittente() == $utente_connesso->getId()){
+           
+        if($lista_messaggio[$indice]->getIdUtenteDestinatario() == $utente_connesso->getId()){
+            
             echo '<li class="right">';
         }else echo '<li>';
         
@@ -71,9 +61,33 @@
         echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
         echo '</div>';
         echo '</li>';
-
     }
-    
+   
 ?>
+  
+            
+   </ul>        
+    <div class="footer">
+          <div class="message-box">
+            <textarea placeholder="type something..." id="messaggio" class="form-control"></textarea>
+            <button class="btn btn-default" id="<?php echo $id_utente_destinatario; ?>" onclick="inviamessaggio(event)"><i class="fa fa-paper-plane" aria-hidden="true"></i><span>Send</span></button>
+          </div>
+            <div id="info">
 
-
+            </div>
+        
+        <?php  
+          
+            //l'utente destinatario si candida ad un annuncio di Alfredo_ Alfredo quindi può Inviare la Collaborazione, Rifiutare il candidato
+            $lista_candidature = $manager_msg->isCandidato($utente_connesso->getId(), $id_utente_destinatario);
+            
+         
+   
+        ?>
+            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Invia collaborazione</button>
+            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Accetta collaborazione</button>
+            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Rifiuta collaborazione</button>
+            <button type="button" class="btn btn-primary btn-xs" id="<?php echo $id_utente_destinatario; ?>">Elimina candidato</button>
+    </div>
+    
+   
