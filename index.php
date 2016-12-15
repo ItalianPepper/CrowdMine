@@ -18,6 +18,10 @@ define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
+define('ATTIVO',"attivo");
+define('SEGNALATO',"segnalato");
+define('ELIMINATO',"eliminato");
+define('AMMINISTRATORE',"amministratore");
 define('DEBUG', true);
 
 try {
@@ -157,11 +161,6 @@ try {
                 break;
             case 'modificaPassword':
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
-                break;
-            case 'EliminaSegnalazioneUtenteControl':
-                include_once MODEL_DIR . "Utente.php";
-                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
-                include_once CONTROL_DIR . "EliminaSegnalazioneUtenteControl.php";
                 break;
             case 'ConfermaSegnalazioneUtenteControl':
                 include_once MODEL_DIR . "Utente.php";

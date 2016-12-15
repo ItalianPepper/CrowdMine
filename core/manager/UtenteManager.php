@@ -1,265 +1,288 @@
 <?php
 
+include_once MODEL_DIR . 'Utente.php';
+include_once MANAGER_DIR . 'MicrocategoriaManager.php';
 include_once MODEL_DIR . 'Annuncio.php';
-include_once MODEL_DIR . 'Microcategoria.php';
-include_once MANAGER_DIR."Manager.php";
-include_once MODEL_DIR . 'Macrocategoria.php';
-include_once MANAGER_DIR . 'Manager.php';
 
 /**
  * Created by PhpStorm.
- * User: Andrea Sarto
+ * User: Dario Galiani
  * Date: 28/11/2016
  * Time: 23.25
  */
-class UtenteManager extends Manager
-{
 
+class UtenteManager extends Manager{
     /**
      * UtenteManager constructor.
      */
-    public function __construct(){
+    public function __construct()
+    {
 
     }
-     /**
-      * Create a new persistent User and its categories
-      *
-      * @param String $name name
-      * @param String $surname surname
-      * @param String $phone number phone
-      * @param Date $dateOfBirth date of birth
-      * @param String $city city
-      * @param String $mail e-mail
-      * @param String $password password
-      * @return User A model instance of the updated User.
-      */
-     public function createUser($name, $surname, $phone, $dateOfBirth, $city, $mail, $password){
-         return new User($name, $surname, $phone, $dateOfBirth, $city, $mail, $password);
-     }
-
-     /**
-      * Send login
-      *
-      * @param String $mail e-mail
-      * @param String $password password
-      */
-     public function forwardsLogin($mail, $password){
-
-     }
 
     /**
-     * Send logout request
+     * Create a new Utente
      *
-     * @param String $mail e-mail
-     * @param String $password password
+     * @param $nome
+     * @param $cognome
+     * @param $telefono
+     * @param $dataNascita
+     * @param $citta
+     * @param $email
+     * @param $password
+     * @param $stato
+     * @param $ruolo
+     * @param $immagineProfilo
      */
-    public function forwardsLogout($mail, $password){
-
+    public function createUser($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo){
+        return new Utente($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo);
     }
 
     /**
-     * Delete data user
-     */
-    public function deleteUserData(){
-
-    }
-
-    /**
-     * Ban an user
+     * Create a new persistent Utente
      *
-     * @param double $UserId
-     * @param String $password
+     * @param $user
      */
-    public function banUser($UserId, $password){
-
-
+    private function insertUtente($user){
+        $INSERT_UTENTE = "INSERT INTO 'utente' (nome, cognome, telefono, dataNascita, citta, email, password, stato, ruolo, immagineProfilo) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+        $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(), $user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
+        self::getDB()->query($query);
     }
 
     /**
-     * Get a list of reported user
-     * return User[] A list og reported user
-     */
-    public function reportedUser(){
-        return [];
-    }
-
-    /**
-     * Change password
+     * Update some param of a existing Utente
      *
-     * @param String $currentPassword
-     * @param String $newPassword
+     * @param $user
      */
-    public function changePassword($currentPassword, $newPassword){
-
+    public function updateUtente($user){
+        $UPDATE_UTENTE = "UPDATE utente SET telefono='%s', dataNascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagineProfilo='%s';";
+        $query = sprintf($UPDATE_UTENTE, $user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
+        self::getDB($query);
     }
 
     /**
-     * Get list of User
+     * Find Utente by is key value
      *
-     * @param String $UserName
-     * @return Utente[] A list of User by User name
+     * @param $userId
+     * @return Utente
      */
-    public function getUtente($UserName){
-        return [];
+    public function findUtenteById($userId){
+        $connection = self::getDB();
+        $CERCA_UTENTE = "SELECT * FROM utente WHERE id='%s';";
+        $query = sprintf($CERCA_UTENTE, $userId);
+        $result = $connection->query($query);
+        $row = $result->fetch_assoc();
+        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['dataNascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagineProfilo']);
     }
 
     /**
-     * Add a new macrocategory
-     * @param Macrocategoria $macrocategoria
-     */
-    public function addMacrocategoria($macrocategoria){
-
-    }
-
-    /**
-     * Add a new microcategory
-     * @param Microcategoria $microcategoria
-     */
-    public function addMicrocategoria($microcategoria){
-
-    }
-
-    /**
-     * Reactivate an User
+     * Find a List of Utente by yours username
      *
-     * @param Double $UtenteId
+     * @param $nome
+     * @param $cognome
+     * @return array
      */
-    public function reactivateUtente($UtenteId){
-
+    private function findUtenteByUserName($nome, $cognome){
+        $users = array();
+        $GET_UTENTE_BY_USERNAME = "SELECT * FROM utente WHERE nome='%s' cognome='%s';";
+        $query = sprintf($GET_UTENTE_BY_USERNAME, $nome, $cognome);
+        $result = self::getDB()->query($query);
+        foreach ($result->fetch_assoc() as $row) {
+            $user = $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagine_profilo']);
+            array_push($users, $user);
+        }
+        return $users;
     }
 
     /**
-     * Get a list of banned User
+     * Find a user
      *
-     * @return bannedUtente[] A list of banned user
+     * @param $email
+     * @param $password
+     * @return bool|Utente
+     */
+    private function findUtenteByLogin($email, $password){
+        $connection = self::getDB();
+        $GET_UTENTE_BY_LOGIN = "SELECT * FROM utente WHERE email='%s' AND password='%s';";
+        $query = sprintf($GET_UTENTE_BY_LOGIN, $email, $password);
+        $result = $connection->query($query);
+        $row = $result->fetch_assoc();
+        if (!$row || mysqli_num_rows($row) <= 0) {
+            return false;
+        } else {
+            return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['dataNascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagineProfilo']);
+        }
+    }
+
+    /**
+     * @param $microCategoria
+     * @param $numStelle
+     * @return array
+     */
+    public function findUserByMicroAvgOverRatio($microCategoria, $numStelle){
+        $mc = $microCategoria->getId();
+        $GET_USER_BY_RATIO = "SELECT utente.id, AVG(feedback.valutazione) AS Media
+            FROM utente,feedback,annuncio, riferito
+            WHERE utente.id = annuncio.id_utente AND riferito.id_annuncio = annuncio.id AND annuncio.id = feedback.id_annuncio AND riferito.id_microcategoria = %s
+            GROUP BY utente.id
+            HAVING AVG(feedback.valutazione) > = %s
+            ORDER BY AVG(feedback.valutazione);
+        ";
+        $query = sprintf($GET_USER_BY_RATIO, $mc, $numStelle);
+        $resSet = self::getDB()->query($query);
+        $users = array();
+        if ($resSet){
+            foreach($resSet->fetch_assoc() as $u){
+                $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+                array_push($users, $user);
+            }
+        }
+        return $users;
+    }
+
+    /**
+     * @return array
+     */
+    public function findAll(){
+        $users = array();
+        $FIND_ALL = "SELECT * FROM utente;";
+        $result = self::getDB()->query($FIND_ALL);
+        foreach($result->fetch_assoc() as $u){
+            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            array_push($users, $user);
+        }return $users;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReportedUtente(){
+        $connection = self::getDB();
+        $GET_UTENTI_SEGNALATI = "SELECT * FROM utente WHERE stato='%s'";
+        $query = sprintf($GET_UTENTI_SEGNALATI, StatoUtente::SEGNALATO);
+        $result = $connection->query($query);
+        $users = array();
+        foreach($result->fetch_assoc() as $u){
+            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            array_push($users, $user);
+        }
+        return $users;
+    }
+
+    /**
+     * @return array
      */
     public function getBannedUtente(){
-        return [];
+        $connection = self::getDB();
+        $GET_UTENTI_BANNATI = "SELECT * FROM utente WHERE stato='%s'";
+        $query = sprintf($GET_UTENTI_BANNATI, StatoUtente::BANNATO);
+        $result = $connection->query($query);
+        $users = array();
+        foreach($result->fetch_assoc() as $u){
+            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            array_push($users, $user);
+        }
+        return $users;
     }
 
     /**
-     * Promote an user as moderator
-     *
-     * @param Double $UtenteId
-     * @param String $password
+     * @return array
      */
-    public function promoteMod($UtenteId, $password){
-
+    public function getAppealUtente(){
+        $users = array();
+        $GET_APPEAL_USERS = "SELECT * FROM 'utente' WHERE stato='%s'";
+        $query = sprintf($GET_APPEAL_USERS, StatoUtente::RICORSO);
+        $result = self::getDB()->query($query);
+        foreach($result->fetch_assoc() as $u){
+            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            array_push($users, $user);
+        }
+        return $users;
     }
 
     /**
-     * Get a list of appeal User ban
-     *
-     * @return appealUtente[] A list of appeal User ban
+     * @param $email
+     * @return bool
      */
-    public function appealUtente(){
-        return [];
+    public function checkEmail($email){
+        $CHECK_EMAIL = "SELECT * FROM utente WHERE email='%s';";
+        $query = sprintf($CHECK_EMAIL, $email);
+        $result = self::getDB()->query($query);
+        if($result->num_rows < 1){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**
-     * Change User data
-     *
-     * @param Double $UserId
+     * @param $userId
+     * @param $password
+     * @return bool
      */
-    public function changeDataUtente($UserId){
-
+    public function checkPassword($userId, $password){
+        $CHECK_PSWD = "SELECT * FROM utente WHERE id='%s' AND password='%s';";
+        $query = sprintf($CHECK_PSWD, $userId, $password);
+        $result = self::getDB()->query($query);
+        if($result->num_rows < 1){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**
-     * Redeem a banned user
-     *
+     * @param $user
+     * @param $microcategoria
      */
-    public function redeemUtente(){
-
+    public function addMicroCategoria($user,$microcategoria){
+        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_microcategoria, id_utente) VALUES('%s', '%s');";
+        $query = sprintf($ADD_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
+        self::getDB()->query($query);
     }
 
     /**
-     * Report an User
-     *
+     * @param $user
+     * @param $microcategoria
      */
-    public function reportUtente(){
-
+    public function removeMicroCategoria($user, $microcategoria){
+        $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
+        $query = sprintf($REMOVE_MICROCATEGORIA, $user, $microcategoria);
+        self::getDB()->query($query);
     }
 
     /**
-     * Search an User
-     *
-     * @param Double %UtenteId
+     * @param $email
+     * @param $password
+     * @return bool|Utente
      */
-    public function searchUtente($UtenteId){
-
+    public function login($email, $password){
+        if(!($user = $this->findUtenteByLogin($email, $password))){
+            return false;
+        }else{
+            return $user;
+        }
     }
 
     /**
-     * Block an User
-     *
-     * @param Double $UtenteId
+     * @param $user
      */
-    public function blockUser($UtenteId){
-
+    public function register($user){
+        $this->insertUtente($user);
     }
 
     /**
-     * Unblock an user
-     *
-     * @param Double $UtenteId
+     * @param $nome
+     * @param $cognome
+     * @return array|bool
      */
-    public function unblockUser($UtenteId){
-
+    public function searchUtente($nome, $cognome){
+        if(!$users = $this->findUtenteByUserName($nome, $cognome)){
+            return false;
+        }else{
+            return $users;
+        }
     }
 
-    /**
-     * Get a list of favorite announcement
-     *
-     * @param Double $UtenteId
-     *
-     * @return favoriteAnnuncio[] A list of favourite annuncment for User
-     */
-    public function getFavorite($UtenteId){
-        return [];
-    }
 
-    /**
-     * Get a list of User that follow a macrocategory
-     *
-     * @param Macrocategoria $macrocategoria A Macrocategoria object
-     *
-     * @return Utente[] A list of User that follows a macrocategoria
-     */
-    public function macrocategoryUtente($macrocategoria){
-        return [];
-    }
-
-    /**
-     * Get a list of User that follow a microcategory
-     *
-     * @param Microcategoria $microcategoria A Microcategoria object
-     *
-     * @return Utente[] A list of Utente that follows a microcategory
-     */
-    public function microcategoryUtente($microcategoria){
-        return [];
-    }
-
-    /**
-     * Return the ranking of macrocategory
-     *
-     * @param Macrocategoria $macrocategory
-     *
-     * @return ranking[]
-     */
-    public function rankingMacrocategoria($macrocategoria){
-        return [];
-    }
-
-    /**
-     * Return the ranking of microcategory
-     *
-     * @param Microcategoria $microcategoria
-     *
-     * @return ranking[]
-     */
-    public function rankingMicrocategoria($microcategoria){
-        return [];
-    }
 }
