@@ -22,7 +22,7 @@ class SearchByTitleFilter extends Filter
 
     public function setTitle($title)
     {
-        parent::setFilterString(" `annuncio`.`titolo` LIKE '".$title."' ");
+        parent::setFilterString(" `annuncio`.`titolo` LIKE '".$title."%' ");
     }
 
 }

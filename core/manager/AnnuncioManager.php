@@ -17,6 +17,7 @@ include_once FILTER_DIR . "SearchByUserIdFilter.php";
 include_once FILTER_DIR . "SearchByMicroFilter.php";
 include_once FILTER_DIR . "OrderByDateFilter.php";
 include_once FILTER_DIR . "SearchByNotStatus.php";
+include_once FILTER_DIR . "SearchByStatus.php";
 
 
 /**

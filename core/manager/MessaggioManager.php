@@ -44,7 +44,7 @@ class MessaggioManager extends Manager
      * @param $idUtente
      */
     public function loadMessaggi($idUtente){
-        $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = $idUtente;";
+        $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = ".$idUtente.";";
         $result = Manager::getDB()->query($LOAD_MESSAGGIO);
         $messaggi = array();
         if ($result) {
@@ -63,7 +63,7 @@ class MessaggioManager extends Manager
      * @param $idDestinatario
      */
     public function loadMessaggio($idMittente, $idDestinatario){
-        $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = $idMittente AND `id_utente_destinatario` = $idDestinatario ORDER BY 'data' ASC;";
+        $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = ".$idMittente." AND `id_utente_destinatario` = ".$idDestinatario." ORDER BY 'data' ASC;";
         $result = Manager::getDB()->query($LOAD_MESSAGGIO);
         $messaggi = array();
         if ($result) {
@@ -95,7 +95,7 @@ class MessaggioManager extends Manager
      * @param $idAnnuncio
      */
     public function agreeCollaborazione($idAnnuncio){
-        $COLLABORAZIONE = "UPDATE `candidatura` SET richiesta_accettata = `accettato` WHERE `id_annuncio` = $idAnnuncio;";
+        $COLLABORAZIONE = "UPDATE `candidatura` SET richiesta_accettata = `accettato` WHERE `id_annuncio` = ".$idAnnuncio.";";
         if (!Manager::getDB()->query($COLLABORAZIONE)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
