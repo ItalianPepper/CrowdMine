@@ -13,8 +13,7 @@ class tipoNotifica{
     const DECISIONE = "decisione";
 }
 
-class Notifica
-{
+class Notifica implements JsonSerializable{
     private $id;
     private $data;
     private $tipo;
@@ -29,8 +28,7 @@ class Notifica
      * @param $info
      * @param $letto
      */
-    public function __construct($data, $tipo, $info, $letto, $id = null)
-    {
+    public function __construct($data, $tipo, $info, $letto, $id = null){
         $this->id = $id;
         $this->data = $data;
         $this->tipo = $tipo;
@@ -41,73 +39,75 @@ class Notifica
     /**
      * @return mixed
      */
-    public function getId()
-    {
+    public function getId(){
         return $this->id;
     }
 
     /**
      * @return mixed
      */
-    public function getData()
-    {
+    public function getData(){
         return $this->data;
     }
 
     /**
      * @return mixed
      */
-    public function getTipo()
-    {
+    public function getTipo(){
         return $this->tipo;
     }
 
     /**
      * @return mixed
      */
-    public function getInfo()
-    {
+    public function getInfo(){
         return $this->info;
     }
 
     /**
      * @return mixed
      */
-    public function getLetto()
-    {
+    public function getLetto(){
         return $this->letto;
     }
 
     /**
      * @param mixed $data
      */
-    public function setData($data)
-    {
+    public function setData($data){
         $this->data = $data;
     }
 
     /**
      * @param mixed $tipo
      */
-    public function setTipo($tipo)
-    {
+    public function setTipo($tipo){
         $this->tipo = $tipo;
     }
 
     /**
      * @param mixed $info
      */
-    public function setInfo($info)
-    {
+    public function setInfo($info){
         $this->info = $info;
     }
 
     /**
      * @param mixed $letto
      */
-    public function setLetto($letto)
-    {
+    public function setLetto($letto){
         $this->letto = $letto;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize(){
+        return "{id: $this->getId(), data: $this->getData(), tipo: $this->getTipo(), letto: $this->getLetto(), info: $this->getLetto()}";
     }
 
 }
