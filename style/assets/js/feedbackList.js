@@ -16,7 +16,7 @@ $(document).ready(function () {
             success: function (data) {
                 var destination = $("#feedback-list-destination");
                 destination.empty();
-                generateFeedbackList(data,"user",destination)
+                generateFeedbackList(data,"admin",destination)
             },
             error: function (data) {
                 toastr[data["toastType"]](data["toastMessage"]);
@@ -67,8 +67,8 @@ function feedbackRowToString(feedbackListObj, role) {
     }
     else if (role == "admin") {
         buttonGroup = '<div class="media-action">' +
-            '<button onclick="confirmFeedback('+feedbackListObj.feedbackID,this+')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
-            '<button onclick="deleteFeedback('+feedbackListObj.feedbackID,this+')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
+            '<button onclick="confirmFeedback('+feedbackListObj.feedbackID+')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
+            '<button onclick="deleteFeedback('+feedbackListObj.feedbackID+')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
             '                                                                                </div>';
 
     }

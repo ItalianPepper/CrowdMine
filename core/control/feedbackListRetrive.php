@@ -21,7 +21,7 @@
             $feedbackListObjArray = array();
             //$feedbackListObjArray = $feedbackManger->getListaFeedback($user->getId());
             $feedbackListObjArray = $feedbackManger->getListaFeedback(1);
-
+            //sleep(3);
             echo json_encode($feedbackListObjArray);
 
 
