@@ -70,7 +70,8 @@ include_once MODEL_DIR . "/Commento.php";
             $_SESSION['listaCommenti'] = serialize($arrayCommenti);
             $_SESSION['annunciRicercati'] = serialize($annunci);
             $_SESSION['provenienza'] = serialize("ricerca");
-            header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
+            //header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
+            include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
         } else {
             header("Location:" . DOMINIO_SITO . "/nothingFound");
         }
