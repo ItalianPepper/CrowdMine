@@ -25,7 +25,14 @@ class NotificaManager extends Manager
      * @param Double $idDestinatario
      */
 
-    public function insertNotifica($id, $data, $tipo, $info, $letto){
+    public function createNotifica($id, $data, $tipo, $info, $letto)
+    {
+        $notifica = new Notifica($id, $data, $tipo, $info, $letto);
+        return $notifica;
+    }
+
+    public function insertNotifica($id, $data, $tipo, $info, $letto)
+    {
         $INSERT_NOTIFICA = "INSERT INTO `Notifica` (`id`, `date`, `tipo`, `letto`, `info`) VALUES ('%s', '%s', '%s', '%s', '%s');";
         $query = sprintf($INSERT_NOTIFICA, $id, $data, $tipo, $info, $letto);
         if (!Manager::getDB()->query($query)) {
@@ -44,9 +51,10 @@ class NotificaManager extends Manager
      * @param $idNotifica
      * @throws ApplicationException
      */
-    public function sendToDispatcher($listaUtenti, $idNotifica){
+    public function sendToDispatcher($listaUtenti, $idNotifica)
+    {
         $size = count($listaUtenti);
-        for($i=0; $i<$size; $i++){
+        for ($i = 0; $i < $size; $i++) {
             $idDestinatario = $listaUtenti[$i];
             $INSERT_IN_DISPATCHER = "INSERT INTO `Dispatcher_notifica` (`id_utente`, `id_notifica`) VALUES ('%s', '%s');";
             $query = sprintf($INSERT_IN_DISPATCHER, $idDestinatario, $idNotifica);
@@ -58,6 +66,7 @@ class NotificaManager extends Manager
             }
         }
     }
+
     /**
      *Return a  Notifiche object with 'id' as $idNotifica
      *
@@ -65,15 +74,46 @@ class NotificaManager extends Manager
      *
      * @return  A Notifica object
      */
-    public function getNotifica($idNotifica){
-        $LOAD_NOTIFICHE= "SELECT * FROM `Notifica` WHERE `id` = $idNotifica;";
+    public function getNotifica($idListaNotifica)
+    {
+        $length = count($idListaNotifica);
+        $listNotifica = array();
+        $LOAD_NOTIFICHE = "SELECT * FROM `Notifica` WHERE `id` ='";
+        for ($i = 0; $i < $length; $i++) {
+            $LOAD_NOTIFICHE .= $idListaNotifica[$i] .= "' OR `id` ='";
+        }
+        $LOAD_NOTIFICHE .= "'";
         $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
         if ($resultNotifica) {
             while ($obj = $resultNotifica->fetch_assoc()) {
                 $notifica = new Notifica($obj['id'], $obj['date'], $obj['tipo'], $obj['letto'], $obj['info']);
+                $listNotifica[] = $notifica;
             }
         }
-        return $notifica;
+        return $listNotifica;
+    }
+
+    /**
+     * @param $idNotifica
+     * @return Notifica
+     */
+    public function getNotificaNotVisualized($idListaNotifica)
+    {
+        $length = count($idListaNotifica);
+        $listNotifica = array();
+        $LOAD_NOTIFICHE = "SELECT * FROM `Notifica` WHERE `letto` = 0 AND(`id` ='";
+        for ($i = 0; $i < $length; $i++) {
+            $LOAD_NOTIFICHE .= $idListaNotifica[$i] .= "' OR `id` ='";
+        }
+        $LOAD_NOTIFICHE .= "')";
+        $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
+        if ($resultNotifica) {
+            while ($obj = $resultNotifica->fetch_assoc()) {
+                $notifica = new Notifica($obj['id'], $obj['date'], $obj['tipo'], $obj['letto'], $obj['info']);
+                $listNotifica[] = $notifica;
+            }
+        }
+        return $listNotifica;
     }
 
     /**
@@ -82,7 +122,8 @@ class NotificaManager extends Manager
      * @param $idUtente
      * @return array
      */
-    public function loadFromDispatcher($idUtente){
+    public function loadFromDispatcher($idUtente)
+    {
         $LOAD_DISPATCHER = "SELECT * FROM `Dispatcher_notifica` WHERE `id_utente` = $idUtente;";
         $result = Manager::getDB()->query($LOAD_DISPATCHER);
         $listIdNotifica = array();
