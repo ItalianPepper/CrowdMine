@@ -973,7 +973,7 @@ else{
 													<div class="col-lg-12 col-md-12 col-xs-12">
 														<div class="row">
 															<div class="col-lg-2 col-md-2 col-xs-4 simple-row">
-																Indirizzi Email
+																Indirizzo Email
 															</div>
 															<div class="col-lg-10 col-md-10 col-xs-8 simple-row">
 																<div class="checkbox">
@@ -986,13 +986,13 @@ else{
 														</div>
 														<div class="row">
 															<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																Numeri di telefono
+																Numero di telefono
 															</div>
 															<div class="col-lg-10 col-md-10 col-xs-8 overlined-row">
 																<div class="checkbox">
 																	<input type="checkbox" id="checkbox2">
 																	<label for="checkbox2">
-																		blocca
+																		Blocca
 																	</label>
 																  </div>
 															</div>
@@ -1005,7 +1005,7 @@ else{
 																<div class="checkbox">
 																	<input type="checkbox" id="checkbox3">
 																	<label for="checkbox3">
-																		blocca
+																		Blocca
 																	</label>
 																  </div>
 															</div>

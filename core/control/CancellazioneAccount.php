@@ -25,6 +25,7 @@ if(isset($_SESSION['user'])){
 
    $user = $_SESSION['user'];
     $manager->deleteUserData();
+    session_destroy();
     header("/home.php");
 }
 else{
