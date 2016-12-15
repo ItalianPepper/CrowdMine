@@ -6,6 +6,13 @@
  * Date: 30/11/2016
  * Time: 20:40
  */
+
+class tipoNotifica{
+    const INSERIMENTO = "inserimento";
+    const RISOLUZIONE = "risoluzione";
+    const DECISIONE = "decisione";
+}
+
 class Notifica
 {
     private $id;
@@ -22,7 +29,7 @@ class Notifica
      * @param $info
      * @param $letto
      */
-    public function __construct($id, $data, $tipo, $info, $letto)
+    public function __construct($data, $tipo, $info, $letto, $id = null)
     {
         $this->id = $id;
         $this->data = $data;
