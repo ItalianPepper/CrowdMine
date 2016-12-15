@@ -304,15 +304,11 @@
                         <div>
                             <label for="selectMacro">Seleziona Macro Categoria</label>
                             <select style="width:100%" id="selectMacro" class="select2">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
                             </select>
                         </div>
                         <div>
                             <label for="selectMicro">Seleziona Micro Categoria</label>
                             <select style="width:100%" id="selectMicro" class="select2">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -365,19 +361,68 @@
 </div>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+
 <script>
     $(document).click(function(){
         $("#mostraRisultati").click(function(){
             {
                 $.ajax({
                     type: "POST",
-                    url: "process.php",
+                    dataType:"json",
+                    url: "classificaUtenti",
                     data: {method: 'one'},
                     success: function(msg){
                     }
                 });
             });
     });
+</script>
+
+<script>
+    $("#mostraRisultati").ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option:"selectMacro"},
+            success: function (response) {
+                var arrayMacroElements = $.map(response, function (el) {
+                    return el;
+                });
+
+                appendMacroElements(arrayMacroElements)
+            }
+        })
+    });
+
+    function appendMacroElements(arrayMacroElements) {
+        $.each(arrayMacroElements, function (i,item){
+            $("#selectMacro").append($("<option>").text(item).attr("value",item));
+        });
+    }
+    </script>
+
+<script>
+    $("#mostraRisultati").ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option:"selectMicro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMicroElements(arrayMicroElements);
+            }
+        });
+    });
+
+    function appendMicroElements(arrayMicroElements) {
+        $.each(arrayMicroElements, function (i,item){
+            $("#selectMicro").append($("<option>").text(item).attr("value",item));
+        });
+    }
 </script>
 
 </body>
