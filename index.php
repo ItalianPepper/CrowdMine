@@ -122,6 +122,9 @@ try {
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "InserisciEsperienza.php";
                 break;
+            case 'classificaUtenti':
+                include_once CONTROL_DIR . "ClassificaUtenti.php";
+                break;
             case 'effettuaLogin':
                 StringUtils::checkPermission("not_logged");
                 include_once CONTROL_DIR . "login-registrazione.php";
