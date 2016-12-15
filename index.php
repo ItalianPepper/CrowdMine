@@ -162,6 +162,9 @@ try {
             case 'modificaPassword':
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
                 break;
+            case 'rimuoviMacroUtenteControl':
+                include_once CONTROL_DIR . "RimuoviMacroUtenteControl.php";
+                break;
             case 'ConfermaSegnalazioneUtenteControl':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
