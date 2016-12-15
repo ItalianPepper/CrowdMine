@@ -18,280 +18,35 @@ if (isset($_SESSION["lista"])){
 }
 include_once VIEW_DIR . 'header.php';
 ?>
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
-<head>
-    <title></title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\Annuncio\annuncioUtenteLoggato.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
-
-    <!-- Theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <?php
+    echo "<script>";
     for ($i = 0; $i < count($annunci); $i++) {
         $id = $annunci[$i]->getId();
-        echo "<script>";
+
         echo "$(document).ready(function(){";
         echo "$(\".btn.btn-link$id\").click(function(){";
         echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").toggle(250);";
         echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").hide(250);";
         echo "});";
         echo "});";
-        echo "</script>";
-    }
-    ?>
 
-    <?php
-    for ($i = 0; $i < count($annunci); $i++) {
-        $id = $annunci[$i]->getId();
-        echo "<script>";
         echo "$(document).ready(function(){";
         echo "$(\".btn.btn-warning$id\").click(function(){";
         echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").toggle(250);";
         echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").hide(250);";
         echo "});";
         echo "});";
-        echo "</script>";
     }
+    echo "</script>";
     ?>
 
 
-    <script>
-        $(document).ready(function(){
-            $(".btn.btn-warning").click(function(){
-                $(".row.col-md-12.col-sm-12.card.candidature").toggle(250);
-                $(".row.col-md-12.col-sm-12.card.contenitore").hide(250);
 
-            });
-        });
-    </script>
-
-</head>
-
-<style>
-    h1 {
-        font-size: 1rem;
-    }
-
-    h4 {
-        font-size: 20px;
-    }
-
-    i {
-        font-size: 300%;
-    }
-
-    @media (min-width: 1px) {
-        h1 {
-            font-size: xx-small;
-        }
-        h4 {
-            font-size: 10px;
-        }
-        .fa.fa-check {
-            font-size: 50%;
-        }
-        .fa.fa-close {
-            font-size: 50%;
-
-        }
-        .fa.fa-mail-reply-all {
-            font-size: 50%;
-
-        }
-
-    }
-
-    @media (min-width: 750px) {
-        h1 {
-            font-size: 13px;
-        }
-        h4 {
-            font-size: 13px;
-        }
-        .fa.fa-check {
-            font-size: 100%;
-        }
-        .fa.fa-close {
-            font-size: 100%;
-
-        }
-        .fa.fa-mail-reply-all {
-            font-size: 100%;
-
-        }
-
-    }
-
-    @media (min-width: 970px) {
-        h1 {
-            font-size: x-large;
-        }
-        h4 {
-            font-size: 20px;
-        }
-        .fa.fa-check {
-            font-size: 200%;
-        }
-        .fa.fa-close {
-            font-size: 200%;
-
-        }
-        .fa.fa-mail-reply-all {
-            font-size: 200%;
-        }
-
-    }
-
-    @media (min-width: 1200px) {
-        h1 {
-            font-size: xx-large;
-
-        }
-        h4 {
-            font-size: 35px;
-        }
-        .fa.fa-check {
-            font-size: 300%;
-        }
-        .fa.fa-close {
-            font-size: 300%;
-        }
-        .fa.fa-mail-reply-all {
-            font-size: 300%;
-        }
-
-    }
-
-    a.morelink {
-        text-decoration:none;
-        outline: none;
-    }
-    .morecontent span {
-        display: none;
-
-    }
-    .media-left img{
-        border-radius: 50%; }
-
-
-</style>
-
-<body>
-<div class="app app-default">
-
-    <aside class="app-sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a class="sidebar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
-            <button type="button" class="sidebar-toggle">
-                <i class="fa fa-times"></i>
-            </button>
-        </div>
-        <div class="sidebar-menu">
-            <ul class="sidebar-nav">
-                <li class="">
-                    <a href="/core/template/index.html">
-                        <div class="icon">
-                            <i class="fa fa-tasks" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Dashboard</div>
-                    </a>
-                </li>
-                <li class="@@menu.messaging">
-                    <a href="/core/template/messaging.html">
-                        <div class="icon">
-                            <i class="fa fa-comments" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Messaging</div>
-                    </a>
-                </li>
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-cube" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">UI Kits</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> UI Kits</li>
-                            <li><a href="/core/template/uikits/customize.html">Customize</a></li>
-                            <li><a href="/core/template/uikits/components.html">Components</a></li>
-                            <li><a href="/core/template/uikits/card.html">Card</a></li>
-                            <li><a href="/core/template/uikits/form.html">Form</a></li>
-                            <li><a href="/core/template/uikits/table.html">Table</a></li>
-                            <li><a href="/core/template/uikits/icons.html">Icons</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Advanced Components</li>
-                            <li><a href="/core/template/uikits/pricing-table.html">Pricing Table</a></li>
-                            <!-- <li><a href="../uikits/timeline.html">Timeline</a></li> -->
-                            <li><a href="/core/template/uikits/chart.html">Chart</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Pages</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Admin</li>
-                            <li><a href="/core/template/pages/form.html">Form</a></li>
-                            <li><a href="/core/template/pages/profile.html">Profile</a></li>
-                            <li><a href="/core/template/pages/search.html">Search</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Landing</li>
-                            <!-- <li><a href="../pages/landing.html">Landing</a></li> -->
-                            <li><a href="/core/template/pages/login.html">Login</a></li>
-                            <li><a href="/core/template/pages/register.html">Register</a></li>
-                            <!-- <li><a href="../pages/404.html">404</a></li> -->
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-footer">
-            <ul class="menu">
-                <li>
-                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li><a href="#"><span class="flag-icon flag-icon-th flag-icon-squared"></span></a></li>
-            </ul>
-        </div>
-    </aside>
-    <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
-        <div class="dropdown-background">
-            <div class="bg"></div>
-        </div>
-        <div class="dropdown-container">
-            {{list}}
-        </div>
-    </script>
-
-    <div class="col-md-12 col-sm-12 app-container">
         <?php
         for ($i = 0; $i < count($annunci); $i++) {
 
         ?>
-            <div class="row" style="margin-right: 20%; height: auto; margin-bottom: 5%">
+            <div class="row" style="margin-right: 20%; height: auto; margin-top: 5%">
 
                 <div class="card">
 
@@ -381,7 +136,9 @@ include_once VIEW_DIR . 'header.php';
                             </div>
 
                         </div>
-                    <?php } ?>
+                        <?php
+                        }
+                        ?>
                     </div>
 
                     <div class="row col-md-12 col-sm-12 card candidature<?php echo $annunci[$i]->getId();?>" style="margin-left: 0; display: none">
@@ -426,31 +183,12 @@ include_once VIEW_DIR . 'header.php';
 
                 </div>
             </div>
-
-    </div>
-            <?php
-
+</div>
+<?php
         }
-        ?>
+?>
+</div>
 
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
-
-        <script type="text/javascript">
-            function toggleMe(a){
-                var e=document.getElementById(a);
-                if(!e)return true;
-                if(e.style.display=="none"){
-                    e.style.display="block"
-                }
-                else{
-                    e.style.display="none"
-                }
-                return true;
-            }
-        </script>
-        <script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
         <script>
             $(document).ready(function() {
                 var showChar = 500;
@@ -486,7 +224,6 @@ include_once VIEW_DIR . 'header.php';
                 });
             });
         </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <?php
 
         if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {

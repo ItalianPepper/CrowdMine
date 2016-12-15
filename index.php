@@ -257,6 +257,11 @@ try {
             case 'nothingFound';
                 include_once VIEW_DIR . "nothingFound.php";
                 break;
+            case 'annuncio';
+                include_once VIEW_DIR . "annuncio.php";
+                break;
+            case 'immprofilo';
+                include_once CORE_DIR . "/template/assets/images/profile.png";
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;
