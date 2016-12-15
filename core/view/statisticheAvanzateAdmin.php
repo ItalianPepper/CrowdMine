@@ -815,8 +815,15 @@
 
     function appendingPaging(dimensionPaging, type, nameMacro) {
         $("#pagination").append($("<ul>").attr("class", "pagination"));
+        $("#pagination ul")
+            .append($("<li>")
+                .attr("id", "page" + 1)
+                .attr("class","active")
+                .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'1'"+")")
+                .append($("<a>").text(1)));
 
-        for (var i = 1; i < dimensionPaging + 1; i++) {
+
+        for (var i = 2; i < dimensionPaging + 1; i++) {
             $("#pagination ul")
                 .append($("<li>")
                     .attr("id", "page" + i)
@@ -827,6 +834,13 @@
 
 
     function goToPage(type,nameMacro,numberPage){
+
+        $("#pagination  ul li").each(function(i, el){
+            el.removeAttribute("class");
+        });
+
+        $("#page"+numberPage).attr("class","active");
+
         $.ajax({
             type: "POST",
             url: "tabUtenti",
