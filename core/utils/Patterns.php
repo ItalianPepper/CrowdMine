@@ -12,6 +12,8 @@ class Patterns {
     public static $TELEPHONE = "/^[0-9]{5,10}$/";
     public static $GENERIC_DATE = "/([0-9]{2}\/[0-9]{2}\/[0-9]{4})/";
     public static $MD5_SLASH = "/^[a-f0-9]{32}\|[a-f0-9]{32}$/";
+    public static $PI_GENERIC = "/^[0-9]{11}$/";
+
     //^: anchored to beginning of string
     //\S*: any set of characters
     //(?=\S{8,}): of at least length 8

@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo password non settato";
-        header("Location:" . DOMINIO_SITO . "/auth");
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
         throw new IllegalArgumentException("Campo password non settato");
     }
     
@@ -40,17 +40,20 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         throw new IllegalArgumentException("Email non valida");
     }
     
-    if (empty($userPassword) || !(isAlphanumeric($userPassword))) {
+    if (empty($userPassword) || !preg_match(Patterns::$PASSWORD, $userPassword)) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Password non inserita";
+        $_SESSION['toast-message'] = "Password non valida";
         header("Location:" . DOMINIO_SITO . "/auth");
-        throw new IllegalArgumentException("Password non inserita");
+        throw new IllegalArgumentException("Password non valida");
     }
     
-    $user = $utenteManager->forwardsLogin($userMail, $userPassword);
+    $user = $utenteManager->login($userMail, $userPassword);
     
-    if($user != null){
+    if($user != false){
         $_SESSION['user'] = serialize($user);
-        $_SESSION['loggedin'] = true;        
+        $_SESSION['loggedin'] = true; 
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "Bentornato ".$user->getNome()." :)";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
     }
 }
