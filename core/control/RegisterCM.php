@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         throw new IllegalArgumentException("Email non valida");
     }
     
-    if (empty($userPassword) || !(isAlphanumeric($userPassword))) {
+    if (empty($userPassword) || !preg_match(Patterns::$PASSWORD, $userPassword)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Password non inserita";
         header("Location:" . DOMINIO_SITO . "/auth");
@@ -175,6 +175,31 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         header("Location:" . DOMINIO_SITO . "/auth");
         throw new IllegalArgumentException("Le password devono essere uguali");
     }
+     if (empty($userPI) || !preg_match(Patterns::$PI_GENERIC, $userPI)) {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Partita iva non valida";
+        header("Location:" . DOMINIO_SITO . "/auth");
+        throw new IllegalArgumentException("Partita iva non valida");
+    }
+     
+    if(($utenteManager->checkEmail($userMail)) == false){
+       $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, "attivato","user", null);
+       $utenteManager->register($userToReg);
+       $user = $utenteManager-> login($userMail, $userPassword);    
+    }
     
-    $utenteManager->createUser($userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword);
+    else{
+       $_SESSION['toast-type'] = "error";
+       $_SESSION['toast-message'] = "Email già collegata ad un'altro account";
+       header("Location:" . DOMINIO_SITO . "/auth");
+       throw new IllegalArgumentException("Email già collegata ad un'altro account");
+    }
+    // verificare il valore di ritorno nel manager
+    if($user != false){
+        $_SESSION['user'] = serialize($user);
+        $_SESSION['loggedin'] = true; 
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "Benvenuto".$user->getNome()." :)";
+        header("Location: " .DOMINIO_SITO."/");
+    }
 }
