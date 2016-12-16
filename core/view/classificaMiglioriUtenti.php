@@ -333,21 +333,21 @@
                             <tbody>
                             <tr>
                                 <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
+                                <td>63</td>
+                                <td>JAVA</td>
+                                <td>Informatica</td>
                             </tr>
                             <tr>
                                 <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
+                                <td>24</td>
+                                <td>PHP</td>
+                                <td>Informatica</td>
                             </tr>
                             <tr>
                                 <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
+                                <td>80</td>
+                                <td>PHP</td>
+                                <td>Informatica</td>
                             </tr>
                             </tbody>
                         </table>
@@ -423,6 +423,22 @@
             $("#selectMicro").append($("<option>").text(item).attr("value",item));
         });
     }
+</script>
+
+<script>
+    $('#mostraRisultati').sortable({
+        axis: 'y',
+        update: function (event, ui) {
+            var data = $(this).sortable('serialize');
+
+            // POST to server using $.post or $.ajax
+            $.ajax({
+                data: data,
+                type: 'POST',
+                url: 'classificaUtenti'
+            });
+        }
+    });
 </script>
 
 </body>
