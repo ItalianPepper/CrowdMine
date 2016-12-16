@@ -165,30 +165,12 @@
           <div class="dropdown-menu">
             <ul>
               <li class="dropdown-header">Notifiche</li>
-              <!--<li>
-                <a href="#">
-                  <span class="badge badge-danger pull-right">8</span>
-                  <div class="message">
-                    <div class="content">
-                      <div class="title">I miei ordini</div>
-                      <div class="description">$400 total</div>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="badge badge-danger pull-right">14</span>
-                  Inbox
-                </a>
-              </li>
               <li>
                 <a href="#">
                   <span class="badge badge-danger pull-right">5</span>
-                  Issues Report
+
                 </a>
               </li>
-              -->
               <li class="dropdown-footer">
                 <a href="#">Visualizza tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>
               </li>
@@ -243,7 +225,25 @@
   </div>
 </nav>
 
+    <script type="text/javascript">
+        $('menu-notifica').ready(function(e){
 
+            e.preventDefault();
+            var url = "listaNotificheControl";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                async: true;
+            success: function(data){
+                var destination = $('lista-notifiche');
+                console.log(destination);
+                var lista = data.list;
+                destination.append();
+                }
+            });
+        })
+    </script>
 
   
   <script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/vendor.js"></script>

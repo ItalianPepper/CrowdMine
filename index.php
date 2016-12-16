@@ -134,7 +134,7 @@ try {
                 include_once CONTROL_DIR . "InserisciEsperienza.php";
                 break;
             case 'listaNotificheControl':
-                include_once CONTROL_DIR . "listaNotificheControl.php";
+                include_once CONTROL_DIR . "listaNotifiche.php";
                 break;
             case 'effettuaLogin':
                 StringUtils::checkPermission("not_logged");
