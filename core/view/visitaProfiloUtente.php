@@ -345,8 +345,9 @@ $utenteEsterno = new Utente("id", "nome", "cognome", "telefono", "data", "citta"
                             if (($utenteEsterno->getStato() == "attivo")) {
                                 ?>
                                 <div>
-                                    <form action="BanUtente" method="post">
+                                    <form action="banUtente" method="post">
                                         <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId(); ?>">
+                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloPersonale">
                                         <button type="button" class="btn btn-danger btn btn-default btn-xs">Ban Utente
                                         </button>
                                     </form>
@@ -356,8 +357,9 @@ $utenteEsterno = new Utente("id", "nome", "cognome", "telefono", "data", "citta"
 
                                 ?>
                                 <div>
-                                    <form action="" method="post">
+                                    <form action="riattivaUtente" method="post">
                                         <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId(); ?>">
+                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloPersonale">
                                         <button type="button" class="btn btn-success btn btn-default btn-xs">Riattiva
                                             Utente
                                         </button>

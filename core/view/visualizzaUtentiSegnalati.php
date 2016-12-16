@@ -326,7 +326,11 @@ if (isset($_SESSION["utentiSegnalati"])){
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-sm btn-success">Ban Utente</button>
+                                    <form   action="banUtente" method="post">
+                                        <input type="hidden" name="idUser" value="<?php $utente->getId(); ?>">
+                                        <input type="hidden" name="urlDellaChiamata" value="visualizzaUtentiSegnalati">
+                                        <button type="submit" class="btn btn-sm btn-danger">Ban Utente</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

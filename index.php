@@ -152,6 +152,9 @@ try {
             case 'cancellaAccount':
                 include_once CONTROL_DIR . "CancellazioneAccount.php";
                 break;
+            case 'riattivaUtente':
+                include_once CONTROL_DIR . "RiattivaUtente.php";
+                break;
             case 'banUtente':
                 include_once CONTROL_DIR . "BanUtente.php";
                 break;

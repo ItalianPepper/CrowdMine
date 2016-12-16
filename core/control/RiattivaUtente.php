@@ -2,26 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: Hacca
- * Date: 05/12/2016
- * Time: 10:33
+ * Date: 15/12/2016
+ * Time: 12:19
  */
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 
 $manager = new UtenteManager();
-
-// prendo in input da dove chiamo questa pagina
 $urlDellaChiamata = $_POST_['urlDellaChiamata'];
 
 if (isset($_SESSSION['user'])) {
     $user = $_SESSION['user'];
     $idUtenteEsterno = $_POST['idUser'];
     $userEsterno = $manager->findUtenteById($idUtenteEsterno);
-    //controllo se esiste l'utente
+
     if (isset($userEsterno) && ($userEsterno->getId()==null) ) {
         if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
-            $userEsterno->setStato("bannato");
+            $userEsterno->setStato("attivo");
             $manager->updateUtente($userEsterno);
 
             if($urlDellaChiamata == "visitaProfiloUtente"){
@@ -33,13 +31,15 @@ if (isset($_SESSSION['user'])) {
                 header("location: " . DOMINIO_SITO);
             }
 
-        } else {
+        }else {
             header("location: " . DOMINIO_SITO);
         }
-    }
-    else {
+
+    } else {
         header("location: " . DOMINIO_SITO);
     }
+
+
 } else {
     header("location: " . DOMINIO_SITO);
 }
