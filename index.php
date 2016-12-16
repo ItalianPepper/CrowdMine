@@ -185,6 +185,10 @@ try {
             case 'visualizzaIndexMacrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
                 break;
+            case 'indexMacrocategorie':
+                include_once MODEL_DIR . "Utente.php";
+                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
+                include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
             case 'visualizzaIndexMicrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMicrocategorie.php";
                 break;

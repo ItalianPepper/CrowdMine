@@ -90,6 +90,32 @@ class MacroCategoriaManager extends Manager
     }
 
     /**
+     * return the total count of macros inside the system
+     * @return int
+     */
+    public function getMacroCount(){
+        $GET_MACRO_COUNT = "SELECT COUNT(*) as num FROM macrocategoria WHERE 1 ";
+        $rs = Manager::getDB()->query($GET_MACRO_COUNT);
+        if($rs){
+            $obj = mysqli_fetch_assoc($rs);
+            return $obj['num'];
+        }
+        return 0;
+    }
+
+    /**
+     * verify if the MacroCategoria already exists
+     * @param $macroCategoria
+     */
+    public function getMacrosPage($page,$pageSize)
+    {
+        $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE 1 LIMIT %s,%s";
+        $query = sprintf($GET_MACRO_BY_NAME,$page,$pageSize);
+        $rs = Manager::getDB()->query($query);
+        return $this->macroToArray($rs);
+    }
+
+    /**
      * @return array|bool
      */
     public function findListMacorocategoria(){
