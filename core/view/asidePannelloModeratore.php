@@ -32,7 +32,7 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="visualizzaIndexMacrocategorie">Macrocategorie</a></li>
+                        <li><a href="indexMacrocategorie">Macrocategorie</a></li>
                         <li><a href="visualizzaIndexMicrocategorie">Microcategorie</a></li>
                     </ul>
                 </div>
