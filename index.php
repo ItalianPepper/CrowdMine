@@ -189,6 +189,7 @@ try {
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
                 include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
+                break;
             case 'visualizzaIndexMicrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMicrocategorie.php";
                 break;
