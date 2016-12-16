@@ -25,6 +25,7 @@ class UtenteManager extends Manager{
      *
      * @param $nome
      * @param $cognome
+     * @param $descrizione
      * @param $telefono
      * @param $dataNascita
      * @param $citta
@@ -34,8 +35,17 @@ class UtenteManager extends Manager{
      * @param $ruolo
      * @param $immagineProfilo
      */
-    public function createUser($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo){
-        return new Utente($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo);
+    public function createUser($id, $nome, $cognome,$descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo){
+        return new Utente($id, $nome, $cognome,$descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo);
+    }
+
+
+    /**
+     * creates user model by SQL query result row
+     * @param $row
+     */
+    private function createUserFromRow($row){
+        $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['descrizione'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagine_profilo']);
     }
 
     /**
@@ -44,8 +54,8 @@ class UtenteManager extends Manager{
      * @param $user
      */
     private function insertUtente($user){
-        $INSERT_UTENTE = "INSERT INTO 'utente' (nome, cognome, telefono, dataNascita, citta, email, password, stato, ruolo, immagineProfilo) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-        $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(), $user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
+        $INSERT_UTENTE = "INSERT INTO 'utente' (nome, cognome, descrizione, telefono, dataNascita, citta, email, password, stato, ruolo, immagineProfilo) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+        $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(),$user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
         self::getDB()->query($query);
     }
 
@@ -55,8 +65,8 @@ class UtenteManager extends Manager{
      * @param $user
      */
     public function updateUtente($user){
-        $UPDATE_UTENTE = "UPDATE utente SET telefono='%s', dataNascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagineProfilo='%s';";
-        $query = sprintf($UPDATE_UTENTE, $user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
+        $UPDATE_UTENTE = "UPDATE utente SET descrizione='%s', telefono='%s', dataNascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagineProfilo='%s';";
+        $query = sprintf($UPDATE_UTENTE, $user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
         self::getDB()->query($query);
     }
 
@@ -72,7 +82,7 @@ class UtenteManager extends Manager{
         $query = sprintf($CERCA_UTENTE, $userId);
         $result = $connection->query($query);
         $row = $result->fetch_assoc();
-        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['dataNascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagineProfilo']);
+        return $this->createUserFromRow($row);
     }
 
     /**
@@ -88,7 +98,7 @@ class UtenteManager extends Manager{
         $query = sprintf($GET_UTENTE_BY_USERNAME, $nome, $cognome);
         $result = self::getDB()->query($query);
         foreach ($result->fetch_assoc() as $row) {
-            $user = $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagine_profilo']);
+            $user = $this->createUserFromRow($row);
             array_push($users, $user);
         }
         return $users;
@@ -110,7 +120,7 @@ class UtenteManager extends Manager{
         if (!$row || mysqli_num_rows($row) <= 0) {
             return false;
         } else {
-            return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['dataNascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagineProfilo']);
+            return $user = $this->createUserFromRow($row);
         }
     }
 
@@ -133,7 +143,7 @@ class UtenteManager extends Manager{
         $users = array();
         if ($resSet){
             foreach($resSet->fetch_assoc() as $u){
-                $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+                $user = $this->createUserFromRow($u);
                 array_push($users, $user);
             }
         }
@@ -148,7 +158,7 @@ class UtenteManager extends Manager{
         $FIND_ALL = "SELECT * FROM utente;";
         $result = self::getDB()->query($FIND_ALL);
         foreach($result->fetch_assoc() as $u){
-            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }return $users;
     }
@@ -163,7 +173,7 @@ class UtenteManager extends Manager{
         $result = $connection->query($query);
         $users = array();
         foreach($result->fetch_assoc() as $u){
-            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }
         return $users;
@@ -179,7 +189,7 @@ class UtenteManager extends Manager{
         $result = $connection->query($query);
         $users = array();
         foreach($result->fetch_assoc() as $u){
-            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }
         return $users;
@@ -194,7 +204,7 @@ class UtenteManager extends Manager{
         $query = sprintf($GET_APPEAL_USERS, StatoUtente::RICORSO);
         $result = self::getDB()->query($query);
         foreach($result->fetch_assoc() as $u){
-            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+            $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }
         return $users;
