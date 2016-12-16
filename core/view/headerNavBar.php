@@ -1,6 +1,6 @@
  <li class="dropdown notification">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
+            <div class="icon"><i class="fa fa-book" aria-hidden="true"></i></div>
             <div class="title">I miei annunci</div>
             <div class="count">0</div>
           </a>

@@ -25,6 +25,8 @@
     {{list}}
   </div>
 </script>
+
+
 <div class="app-container app-full" style="padding-left:0px">
   <nav class="navbar navbar-default" id="navbar" style="padding: 0px; border-width: 0px; ">
   <div class="container-fluid" style="padding: 0px;">
@@ -40,11 +42,21 @@
         <li class="logo">
           <img class="img-responsive" style="height: 75%; " src="<?php echo STYLE_DIR ?>/img/Favicon_3.png" />  
           <a class="navbar-brand" href="#"><span class="highlight">Alfredo Fiorillo</span></a>     </li>
+        
         <li>
           <button type="button" class="navbar-toggle">
-            <img class="profile-img" src="<?php echo STYLE_DIR ?>./assets/images/profile.png">
+           
+            <i class="fa fa-navicon" style="color: white"></i>
           </button>
         </li>
+      
+        <!--
+        <li>
+          <button type="button" class="sidebar-toggle">
+            <i class="fa fa-bars"></i>
+          </button>
+        </li>
+        -->
       </ul>
     
       <ul class="nav navbar-nav navbar-left" style="padding-left: 0px;margin-left: 0px;">
@@ -59,10 +71,6 @@
         
       </ul>
       
-    
-
-  
-        
       <!-- DA QUI PARTE LA NAVBAR CON LE TRE ICONE -->  
       <ul class="nav navbar-nav navbar-right" style="padding-left: 0px;">
         <?php
