@@ -6,12 +6,10 @@
  * Time: 11:29
  */
 
-include_once MODEL_DIR.'Utente.php';
-$manager = new UtenteManager();
 
 if(isset($_SESSSION['user'])){
-    header("/visitaProfiloPersonale.php");
+    header ("location: ".DOMINIO_SITO.DIRECTORY_SEPARATOR."visitaProfiloPersonale");
 }
 else{
-    header("/home.php");
+    header ("location: ".DOMINIO_SITO);
 }

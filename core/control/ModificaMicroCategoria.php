@@ -14,8 +14,8 @@ if(isset($_SESSSION['user'])){
     $microCategoria = $_SESSSION['microCategoria'];
     $manager->editMicrocategoria($microCategoria);
     //Lo reindirizzo al control per visualizzare la pagina del profilo personale in modo che viene aggiornapa perchè ricaricata.
-    header("/VisualizzaProfiloPersonale.php");
+    header ("location: ".DOMINIO_SITO.DIRECTORY_SEPARATOR."visualizzaProfiloPersonale");
 }
 else{
-    header("/home.php");
+    header ("location: ".DOMINIO_SITO);
 }
