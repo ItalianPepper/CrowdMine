@@ -163,6 +163,16 @@ try {
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "inviaMessaggio.php";
                 break;
+            case 'inviaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "inviaCollaborazione.php";
+                break;
+            case 'rifiutaCandidato':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "rifiutaCandidato.php";
+                break;
+            
+            
             
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
