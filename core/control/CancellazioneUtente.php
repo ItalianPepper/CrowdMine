@@ -17,7 +17,7 @@ $manager = new UtenteManager();
 
 if(isset($_SESSION['user'])){
 
-    $user = $_SESSION['user'];
+    $user = unserialize($_SESSION['user']);
     $password = $_POST['inputPassword'];
     if($user->getPassword()==$password){
         $manager->deleteUserData($user);

@@ -11,8 +11,12 @@ include_once MANAGER_DIR . 'UtenteManager.php';
 
 $manager = new UtenteManager();
 $urlDellaChiamata = $_POST_['urlDellaChiamata'];
+$user= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", "password", "attivo", "moderatore", "immagine");
+$utenteEsterno = new Utente(3, "nome2", "cognome2", "telefono", "data", "citta", "email2", "password","attivo", "utente", "immagine");
+$_SESSION['user'] = $user;
 
-if (isset($_SESSSION['user'])) {
+
+if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
     $idUtenteEsterno = $_POST['idUser'];
     $userEsterno = $manager->findUtenteById($idUtenteEsterno);
@@ -20,6 +24,7 @@ if (isset($_SESSSION['user'])) {
     if (isset($userEsterno) && ($userEsterno->getId()==null) ) {
         if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
             $userEsterno->setStato("attivo");
+            $_SESSION['utenteEsterno'] = serialize($userEsterno);
             $manager->updateUtente($userEsterno);
 
             if($urlDellaChiamata == "visitaProfiloUtente"){

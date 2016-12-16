@@ -6,8 +6,9 @@
 //$utenteEsterno = $_SESSION['utenteEsterno'];
 //$user = $_SESSION['user'];
 //per provare creo un user
-$user = new Utente("id", "nome", "cognome", "telefono", "data", "citta", "email", "password", "stato", "amministratore", "immagine");
-$utenteEsterno = new Utente("id", "nome", "cognome", "telefono", "data", "citta", "email", "password","attivo", "moderatore", "immagine");
+ $user= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", "password", "attivo", "moderatore", "immagine");
+
+    $utenteEsterno = new Utente(3, "nome2", "cognome2", "telefono", "data", "citta", "email2", "password", "attivo", "utente", "immagine");
 
 ?>
 
@@ -346,9 +347,9 @@ $utenteEsterno = new Utente("id", "nome", "cognome", "telefono", "data", "citta"
                                 ?>
                                 <div>
                                     <form action="banUtente" method="post">
-                                        <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId(); ?>">
-                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloPersonale">
-                                        <button type="button" class="btn btn-danger btn btn-default btn-xs">Ban Utente
+                                        <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId();?>">
+                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
+                                        <button type="submit" class="btn btn-danger btn btn-default btn-xs">Ban Utente
                                         </button>
                                     </form>
                                 </div>
@@ -359,8 +360,8 @@ $utenteEsterno = new Utente("id", "nome", "cognome", "telefono", "data", "citta"
                                 <div>
                                     <form action="riattivaUtente" method="post">
                                         <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId(); ?>">
-                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloPersonale">
-                                        <button type="button" class="btn btn-success btn btn-default btn-xs">Riattiva
+                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
+                                        <button type="submit" class="btn btn-success btn btn-default btn-xs">Riattiva
                                             Utente
                                         </button>
                                     </form>

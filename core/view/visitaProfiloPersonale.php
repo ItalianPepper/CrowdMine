@@ -3,15 +3,14 @@
 <?php
 
 include_once MODEL_DIR . "Utente.php";
-$utente = new Utente("id", "nome", "cognome", "Telefono", "data", "citta", "email", "password", "stato", "ruolo", "imm");
-/*
+
 if(isset($_SESSSION['user'])){
-    $utente = $_SESSION['user'];
+    $utente = unserialize($_SESSION['user']);
 }
 else{
-    header("/home.php");
+    header("location: " . DOMINIO_SITO);
 }
-*/
+
 ?>
 <head>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>

@@ -150,7 +150,7 @@ try {
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
             	break;
             case 'cancellaAccount':
-                include_once CONTROL_DIR . "CancellazioneAccount.php";
+                include_once CONTROL_DIR . "CancellazioneUtente.php";
                 break;
             case 'riattivaUtente':
                 include_once CONTROL_DIR . "RiattivaUtente.php";
@@ -159,7 +159,7 @@ try {
                 include_once CONTROL_DIR . "BanUtente.php";
                 break;
             case 'visualizzaProfiloPersonale':
-                include_once CONTROL_DIR . "VisualizzaProfiloPersonale.php";
+                include_once CONTROL_DIR . "VisualizzaProfiloPersonaleControl.php";
                 break;
             case 'cercaAnnunci':
                 StringUtils::checkPermission("all");
