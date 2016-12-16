@@ -57,7 +57,7 @@ class UtenteManager extends Manager{
     public function updateUtente($user){
         $UPDATE_UTENTE = "UPDATE utente SET telefono='%s', dataNascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagineProfilo='%s';";
         $query = sprintf($UPDATE_UTENTE, $user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
-        self::getDB($query);
+        self::getDB()->query($query);
     }
 
     /**

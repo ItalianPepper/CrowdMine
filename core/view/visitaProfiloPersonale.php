@@ -4,12 +4,7 @@
 
 include_once MODEL_DIR . "Utente.php";
 
-if(isset($_SESSSION['user'])){
-    $utente = unserialize($_SESSION['user']);
-}
-else{
-    header("location: " . DOMINIO_SITO);
-}
+$utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", "password", "attivo", "moderatore", "immagine");
 
 ?>
 <head>

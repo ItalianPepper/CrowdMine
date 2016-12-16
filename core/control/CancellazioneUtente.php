@@ -25,6 +25,8 @@ if(isset($_SESSION['user'])){
         header ("location: ".DOMINIO_SITO);
     }
     else{
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Password errata";
         header ("location: ".DOMINIO_SITO.DIRECTORY_SEPARATOR."visitaProfiloPersonale");
     }
 }
