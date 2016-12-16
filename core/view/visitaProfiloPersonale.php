@@ -3,7 +3,10 @@
 <?php
 include_once MODEL_DIR."Utente.php";
 include_once MODEL_DIR.'MacroCategoria.php';
+include_once MODEL_DIR.'MicroCategoria.php';
 include_once CONTROL_DIR.'SelezionaMacroControl.php';
+include_once MODEL_DIR  . 'MicroListObject.php';
+include_once CONTROL_DIR  .  'SelezionaMicroControl.php';
 
 
 if(isset($_SESSSION['user'])){
@@ -20,7 +23,7 @@ if (isset($_SESSION["macro"])){
 } else {
     $_SESSION['toast-type'] = "error";
     $_SESSION['toast-message'] = "macro non settata";
-    header("Location: " . DOMINIO_SITO . "/visitaProfiloPersonale");
+    header("Location: " . DOMINIO_SITO);
 }
 
 if (isset($_SESSION["macroUtente"])){
@@ -29,7 +32,25 @@ if (isset($_SESSION["macroUtente"])){
 } else {
     $_SESSION['toast-type'] = "error";
     $_SESSION['toast-message'] = "macro Utente non settata";
-    header("Location: " . DOMINIO_SITO . "/visitaProfiloPersonale");
+    header("Location: " . DOMINIO_SITO);
+}
+
+if (isset($_SESSION["micro"])){
+    $microList = unserialize($_SESSION['micro']);
+    unset($_SESSION["micro"]);
+} else {
+    $_SESSION['toast-type'] = "error";
+    $_SESSION['toast-message'] = "micro non settata";
+    header("Location: " . DOMINIO_SITO);
+}
+
+if (isset($_SESSION["microUtente"])){
+    $microListUtente = unserialize($_SESSION['microUtente']);
+    unset($_SESSION["microUtente"]);
+} else {
+    $_SESSION['toast-type'] = "error";
+    $_SESSION['toast-message'] = "micro Utente non settata";
+    header("Location: " . DOMINIO_SITO);
 }
 ?>
 
@@ -837,11 +858,11 @@ if (isset($_SESSION["macroUtente"])){
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
                                                         <?php
-                                                        foreach($macroListUtente as $micro) { ?>
+                                                        foreach($microListUtente as $micro) {?>
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
-                                                                <span class="label label-default">Informatica</span>
-                                                                <span class="label label-info">Php</span>
+                                                                <span class="label label-default"><?php echo $micro->getMacroCategoria()->getNome() ?></span>
+                                                                <span class="label label-info"><?php echo $micro->getMicroCategoria()->getNome() ?></span>
                                                             </div>
                                                             <div class="dropdown corner-dropdown">
 
@@ -849,10 +870,10 @@ if (isset($_SESSION["macroUtente"])){
                                                                     <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="#">Rimuovi</a></li>
+                                                                    <li><a href="<?php echo "rimuoviMicroUtenteControl?idMacro=".$micro->getMicroCategoria()->getId()?>">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
-                                                        </div><?php }?>
+                                                        </div> <?php }?>
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
                                                                 <span class="label label-default">Informatica</span>

@@ -165,6 +165,9 @@ try {
             case 'rimuoviMacroUtenteControl':
                 include_once CONTROL_DIR . "RimuoviMacroUtenteControl.php";
                 break;
+            case 'rimuoviMicroUtenteControl':
+                include_once CONTROL_DIR . "RimuoviMicroUtenteControl.php";
+                break;
             case 'ConfermaSegnalazioneUtenteControl':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
