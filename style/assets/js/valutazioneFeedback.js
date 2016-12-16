@@ -2,7 +2,7 @@
  * Created by LongSky on 13/12/2016.
  */
 function deleteFeedback(id) {
-    clearjQueryCache();
+   clearjQueryCache();
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
@@ -13,6 +13,8 @@ function deleteFeedback(id) {
             toastr[data["toastType"]](data["toastMessage"]);
             divToDelete = $("#" + id + "");
             destination = $("#feedback-list-destination");
+            divToDelete.fadeOut();
+            delay(400);
             divToDelete.remove();
         },
         error: function (data) {
@@ -22,7 +24,7 @@ function deleteFeedback(id) {
 }
 
 function confirmFeedback(id) {
-    clearjQueryCache();
+   clearjQueryCache();
     $.ajax({
         url: "feedbackValutation",
         type: "POST",
@@ -33,6 +35,8 @@ function confirmFeedback(id) {
             toastr[data["toastType"]](data["toastMessage"]);
             divToDelete = $("#" + id + "");
             destination = $("#feedback-list-destination");
+            divToDelete.fadeOut();
+            delay(400);
             divToDelete.remove();
         },
         error: function (data) {
@@ -53,6 +57,8 @@ function sendFeedbackToAdmin(id) {
             toastr[data["toastType"]](data["toastMessage"]);
             divToDelete = $("#" + id + "");
             destination = $("#feedback-list-destination");
+            divToDelete.fadeOut();
+            delay(400);
             divToDelete.remove();
         },
         error: function (data) {

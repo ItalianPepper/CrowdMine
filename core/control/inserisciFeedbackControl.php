@@ -119,7 +119,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //if($feedbackManager->checkCollaboration($userSubID,$adsID))
     //{
         $data =  date("Y-m-d H:i:s");
-        $feedbackManager->insertFeedback(null,$userSubID,$adsID,$userValId,$feedbackRating,$feedbackDescription,$data,ATTIVO,$feedbackName);
+        $feedbackManager->insertFeedback(null,$userSubID,$adsID,
+                                        $userValId,$feedbackRating,
+                                        $feedbackDescription,$data,
+                                        ATTIVATO,$feedbackName);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "Feedback inserito con successo";
         header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");

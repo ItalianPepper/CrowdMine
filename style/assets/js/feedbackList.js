@@ -16,7 +16,7 @@ $(document).ready(function () {
             success: function (data) {
                 var destination = $("#feedback-list-destination");
                 destination.empty();
-                generateFeedbackList(data,"admin",destination)
+                generateFeedbackList(data,"moderator",destination)
             },
             error: function (data) {
                 toastr[data["toastType"]](data["toastMessage"]);
