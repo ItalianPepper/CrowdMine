@@ -70,6 +70,9 @@ try {
             case 'visitaProfiloUtente':
                 include_once VIEW_DIR . "visitaProfiloUtente.php";
                 break;
+            case 'ProfiloUtente':
+                include_once CONTROL_DIR . "ProfiloUtenteControl.php";
+                break;
             case 'visitaProfiloPersonale':
                 include_once VIEW_DIR . "visitaProfiloPersonale.php";
                 break;
@@ -188,7 +191,7 @@ try {
             case 'visualizzaIndexMacrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
                 break;
-            case 'indexMacrocategorie':
+            case 'IndexMacrocategorie':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
                 include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
