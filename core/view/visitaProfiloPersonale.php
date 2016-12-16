@@ -789,37 +789,37 @@ if (isset($_SESSION["macroUtente"])){
                                                         </div>
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
-                                                        <form class="form form-horizontal" id="macro-input" style="display:none">
-                                                        <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+                                                            <form class="form form-horizontal" action="aggiungiMacroUtente" method="post" id="macro-input" style="display:none">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
-                                                        </div>
-                                                        <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
 
                                                                     <div class="input-group">
                                                         	            <span class="input-group-addon" id="basic-addon1">
 																            <i class="fa fa-tag" aria-hidden="true"></i>
 															            </span>
 
-                                                                        <select class="form-control select2">
+                                                                        <select class="form-control select2" name="getIdMacro" form="macro-input">
                                                                             <?php
-                                                                                 foreach ($macroList as $macro) {
-                                                                                    if(!array_search($macro, $macroListUtente)) { ?>
-                                                                                        <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
-                                                                            <?php   }
-                                                                                 } ?>
+                                                                            foreach ($macroList as $macro) {
+                                                                                if(!array_search($macro, $macroListUtente)) { ?>
+                                                                                    <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
+                                                                                <?php   }
+                                                                            } ?>
                                                                         </select>
                                                                     </div>
-                                                                     <div class="form-footer">
-                                                                           <div class="form-group">
-                                                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                    <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                    <button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancel</button>
-                                                                                </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </form>
-                                                            </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -836,12 +836,13 @@ if (isset($_SESSION["macroUtente"])){
                                             <div id="profile-collapse6" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <?php
+                                                        foreach($macroListUtente as $micro) { ?>
                                                         <div class="row">
-                                                            <div class="col-lg-6 col-md-9 col-xs-12 simple-row">
+                                                            <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
                                                                 <span class="label label-default">Informatica</span>
                                                                 <span class="label label-info">Php</span>
                                                             </div>
-
                                                             <div class="dropdown corner-dropdown">
 
                                                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -851,7 +852,7 @@ if (isset($_SESSION["macroUtente"])){
                                                                     <li><a href="#">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
+                                                        </div><?php }?>
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
                                                                 <span class="label label-default">Informatica</span>

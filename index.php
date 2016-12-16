@@ -170,6 +170,9 @@ try {
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
                 include_once CONTROL_DIR . "ConfermaSegnalazioneUtenteControl.php";
                 break;
+            case 'aggiungiMacroUtente':
+                include_once CONTROL_DIR . "AggiungiMacroUtenteControl.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
