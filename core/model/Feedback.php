@@ -11,6 +11,8 @@ class Feedback extends Commento
 {
 
     private $valutazione;
+    private $idValutato;
+    private $titolo;
 
     /**
      * Feedback constructor.
@@ -21,10 +23,13 @@ class Feedback extends Commento
      * @param $corpo
      * @param $data
      */
-    public function __construct($id, $idAnnuncio, $idUtente, $corpo, $data, $valutazione)
+    public function __construct($id, $idAnnuncio, $idUtente, $idValutato, $corpo, $data, $stato, $valutazione, $titolo)
     {
-        parent::__construct($id, $idAnnuncio, $idUtente, $corpo, $data);
+        parent::__construct($id, $idAnnuncio, $idUtente, $corpo, $data, $stato);
         $this->valutazione = $valutazione;
+        $this->idValutato = $idValutato;
+        $this->titolo = $titolo;
+
     }
 
     /**
@@ -42,5 +47,22 @@ class Feedback extends Commento
     {
         $this->valutazione = $valutazione;
     }
+
+    public function getIdValutato()
+    {
+        return $this->idValutato;
+    }
+
+    public function getTitolo()
+    {
+        return $this->titolo;
+    }
+
+    public function setTitolo($titolo)
+    {
+        $this->titolo = $titolo;
+    }
+
+
 
 }

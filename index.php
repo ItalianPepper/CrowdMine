@@ -18,6 +18,10 @@ define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
+define('ATTIVO',"attivo");
+define('SEGNALATO',"segnalato");
+define('ELIMINATO',"eliminato");
+define('AMMINISTRATORE',"amministratore");
 define('DEBUG', true);
 
 try {
@@ -90,12 +94,15 @@ try {
             case 'conversazionePrivata':
                 include_once VIEW_DIR . "conversazionePrivata.php";
                 break;
+            case 'footer':
+                include_once VIEW_DIR . "footer.php";
+                break;
             
             case 'inserisciEsperienza':
                 StringUtils::checkPermission("Cliente");
                 include_once VIEW_DIR . "inserisciEsperienza.php";
                 break;
-//             case 'standard':
+//          case 'standard':
 //                include_once "standard.html";
 //                break;
             case 'ricercaAnnuncio':
@@ -136,11 +143,17 @@ try {
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
+            case 'segnalaUtente':
+                include_once CONTROL_DIR . "SegnalaUtente.php";
+                break;
             case 'feedbackListRetrive':
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
             	break;
             case 'cancellaAccount':
                 include_once CONTROL_DIR . "CancellazioneAccount.php";
+                break;
+            case 'riattivaUtente':
+                include_once CONTROL_DIR . "RiattivaUtente.php";
                 break;
             case 'banUtente':
                 include_once CONTROL_DIR . "BanUtente.php";
@@ -158,11 +171,6 @@ try {
             case 'modificaPassword':
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
                 break;
-            case 'EliminaSegnalazioneUtenteControl':
-                include_once MODEL_DIR . "Utente.php";
-                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
-                include_once CONTROL_DIR . "EliminaSegnalazioneUtenteControl.php";
-                break;
             case 'ConfermaSegnalazioneUtenteControl':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
@@ -179,6 +187,11 @@ try {
                 break;
             case 'visualizzaIndexMacrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
+                break;
+            case 'indexMacrocategorie':
+                include_once MODEL_DIR . "Utente.php";
+                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
+                include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
                 break;
             case 'visualizzaIndexMicrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMicrocategorie.php";
@@ -209,7 +222,7 @@ try {
                 break;
                 case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
-                break;
+                break;        
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;
