@@ -321,34 +321,31 @@
                 <div class="card">
                     <div class="card-header">Risultati</div>
                     <div class="card-body no-padding">
-                        <table class="datatable table table-striped primary" cellspacing="0" width="100%">
+                        <table id ="tabellaRisultati" class="datatable table table-striped primary" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Feedback positivi</th>
-                                <th>Micro Categorie</th>
+                                <th>Micro Categoria</th>
                                 <th>Macro Categoria</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <?php
+                            $arrayUtenti = array(
+                                array("Nome" => "Giuseppe", "FeedBack" => "84", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+                                array("Nome" => "Giorgio", "FeedBack" => "48", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+                                array("Nome" => "Gigi", "FeedBack" => "8", "MicroCategoria" => "JAVA", "MacroCategoria" => "Informatica"),
+                            );
+                            ?>
+
+                            <?php foreach ($arrayUtenti as $row): ?>
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>63</td>
-                                <td>JAVA</td>
-                                <td>Informatica</td>
+                                <td><? echo $row['Nome']; ?></td>
+                                <td><? echo $row['FeedBack']; ?></td>
+                                <td><? echo $row['MicroCategoria']; ?></td>
+                                <td><? echo $row['MacroCategoria']; ?></td>
                             </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>24</td>
-                                <td>PHP</td>
-                                <td>Informatica</td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>80</td>
-                                <td>PHP</td>
-                                <td>Informatica</td>
-                            </tr>
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -362,24 +359,9 @@
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
 
-<script>
-    $(document).click(function(){
-        $("#mostraRisultati").click(function(){
-            {
-                $.ajax({
-                    type: "POST",
-                    dataType:"json",
-                    url: "classificaUtenti",
-                    data: {method: 'one'},
-                    success: function(msg){
-                    }
-                });
-            });
-    });
-</script>
 
 <script>
-    $("#mostraRisultati").ready(function () {
+    $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "classificaUtenti",
@@ -400,10 +382,8 @@
             $("#selectMacro").append($("<option>").text(item).attr("value",item));
         });
     }
-    </script>
 
-<script>
-    $("#mostraRisultati").ready(function () {
+    $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "classificaUtenti",
@@ -425,20 +405,40 @@
     }
 </script>
 
+//*************** cancella e ricrea tabella
 <script>
-    $('#mostraRisultati').sortable({
-        axis: 'y',
-        update: function (event, ui) {
-            var data = $(this).sortable('serialize');
-
-            // POST to server using $.post or $.ajax
-            $.ajax({
-                data: data,
-                type: 'POST',
-                url: 'classificaUtenti'
-            });
-        }
+    $("#mostraRisultati").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option:"selectMicro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                updatePage(arrayMicroElements);
+            }
+        });
     });
-</script>
 
+    function updatePage(arrayMicroElements){
+        $("#tabellaRisultati tbody tr").remove();
+        var el = document.getElementById('selectMicro').value;
+                <?php foreach ($arrayUtenti as $row):?>
+                    if (el == '<?php echo $row['MicroCategoria']?>') {
+                        $("#tabellaRisultati").find("tbody")
+                                .append($("<tr>")
+                                .append($("<td></td>").text("<?php echo $row['Nome']?>"))
+                                .append($("<td></td>").text("<?php echo $row['FeedBack']?>"))
+                                .append($("<td></td>").text("<?php echo $row['MicroCategoria']?>"))
+                                .append($("<td></td>").text("<?php echo $row['MacroCategoria']?>"))
+                                .append($("</tr>"))
+                            )
+                    }
+                <?php endforeach; ?>
+
+    }
+
+</script>
 </body>

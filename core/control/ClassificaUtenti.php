@@ -39,6 +39,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 }
+
+function arrayUtenti(){
+    $arrayUtentiFunc = array ( array("Nome" => "Giuseppe", "FeedBack" => "84", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+                            array("Nome" => "Giorgio", "FeedBack" => "48", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+                            array("Nome" => "Gigi", "FeedBack" => "8", "MicroCategoria" => "JAVA", "MacroCategoria" => "Informatica"),
+                        );
+    return $arrayUtentiFunc;
+}
+
 function stubMacroCategorie()
 {
     $arrayTest = array("Informatica", "Ristorazione", "Bancario" );
