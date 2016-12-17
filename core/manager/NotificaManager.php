@@ -74,15 +74,10 @@ class NotificaManager extends Manager
      *
      * @return  A Notifica object
      */
-    public function getNotifica($idListaNotifica)
+    public function getNotificaById($idUtente)
     {
-        $length = count($idListaNotifica);
         $listNotifica = array();
-        $LOAD_NOTIFICHE = "SELECT * FROM `Notifica` WHERE `id` ='";
-        for ($i = 0; $i < $length; $i++) {
-            $LOAD_NOTIFICHE .= $idListaNotifica[$i] .= "' OR `id` ='";
-        }
-        $LOAD_NOTIFICHE .= "'";
+        $LOAD_NOTIFICHE = "SELECT n.* FROM notifica n, dispatcher d, WHERE d.id_utente = $idUtente";
         $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
         if ($resultNotifica) {
             while ($obj = $resultNotifica->fetch_assoc()) {
@@ -97,15 +92,10 @@ class NotificaManager extends Manager
      * @param $idNotifica
      * @return Notifica
      */
-    public function getNotificaNotVisualized($idListaNotifica)
+    public function getNotificaNotVisualized($idUtente)
     {
-        $length = count($idListaNotifica);
         $listNotifica = array();
-        $LOAD_NOTIFICHE = "SELECT * FROM `Notifica` WHERE `letto` = 0 AND(`id` ='";
-        for ($i = 0; $i < $length; $i++) {
-            $LOAD_NOTIFICHE .= $idListaNotifica[$i] .= "' OR `id` ='";
-        }
-        $LOAD_NOTIFICHE .= "')";
+        $LOAD_NOTIFICHE = "SELECT n.* FROM notifica n, dispatcher d, WHERE d.id_utente = $idUtente AND n.letto=0 AND d.id_notifica = n.id";
         $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
         if ($resultNotifica) {
             while ($obj = $resultNotifica->fetch_assoc()) {
