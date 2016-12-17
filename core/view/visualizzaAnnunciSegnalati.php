@@ -260,7 +260,7 @@ include_once VIEW_DIR . 'header.php';
                     <div class="media-action">
                         <button class="btn btn-link" data-toggle="modal" data-target="#myModal2" ><i class="fa fa-check"style="font-size: 200%;"></i> Attiva</button>
                         <button class="btn btn-link" data-toggle="modal" data-target="#myModal3"><i class="fa fa-close" style="font-size: 200%;"></i> Disattiva</button>
-                        <button class="btn btn-link"><i class="fa fa-check-circle"></i> Invia all'amministratore</button>
+                        <button class="btn btn-link" data-toggle="modal" data-target="#myModal4"><i class="fa fa-check-circle" style="font-size: 200%;"></i> Invia all'amministratore</button>
                     </div>
                 </div>
 
@@ -314,8 +314,9 @@ include_once VIEW_DIR . 'header.php';
                                             aria-hidden="true">×</span></button>
                                 <h4 class="modal-title">Inviare all'amministratore?</h4>
                             </div>
-                            <form action="aggiungiPreferitiControl" method="post">
+                            <form action="inviaAnnuncioAdmin" method="post">
                                 <div class="modal-footer">
+                                    <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
                                         Chiudi
                                     </button>

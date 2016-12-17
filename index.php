@@ -263,6 +263,12 @@ try {
             case 'nothingFound';
                 include_once VIEW_DIR . "nothingFound.php";
                 break;
+            case 'inviaAnnuncioAdmin';
+                include_once CONTROL_DIR . "inviaAnnuncioAdmin.php";
+                break;
+            case 'visualizzaAnnunciConflitto';
+                include_once CONTROL_DIR . "annunciConflitto.php";
+                break;
             case 'annuncio';
                 include_once VIEW_DIR . "annuncio.php";
                 break;

@@ -1,6 +1,6 @@
 <aside class="app-sidebar" id="sidebar">
     <div class="sidebar-header">
-        <a class="sidebar-brand" href="#"><span class="highlight"> Moderatore </span></a>
+        <a class="sidebar-brand" href="#"><span class="highlight"> Admin </span></a>
         <button type="button" class="sidebar-toggle">
             <i class="fa fa-times"></i>
         </button>
@@ -47,7 +47,7 @@
                 <div class="dropdown-menu">
                     <ul>
                         <li><a href="visualizzaUtentiBannati">Lista Utenti Bannati</a></li>
-                        <li><a href="annunciConflitto">Annunci in conflitto</a></li>
+                        <li><a href="visualizzaAnnunciConflitto">Annunci in conflitto</a></li>
                         <li><a href="visualizzaIndexStatistiche">Statistiche</a></li>
                     </ul>
                 </div>
