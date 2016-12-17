@@ -65,8 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-    // $userManager = new UtenteManager();
-    //$res = $userManager->changePassword($currPass, $newPass);
+    /* $userManager = new UtenteManager();
+    $res = $userManager->checkPassword($user->getId(), $currPass);
+
+    if(res){
+        $user->setPassword($newPass);
+        updateUtente($user);
+    }*/
 
 }
 

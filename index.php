@@ -70,6 +70,9 @@ try {
             case 'visitaProfiloUtente':
                 include_once VIEW_DIR . "visitaProfiloUtente.php";
                 break;
+            case 'ProfiloUtente':
+                include_once CONTROL_DIR . "ProfiloUtenteControl.php";
+                break;
             case 'visitaProfiloPersonale':
                 include_once VIEW_DIR . "visitaProfiloPersonale.php";
                 break;
@@ -171,10 +174,19 @@ try {
             case 'modificaPassword':
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
                 break;
-            case 'ConfermaSegnalazioneUtenteControl':
+            case 'rimuoviMacroUtenteControl':
+                include_once CONTROL_DIR . "RimuoviMacroUtenteControl.php";
+                break;
+            case 'rimuoviMicroUtenteControl':
+                include_once CONTROL_DIR . "RimuoviMicroUtenteControl.php";
+                break;
+            case 'SegnalazioneUtenteControl':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
-                include_once CONTROL_DIR . "ConfermaSegnalazioneUtenteControl.php";
+                include_once CONTROL_DIR . "SegnalazioneUtenteControl.php";
+                break;
+            case 'aggiungiMacroUtente':
+                include_once CONTROL_DIR . "AggiungiMacroUtenteControl.php";
                 break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
@@ -188,7 +200,7 @@ try {
             case 'visualizzaIndexMacrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
                 break;
-            case 'indexMacrocategorie':
+            case 'IndexMacrocategorie':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
                 include_once CONTROL_DIR . "IndexMacrocategorieControl.php";

@@ -262,7 +262,7 @@
                             </a>
                             <div class="dropdown-menu">
                                 <div class="profile-info">
-                                    <h4 class="username">Scott White</h4>
+                                    <h4 class="username"><?php $user->getNome()." ".$user->getCognome() ?></h4>
                                 </div>
                                 <ul class="action">
                                     <li>
@@ -299,8 +299,8 @@
                     <div class="card-body app-heading">
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
-                            <div class="title"><span class="highlight">Scott White</span></div>
-                            <div class="description">Frontend Developer</div>
+                            <div class="title"><span class="highlight"><?php echo $user->getNome()." ".$user->getCognome();?></span></div>
+                            <div class="description"><?php echo $user->getDescrizione();?></div>
                         </div>
 
                         <?php
@@ -425,7 +425,7 @@
                                                         Nome
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 simple-row">
-                                                        Scott
+                                                        <?php echo $user->getNome()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -433,15 +433,7 @@
                                                         Cognome
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        White
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        Professione
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        Web Designer
+                                                        <?php echo $user->getCognome()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -449,7 +441,7 @@
                                                         Data di nascita
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        22/04/1989
+                                                        <?php echo $user->getDataNascita()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -457,33 +449,18 @@
                                                         Localit&agrave;
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        Fisciano
+                                                        <?php echo $user->getCitta()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        CAP
+                                                        Email
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        84048
+                                                        <?php echo $user->getEmail()?>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        Partita Iva
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        12345678912
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        Sito Web
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        www.fakesite.com
-                                                    </div>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

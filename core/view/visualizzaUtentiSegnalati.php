@@ -290,14 +290,12 @@ if (isset($_SESSION["utentiSegnalati"])){
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
                                                                     <div class="media-action">
-                                                                        <form action="ConfermaSegnalazioneUtenteControl" method="post">
-                                                                            <button class="btn btn-link" name="idUtenteConferma" type="button" data-toggle="modal" data-target="#myModal" value="<?php echo $utente->getId()?>""><i class="fa fa-check"></i> Conferma</button>
-                                                                        </form>
-                                                                        <form action="ConfermaSegnalazioneUtenteControl" method="post">
+                                                                        <button class="btn btn-link" name="idUtenteConferma" type="button" data-toggle="modal" data-target="#myModal" value="<?php echo $utente->getId()?>""><i class="fa fa-check"></i> Conferma</button>
+                                                                        <form action="SegnalazioneUtenteControl" method="post">
                                                                             <button class="btn btn-link" name="idUtenteElimina" type="submit" value="<?php echo $utente->getId()?>"><i class="fa fa-close"></i> Elimina</button>
                                                                         </form>
-                                                                        <form action="ConfermaSegnalazioneUtenteControl" method="post">
-                                                                            <button class="btn btn-link" name="idUtenteConferma" type="submit" value="<?php echo $utente->getId()?>"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
+                                                                        <form action="SegnalazioneUtenteControl" method="post">
+                                                                            <button class="btn btn-link" name="idUtenteAdmin" type="submit" value="<?php echo $utente->getId()?>"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
                                                                         </form>
                                                                     </div>
                                                                 </div>
@@ -327,7 +325,7 @@ if (isset($_SESSION["utentiSegnalati"])){
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
                                     <form   action="banUtente" method="post">
-                                        <input type="hidden" name="idUser" value="<?php $utente->getId(); ?>">
+                                        <input type="hidden" name="idUser" value="<?php echo $utente->getId(); ?>">
                                         <input type="hidden" name="urlDellaChiamata" value="visualizzaUtentiSegnalati">
                                         <button type="submit" class="btn btn-sm btn-danger">Ban Utente</button>
                                     </form>

@@ -15,12 +15,12 @@ include_once MANAGER_DIR . 'UtenteManager.php';
 $userManager = new UtenteManager();
 //$usersReported = $userManager->getReportedUtente();
 
-$user1 = new Utente("id1", "nome1", "cognome1", "telefono1", "datanascita1", "citta1", "email1", "password1", "stato1", "ruolo1", "immagineProfilo1");
-$user2 = new Utente("id2", "nome2", "cognome2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
-$user3 = new Utente("id2", "nome2", "cognome2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
-$user4 = new Utente("id2", "nome2", "cognome2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
-$user5 = new Utente("id2", "nome2", "cognome2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
-$user6 = new Utente("id2", "nome2", "cognome2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
+$user1 = new Utente("id1", "nome1", "cognome1", "descrizione1", "telefono1", "datanascita1", "citta1", "email1", "password1", "stato1", "ruolo1", "immagineProfilo1");
+$user2 = new Utente("id2", "nome2", "cognome2", "descrizione2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
+$user3 = new Utente("id2", "nome2", "cognome2", "descrizione2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
+$user4 = new Utente("id2", "nome2", "cognome2", "descrizione2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
+$user5 = new Utente("id2", "nome2", "cognome2", "descrizione2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
+$user6 = new Utente("id2", "nome2", "cognome2", "descrizione2", "telefono2", "datanascita2", "citta2", "email2", "password2", "stato2", "ruolo2", "immagineProfilo2");
 
 
 $usersReported = array($user1, $user2, $user3, $user4, $user5, $user6);

@@ -1,12 +1,59 @@
 <!DOCTYPE html>
 <html>
 <?php
+include_once MODEL_DIR."Utente.php";
+include_once MODEL_DIR.'MacroCategoria.php';
+include_once MODEL_DIR.'MicroCategoria.php';
+include_once CONTROL_DIR.'SelezionaMacroControl.php';
+include_once MODEL_DIR  . 'MicroListObject.php';
+include_once CONTROL_DIR  .  'SelezionaMicroControl.php';
 
-include_once MODEL_DIR . "Utente.php";
 
-$utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", "password", "attivo", "moderatore", "immagine");
+if(isset($_SESSSION['user'])){
+    $utente = $_SESSION['user'];
+}
+else{
+    $utente = new Utente("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
+    //header("/home.php");
+}
 
+if (isset($_SESSION["macro"])){
+    $macroList = unserialize($_SESSION['macro']);
+    unset($_SESSION["macro"]);
+} else {
+    $_SESSION['toast-type'] = "error";
+    $_SESSION['toast-message'] = "macro non settata";
+    header("Location: " . DOMINIO_SITO);
+}
+
+if (isset($_SESSION["macroUtente"])){
+    $macroListUtente = unserialize($_SESSION['macroUtente']);
+    unset($_SESSION["macroUtente"]);
+} else {
+    $_SESSION['toast-type'] = "error";
+    $_SESSION['toast-message'] = "macro Utente non settata";
+    header("Location: " . DOMINIO_SITO);
+}
+
+if (isset($_SESSION["micro"])){
+    $microList = unserialize($_SESSION['micro']);
+    unset($_SESSION["micro"]);
+} else {
+    $_SESSION['toast-type'] = "error";
+    $_SESSION['toast-message'] = "micro non settata";
+    header("Location: " . DOMINIO_SITO);
+}
+
+if (isset($_SESSION["microUtente"])){
+    $microListUtente = unserialize($_SESSION['microUtente']);
+    unset($_SESSION["microUtente"]);
+} else {
+    $_SESSION['toast-type'] = "error";
+    $_SESSION['toast-message'] = "micro Utente non settata";
+    header("Location: " . DOMINIO_SITO);
+}
 ?>
+
 <head>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
@@ -295,9 +342,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                     <div class="card-body app-heading">
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
-                            <div class="title"><span
-                                        class="highlight"><?php echo $utente->getNome() . " " . $utente->getCognome() ?></span>
-                            </div>
+                            <div class="title"><span class="highlight"><?php echo $utente->getNome()." ".$utente->getCognome()?></span></div>
                         </div>
                     </div>
                 </div>
@@ -312,12 +357,10 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                 <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Profilo</a>
                             </li>
                             <li role="tab2">
-                                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Privacy e
-                                    sicurezza</a>
+                                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Privacy e sicurezza</a>
                             </li>
                             <li role="tab3">
-                                <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Annunci e offerte di
-                                    lavoro</a>
+                                <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Annunci e offerte di lavoro</a>
                             </li>
                             <li role="tab4">
                                 <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Segnalazioni</a>
@@ -334,8 +377,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             Elementi base
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#profile-collapse1">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse1">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Indirizzi Email
@@ -351,57 +393,38 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                                 Email
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-                                                                <?php echo $utente->getEmail(); ?>
+                                                                <?php echo $utente->getEmail();?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li>
-                                                                        <a onclick="$('#edit-mail').toggleWith('#edit-mail-input')">Modifica</a>
-                                                                    </li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a onclick="$('#edit-mail').toggleWith('#edit-mail-input')">Modifica</a></li>
                                                                     <li><a href="#">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="edit-mail-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="edit-mail-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-envelope"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-envelope" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="text" class="form-control"
-                                                                               placeholder="Nuova Email"
-                                                                               aria-describedby="basic-addon1"
-                                                                               value="fakemail@gmail.com">
+                                                                        <input type="text" class="form-control" placeholder="Nuova Email" aria-describedby="basic-addon1" value="fakemail@gmail.com">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#edit-mail-input').toggleWith('#edit-mail')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-mail-input').toggleWith('#edit-mail')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -413,8 +436,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#profile-collapse2">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse2">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Numero di telefono
@@ -430,58 +452,38 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                                 Tel.
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-                                                                <?php echo $utente->getTelefono(); ?>
+                                                                <?php echo $utente->getTelefono();?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li>
-                                                                        <a onclick="$('#edit-tel').toggleWith('#edit-tel-input')">Modifica</a>
-                                                                    </li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a onclick="$('#edit-tel').toggleWith('#edit-tel-input')">Modifica</a></li>
                                                                     <li><a href="#">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="edit-tel-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="edit-tel-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-phone"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-phone" aria-hidden="true"></i>
 																			</span>
-                                                                        <input id="numberTelephoneChange" type="text"
-                                                                               class="form-control"
-                                                                               placeholder="Nuovo Numero"
-                                                                               aria-describedby="basic-addon1"
-                                                                               value="<?php echo $utente->getTelefono() ?>">
+                                                                        <input id="numberTelephoneChange" type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="<?php echo $utente->getTelefono()?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#edit-tel-input').toggleWith('#edit-tel')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right" >Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-tel-input').toggleWith('#edit-tel')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -493,8 +495,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#profile-collapse3">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse3">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Cambia password
@@ -508,58 +509,37 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row" id="edit-mail">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-                                                                La nuova password deve essere composta da almeno 8
-                                                                caratteri, deve contenere maiuscole e minuscole, e deve
-                                                                essere presente almeno un numero.
+                                                                La nuova password deve essere composta da almeno 8 caratteri, deve contenere maiuscole e minuscole, e deve essere presente almeno un numero.
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <form action="modificaPassword" method="post"
-                                                                  class="form form-horizontal" id="tel-input">
+                                                            <form action="modificaPassword" method="post" class="form form-horizontal" id="tel-input">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-lock"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-lock" aria-hidden="true"></i>
 																			</span>
-                                                                        <input name="PasswordAttuale" type="text"
-                                                                               class="form-control"
-                                                                               placeholder="Password attuale"
-                                                                               aria-describedby="basic-addon1" value="">
+                                                                        <input name="PasswordAttuale" type="text" class="form-control" placeholder="Password attuale" aria-describedby="basic-addon1" value="">
                                                                     </div>
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-lock"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-lock" aria-hidden="true"></i>
 																			</span>
-                                                                        <input name="NuovaPassword" type="text"
-                                                                               class="form-control"
-                                                                               placeholder="Nuova Password"
-                                                                               aria-describedby="basic-addon1" value="">
+                                                                        <input name="NuovaPassword" type="text" class="form-control" placeholder="Nuova Password" aria-describedby="basic-addon1" value="">
                                                                     </div>
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-lock"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-lock" aria-hidden="true"></i>
 																			</span>
-                                                                        <input name="ConfermaNuovaPassword" type="text"
-                                                                               class="form-control"
-                                                                               placeholder="Conferma nuova Password"
-                                                                               aria-describedby="basic-addon1" value="">
+                                                                        <input name="ConfermaNuovaPassword" type="text" class="form-control" placeholder="Conferma nuova Password" aria-describedby="basic-addon1" value="">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -571,8 +551,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#profile-collapse4">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse4">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Dati anagrafici
@@ -593,51 +572,32 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li>
-                                                                        <a onclick="$('#edit-name').toggleWith('#edit-name-input')">Modifica</a>
-                                                                    </li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a onclick="$('#edit-name').toggleWith('#edit-name-input')">Modifica</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="edit-name-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="edit-name-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-user"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="text" class="form-control"
-                                                                               placeholder="Nuovo Nome"
-                                                                               aria-describedby="basic-addon1"
-                                                                               value="<?php echo $utente->getNome() ?>">
+                                                                        <input type="text" class="form-control" placeholder="Nuovo Nome" aria-describedby="basic-addon1" value="<?php echo $utente->getNome() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#edit-name-input').toggleWith('#edit-name')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-name-input').toggleWith('#edit-name')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -654,51 +614,32 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li>
-                                                                        <a onclick="$('#edit-surname').toggleWith('#edit-surname-input')">Modifica</a>
-                                                                    </li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a onclick="$('#edit-surname').toggleWith('#edit-surname-input')">Modifica</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="edit-surname-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="edit-surname-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-user"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="text" class="form-control"
-                                                                               placeholder="Nuovo Cognome"
-                                                                               aria-describedby="basic-addon1"
-                                                                               value="<?php echo $utente->getCognome() ?>">
+                                                                        <input type="text" class="form-control" placeholder="Nuovo Cognome" aria-describedby="basic-addon1" value="<?php echo $utente->getCognome() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#edit-surname-input').toggleWith('#edit-surname')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-surname-input').toggleWith('#edit-surname')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -715,50 +656,32 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li>
-                                                                        <a onclick="$('#edit-birthdate').toggleWith('#edit-birthdate-input')">Modifica</a>
-                                                                    </li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a onclick="$('#edit-birthdate').toggleWith('#edit-birthdate-input')">Modifica</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="edit-birthdate-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="edit-birthdate-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-calendar"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-calendar" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="date" class="form-control"
-                                                                               aria-describedby="basic-addon1"
-                                                                               value="<?php echo $utente->getDataNascita() ?>">
+                                                                        <input type="date" class="form-control" aria-describedby="basic-addon1" value="<?php echo $utente->getDataNascita() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#edit-birthdate-input').toggleWith('#edit-birthdate')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-birthdate-input').toggleWith('#edit-birthdate')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -775,51 +698,32 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li>
-                                                                        <a onclick="$('#edit-location').toggleWith('#edit-location-input')">Modifica</a>
-                                                                    </li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a onclick="$('#edit-location').toggleWith('#edit-location-input')">Modifica</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="edit-location-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="edit-location-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-map-marker"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-map-marker" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="text" class="form-control"
-                                                                               placeholder="Nuova Localit&agrave;"
-                                                                               aria-describedby="basic-addon1"
-                                                                               value="<?php echo $utente->getCitta() ?>">
+                                                                        <input type="text" class="form-control" placeholder="Nuova Localit&agrave;" aria-describedby="basic-addon1" value="<?php echo $utente->getCitta() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#edit-location-input').toggleWith('#edit-location')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-location-input').toggleWith('#edit-location')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -836,38 +740,50 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             Gestione categorie
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#profile-collapse5">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse5">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Visualizza, aggiungi macrocategorie
                                                     </h4>
-                                                    <p>Visualizza, aggiungi ed elimina le macrocategorie di
-                                                        competenza</p>
+                                                    <p>Visualizza, aggiungi ed elimina le macrocategorie di competenza</p>
                                                 </div>
                                             </a>
                                             <div id="profile-collapse5" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="row">
+                                                        <?php
+                                                        foreach($macroListUtente as $macro) { ?>
+                                                            <div class="row">
+                                                                <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
+                                                                    <span class="label label-primary"><?php echo $macro->getNome() ?></span>
+                                                                </div>
+
+                                                                <div class="dropdown corner-dropdown">
+                                                                    <button class="btn btn-default dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                        <li><a href="<?php echo "rimuoviMacroUtenteControl?idMacro=".$macro->getId() ?>">Rimuovi</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
+                                                        <!--<div class="row">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 simple-row">
                                                                 <span class="label label-primary">Informatica</span>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
                                                                     <li><a href="#">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
+
                                                         <div class="row">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
                                                                 <span class="label label-success">Graphic Design</span>
@@ -875,22 +791,18 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
                                                                     <li><a href="#">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
-
+-->
                                                         <div class="row" id="add-macro">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-                                                                <a onclick="$('#add-macro').toggleWith('#macro-input')">
+                                                                <a onclick="$('#add-macro').toggleWith('#macro-input')" >
                                                                     <i class="fa fa-plus"></i>
                                                                     Aggiungi macrocategoria
                                                                 </a>
@@ -898,35 +810,31 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                         </div>
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="macro-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" action="aggiungiMacroUtente" method="post" id="macro-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-tag"
-                                                                                   aria-hidden="true"></i>
-																			</span>
-                                                                        <select class="form-control select2">
-                                                                            <option value="AL">Alabama</option>
-                                                                            <option value="WY">Wyoming</option>
+                                                        	            <span class="input-group-addon" id="basic-addon1">
+																            <i class="fa fa-tag" aria-hidden="true"></i>
+															            </span>
+
+                                                                        <select class="form-control select2" name="getIdMacro" form="macro-input">
+                                                                            <?php
+                                                                            foreach ($macroList as $macro) {
+                                                                                if(!array_search($macro, $macroListUtente)) { ?>
+                                                                                    <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
+                                                                                <?php   }
+                                                                            } ?>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#macro-input').toggleWith('#add-macro')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -938,39 +846,34 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#profile-collapse6">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse6">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Visualizza, aggiungi microcategorie
                                                     </h4>
-                                                    <p>Visualizza, aggiungi ed elimina le microcategorie di
-                                                        competenza</p>
+                                                    <p>Visualizza, aggiungi ed elimina le microcategorie di competenza</p>
                                                 </div>
                                             </a>
                                             <div id="profile-collapse6" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <?php
+                                                        foreach($microListUtente as $micro) {?>
                                                         <div class="row">
-                                                            <div class="col-lg-6 col-md-9 col-xs-12 simple-row">
-                                                                <span class="label label-default">Informatica</span>
-                                                                <span class="label label-info">Php</span>
+                                                            <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
+                                                                <span class="label label-default"><?php echo $micro->getMacroCategoria()->getNome() ?></span>
+                                                                <span class="label label-info"><?php echo $micro->getMicroCategoria()->getNome() ?></span>
                                                             </div>
-
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="#">Rimuovi</a></li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a href="<?php echo "rimuoviMicroUtenteControl?idMicro=".$micro->getMicroCategoria()->getId()?>">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
+                                                        </div> <?php }?>
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
                                                                 <span class="label label-default">Informatica</span>
@@ -979,14 +882,10 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
                                                                     <li><a href="#">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
@@ -994,7 +893,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                         <div class="row" id="add-micro">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-                                                                <a onclick="$('#add-micro').toggleWith('#micro-input')">
+                                                                <a onclick="$('#add-micro').toggleWith('#micro-input')" >
                                                                     <i class="fa fa-plus"></i>
                                                                     Aggiungi microcategoria
                                                                 </a>
@@ -1002,17 +901,14 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                         </div>
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="micro-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="micro-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-tag"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-tag" aria-hidden="true"></i>
 																			</span>
                                                                         <select class="form-control select2">
                                                                             <option value="AL">Informatica</option>
@@ -1020,10 +916,8 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                                         </select>
                                                                     </div>
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-tags"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-tags" aria-hidden="true"></i>
 																			</span>
                                                                         <select class="form-control select2">
                                                                             <option value="AL">Php</option>
@@ -1033,15 +927,8 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#micro-input').toggleWith('#add-micro')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input').toggleWith('#add-micro')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1062,14 +949,12 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="section">
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#privacy-collapse1">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse1">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Blocca Utente
                                                     </h4>
-                                                    <p>Vedi l'elenco ed effettua i cambiamenti che desideri
-                                                        apportare</p>
+                                                    <p>Vedi l'elenco ed effettua i cambiamenti che desideri apportare</p>
                                                 </div>
                                             </a>
                                             <div id="privacy-collapse1" class="panel-collapse collapse">
@@ -1086,7 +971,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <div class="media-heading">
-                                                                            <h4 class="title"><?php ?></h4>
+                                                                            <h4 class="title"><?php  ?></h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1094,14 +979,10 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
                                                                     <li><a href="#">Sblocca</a></li>
                                                                 </ul>
                                                             </div>
@@ -1109,7 +990,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
 
                                                         <div class="row" id="add-userblock">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-                                                                <a onclick="$('#add-userblock').toggleWith('#userblock-input')">
+                                                                <a onclick="$('#add-userblock').toggleWith('#userblock-input')" >
                                                                     <i class="fa fa-plus"></i>
                                                                     Blocca nuovo utente
                                                                 </a>
@@ -1117,37 +998,25 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                         </div>
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="userblock-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="userblock-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-user"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
                                                                         <select class="form-control select2">
-                                                                            <option value="AL">Fabiano Pecorelli
-                                                                            </option>
-                                                                            <option value="WY">Antonio Luca D'avanzo
-                                                                            </option>
+                                                                            <option value="AL">Fabiano Pecorelli</option>
+                                                                            <option value="WY">Antonio Luca D'avanzo</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Save
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#userblock-input').toggleWith('#add-userblock')">
-                                                                                    Cancel
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#userblock-input').toggleWith('#add-userblock')">Cancel</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1159,14 +1028,12 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#privacy-collapse2">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse2">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Visibilit&agrave; informazioni personali
                                                     </h4>
-                                                    <p>Scegli quali informazioni del tuo profilo vuoi rendere visibile
-                                                        agli altri utenti</p>
+                                                    <p>Scegli quali informazioni del tuo profilo vuoi rendere visibile agli altri utenti</p>
                                                 </div>
                                             </a>
                                             <div id="privacy-collapse2" class="panel-collapse collapse">
@@ -1174,7 +1041,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
                                                         <div class="row">
                                                             <div class="col-lg-2 col-md-2 col-xs-4 simple-row">
-                                                                Indirizzo Email
+                                                                Indirizzi Email
                                                             </div>
                                                             <div class="col-lg-10 col-md-10 col-xs-8 simple-row">
                                                                 <div class="checkbox">
@@ -1187,13 +1054,13 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-                                                                Numero di telefono
+                                                                Numeri di telefono
                                                             </div>
                                                             <div class="col-lg-10 col-md-10 col-xs-8 overlined-row">
                                                                 <div class="checkbox">
                                                                     <input type="checkbox" id="checkbox2">
                                                                     <label for="checkbox2">
-                                                                        Blocca
+                                                                        blocca
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -1206,7 +1073,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                                 <div class="checkbox">
                                                                     <input type="checkbox" id="checkbox3">
                                                                     <label for="checkbox3">
-                                                                        Blocca
+                                                                        blocca
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -1216,14 +1083,12 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#privacy-collapse3">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse3">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Condivisione di dati con terze parti
                                                     </h4>
-                                                    <p>Scegli se possiamo condividere le informazioni di base del tuo
-                                                        profilo con terze parti</p>
+                                                    <p>Scegli se possiamo condividere le informazioni di base del tuo profilo con terze parti</p>
                                                 </div>
                                             </a>
                                             <div id="privacy-collapse3" class="panel-collapse collapse">
@@ -1231,8 +1096,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-6 col-xs-8 simple-row">
-                                                                Acconsenti al trattamento di dati personali da terze
-                                                                parti?
+                                                                Acconsenti al trattamento di dati personali da terze parti?
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-xs-4 simple-row">
                                                                 <div class="checkbox">
@@ -1248,14 +1112,12 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#privacy-collapse4">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse4">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Processo di verifica in due passaggi
                                                     </h4>
-                                                    <p>Attiva questa funzionalit&agrave; per una maggiore protezione nel
-                                                        tuo account</p>
+                                                    <p>Attiva questa funzionalit&agrave; per una maggiore protezione nel tuo account</p>
                                                 </div>
                                             </a>
                                             <div id="privacy-collapse4" class="panel-collapse collapse">
@@ -1279,8 +1141,7 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                             </div>
                                         </div>
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#privacy-collapse5">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse5">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Cancellazione Account
@@ -1294,25 +1155,21 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row" id="edit-mail">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-                                                                Eseguendo questa procedura il tuo account sarà rimosso
-                                                                da CrowdMine.
+                                                                Eseguendo questa procedura il tuo account sarà rimosso da CrowdMine.
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-                                                                <div class="form-footer">
-                                                                    <div class="form-group">
-                                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                            <button type="button"
-                                                                                    class="btn btn-danger pull-right"
-                                                                                    data-toggle="modal"
-                                                                                    data-target="#myModal">Cancella
-                                                                                Account
-                                                                            </button>
+                                                            <form action="cancellaAccount" class="form form-horizontal" id="tel-input">
+                                                                <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit" class="btn btn-danger pull-right">Cancella Account</button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1344,38 +1201,14 @@ $utente= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", 
     </div>
 </div>
 
-<form action="cancellaAccount" class="form form-horizontal" id="tel-input" method="post">
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">Sei Sicuro di voler cancellare il tuo Account ?</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Se sei intenzionato a cancellare il tuo account inserisci la tua password.</p>
-                    <br>
-                    <input type="password" class="form-control" name="inputPassword" placeholder="Password">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger pull-right">Cancella Account</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
 
 
 <script>
-
     /*toggle element and toggle self element*/
-    $.fn.toggleWith = function (id) {
+    $.fn.toggleWith = function(id) {
         $(id).toggle('fast');
         $(this).toggle('fast');
     };
@@ -1392,6 +1225,7 @@ if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
     unset($_SESSION['toast-message']);
 }
 ?>
+
 
 
 </body>
