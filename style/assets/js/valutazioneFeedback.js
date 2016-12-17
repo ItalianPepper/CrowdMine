@@ -14,8 +14,6 @@ function deleteFeedback(id) {
             divToDelete = $("#" + id + "");
             destination = $("#feedback-list-destination");
             divToDelete.fadeOut();
-            delay(400);
-            divToDelete.remove();
         },
         error: function (data) {
             toastr[data["toastType"]](data["toastMessage"]);
@@ -36,8 +34,7 @@ function confirmFeedback(id) {
             divToDelete = $("#" + id + "");
             destination = $("#feedback-list-destination");
             divToDelete.fadeOut();
-            delay(400);
-            divToDelete.remove();
+
         },
         error: function (data) {
             toastr[data["toastType"]](data["toastMessage"]);
@@ -58,8 +55,7 @@ function sendFeedbackToAdmin(id) {
             divToDelete = $("#" + id + "");
             destination = $("#feedback-list-destination");
             divToDelete.fadeOut();
-            delay(400);
-            divToDelete.remove();
+
         },
         error: function (data) {
             toastr[data["toastType"]](data["toastMessage"]);

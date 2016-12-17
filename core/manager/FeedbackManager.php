@@ -125,16 +125,17 @@ class FeedbackManager extends Manager
         $stato = SEGNALATO;
         $GET_REPORTED_FEEDBACK = "SELECT feedback.*, utente.nome, utente.cognome, utente.immagine_profilo 
                                   FROM feedback,utente 
-                                  WHERE feedback.stato = $stato AND feedback.id_valutato = utente.id";
-        return $this->feedbackToLOArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
+                                  WHERE feedback.stato ='$stato' AND feedback.id_valutato = utente.id";
+        $resSet = self::getDB()->query($GET_REPORTED_FEEDBACK);
+        return $this->feedbackLOToArray($resSet);
     }
 
     public function getFeedbackAdmin(){
         $stato = AMMINISTRATORE;
-        $GET_REPORTED_FEEDBACK = "SELECT feedback.* utente.nome, utente.cognome, utente.immagine_profilo 
+        $GET_REPORTED_FEEDBACK = "SELECT feedback.*,utente.nome, utente.cognome, utente.immagine_profilo 
                                   FROM feedback,utente 
-                                  WHERE feedback.stato = $stato AND feedback.id_valutato = utente.id";
-        return $this->feedbackToLOArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
+                                  WHERE feedback.stato = '$stato' AND feedback.id_valutato = utente.id";
+        return $this->feedbackLOToArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
     }
 
     public function removeFeedback($idFeedback){

@@ -16,7 +16,7 @@ $(document).ready(function () {
             success: function (data) {
                 var destination = $("#feedback-list-destination");
                 destination.empty();
-                generateFeedbackList(data,"moderator",destination)
+                generateFeedbackList(data, "user", destination)
             },
             error: function (data) {
                 toastr[data["toastType"]](data["toastMessage"]);
@@ -27,20 +27,26 @@ $(document).ready(function () {
     });
 });
 
-function generateFeedbackList(data,role,destination)
-{
-    for (var i in data) {
-        var feedbackListObj = [];
-        feedbackListObj.feedbackID = data[i].feedbackID;
-        feedbackListObj.feedbackTitle = data[i].feedbackTitle;
-        feedbackListObj.feedbackDesc = data[i].feedbackDesc;
-        feedbackListObj.userFirstName = data[i].userFirstName;
-        feedbackListObj.userLastName = data[i].userLastName;
-        feedbackListObj.userProfileImage = data[i].userProfileImage;
-        feedbackListObj.feedbackRating = data[i].feedbackRating;
+function generateFeedbackList(data, role, destination) {
+    if (data.length > 0) {
+        for (var i in data) {
+            var feedbackListObj = [];
+            feedbackListObj.feedbackID = data[i].feedbackID;
+            feedbackListObj.feedbackTitle = data[i].feedbackTitle;
+            feedbackListObj.feedbackDesc = data[i].feedbackDesc;
+            feedbackListObj.userFirstName = data[i].userFirstName;
+            feedbackListObj.userLastName = data[i].userLastName;
+            feedbackListObj.userProfileImage = data[i].userProfileImage;
+            feedbackListObj.feedbackRating = data[i].feedbackRating;
 
-        destination.append(feedbackRowToString(feedbackListObj, role));
-        setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
+            destination.append(feedbackRowToString(feedbackListObj, role));
+            setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
+        }
+    }
+    else
+    {
+
+        destination.html('<div class="media-content">Nessun feedback disponibile</div>');
     }
 }
 
@@ -60,15 +66,15 @@ function feedbackRowToString(feedbackListObj, role) {
     }
     else if (role == "moderator") {
         buttonGroup = '<div class="media-action">' +
-            '<button onclick="confirmFeedback('+feedbackListObj.feedbackID+')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
-            '<button onclick="deleteFeedback('+feedbackListObj.feedbackID+')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
-            '<button onclick="sendFeedbackToAdmin('+feedbackListObj.feedbackID+')" class="btn btn-link"><i class="fa fa-exclamation"></i> Invia all\' Amministratore</button>' +
+            '<button onclick="confirmFeedback(' + feedbackListObj.feedbackID + ')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
+            '<button onclick="deleteFeedback(' + feedbackListObj.feedbackID + ')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
+            '<button onclick="sendFeedbackToAdmin(' + feedbackListObj.feedbackID + ')" class="btn btn-link"><i class="fa fa-exclamation"></i> Invia all\' Amministratore</button>' +
             '                                                                                </div>';
     }
     else if (role == "admin") {
         buttonGroup = '<div class="media-action">' +
-            '<button onclick="confirmFeedback('+feedbackListObj.feedbackID+')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
-            '<button onclick="deleteFeedback('+feedbackListObj.feedbackID+')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
+            '<button onclick="confirmFeedback(' + feedbackListObj.feedbackID + ')"  class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>' +
+            '<button onclick="deleteFeedback(' + feedbackListObj.feedbackID + ')" class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>' +
             '                                                                                </div>';
 
     }
@@ -78,7 +84,7 @@ function feedbackRowToString(feedbackListObj, role) {
         '                                                                <div class="media social-post">' +
         '                                                                    <div class="media-left">' +
         '                                                                        <a href="#">' +
-        '                                                                         <img src="style&sol;assets&sol;images&sol;'+ feedbackListObj.userProfileImage + '"> ' +
+        '                                                                         <img src="style&sol;assets&sol;images&sol;' + feedbackListObj.userProfileImage + '"> ' +
         '                                                                        </a>' +
         '                                                                    </div>' +
         '                                                                    <div class="section">' +

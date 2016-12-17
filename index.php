@@ -143,6 +143,9 @@ try {
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
+            case 'reportedFedbackListRetrive':
+                include_once CONTROL_DIR . "reportedFedbackListRetrive.php";
+                break;
             case 'feedbackListRetrive':
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
             	break;
