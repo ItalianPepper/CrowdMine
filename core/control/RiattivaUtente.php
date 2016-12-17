@@ -2,46 +2,49 @@
 /**
  * Created by PhpStorm.
  * User: Hacca
- * Date: 05/12/2016
- * Time: 10:33
+ * Date: 15/12/2016
+ * Time: 12:19
  */
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 
 $manager = new UtenteManager();
+$urlDellaChiamata = $_POST_['urlDellaChiamata'];
+$user= new Utente(1, "nome", "cognome", "telefono", "data", "citta", "email", "password", "attivo", "moderatore", "immagine");
+$utenteEsterno = new Utente(3, "nome2", "cognome2", "telefono", "data", "citta", "email2", "password","attivo", "utente", "immagine");
+$_SESSION['user'] = $user;
 
-// prendo in input da dove chiamo questa pagina
-$urlDellaChiamata = $_POST['urlDellaChiamata'];
 
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
     $idUtenteEsterno = $_POST['idUser'];
-    $utenteEsterno = $manager->findUtenteById($idUtenteEsterno);
+    $userEsterno = $manager->findUtenteById($idUtenteEsterno);
 
-    //controllo se esiste l'utente
-    if (isset($utenteEsterno) && ($utenteEsterno->getId()==null) ) {
+    if (isset($userEsterno) && ($userEsterno->getId()==null) ) {
         if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
-            $utenteEsterno->setStato("bannato");
-            echo $utenteEsterno->getId()." ".$utenteEsterno->getStato();
+            $userEsterno->setStato("attivo");
+            $_SESSION['utenteEsterno'] = serialize($userEsterno);
             $manager->updateUtente($userEsterno);
-            $_SESSION['utenteEsterno'] = serialize($utenteEsterno);
+
             if($urlDellaChiamata == "visitaProfiloUtente"){
                 //permette di essere reindirizzato dalla pagina da cui viene chiamato il control
-               // header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata);
+                header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata);
             }
             else {
                 //significa che è stato manomessa la form, modificato il campo url da dove chiama
                 header("location: " . DOMINIO_SITO);
             }
 
-        } else {
+        }else {
             header("location: " . DOMINIO_SITO);
         }
-    }
-    else {
+
+    } else {
         header("location: " . DOMINIO_SITO);
     }
+
+
 } else {
     header("location: " . DOMINIO_SITO);
 }

@@ -11,10 +11,13 @@
         <title>CrowdMine | Registrazione</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>dist/css/AdminLTE.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets/css/vendor.css">
         <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets/css/flat-admin.css">
         <link rel="shortcut icon" href="<?php echo STYLE_DIR; ?>img/icon_crowdmine.png" type="image/x-icon" />
+        <!-- iCheck -->
+        <link href="<?php echo STYLE_DIR; ?>plugins/toastr/toastr.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>plugins/iCheck/all.css">
 
 
         <!-- Theme -->
@@ -25,19 +28,18 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-default" id="navbar">
-            <div class="container-fluid">
+        <nav class="navbar navbar-default" id="navbar" style="border-left-width: 0px; border-right-width: 0px;">
+            <div class="container-fluid" style="padding-right: 0px; padding-left: 0px;">
                 <div class="navbar-collapse collapse in">
-                    <form class="nav navbar-nav navbar-right" method="post" action="effettuaLogin" id="formAuth">
-                        <div class="col-md-12 col-xs-12">
+                    <form class="nav navbar-nav navbar-right" method="post" action="effettuaLogin" onsubmit="return Modulo()" id="modulo">
+                        <div class="col-md-12 col-xs-12" style=" padding-top: 3%">
                             <div class="form-group col-md-5 col-xs-5">
-                                <label class="sr-only" for="inputEmail">Email address</label>
                                 <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                             </div>
                             <div class="form-group col-md-5 col-xs-5">
-                                <label class="sr-only" for="inputPassword">Password</label>
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                                <a href="#" class="text-center ">Hai dimenticato la password? Clicca qui!</a>
+
+                                <input style="margin-bottom: 0px;" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                <a href="#" class="text-center ">Hai dimenticato la password?</a>
                             </div>
                             <button type="submit" class="btn btn-success col-md-2 col-xs-2">Sign in</button>
                         </div>
@@ -133,7 +135,8 @@
                                 <div class="input-group">
                                     <select class="form-control select2" name="citta" id="listacitta" style="width: 100%;">
 
-                                    </select><div class="input-group-addon">
+                                    </select>
+                                    <div class="input-group-addon">
                                         <i class="fa fa-map-marker"></i>
                                     </div>
                                 </div>
@@ -154,12 +157,12 @@
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label>
-                                        <input type="radio" name="tipologia" value="Cliente" class="flat-red"> Società
+                                        <input type="radio" name="tipologia" value="Società" class="flat-red"> Società
                                     </label>
                                 </div>
                                 <div class="col-md-6">
                                     <label>
-                                        <input type="radio" name="tipologia" value="Offerente" class="flat-red"> Utente
+                                        <input type="radio" name="tipologia" value="Utente" class="flat-red"> Utente
                                     </label>
                                 </div>
                             </div>
@@ -206,9 +209,89 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="../assets/js/vendor.js"></script>
-        <script type="text/javascript" src="../assets/js/app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>/scripts/caricacitta.js"></script>
+        
+        <!-- iCheck -->
+        <script src="<?php echo STYLE_DIR; ?>plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script src="<?php echo STYLE_DIR; ?>plugins/toastr/toastr.js"></script>        
+        <script>
+                                            function cambiaImmagine(input) {
+                                                if (input.files && input.files[0]) {
+                                                    var reader = new FileReader();
 
+                                                    reader.onload = function (e) {
+                                                        $('#immagine').attr('src', e.target.result);
+                                                    }
+
+                                                    reader.readAsDataURL(input.files[0]);
+                                                }
+                                            }
+
+                                          /*  $(function () {
+                                                $('input').iCheck({
+                                                    checkboxClass: 'icheckbox_square-blue',
+                                                    radioClass: 'iradio_square-blue',
+                                                    increaseArea: '20%' // optional
+                                                });
+                                                //Date picker
+                                                $('#datepicker').datepicker({
+                                                    autoclose: true
+                                                });
+
+                                                //iCheck for checkbox and radio inputs
+                                                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                                                    checkboxClass: 'icheckbox_minimal-blue',
+                                                    radioClass: 'iradio_minimal-blue'
+                                                });
+                                                //Red color scheme for iCheck
+                                                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                                                    checkboxClass: 'icheckbox_minimal-red',
+                                                    radioClass: 'iradio_minimal-red'
+                                                });
+                                                //Flat red color scheme for iCheck
+                                                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                                                    checkboxClass: 'icheckbox_flat-green',
+                                                    radioClass: 'iradio_flat-green'
+                                                });
+                                            });*/
+        </script>
+        <script>
+
+            function Modulo() {
+                // Variabili associate ai campi del modulo
+                var email = document.modulo.inputEmail.value;
+                var password = document.modulo.inputPassword.value;
+                var email_reg_exp = /^[_a-zA-Z0-9+-]+(\.[_a-zA-Z0-9+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
+
+                if (!email_reg_exp.test(email) || (email == "") || (email == "undefined")) {
+                    toastr["error"]("Inserire un indirizzo email corretto.");
+                    document.modulo.inputEmail.select();
+                    return false;
+                } else if ((password == "") || (password == "undefined") || ((password.length) < 8)) {
+                    toastr["error"]("Inserire una password valida.");
+                    document.modulo.inputPassword.focus();
+                    return false;
+                } else {
+                    document.modulo.submit();
+                    return true;
+                }
+            }
+        </script>
+
+
+        <?php
+        if ($_SESSION['toast-type'] && $_SESSION['toast-message']) {
+            ?>
+            <script>
+                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+            </script>
+            <?php
+            unset($_SESSION['toast-type']);
+            unset($_SESSION['toast-message']);
+        }
+        ?>
     </body>
 </html>
 

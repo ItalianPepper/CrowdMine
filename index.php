@@ -70,6 +70,9 @@ try {
             case 'visitaProfiloUtente':
                 include_once VIEW_DIR . "visitaProfiloUtente.php";
                 break;
+            case 'ProfiloUtente':
+                include_once CONTROL_DIR . "ProfiloUtenteControl.php";
+                break;
             case 'visitaProfiloPersonale':
                 include_once VIEW_DIR . "visitaProfiloPersonale.php";
                 break;
@@ -94,12 +97,15 @@ try {
             case 'conversazionePrivata':
                 include_once VIEW_DIR . "conversazionePrivata.php";
                 break;
+            case 'footer':
+                include_once VIEW_DIR . "footer.php";
+                break;
             
             case 'inserisciEsperienza':
                 StringUtils::checkPermission("Cliente");
                 include_once VIEW_DIR . "inserisciEsperienza.php";
                 break;
-//             case 'standard':
+//          case 'standard':
 //                include_once "standard.html";
 //                break;
             case 'ricercaAnnuncio':
@@ -128,7 +134,7 @@ try {
                 break;
             case 'effettuaLogin':
                 StringUtils::checkPermission("not_logged");
-				include_once CONTROL_DIR . "LoginCM.php";
+		include_once CONTROL_DIR . "LoginCM.php";
                 break;
             case 'logout':
                 StringUtils::checkPermission("all");
@@ -140,17 +146,23 @@ try {
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
+            case 'segnalaUtente':
+                include_once CONTROL_DIR . "SegnalaUtente.php";
+                break;
             case 'feedbackListRetrive':
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
             	break;
             case 'cancellaAccount':
-                include_once CONTROL_DIR . "CancellazioneAccount.php";
+                include_once CONTROL_DIR . "CancellazioneUtente.php";
+                break;
+            case 'riattivaUtente':
+                include_once CONTROL_DIR . "RiattivaUtente.php";
                 break;
             case 'banUtente':
                 include_once CONTROL_DIR . "BanUtente.php";
                 break;
             case 'visualizzaProfiloPersonale':
-                include_once CONTROL_DIR . "VisualizzaProfiloPersonale.php";
+                include_once CONTROL_DIR . "VisualizzaProfiloPersonaleControl.php";
                 break;
             case 'cercaAnnunci':
                 StringUtils::checkPermission("all");
@@ -188,6 +200,11 @@ try {
             case 'visualizzaIndexMacrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
                 break;
+            case 'IndexMacrocategorie':
+                include_once MODEL_DIR . "Utente.php";
+                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
+                include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
+                break;
             case 'visualizzaIndexMicrocategorie':
                 include_once VIEW_DIR . "visualizzaIndexMicrocategorie.php";
                 break;
@@ -217,7 +234,7 @@ try {
                 break;
                 case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
-                break;
+                break;        
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;
