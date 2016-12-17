@@ -41,6 +41,6 @@ $_SESSION["listaCandidature"] = serialize($arrayCandidature);
 $_SESSION["listaUtentiCandidati"] = serialize($arrayUtentiCandidati);
 $_SESSION["listaCommenti"] = serialize($arrayCommenti);
 $_SESSION["lista"] = serialize($listaAnnunci);
-header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciProprietari");
+include_once VIEW_DIR. "annuncioProprietario.php";
 
 ?>

@@ -12,4 +12,5 @@ $idUtente = "1";
 $managerAnnuncio = new AnnuncioManager();
 $ann = $managerAnnuncio->getFavorite($idUtente);
 $_SESSION["listaAnnunciPreferiti"] = serialize($ann);
-header("Location: ". DOMINIO_SITO . "/visualizzaAnnunciPreferiti");
+include_once VIEW_DIR. "annunciPreferiti.php";
+?>

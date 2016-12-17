@@ -68,7 +68,7 @@ try {
     if (!defined("TESTING")) {
         switch (isset($_URL[0]) ? $_URL[0] : '') {
             case '':
-                include_once VIEW_DIR . "home.php";
+                include_once CONTROL_DIR . "visualizzaHome.php";
                 break;
             case 'template':
                 header("location: http://crowdmine.altervista.org/dist/html/");
@@ -191,12 +191,6 @@ try {
             case 'visualizzaAnnuncioProprietario';
                 include_once CONTROL_DIR . "visualizzaAnnunci.php";
                 break;
-            case 'visualizzaAnnunciProprietari';
-                include_once VIEW_DIR. "annuncioProprietario.php";
-                break;
-            case 'visualizzaAnnunciPreferiti';
-                include_once VIEW_DIR. "annunciPreferiti.php";
-                break;
             case 'rimuoviCandidatura';
                 include_once CONTROL_DIR. "rimuoviCandidatura.php";
                 break;
@@ -240,8 +234,8 @@ try {
                 include_once CONTROL_DIR . "aggiungiCandidatura.php";
                 break;
             case 'segnalaAnnuncioControl';
-            include_once CONTROL_DIR . "segnalaAnnuncio.php";
-            break;
+                include_once CONTROL_DIR . "segnalaAnnuncio.php";
+                break;
             case 'attivaAnnuncioControl';
                 include_once CONTROL_DIR . "attivaAnnuncio.php";
                 break;
