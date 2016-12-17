@@ -32,19 +32,19 @@ include_once MODEL_DIR . "/Commento.php";
     } else {
         $luogo = null;
     }
-
-    if (($_POST['tipologia']) != null) {
-        $tipologia = $_POST['tipologia'];
-        $tipologiaObj = new SearchByTypeFilter($tipologia);
-        array_push($filters, $tipologiaObj);
-    } else {
-        $tipologia = null;
+    if(isset($_POST['tipologia'])) {
+        if (($_POST['tipologia']) != null) {
+            $tipologia = $_POST['tipologia'];
+            $tipologiaObj = new SearchByTypeFilter($tipologia);
+            array_push($filters, $tipologiaObj);
+        } else {
+            $tipologia = null;
+        }
     }
 
 
-    if (!isset($_POST['utente'])) {                      //attendiamo il manager Utente
-        $utenteName = $_POST['utente'];
-        $idUtente = "1";
+    if (isset($_POST['utente'])) {
+        $idUtente = $_POST["utente"];
         $utenteObj = new SearchByUserIdFilter($idUtente);
         array_push($filters, $utenteObj);
     } else {
@@ -60,25 +60,34 @@ include_once MODEL_DIR . "/Commento.php";
         $data = null;
     }
 
-
-    try {
-        $annunci = $managerAnnuncio->searchAnnuncio($filters);
-        if (count($annunci) != 0) {
-            for ($i = 0; $i < count($annunci); $i++) {
-                array_push($arrayCommenti, $managerAnnuncio->getCommentsbyId($annunci[$i]->getId()));
+    if(count($filters)==0){
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Nessun filtro settato";
+        include_once VIEW_DIR . "ricercaAnnuncio.php";
+    } else {
+        try {
+            //aggiungo altri filtri per non mostrare gli annunci eliminati e disattivati
+            array_push($filters,new SearchByNotStatus(ELIMINATO));
+            array_push($filters,new SearchByNotStatus(DISATTIVATO));
+            array_push($filters,new SearchByNotStatus(REVISIONE));
+            $annunci = $managerAnnuncio->searchAnnuncio($filters);
+            if (count($annunci) != 0) {
+                for ($i = 0; $i < count($annunci); $i++) {
+                    array_push($arrayCommenti, $managerAnnuncio->getCommentsbyId($annunci[$i]->getId()));
+                }
+                $_SESSION['listaCommenti'] = serialize($arrayCommenti);
+                $_SESSION['annunciRicercati'] = serialize($annunci);
+                $_SESSION['provenienza'] = serialize("ricerca");
+                include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
+            } else {
+                $_SESSION['toast-type'] = "error";
+                $_SESSION['toast-message'] = "Nessun annuncio trovato";
+                include_once VIEW_DIR . "ricercaAnnuncio.php";
             }
-            $_SESSION['listaCommenti'] = serialize($arrayCommenti);
-            $_SESSION['annunciRicercati'] = serialize($annunci);
-            $_SESSION['provenienza'] = serialize("ricerca");
-            //header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
-            include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
-        } else {
-            header("Location:" . DOMINIO_SITO . "/nothingFound");
+
+        } catch (ApplicationException $e) {
+
         }
 
-    } catch (ApplicationException $e) {
-
     }
-
-
 ?>

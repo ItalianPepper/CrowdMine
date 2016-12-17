@@ -336,7 +336,7 @@ include_once VIEW_DIR . 'header.php';
                         <button class="btn btn-link <?php echo $annunci[$i]->getId();?>">
                             <i class="fa fa-comments-o"></i><?php echo count($commenti[$i]) ?>Comments
                         </button>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal3">Candidati</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $annunci[$i]->getId(); ?>">Candidati</button>
                     </div>
 
 
@@ -382,7 +382,7 @@ include_once VIEW_DIR . 'header.php';
 
                         ?>
                         <div class="col-md-12 form-commento">
-                            <form action="commentaAnnuncioRicercato" method="post">
+                            <form action="commentaAnnuncio" method="post">
                                 <div class="col-md-10 input-comment">
                                     <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
                                            name="commento">
@@ -405,7 +405,7 @@ include_once VIEW_DIR . 'header.php';
                                     <h4 class="modal-title">Conferma candidatura</h4>
                                 </div>
                                 <form action="aggiungiCandidaturaControl" method="post">
-                                    <div class="modal-body">Inserisci una descrizione per candidarti<?php echo $annunci[$i]->getId();?>
+                                    <div class="modal-body">Inserisci una descrizione per candidarti
                                         <textarea name="descrizione" rows="3" class="form-control"
                                                   placeholder="Descrizione.."></textarea>
                                         <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">

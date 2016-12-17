@@ -254,7 +254,7 @@ include_once VIEW_DIR . 'header.php';
                                         <option>Seleziona la macro categoria</option>
                                 </select>
 
-                                <select id="micro" name="microcategorie" style="margin-top: 3%">
+                                <select id="micro" name="microcategorie[]" style="margin-top: 3%">
                                     <option selected="selected">Seleziona prima la macro</option>
                                 </select>
 

@@ -104,8 +104,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     }
 
     if(isset($_POST['microcategorie'])){
-        //$listaMicrocategorie = $_POST['microcategorie']; //correggere con gli id delle microcategorie
-        $listaMicrocategorie = ["1"];
+        $listaMicrocategorie = $_POST['microcategorie'];
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo microcategorie annuncio non settato";

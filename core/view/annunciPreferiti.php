@@ -25,14 +25,15 @@ include_once VIEW_DIR . 'header.php';
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\Annuncio\annuncioUtenteLoggato.css>
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\Annuncio\annuncioUtenteLoggato.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -260,9 +261,10 @@ include_once VIEW_DIR . 'header.php';
                             </div>
                             <form action="aggiungiCandidaturaControl" method="post">
                                 <div class="modal-body">Inserisci una descrizione per candidarti
-                                    <textarea name="Descrizione" rows="3" class="form-control"
+                                    <textarea name="descrizione" rows="3" class="form-control"
                                               placeholder="Descrizione.."></textarea>
                                 </div>
+                                <input name="idAnnuncio" style="display: none" value="<?php echo $listaAnnunciPreferiti[$i]->getId(); ?>">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi
                                     </button>
@@ -309,6 +311,7 @@ include_once VIEW_DIR . 'header.php';
                                     <textarea name="Descrizione" rows="3" class="form-control"
                                               placeholder="Descrizione.."></textarea>
                                 </div>
+                                <input name="idAnnuncio" style="display: none" value="<?php echo $listaAnnunciPreferiti[$i]->getId() ?>">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi
                                     </button>
@@ -321,39 +324,6 @@ include_once VIEW_DIR . 'header.php';
 
 
                 <div class="row col-md-12 col-sm-12 card contenitore" style="margin-left: 0; display: none">
-
-                    <div class="row col-md-12 col-sm-12 comment-body"
-                         style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
-                        <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
-                            </a>
-                        </div>
-                        <div class="media-heading">
-                            <h4 class="title">Scott White</h4>
-                            <h5 class="timeing">20 mins ago</h5>
-                        </div>
-                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                            scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus
-                            viverra turpis. Fusce condimentum nunc ac nisi vulputate.
-                        </div>
-                    </div>
-                    <div class="row col-md-12 col-sm-12 comment-body"
-                         style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
-                        <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
-                            </a>
-                        </div>
-                        <div class="media-heading">
-                            <h4 class="title">Scott White</h4>
-                            <h5 class="timeing">20 mins ago</h5>
-                        </div>
-                        <div class="media-content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                            scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus
-                            viverra turpis. Fusce condimentum nunc ac nisi vulputate.
-                        </div>
-                    </div>
 
                     <div class="col-md-12 form-commento">
 
@@ -430,7 +400,18 @@ include_once VIEW_DIR . 'header.php';
             });
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <?php
 
+    if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+        ?>
+        <script>
+            toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+        </script>
+        <?php
+        unset($_SESSION['toast-type']);
+        unset($_SESSION['toast-message']);
+    }
+    ?>
 </body>
 
 </html>

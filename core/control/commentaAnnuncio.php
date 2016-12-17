@@ -7,26 +7,21 @@ include_once MODEL_DIR . "/Commento.php";
 if($_SERVER["REQUEST_METHOD"]=="POST") {
 
     $manager = new AnnuncioManager();
-    echo $idAnnuncio = $_POST['idAnnuncio'];
-    echo $message = $_POST['commento'];
+    $idAnnuncio = $_POST['idAnnuncio'];
+    $commento = $_POST['commento'];
+    $idUtente = 1;
+    $dataPubblicazione = new DateTime();
+    $data = $dataPubblicazione->format("Y-m-d H:i:s");
+    try{
+        $manager->commentAnnuncio($idAnnuncio,$idUtente,$commento,$data);
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "Commento aggiunto";
+        header("Location:" . DOMINIO_SITO . "/annunciProprietari");
+    } catch (ApplicationException $a){
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Commento rifiutato";
+        header("Location:" . DOMINIO_SITO . "/annunciProprietari");
 
-
-    if (isset($_SESSION["listaCommenti"])) {
-        $commenti = unserialize($_SESSION["listaCommenti"]);
-        unset($_SESSION["listaCommenti"]);
-        for ($i = 0; $i < count($commenti); $i++) {
-            for ($j = 0; $j < count($commenti[$i]); $j++){
-                if ($idAnnuncio == $commenti[$i][$j]->getIdAnnuncio()) {
-                    $manager->commentAnnuncio($idAnnuncio, "1", $message, date("Y-m-d"));
-                    header("Location: " . DOMINIO_SITO . "/getHome");
-                    exit();
-                } else {
-                    $manager->commentAnnuncio($idAnnuncio, "1", $message, date("Y-m-d"));
-                    header("Location: " . DOMINIO_SITO . "/getHome");
-                    exit();
-                }
-            }
-        }
     }
 }
 
