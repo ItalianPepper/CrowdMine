@@ -147,8 +147,8 @@ class UtenteManager extends Manager{
         $users = array();
         $FIND_ALL = "SELECT * FROM utente;";
         $result = self::getDB()->query($FIND_ALL);
-        foreach($result->fetch_assoc() as $u){
-            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagineProfilo']);
+        while($u = $result->fetch_assoc()){
+            $user = $this->createUser($u['id'], $u['nome'], $u['cognome'], $u['telefono'], $u['dataNascita'], $u['citta'], $u['email'], $u['password'], $u['stato'], $u['ruolo'], $u['immagine_profilo']);
             array_push($users, $user);
         }return $users;
     }

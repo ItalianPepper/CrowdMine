@@ -24,7 +24,10 @@ define('ATTIVO',"attivo");
 define('SEGNALATO',"segnalato");
 define('ELIMINATO',"eliminato");
 define('REVISIONE',"revisione");
+define('DISATTIVATO',"disattivato");
 define('AMMINISTRATORE',"amministratore");
+define('REVISIONE_MODIFICA',"revisione_modifica");
+define('RICORSO',"ricorso");
 define('DEBUG', true);
 
 try {
@@ -245,7 +248,7 @@ try {
             case 'disattivaAnnuncioControl';
                 include_once CONTROL_DIR . "disattivaAnnuncio.php";
                 break;
-            case 'commentaAnnuncioControl';
+            case 'commentaAnnuncio';
                 include_once CONTROL_DIR . "commentaAnnuncio.php";
                 break;
             case 'annunciProprietari';
@@ -270,10 +273,14 @@ try {
                 include_once CONTROL_DIR . "annunciConflitto.php";
                 break;
             case 'annuncio';
-                include_once VIEW_DIR . "annuncio.php";
+                include_once VIEW_DIR . "annuncioStileNuovo.php";
                 break;
             case 'immprofilo';
                 include_once CORE_DIR . "/template/assets/images/profile.png";
+                break;
+            case 'segnalaCommento';
+                include_once CONTROL_DIR . "segnalaCommento.php";
+                break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;

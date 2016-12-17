@@ -173,7 +173,6 @@ class AnnuncioManager
         $query = sprintf(self::$GET_ALL_ANNUNCI);
         FilterUtils::applyFilters($filters, $query);
         $res = Manager::getDB()->query($query);
-        echo $query;
         $annunci = array();
         if ($res) {
             while ($obj = $res->fetch_assoc()) {
@@ -317,7 +316,17 @@ class AnnuncioManager
      */
     public function getAnnunciHomePageUtenteVisitatore()
     {
-        return $this->searchAnnuncio(Array(new OrderByDateFilter(OrderType::DESC)));
+        //aggiunta dei filtri per ricercare effettivamente gli annunci giusti
+        $arr = array();
+        //array_push($arr,new OrderByDateFilter(OrderType::DESC));
+        array_push($arr,new SearchByNotStatus(REVISIONE));
+        array_push($arr,new SearchByNotStatus(DISATTIVATO));
+        array_push($arr,new SearchByNotStatus(ELIMINATO));
+        array_push($arr,new SearchByNotStatus(REVISIONE_MODIFICA));
+        array_push($arr,new SearchByNotStatus(AMMINISTRATORE));
+        array_push($arr,new SearchByNotStatus(RICORSO));
+
+        return $this->searchAnnuncio($arr);
     }
 
     /**
@@ -328,6 +337,10 @@ class AnnuncioManager
     public function reportAnnuncio($idAnnuncio)
     {
         $this->updateStatus($idAnnuncio, StatoAnnuncio::SEGNALATO);
+    }
+
+    public function reportCommento($idCommento){
+        $this->updateStatusCommento($idCommento,SEGNALATO);
     }
 
     /**
@@ -422,6 +435,20 @@ class AnnuncioManager
      * @param $oldStatus
      * @throws ApplicationException
      */
+
+    public function updateStatusCommento($idCommento, $newStatus, $oldStatus = null){
+        $UPDATE_STATUS = "UPDATE `commento` SET `stato` = '%s' WHERE `id` = '%s'";
+        $query = sprintf($UPDATE_STATUS, $newStatus, $idCommento);
+
+        /*force old status matching*/
+        if ($oldStatus != null)
+            $query .= sprintf(" AND `stato` = '%s'", $oldStatus);
+
+        if (!Manager::getDB()->query($query)) {
+            throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+    }
+
     public function updateStatus($idAnnuncio, $newStatus, $oldStatus = null)
     {
 
