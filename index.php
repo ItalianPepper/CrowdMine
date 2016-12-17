@@ -152,9 +152,6 @@ try {
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
-            case 'visualizzaAnnunciSegnalati':
-                include_once VIEW_DIR . "visualizzaAnnunciSegnalati.php";
-                break;
             case 'annunciSegnalati':
                 include_once CONTROL_DIR . "annunciSegnalati.php";
                 break;
@@ -197,9 +194,6 @@ try {
             case 'inserisciAnnuncio';
                 include_once CONTROL_DIR . "inserisciAnnuncio.php";
                 break;
-            case 'formInserisciAnnuncio';
-                include_once VIEW_DIR . "inserisciAnnuncio.php";
-                break;
             case 'inserisciAnnuncioControl';
                 include_once CONTROL_DIR . "getDatiAnnuncio.php";
                 break;
@@ -212,9 +206,6 @@ try {
             case 'modificaAnnuncioControl';
                 include_once CONTROL_DIR . "getDatiAnnuncioModificato.php";
                 break;
-            case 'visualizzaModificaAnnuncio';
-                include_once VIEW_DIR . "modificaAnnuncio.php";
-                break;
             case 'aggiungiPreferitiControl';
                 include_once CONTROL_DIR . "aggiungiPreferiti.php";
                 break;
@@ -223,9 +214,6 @@ try {
                 break;
             case 'annunciPreferiti';
                 include_once CONTROL_DIR . "visualizzaPreferiti.php";
-                break;
-            case 'formRicercaAnnunci';
-                include_once VIEW_DIR . "ricercaAnnuncio.php";
                 break;
             case 'rimuoviPreferitiControl';
                 include_once CONTROL_DIR . "rimuoviPreferiti.php";

@@ -15,11 +15,11 @@ try{
     $manager->addToFavorites($idAnnuncio,1,$data);
     $_SESSION['toast-type'] = "success";
     $_SESSION['toast-message'] = "L'annuncio è stato aggiunto ai preferiti";
-    header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");
+    header("Location:" . DOMINIO_SITO . "/getHome");
 } catch (ApplicationException $a){
     $_SESSION['toast-type'] = "error";
     $_SESSION['toast-message'] = "Errore nell'aggiungere l'annuncio ai preferiti";
-    header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");
+    header("Location:" . DOMINIO_SITO . "/getHome");
 }
 
 

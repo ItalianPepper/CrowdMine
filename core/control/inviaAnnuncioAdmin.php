@@ -13,5 +13,5 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     $manager = new AnnuncioManager();
     echo $idAnnuncio = $_POST['idAnnuncio'];
     $manager->sendToAdmin($idAnnuncio);
-    header("Location: " . DOMINIO_SITO . "/visualizzaAnnunciSegnalati");
+    include_once VIEW_DIR . "visualizzaAnnunciSegnalati.php";
 }

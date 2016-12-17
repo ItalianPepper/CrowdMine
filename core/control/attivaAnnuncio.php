@@ -15,5 +15,5 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     $oldStatus=null;
     $stato='attivo';
     $manager->updateStatus($idAnnuncio, $stato, $oldStatus);
-    header("Location: " . DOMINIO_SITO . "/visualizzaAnnunciSegnalati");
+    header("Location: " . DOMINIO_SITO . "/annunciSegnalati");
 }

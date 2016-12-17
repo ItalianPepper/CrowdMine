@@ -35,6 +35,6 @@ $listaProva[] = $annuncio2;
  */
 $_SESSION["annunciSegnalati"] = serialize($lista);
 
-header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciSegnalati");
+include_once VIEW_DIR ."visualizzaAnnunciSegnalati.php";
 
 ?>

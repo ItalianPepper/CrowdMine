@@ -32,11 +32,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         $manager->addCandidatura($idAnnuncio, $idUtente, $descrizione, $data);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "Candidatura inviata";
-        header("Location: " . DOMINIO_SITO . "/annunciPreferiti");
+        header("Location: " . DOMINIO_SITO . "/getHome");
     } catch (ApplicationException $a){
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Candidatura già inviata";
-        header("Location: " . DOMINIO_SITO . "/annunciPreferiti");
+        header("Location: " . DOMINIO_SITO . "/getHome");
     }
 
 

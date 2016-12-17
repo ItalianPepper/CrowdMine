@@ -31,6 +31,6 @@ $listaProva[] = $commento;
 
 $_SESSION["commentiSegnalati"] = serialize($listaProva);
 
-header("Location:" . DOMINIO_SITO . "/visualizzaCommentiSegnalati");
+include_once VIEW_DIR ."visualizzaCommentiSegnalati.php";
 
 ?>

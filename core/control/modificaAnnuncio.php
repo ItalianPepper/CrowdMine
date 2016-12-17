@@ -5,7 +5,7 @@ if(isset($_GET["id"])){
     $managerAnnunci = new AnnuncioManager();
     $ris = $managerAnnunci->getAnnuncio($idAnn);
     $_SESSION["annuncio"] = serialize($ris);
-    header("Location: ". DOMINIO_SITO . "/visualizzaModificaAnnuncio");
+    include_once VIEW_DIR . "modificaAnnuncio.php";
 } else {
     header("Location: " . DOMINIO_SITO ."/annunciProprietari");
 }

@@ -1,4 +1,4 @@
 <?php
-header("Location:" . DOMINIO_SITO . "/formRicercaAnnunci");
+include_once VIEW_DIR . "ricercaAnnuncio.php";
 ?>
 

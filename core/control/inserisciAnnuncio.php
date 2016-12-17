@@ -1,3 +1,3 @@
 <?php
-header ("Location: ". DOMINIO_SITO ."/formInserisciAnnuncio");
+include_once VIEW_DIR . "inserisciAnnuncio.php";
 ?>
