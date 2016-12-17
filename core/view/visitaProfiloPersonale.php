@@ -13,7 +13,7 @@ if(isset($_SESSSION['user'])){
     $utente = $_SESSION['user'];
 }
 else{
-    $utente = new Utente("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
+    $utente = new Utente("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
     //header("/home.php");
 }
 
@@ -870,7 +870,7 @@ if (isset($_SESSION["microUtente"])){
                                                                     <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="<?php echo "rimuoviMicroUtenteControl?idMacro=".$micro->getMicroCategoria()->getId()?>">Rimuovi</a></li>
+                                                                    <li><a href="<?php echo "rimuoviMicroUtenteControl?idMicro=".$micro->getMicroCategoria()->getId()?>">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div> <?php }?>

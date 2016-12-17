@@ -22,12 +22,12 @@ include_once MODEL_DIR  . 'MicroListObject.php';
 $microListUtente = array();
 $microList = array();
 for ($i=0; $i<5; $i++){
-    $microUtente = new MicroCategoria("IdMicroUtente", "IdMacroUtente", "nomeMicroUtente");
+    $microUtente = new MicroCategoria("IdMacroUtente", "nomeMicroUtente", "IdMicroUtente");
     array_push($microListUtente, $microUtente);
 }
 
 for ($i=0; $i<5; $i++){
-    $micro = new MicroCategoria("idMicro", "idMacro", "nomeMicro");
+    $micro = new MicroCategoria("idMacro", "nomeMicro", "idMicro");
     array_push($microList, $micro);
 }
 

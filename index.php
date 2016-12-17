@@ -180,10 +180,10 @@ try {
             case 'rimuoviMicroUtenteControl':
                 include_once CONTROL_DIR . "RimuoviMicroUtenteControl.php";
                 break;
-            case 'ConfermaSegnalazioneUtenteControl':
+            case 'SegnalazioneUtenteControl':
                 include_once MODEL_DIR . "Utente.php";
                 //StringUtils::checkPermission(RuoloUtente::MODERATORE);
-                include_once CONTROL_DIR . "ConfermaSegnalazioneUtenteControl.php";
+                include_once CONTROL_DIR . "SegnalazioneUtenteControl.php";
                 break;
             case 'aggiungiMacroUtente':
                 include_once CONTROL_DIR . "AggiungiMacroUtenteControl.php";
