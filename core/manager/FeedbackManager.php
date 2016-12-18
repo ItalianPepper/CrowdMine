@@ -113,7 +113,7 @@ class FeedbackManager extends Manager
     public function sortListaFeedback($idUtente,$param){
         $GET_FEEDBACK_BY_USER_PARAM = "SELECT feedback.id,feedback.titolo,feedback.corpo,feedback.valutazione,utente.nome,utente.cognome,utente.immagine_profilo 
             FROM feedback, utente 
-            WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente
+            WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente  AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))
             ORDER BY $param DESC";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER_PARAM);

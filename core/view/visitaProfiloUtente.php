@@ -17,7 +17,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-
+    <?php include_once VIEW_DIR ."noscriptView.php";  ?>
+    
     <style>
         div.section .profile {
             margin-bottom: 0px;
