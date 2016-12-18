@@ -24,7 +24,7 @@ function showPaginationButtons($currentPage, $numPages, $maxButtons=6)
                 <span aria-hidden='true'>&laquo;</span>
               </a></li>";
     } else {
-        echo "<li><a href='?page=" . ($currentPage - 1) . "' aria-label='Previous'>
+        echo "<li><a href='" . ($currentPage - 1) . "' aria-label='Previous'>
                 <span aria-hidden='true'>&laquo;</span>
              </a></li>";
     }
@@ -64,13 +64,13 @@ function showPaginationButtons($currentPage, $numPages, $maxButtons=6)
 
     /*Numbered buttons*/
     for ($i = $is; $i < $currentPage; $i++) {
-        echo "<li><a href='?page=" . $i . "'>" . $i . "</a></li>";
+        echo "<li><a href='" . $i . "'>" . $i . "</a></li>";
     }
 
     echo "<li class='active'><a>" . $currentPage . "</a></li>";
 
     for ($i = $currentPage + 1; $i <= $ie; $i++) {
-        echo "<li><a href='?page=" . $i . "'>" . $i . "</a></li>";
+        echo "<li><a href='" . $i . "'>" . $i . "</a></li>";
     }
 
     if ($nextEllipsis == true)
@@ -83,20 +83,42 @@ function showPaginationButtons($currentPage, $numPages, $maxButtons=6)
                 <span aria-hidden='true'>&raquo;</span>
               </a></li>";
     } else {
-        echo "<li><a href='?page=" . ($currentPage + 1) . "' aria-label='Next'>
+        echo "<li><a href='" . ($currentPage + 1) . "' aria-label='Next'>
                <span aria-hidden='true'>&raquo;</span>
               </a></li>";
     }
 }
 
+
 /**
  * generate random color based on hash string
+ *
  * @param $hash
+ * @param float $lumCap maximum luminance value (default 0.82)
+ * @return string
  */
-function colorByHash($hash){
+function colorByHash($hash, $lumCap=0.82){
+
+
+    $f = 255; //luminance scale factor
+
     mt_srand(crc32($hash));
-    //base of 0x333333 for darker colors
-    return sprintf('#%06X', mt_rand(0x333333, 0xFFFFFF));
+
+    $r = mt_rand(0,255)/255;
+    $g = mt_rand(0,255)/255;
+    $b = mt_rand(0,255)/255;
+
+    $luminance = 0.2126*$r + 0.7152*$g + 0.0722*$b;
+
+    //reducing by same percentage of lumCap (darker colors)
+    if($luminance>$lumCap)
+        $f=$lumCap*255;
+
+    $r*=$f;
+    $g*=$f;
+    $b*=$f;
+
+    return sprintf('#%02X%02X%02X', $r,$g,$b);
 }
 
 /**

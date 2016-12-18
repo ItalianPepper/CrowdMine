@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-<?php
-//prendo i dati dell'utente
-//$utenteEsterno = $_SESSION['utenteEsterno'];
-
-    $utenteEsterno = new Utente(3, "nome2", "cognome2","desc", "telefono", "data", "citta", "email2", "password", "attivo", "utente", "immagine");
-
-?>
 
 <head>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
