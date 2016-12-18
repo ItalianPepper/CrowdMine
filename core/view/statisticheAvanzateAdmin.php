@@ -462,7 +462,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <nav id="pagination">
+                                            <nav id="pagination" max-buttons="6" pagination>
                                                <!-- <ul class="pagination">
                                                     <li>
                                                         <a href="#" aria-label="Previous">
@@ -786,10 +786,11 @@
                     )
                 );
         });
-        pagination(type,nameButton);
+        pagination(1,type,nameButton);
     }
 
-    function pagination(type, nameMacro){
+    function pagination(page,type, nameMacro){
+
         $.ajax({
             type: "POST",
             url: "tabUtenti",
@@ -797,38 +798,128 @@
             data:{pagination:"maxPage"},
             success:function (response) {
                 var dimensionPaging = response;
-                appendingPaging(dimensionPaging,type,nameMacro);
+                $("#pagination").attr("dimension-paging",dimensionPaging);
+                appendingPaging(page,type,nameMacro);
             }
         });
     }
 
-    function appendingPaging(dimensionPaging, type, nameMacro) {
+    function appendingPaging( page, type, nameMacro) {
+
         $("#pagination").append($("<ul>").attr("class", "pagination"));
-        $("#pagination ul")
-            .append($("<li>")
-                .attr("id", "page" + 1)
-                .attr("class","active")
-                .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'1'"+")")
-                .append($("<a>").text(1)));
+        var dimensionPaging = parseInt($("#pagination").attr("dimension-paging"));
+        var maxButtons = parseInt($("#pagination").attr("max-buttons"));
+        var currentPage =  parseInt(page);
+
+        //clamp currentPage to dimensionPaging
+        if(currentPage>dimensionPaging)
+        currentPage=dimensionPaging;
+
+        //start/end indices for buttons
+        var is;
+        var ie;
+
+        //ellipsis enabled for buttons after currentPage
+        var nextEllipsis = false;
+
+        /*Previous button*/
+        if (currentPage < 2) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + 0)
+                    .attr("class","disabled")
+                    .append($("<span>").attr("aria-hidden","true").html("&laquo;")));
+        } else {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + 0)
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+(currentPage-1)+"'"+")")
+                    .append($("<span>").attr("aria-hidden","true").html("&laquo;")));
+        }
+
+        //starting point for the index, half back, half-1 front
+        is = currentPage - Math.floor(maxButtons/2);
+        ie = currentPage + Math.ceil(maxButtons/2)-1;
+
+        //boundaries for indices, $is must be greater than 1
+        if(is<1){
+            //number of buttons lost now return by the other index
+            ie+=1-is;
+            is=1;
+        }
+
+        //$ie always before numPages
+        if(ie>dimensionPaging){
+            //number of buttons lost now return by the other index
+            is+=dimensionPaging-ie;
+            ie=dimensionPaging;
+        }
+
+        //clean carries
+        if(is<1) is=1;
+
+        //enabling ellipsis for the buttons after currentPage
+        if (ie < dimensionPaging) {
+            nextEllipsis = true;
+            ie -= 1;
+        }
+        //ellipsis for the buttons before current page
+        if (is > 1) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .append($("<span>").text("...")));
+            is += 1;
+        }
 
 
-        for (var i = 2; i < dimensionPaging + 1; i++) {
+        /*Numbered buttons*/
+        for (var i = is; i < currentPage; i++) {
             $("#pagination ul")
                 .append($("<li>")
                     .attr("id", "page" + i)
                     .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+i+"'"+")")
-                    .append($("<a>").text(i)));
+                    .append($("<span>").attr("aria-hidden","true").text(i)));
+        }
+
+        $("#pagination ul")
+            .append($("<li>")
+                .attr("id", "page" + currentPage)
+                .attr("class","active")
+                .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+currentPage+"'"+")")
+                .append($("<span>").attr("aria-hidden","true").text(currentPage)));
+
+        for (var i = currentPage + 1; i <= ie; i++) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + i)
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+i+"'"+")")
+                    .append($("<span>").attr("aria-hidden","true").text(i)));
+        }
+
+        if (nextEllipsis == true) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .append($("<span>").text("...")));
+        }
+
+        /*Next button*/
+        if (currentPage >= dimensionPaging) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + dimensionPaging)
+                    .attr("class","disabled")
+                    .append($("<span>").attr("aria-hidden","true").html("&raquo;")));
+        } else {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + dimensionPaging)
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+(currentPage+1)+"'"+")")
+                    .append($("<span>").attr("aria-hidden","true").html("&raquo;")));
         }
     }
 
 
     function goToPage(type,nameMacro,numberPage){
-
-        $("#pagination  ul li").each(function(i, el){
-            el.removeAttribute("class");
-        });
-
-        $("#page"+numberPage).attr("class","active");
 
         $.ajax({
             type: "POST",
@@ -839,7 +930,9 @@
             var arrayMicroPage = $.map(response, function (el) {
                 return el;
             });
-                updatePage(arrayMicroPage)
+                updatePage(arrayMicroPage);
+                $("#pagination ul").remove();
+                pagination(numberPage,type,nameMacro);
             }
         });
     }
