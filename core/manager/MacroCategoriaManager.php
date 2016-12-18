@@ -110,7 +110,7 @@ class MacroCategoriaManager extends Manager
     public function getMacrosPage($page,$pageSize)
     {
         $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE 1 LIMIT %s,%s";
-        $query = sprintf($GET_MACRO_BY_NAME,$page,$pageSize);
+        $query = sprintf($GET_MACRO_BY_NAME,$page*$pageSize,$pageSize);
         $rs = Manager::getDB()->query($query);
         return $this->macroToArray($rs);
     }

@@ -1891,7 +1891,7 @@ a:hover {
   .row .corner-dropdown{
 	position: absolute;
 	top: 0px;
-	right: 6px;
+	right: 8px;
 	font-size: 24px; }
   .row .corner-dropdown .btn{
 	padding: 0px 6px;

@@ -212,14 +212,16 @@
                                     <div class="panel-body">
                                         <div class="col-lg-12 col-md-12 col-xs-12">
                                             <?php
+
+                                            $rowType = "simple-row";
+
                                             for($i=0;$i<count($macros);$i++) {
                                                     $macro = $macros[$i];
-                                                    if($i!=0)   $rowType = "overlined-row";
-                                                    else        $rowType = "simple-row";
+                                                    if($i==1)   $rowType = "overlined-row";
                                                 ?>
                                                 <div class="row" id="edit-macro<?php echo $macro->getId()?>">
                                                     <div class="col-lg-9 col-md-9 col-xs-12 <?php echo $rowType ?>">
-                                                        <?php randomColorLabel($macro->getNome(),$macro->getNome()) ?>
+                                                        <?php randomColorLabel($macro->getNome().$macro->getId(),$macro->getNome()) ?>
 
                                                     </div>
 
@@ -247,7 +249,7 @@
                                                         <div class="col-lg-2 col-md-2 hidden-sm hidden-xs <?php echo $rowType ?>">
 
                                                         </div>
-                                                        <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                        <div class="col-lg-5 col-md-6 col-xs-12 <?php echo $rowType ?>">
                                                             <div class="input-group">
 															<span class="input-group-addon" id="basic-addon1">
 																<i class="fa fa-tag" aria-hidden="true"></i>
@@ -280,7 +282,7 @@
                                             ?>
 
                                             <div class="row" id="add-macro">
-                                                <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
+                                                <div class="col-lg-9 col-md-9 col-xs-12 <?php echo $rowType ?>">
                                                     <a onclick="$('#add-macro').toggleWith('#macro-input')" >
                                                         <i class="fa fa-plus"></i>
                                                         Aggiungi macrocategoria
@@ -290,10 +292,10 @@
                                             <!-- FORM INSERIMENTO !-->
                                             <div class="row">
                                                 <form class="form form-horizontal" id="macro-input" style="display:none">
-                                                    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+                                                    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs <?php echo $rowType ?>">
 
                                                     </div>
-                                                    <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                    <div class="col-lg-5 col-md-6 col-xs-12 <?php echo $rowType ?>">
                                                         <div class="input-group">
 															<span class="input-group-addon" id="basic-addon1">
 																<i class="fa fa-tag" aria-hidden="true"></i>
