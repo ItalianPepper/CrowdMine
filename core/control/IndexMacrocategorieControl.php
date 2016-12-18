@@ -20,15 +20,13 @@ $numMacros = $macroManager->getMacroCount();
 
 $numPages = ceil($numMacros/$MACROS_PER_PAGE);
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if (isset($_URL) && isset($_URL[1])) {
+    $page = (int)testInput($_URL[1]);
 
-    if (isset($_GET["page"])) {
-        $page = (int)testInput($_GET["page"]);
-
-        if($page<1 || $page>$numPages)
-            $page = 1;
-    }
+    if($page<1 || $page>$numPages)
+        $page = 1;
 }
+
 
 $pageStart = ($page-1)*$MACROS_PER_PAGE;
 $pageEnd = min($page*$MACROS_PER_PAGE,$numMacros);
