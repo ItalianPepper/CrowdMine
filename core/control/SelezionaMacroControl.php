@@ -20,12 +20,12 @@ $macroManager = new MacroCategoriaManager();
 $macroListUtente = array();
 $macroList = array();
 for ($i=0; $i<5; $i++){
-    $macroUtente = new MacroCategoria("idMacroUtente", "nomeMacroUtente");
+    $macroUtente = new MacroCategoria("idMacro".$i, "nomeMacro".$i);
     array_push($macroListUtente, $macroUtente);
 }
 
-for ($i=0; $i<5; $i++){
-    $macro = new MacroCategoria("idMacro", "nomeMacro1");
+for ($i=0; $i<10; $i++){
+    $macro = new MacroCategoria("idMacro".$i, "nomeMacro".$i);
     array_push($macroList, $macro);
 }
 

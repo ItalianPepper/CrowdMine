@@ -21,29 +21,36 @@ include_once MODEL_DIR  . 'MicroListObject.php';
 
 $microListUtente = array();
 $microList = array();
+
+//START STUB
 for ($i=0; $i<5; $i++){
-    $microUtente = new MicroCategoria("IdMacroUtente", "nomeMicroUtente", "IdMicroUtente");
+    $microUtente = new MicroCategoria("idMacro".$i, "nomeMicro".$i, "idMicro".$i);
     array_push($microListUtente, $microUtente);
 }
 
-for ($i=0; $i<5; $i++){
-    $micro = new MicroCategoria("idMacro", "nomeMicro", "idMicro");
+for ($i=0; $i<10; $i++){
+    $micro = new MicroCategoria("idMacro".$i, "nomeMicro".$i, "idMicro".$i);
     array_push($microList, $micro);
 }
+//END STUB
 
 //$microList = $microManager->findAll();
 //$microListUtente = $microManager->findMicrocategoriaByUser($user);
 
 $microListObjectUtente = array();
+$i=0;
 foreach ($microListUtente as $micro){
-    //$macro = $macroManager->getMacroById($micro->getIdMacrocategoria());
-    array_push($microListObjectUtente, new MicroListObject($micro, new MacroCategoria("idMacro", "macroNameByManager")));
+    //$macro = $macroManager->getMacroById($micro->getIdMacrocategoria()); ***usare $macro come input di MacroCategoria***
+    array_push($microListObjectUtente, new MicroListObject($micro, new MacroCategoria("idMacro".$i, "nomeMacro".$i)));
+    $i++;
 }
 
 $microListObject = array();
+$i=0;
 foreach ($microList as $micro){
     //$macro = $macroManager->getMacroById($micro->getIdMacrocategoria());
-    array_push($microListObject, new MicroListObject($micro, new MacroCategoria("idMacro", "macroNameByManager")));
+    array_push($microListObject, new MicroListObject($micro, new MacroCategoria("idMacro".$i, "nomeMacro".$i)));
+    $i++;
 }
 
 

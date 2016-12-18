@@ -70,7 +70,28 @@ if (isset($_SESSION["microUtente"])){
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function caricaMicro(){
+            var stringa = "micro";
+            var index = document.getElementById("macro").options[document.getElementById("macro").selectedIndex].value;
+            $.ajax({
+                type: "GET",
+                url: "asynAnnunci",
+                data: {nome:stringa,idMacro:index},
+                cache: false,
+                success: function (data){
+                    var sel = document.getElementById("micro");
+                    sel.innerHTML = data;
+                }
+            });
+        }
+    </script>
+
 </head>
+
 <body>
 <div class="app app-default">
     <aside class="app-sidebar" id="sidebar">
@@ -824,7 +845,7 @@ if (isset($_SESSION["microUtente"])){
                                                                         <select class="form-control select2" name="getIdMacro" form="macro-input">
                                                                             <?php
                                                                             foreach ($macroList as $macro) {
-                                                                                if(!array_search($macro, $macroListUtente)) { ?>
+                                                                                if(array_search($macro, $macroListUtente)===FALSE) { ?>
                                                                                     <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
                                                                                 <?php   }
                                                                             } ?>
@@ -874,7 +895,7 @@ if (isset($_SESSION["microUtente"])){
                                                                 </ul>
                                                             </div>
                                                         </div> <?php }?>
-                                                        <div class="row">
+                                                        <!--<div class="row">
                                                             <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
                                                                 <span class="label label-default">Informatica</span>
                                                                 <span class="label label-warning">Javascript</span>
@@ -889,7 +910,7 @@ if (isset($_SESSION["microUtente"])){
                                                                     <li><a href="#">Rimuovi</a></li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
+                                                        </div>-->
 
                                                         <div class="row" id="add-micro">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
@@ -910,20 +931,25 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-tag" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2">
-                                                                            <option value="AL">Informatica</option>
-                                                                            <option value="WY">Graphic Design</option>
+                                                                        <select class="form-control select2" form="micro-input" id="macro" onchange="caricaMicro()">
+                                                                            <?php
+                                                                            foreach ($macroList as $macro) {
+                                                                                if(array_search($macro, $macroListUtente)!==FALSE) { ?>
+                                                                                    <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
+                                                                                <?php   }
+                                                                            } ?>
+                                                                            <option value="" selected>Seleziona la Macrocategoria</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="input-group">
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-tags" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2">
-                                                                            <option value="AL">Php</option>
-                                                                            <option value="WY">Javascript</option>
+                                                                        <select class="form-control select2" id="micro">
+                                                                            <option value="" selected>Seleziona la Microcategoria</option>
                                                                         </select>
                                                                     </div>
+                                                                    <input type="text" class="form-control" placeholder="Crea una nuova Microcategoria">
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">

@@ -188,6 +188,9 @@ try {
             case 'aggiungiMacroUtente':
                 include_once CONTROL_DIR . "AggiungiMacroUtenteControl.php";
                 break;
+            case 'asynAnnunci':
+                include_once CONTROL_DIR . "asynAnnunci.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
