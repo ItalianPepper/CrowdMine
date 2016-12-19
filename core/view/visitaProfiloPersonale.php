@@ -1243,7 +1243,7 @@ if (isset($_SESSION["microUtente"])){
             <div class="modal-body">
 
                 <p>Inserisci la password per cancellare il tuo Account.</p>
-                <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                <input type="text" class="form-control" name="inputPassword" placeholder="Password" aria-describedby="basic-addon1">
             </div>
             <div class="modal-footer">
 
