@@ -152,19 +152,10 @@
                         </div>
                         <br>
                         <br>
-                        <div class="col-md-5 col-md-offset-1">
-                            <label class="simple-text">Sei una società o un' utente ?</label>
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <div class="col-md-6">
-                                    <label>
-                                        <input type="radio" name="tipologia" value="Società" class="flat-red"> Società
-                                    </label>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>
-                                        <input type="radio" name="tipologia" value="Utente" class="flat-red"> Utente
-                                    </label>
-                                </div>
+                                <label class="simple-text">Descrizione:</label>
+                                <textarea style="resize: none" class="form-control" name="descrizione" rows="3" placeholder="Inserisci una tua descrizione..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -185,19 +176,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="simple-text">Descrizione:</label>
-                                <textarea style="resize: none" class="form-control" name="descrizione" rows="3" placeholder="Inserisci una tua descrizione..."></textarea>
-                            </div>
-                        </div>
+                        </div>                       
                     </div>
                     <div class="row">
                         <div class="col-xs-8">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox" class="flat-red" name="accetto" id="accetto" style="position: absolute; opacity: 0;"> Autorizzo il trattamento dei dati personali
+                            <div class="checkbox">
+                                <input type="checkbox" name="accetto" id="checkbox1">
+                                <label for="checkbox1">
+                                    Autorizzo il trattamento dei dati personali
                                 </label>
                             </div>
                         </div>
@@ -212,7 +198,7 @@
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>/scripts/caricacitta.js"></script>
-        
+
         <!-- iCheck -->
         <script src="<?php echo STYLE_DIR; ?>plugins/datepicker/bootstrap-datepicker.js"></script>
         <script src="<?php echo STYLE_DIR; ?>plugins/toastr/toastr.js"></script>        
@@ -229,33 +215,33 @@
                                                 }
                                             }
 
-                                          /*  $(function () {
-                                                $('input').iCheck({
-                                                    checkboxClass: 'icheckbox_square-blue',
-                                                    radioClass: 'iradio_square-blue',
-                                                    increaseArea: '20%' // optional
-                                                });
-                                                //Date picker
-                                                $('#datepicker').datepicker({
-                                                    autoclose: true
-                                                });
-
-                                                //iCheck for checkbox and radio inputs
-                                                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                                                    checkboxClass: 'icheckbox_minimal-blue',
-                                                    radioClass: 'iradio_minimal-blue'
-                                                });
-                                                //Red color scheme for iCheck
-                                                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-                                                    checkboxClass: 'icheckbox_minimal-red',
-                                                    radioClass: 'iradio_minimal-red'
-                                                });
-                                                //Flat red color scheme for iCheck
-                                                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-                                                    checkboxClass: 'icheckbox_flat-green',
-                                                    radioClass: 'iradio_flat-green'
-                                                });
-                                            });*/
+                                            /*  $(function () {
+                                             $('input').iCheck({
+                                             checkboxClass: 'icheckbox_square-blue',
+                                             radioClass: 'iradio_square-blue',
+                                             increaseArea: '20%' // optional
+                                             });
+                                             //Date picker
+                                             $('#datepicker').datepicker({
+                                             autoclose: true
+                                             });
+                                             
+                                             //iCheck for checkbox and radio inputs
+                                             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                                             checkboxClass: 'icheckbox_minimal-blue',
+                                             radioClass: 'iradio_minimal-blue'
+                                             });
+                                             //Red color scheme for iCheck
+                                             $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                                             checkboxClass: 'icheckbox_minimal-red',
+                                             radioClass: 'iradio_minimal-red'
+                                             });
+                                             //Flat red color scheme for iCheck
+                                             $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                                             checkboxClass: 'icheckbox_flat-green',
+                                             radioClass: 'iradio_flat-green'
+                                             });
+                                             });*/
         </script>
         <script>
 

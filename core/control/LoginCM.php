@@ -56,4 +56,8 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         $_SESSION['toast-message'] = "Bentornato ".$user->getNome()." :)";
         header("Location: " . $_SERVER['HTTP_REFERER']);
     }
+    
+    else {
+        
+    }
 }
