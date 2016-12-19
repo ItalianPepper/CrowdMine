@@ -290,14 +290,14 @@
                     <div class="card-header">Opzioni</div>
                     <div class="card-body">
                         <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio5" value="option1">
-                            <label for="radio5">
+                            <input type="radio" name="radio2" id="radioMacro" value="option1">
+                            <label for="radioMacro">
                                 Macro Categoria
                             </label>
                         </div>
                         <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio6" value="option2" checked>
-                            <label for="radio6">
+                            <input type="radio" name="radio2" id="radioMicro" value="option2">
+                            <label for="radioMicro">
                                 Micro Categoria
                             </label>
                         </div>
@@ -321,34 +321,17 @@
                 <div class="card">
                     <div class="card-header">Risultati</div>
                     <div class="card-body no-padding">
-                        <table class="datatable table table-striped primary" cellspacing="0" width="100%">
+                        <table id="tabellaRisultati" class="datatable table table-striped primary" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Feedback positivi</th>
-                                <th>Micro Categorie</th>
+                                <th>Micro Categoria</th>
                                 <th>Macro Categoria</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -362,53 +345,35 @@
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
 
-<script>
-    $(document).click(function(){
-        $("#mostraRisultati").click(function(){
-            {
-                $.ajax({
-                    type: "POST",
-                    dataType:"json",
-                    url: "classificaUtenti",
-                    data: {method: 'one'},
-                    success: function(msg){
-                    }
-                });
-            });
-    });
-</script>
 
 <script>
-    $("#mostraRisultati").ready(function () {
+    $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "classificaUtenti",
             dataType: "json",
-            data: {option:"selectMacro"},
+            data: {option: "selectMacro"},
             success: function (response) {
                 var arrayMacroElements = $.map(response, function (el) {
                     return el;
                 });
-
                 appendMacroElements(arrayMacroElements)
             }
         })
     });
 
     function appendMacroElements(arrayMacroElements) {
-        $.each(arrayMacroElements, function (i,item){
-            $("#selectMacro").append($("<option>").text(item).attr("value",item));
+        $.each(arrayMacroElements, function (i, item) {
+            $("#selectMacro").append($("<option>").text(item).attr("value", item));
         });
     }
-    </script>
 
-<script>
-    $("#mostraRisultati").ready(function () {
+    $("#selectMacro").ready(function () {
         $.ajax({
             type: "POST",
             url: "classificaUtenti",
             dataType: "json",
-            data: {option:"selectMicro"},
+            data: {option: "selectMicro"},
             success: function (response) {
                 var arrayMicroElements = $.map(response, function (el) {
                     return el;
@@ -418,11 +383,89 @@
         });
     });
 
+    $("#selectMacro").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMicro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMicroElements(arrayMicroElements);
+            }
+        });
+    });
+
+
     function appendMicroElements(arrayMicroElements) {
-        $.each(arrayMicroElements, function (i,item){
-            $("#selectMicro").append($("<option>").text(item).attr("value",item));
+        $("#selectMicro").empty();
+        $.each(arrayMicroElements, function (i, item) {
+            $("#selectMicro").append($("<option>").text(item).attr("value", item));
         });
     }
+</script>
+
+//*************** cancella e ricrea tabella
+<script>
+    $("#mostraRisultati").click(function () {
+
+        var macro = $("#selectMacro").val();
+        var micro = $("#selectMicro").val();
+        var dataRicerca = {};
+
+        if(micro != null){
+
+            dataRicerca = {
+                selectMacro:macro, selectMicro:micro
+            }
+        }else {
+            dataRicerca = {
+                selectMacro:macro, selectMicro:0
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: dataRicerca,
+            success: function (response) {
+                var arrayUtenti = $.map(response, function (el) {
+                    return el;
+                });
+                updatePage(arrayUtenti);
+            }
+        });
+    });
+
+    function updatePage(arrayUtenti) {
+        $("#tabellaRisultati tbody tr").remove();
+        $.each(arrayUtenti, function (i, el) {
+            $("#tabellaRisultati").find("tbody")
+                .append($("<tr>")
+                    .append($("<th></th>")
+                        .attr("scope", "row")
+                        .text(i + 1))
+                    .append($("<td>")
+                        .text(el)
+                    )
+                );
+        });
+    }
+</script>
+
+
+<script>
+    $("#radioMacro").click(function () {
+        $("#selectMicro").attr("disabled", true);
+    });
+
+    $("#radioMicro").click(function () {
+        $("#selectMicro").removeAttr("disabled");
+    });
+
 </script>
 
 </body>

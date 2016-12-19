@@ -327,34 +327,34 @@
                                             <div class="section">
                                                 <div class="section-title">Macro Categorie</div>
                                                 <div class="section-body">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <select id="selectMacro" style="width:100%"
-                                                                    class="select2">
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <label for="fromdatemacro">Da</label>
-                                                            <input id="fromdatemacro" type="date"
-                                                                   class="form-control">
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <label for="atdatemacro">A</label>
-                                                            <input id="atdatemacro" type="date"
-                                                                   class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <button id="submitMacro"
-                                                                        class="btn btn-primary">Mostra Risultati
-                                                                </button>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <select id="selectMacro" style="width:100%"
+                                                                        class="select2">
+                                                                </select>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <label for="fromdatemacro">Da</label>
+                                                                <input id="fromdatemacro" type="date"
+                                                                       class="form-control">
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <label for="atdatemacro">A</label>
+                                                                <input id="atdatemacro" type="date"
+                                                                       class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <button id="submitMacro"
+                                                                            class="btn btn-primary">Mostra Risultati
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div>
@@ -373,34 +373,33 @@
                                             <div class="section">
                                                 <div class="section-title">Micro Categorie</div>
                                                 <div class="section-body">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <select id="selectMicro" style="width:100%"
-                                                                    class="select2">
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <label for="fromdatemicro">Da</label>
-                                                            <input id="fromdatemicro" type="date"
-                                                                   class="form-control">
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <label for="atdatemicro">A</label>
-                                                            <input id="atdatemicro" type="date"
-                                                                   class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <button id="submitMicro"
-                                                                        class="btn btn-primary">Mostra Risultati
-                                                                </button>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <select id="selectMicro" style="width:100%"
+                                                                        class="select2">
+                                                                </select>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <label for="fromdatemicro">Da</label>
+                                                                <input id="fromdatemicro" type="date"
+                                                                       class="form-control">
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <label for="atdatemicro">A</label>
+                                                                <input id="atdatemicro" type="date"
+                                                                       class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <button id="submitMicro"
+                                                                            class="btn btn-primary">Mostra Risultati
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div>
@@ -415,59 +414,76 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="tab3">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <div class="section">
-                                        <div class="section-title">Macro Categorie Preferite Dagli Utenti</div>
-                                        <div class="section-body">
-                                            <table id="macroUtenti" class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Macro Categoria</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <div class="section">
-                                        <div class="section-title">Macro Categorie Offerte Degli Annunci</div>
-                                        <div class="section-body">
-                                            <table id="macroAnnunci" class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Macro Categoria</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tab3">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="section">
+                                    <div class="section-title">Macro Categorie Preferite Dagli Utenti</div>
+                                    <div class="section-body">
+                                        <table id= "macroUtenti" class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Macro Categoria</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12col-xs-12">
-                                    <div class="section">
-                                        <div class="section-title"><p id="labelMacro"></p></div>
-                                        <div class="section-body">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <div id="container-micro">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <nav id="pagination">
-                                                </nav>
-                                            </div>
-                                        </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="section">
+                                    <div class="section-title">Macro Categorie Offerte Degli Annunci</div>
+                                    <div class="section-body">
+                                        <table id= "macroAnnunci" class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Macro Categoria</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12col-xs-12">
+                                <div class="section">
+                                    <div class="section-title"><p id="labelMacro"></p></div>
+                                    <div class="section-body">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div id="container-micro">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <nav id="pagination" max-buttons="6" pagination>
+                                               <!-- <ul class="pagination">
+                                                    <li>
+                                                        <a href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+                                                    <li><a href="#">1</a></li>
+                                                    <li class="active"><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li>
+                                                        <a href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>-->
+                                            </nav>
+                                        </div>
+                                    </div>
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -475,6 +491,7 @@
             </div>
         </div>
     </div>
+</div>
 </body>
 
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
@@ -769,10 +786,11 @@
                     )
                 );
         });
-        pagination(type,nameButton);
+        pagination(1,type,nameButton);
     }
 
-    function pagination(type, nameMacro){
+    function pagination(page,type, nameMacro){
+
         $.ajax({
             type: "POST",
             url: "tabUtenti",
@@ -780,39 +798,128 @@
             data:{pagination:"maxPage"},
             success:function (response) {
                 var dimensionPaging = response;
-                appendingPaging(dimensionPaging,type,nameMacro);
+                $("#pagination").attr("dimension-paging",dimensionPaging);
+                appendingPaging(page,type,nameMacro);
             }
         });
     }
 
-    function appendingPaging(dimensionPaging, type, nameMacro) {
+    function appendingPaging( page, type, nameMacro) {
 
         $("#pagination").append($("<ul>").attr("class", "pagination"));
+        var dimensionPaging = parseInt($("#pagination").attr("dimension-paging"));
+        var maxButtons = parseInt($("#pagination").attr("max-buttons"));
+        var currentPage =  parseInt(page);
 
-        $("#pagination ul")
-            .append($("<li>")
-                .attr("id", "page" + 1)
-                .attr("class", "active")
-                .attr("onclick", "goToPage(" + "'" + type + "'" + "," + "'" + nameMacro +"'"+ ","+"'"+ 1 +"'" +")")
-                .append($("<a>").text(1)));
+        //clamp currentPage to dimensionPaging
+        if(currentPage>dimensionPaging)
+        currentPage=dimensionPaging;
+
+        //start/end indices for buttons
+        var is;
+        var ie;
+
+        //ellipsis enabled for buttons after currentPage
+        var nextEllipsis = false;
+
+        /*Previous button*/
+        if (currentPage < 2) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + 0)
+                    .attr("class","disabled")
+                    .append($("<span>").attr("aria-hidden","true").html("&laquo;")));
+        } else {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + 0)
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+(currentPage-1)+"'"+")")
+                    .append($("<span>").attr("aria-hidden","true").html("&laquo;")));
+        }
+
+        //starting point for the index, half back, half-1 front
+        is = currentPage - Math.floor(maxButtons/2);
+        ie = currentPage + Math.ceil(maxButtons/2)-1;
+
+        //boundaries for indices, $is must be greater than 1
+        if(is<1){
+            //number of buttons lost now return by the other index
+            ie+=1-is;
+            is=1;
+        }
+
+        //$ie always before numPages
+        if(ie>dimensionPaging){
+            //number of buttons lost now return by the other index
+            is+=dimensionPaging-ie;
+            ie=dimensionPaging;
+        }
+
+        //clean carries
+        if(is<1) is=1;
+
+        //enabling ellipsis for the buttons after currentPage
+        if (ie < dimensionPaging) {
+            nextEllipsis = true;
+            ie -= 1;
+        }
+        //ellipsis for the buttons before current page
+        if (is > 1) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .append($("<span>").text("...")));
+            is += 1;
+        }
 
 
-        for (var i = 2; i < dimensionPaging+1; i++) {
+        /*Numbered buttons*/
+        for (var i = is; i < currentPage; i++) {
             $("#pagination ul")
                 .append($("<li>")
                     .attr("id", "page" + i)
-                    .attr("onclick", "goToPage(" + "'" + type + "'" + "," + "'" + nameMacro +"'"+ "," + "'" +i+ "'" + ")")
-                    .append($("<a>").text(i)));
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+i+"'"+")")
+                    .append($("<span>").attr("aria-hidden","true").text(i)));
+        }
+
+        $("#pagination ul")
+            .append($("<li>")
+                .attr("id", "page" + currentPage)
+                .attr("class","active")
+                .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+currentPage+"'"+")")
+                .append($("<span>").attr("aria-hidden","true").text(currentPage)));
+
+        for (var i = currentPage + 1; i <= ie; i++) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + i)
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+i+"'"+")")
+                    .append($("<span>").attr("aria-hidden","true").text(i)));
+        }
+
+        if (nextEllipsis == true) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .append($("<span>").text("...")));
+        }
+
+        /*Next button*/
+        if (currentPage >= dimensionPaging) {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + dimensionPaging)
+                    .attr("class","disabled")
+                    .append($("<span>").attr("aria-hidden","true").html("&raquo;")));
+        } else {
+            $("#pagination ul")
+                .append($("<li>")
+                    .attr("id", "page" + dimensionPaging)
+                    .attr("onclick", "goToPage("+"'"+type+"'"+","+"'"+nameMacro+"'"+","+"'"+(currentPage+1)+"'"+")")
+                    .append($("<span>").attr("aria-hidden","true").html("&raquo;")));
         }
     }
 
+
     function goToPage(type,nameMacro,numberPage){
-
-        $("#pagination  ul li").each(function(i,el){
-            el.removeAttribute("class");
-        });
-
-        $("#page"+numberPage).attr("class","active");
 
         $.ajax({
             type: "POST",
@@ -823,7 +930,9 @@
             var arrayMicroPage = $.map(response, function (el) {
                 return el;
             });
-                updatePage(arrayMicroPage)
+                updatePage(arrayMicroPage);
+                $("#pagination ul").remove();
+                pagination(numberPage,type,nameMacro);
             }
         });
     }
