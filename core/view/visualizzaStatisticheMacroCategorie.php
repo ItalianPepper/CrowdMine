@@ -324,19 +324,23 @@
 
         var ctx = document.getElementById("statisticheMacro").getContext("2d");
 
+        var numOfMacro = $.map(result, function(el,key){return key;}).length;
+
+        var colors = rgbaRandom(numOfMacro);
+
+        var i=0;
         function createElements() {
            var allElement = [];
             for (var key in result) {
-              var  randomColor= rgbaRandom();
-
                 var grafics = {
                     label: [key],
                     data: [result[key]],
-                    backgroundColor: randomColor,
-                    borderColor: randomColor,
+                    backgroundColor: colors[i],
+                    borderColor: colors[i],
                     borderWidth: 1,
                 }
                 allElement.push(grafics);
+                i++;
             }
             return allElement;
         };
@@ -362,22 +366,28 @@
     }
 
 
-    function rgbaRandom(){
+    function rgbaRandom(numElements) {
 
-        var rgbaArray = ["rgba(255,255,255,0.7)","rgba(36,211,255,0.7)","rgba(185,255,20,0.7)","rgba(31,75,255,0.7)",
-                        "rgba(133,255,214,0.7)","rgba(255,232,20,0.7)","rgba(112,255,184,0.7)","rgba(255,23,38,0.7)",
-                        "rgba(120,255,79,0.7)","rgba(120,255,219,0.7)","rgba(255,146,51,0.7)","rgba(103,92,255,0.7)",
-                        "rgba(0, 255, 0, 0.7)", "rgba(255,239,92,0.7)","rgba(255,128,0,0.7)","rgba(161,252,255,0.7)",
-                        "rgba(10,255,182,0.7)","rgba(0,255,238,0.7)","rgba(255,0,0,0.7)","rgba(71,51,255,0.7)"];
+        var rgbaArray = [
+            "rgba(255,192,0.7)","rgba(255,192,0,0.7)","rgba(224,255,0,0.7)","rgba(126,255,0,0.7)"
+            ,"rgba(33, 255,0,0.7)","rgba(0,255,65,0.7)","rgba(0,255,159,0.7)","rgba(0,253,255,0.7)"
+            ,"rgba(0,159,255,0.7)","rgba(0,61,255,0.7)","rgba(33,0,255,0.7)","rgba(131,0,255,0.7)"
+            ,"rgba(229,0,255,0.7)","rgba(0,82,255,0.7)","rgba(255,0,124,0.7)","rgba(16,0,255,0.7)"
+        ];
 
-        var numberRandom = Math.floor(Math.random()*(rgbaArray.length-0));
 
-        for(var i=0; i<rgbaArray.length; i++){
-            if(i == numberRandom){
-                return rgbaArray[i];
-            }
+        var resultSetColors = [];
+
+        for (var k = 0; k < numElements; k++) {
+            var numberRandom = Math.floor(Math.random() * (rgbaArray.length - 1) + 1);
+                    resultSetColors.push(rgbaArray[numberRandom]);
+                    rgbaArray.splice( $.inArray(rgbaArray[numberRandom],rgbaArray) ,1 );
         }
+
+        return resultSetColors;
     }
+
+
 </script>
 
 </html>
