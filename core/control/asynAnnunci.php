@@ -55,14 +55,14 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         $utenteManager = new UtenteManager();
        //$microUtenteList = $utenteManager->findMicroUtente($user->getId());
         if(count($microList)>0 && count($microUtenteList)>0) {
-            $toReturn = "<option value=-1 selected>Seleziona la Microcategoria</option>";
+            $toReturn = "<option value='' selected>Seleziona la Microcategoria</option>";
             foreach ($microList as $micro) {
                 if(array_search($micro, $microUtenteList)!==FALSE)
                     $toReturn = $toReturn . "<option value=" . $micro->getId() . ">" . $micro->getNome() . "</option>";
             }
             echo $toReturn;
         } else {
-            echo $toReturn = "<option value=-1 selected>Non ci sono micro per questa macro.</option>";
+            echo $toReturn = "<option value='' selected>Non ci sono micro per questa macro.</option>";
         }
     }
 

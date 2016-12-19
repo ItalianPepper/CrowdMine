@@ -444,8 +444,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-mail-input').toggleWith('#edit-mail')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-mail-input').toggleWith('#edit-mail')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -503,8 +503,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right" >Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-tel-input').toggleWith('#edit-tel')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right" >Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-tel-input').toggleWith('#edit-tel')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -560,7 +560,7 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -617,8 +617,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-name-input').toggleWith('#edit-name')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-name-input').toggleWith('#edit-name')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -659,8 +659,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-surname-input').toggleWith('#edit-surname')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-surname-input').toggleWith('#edit-surname')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -701,8 +701,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-birthdate-input').toggleWith('#edit-birthdate')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-birthdate-input').toggleWith('#edit-birthdate')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -743,8 +743,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-location-input').toggleWith('#edit-location')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#edit-location-input').toggleWith('#edit-location')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -854,8 +854,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -922,7 +922,7 @@ if (isset($_SESSION["microUtente"])){
                                                         </div>
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="micro-input" style="display:none">
+                                                            <form class="form form-horizontal" id="micro-input" style="display:none" action="aggiungiMicroUtente" method="post">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
@@ -931,7 +931,41 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-tag" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2" form="micro-input" id="macro" onchange="caricaMicro()">
+                                                                        <select class="form-control select2">
+                                                                            <?php
+                                                                            foreach ($macroList as $macro) {
+                                                                                if(array_search($macro, $macroListUtente)!==FALSE) { ?>
+                                                                                    <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
+                                                                                <?php   }
+                                                                            } ?>
+                                                                            <option value="" selected>Seleziona la Macrocategoria</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group" id="creaMicro">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <input type="text" class="form-control" placeholder="Crea una nuova Microcategoria">
+
+                                                                                <button type="submit" class="btn btn-success pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input').toggleWith('#add-micro')">Cancella</button>
+                                                                                <button type="button" class="btn btn-primary pull-right" onclick="$('#micro-input').toggleWith('#micro-input1')" >Seleziona</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row">
+                                                            <form class="form form-horizontal" id="micro-input1" style="display:none" action="aggiungiMicroUtente" method="post">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-tag" aria-hidden="true"></i>
+																			</span>
+                                                                        <select class="form-control select2" id="macro" onchange="caricaMicro()">
                                                                             <?php
                                                                             foreach ($macroList as $macro) {
                                                                                 if(array_search($macro, $macroListUtente)!==FALSE) { ?>
@@ -945,16 +979,16 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-tags" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2" id="micro">
+                                                                        <select class="form-control select2" id="micro" name="idMicro" form="micro-input1">
                                                                             <option value="" selected>Seleziona la Microcategoria</option>
                                                                         </select>
                                                                     </div>
-                                                                    <input type="text" class="form-control" placeholder="Crea una nuova Microcategoria">
                                                                     <div class="form-footer">
-                                                                        <div class="form-group">
+                                                                        <div class="form-group" id="selectMicro">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input').toggleWith('#add-micro')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-success pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input1').toggleWith('#add-micro')">Cancella</button>
+                                                                                <button type="button" class="btn btn-primary pull-right" onclick="$('#micro-input1').toggleWith('#micro-input')">Crea</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1041,8 +1075,8 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#userblock-input').toggleWith('#add-userblock')">Cancel</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#userblock-input').toggleWith('#add-userblock')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1170,7 +1204,7 @@ if (isset($_SESSION["microUtente"])){
                                             <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse5">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
-                                                        Cancellazione Account
+                                                        Cancellalazione Account
                                                     </h4>
                                                     <p>Se lo desideri, puoi eliminare il tuo account dal sistema</p>
                                                 </div>
@@ -1185,12 +1219,12 @@ if (isset($_SESSION["microUtente"])){
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <form action="cancellaAccount" class="form form-horizontal" id="tel-input">
+                                                            <form action="CancellalaAccount" class="form form-horizontal" id="tel-input">
                                                                 <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-danger pull-right">Cancella Account</button>
+                                                                                <button type="submit" class="btn btn-danger pull-right">Cancellala Account</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>

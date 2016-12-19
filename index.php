@@ -191,6 +191,9 @@ try {
             case 'asynAnnunci':
                 include_once CONTROL_DIR . "asynAnnunci.php";
                 break;
+            case 'aggiungiMicroUtente':
+                include_once CONTROL_DIR . "AggiungiMicroUtenteControl.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
