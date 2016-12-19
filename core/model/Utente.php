@@ -37,6 +37,7 @@ class Utente {
     private $stato;
     private $ruolo;
     private $immagineProfilo;
+    private $partitaIva;
 
     /**
      * Utente constructor.
@@ -53,7 +54,7 @@ class Utente {
      * @param $ruolo
      * @param $immagineProfilo
      */
-    public function __construct($id, $nome, $cognome, $descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo)
+    public function __construct($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo,$descrizione=null, $immagineProfilo=null, $partitaIva=null)
     {
         $this->id = $id;
         $this->nome = $nome;
@@ -67,6 +68,7 @@ class Utente {
         $this->stato = $stato;
         $this->ruolo = $ruolo;
         $this->immagineProfilo = $immagineProfilo;
+        $this->partitaIva = $partitaIva;
     }
 
     /**
@@ -171,6 +173,22 @@ class Utente {
     public function setNome($nome)
     {
         $this->nome = $nome;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPartitaIva()
+    {
+        return $this->partitaIva;
+    }
+
+    /**
+     * @param null $partitaIva
+     */
+    public function setPartitaIva($partitaIva)
+    {
+        $this->partitaIva = $partitaIva;
     }
 
     /**

@@ -125,7 +125,7 @@
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <div class="input-group date">
-                                    <input type="text" class="form-control pull-right" name="datanascita" id="datepicker" placeholder="Data di nascita*">
+                                    <input type="date" class="form-control pull-right" name="datanascita" id="datepicker" placeholder="Data di nascita*">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar" onclick="document.getElementById('datepicker').focus()"></i>
                                     </div>
