@@ -23,12 +23,14 @@ if (isset($_SESSION['user'])) {
     if (isset($utenteEsterno) && ($utenteEsterno->getId()==null) ) {
         if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
             $utenteEsterno->setStato("bannato");
-            echo $utenteEsterno->getId()." ".$utenteEsterno->getStato();
             $manager->updateUtente($userEsterno);
             $_SESSION['utenteEsterno'] = serialize($utenteEsterno);
-            if($urlDellaChiamata == "visitaProfiloUtente"){
+            if($urlDellaChiamata == "ProfiloUtente"){
                 //permette di essere reindirizzato dalla pagina da cui viene chiamato il control
-               // header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata);
+                header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata."?user=".$userEsterno->getId());
+            }
+            elseif ($urlDellaChiamata == "visualizzaUtentiSegnalati"){
+                header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata);
             }
             else {
                 //significa che è stato manomessa la form, modificato il campo url da dove chiama

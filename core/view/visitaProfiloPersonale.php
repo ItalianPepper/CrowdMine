@@ -326,7 +326,7 @@ if (isset($_SESSION["microUtente"])){
                             </a>
                             <div class="dropdown-menu">
                                 <div class="profile-info">
-                                    <h4 class="username">Scott White</h4>
+                                    <h4 class="username"><?php echo $utente->getNome()." ".$utente->getCognome()?></h4>
                                 </div>
                                 <ul class="action">
                                     <li>
@@ -364,6 +364,7 @@ if (isset($_SESSION["microUtente"])){
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
                             <div class="title"><span class="highlight"><?php echo $utente->getNome()." ".$utente->getCognome()?></span></div>
+                            <div class="description"><?php echo $utente->getDescrizione();?></div>
                         </div>
                     </div>
                 </div>
@@ -1185,17 +1186,17 @@ if (isset($_SESSION["microUtente"])){
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <form action="cancellaAccount" class="form form-horizontal" id="tel-input">
+
                                                                 <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-danger pull-right">Cancella Account</button>
+                                                                                <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal">Cancella Account</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1230,6 +1231,31 @@ if (isset($_SESSION["microUtente"])){
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Seisicuro di voler eliminare il tuo Account?</h4>
+            </div>
+            <form action="cancellaAccount" class="form form-horizontal" id="tel-input">
+            <div class="modal-body">
+
+                <p>Inserisci la password per cancellare il tuo Account.</p>
+                <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+            </div>
+            <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Annulla</button>
+                <button type="submit" class="btn btn-sm btn-danger">Conferma Cancellazione</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 <script>
