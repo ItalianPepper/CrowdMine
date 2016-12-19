@@ -290,14 +290,14 @@
                     <div class="card-header">Opzioni</div>
                     <div class="card-body">
                         <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio5" value="option1">
-                            <label for="radio5">
+                            <input type="radio" name="radio2" id="radioMacro" value="option1">
+                            <label for="radioMacro">
                                 Macro Categoria
                             </label>
                         </div>
                         <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio6" value="option2" checked>
-                            <label for="radio6">
+                            <input type="radio" name="radio2" id="radioMicro" value="option2">
+                            <label for="radioMicro">
                                 Micro Categoria
                             </label>
                         </div>
@@ -321,7 +321,8 @@
                 <div class="card">
                     <div class="card-header">Risultati</div>
                     <div class="card-body no-padding">
-                        <table id ="tabellaRisultati" class="datatable table table-striped primary" cellspacing="0" width="100%">
+                        <table id="tabellaRisultati" class="datatable table table-striped primary" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr>
                                 <th>Nome</th>
@@ -330,22 +331,7 @@
                                 <th>Macro Categoria</th>
                             </tr>
                             </thead>
-                            <?php
-                            $arrayUtenti = array(
-                                array("Nome" => "Giuseppe", "FeedBack" => "84", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
-                                array("Nome" => "Giorgio", "FeedBack" => "48", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
-                                array("Nome" => "Gigi", "FeedBack" => "8", "MicroCategoria" => "JAVA", "MacroCategoria" => "Informatica"),
-                            );
-                            ?>
-
-                            <?php foreach ($arrayUtenti as $row): ?>
-                            <tr>
-                                <td><? echo $row['Nome']; ?></td>
-                                <td><? echo $row['FeedBack']; ?></td>
-                                <td><? echo $row['MicroCategoria']; ?></td>
-                                <td><? echo $row['MacroCategoria']; ?></td>
-                            </tr>
-                            <?php endforeach; ?>
+                            <tbody>
                             </tbody>
                         </table>
                     </div>
@@ -366,29 +352,28 @@
             type: "POST",
             url: "classificaUtenti",
             dataType: "json",
-            data: {option:"selectMacro"},
+            data: {option: "selectMacro"},
             success: function (response) {
                 var arrayMacroElements = $.map(response, function (el) {
                     return el;
                 });
-
                 appendMacroElements(arrayMacroElements)
             }
         })
     });
 
     function appendMacroElements(arrayMacroElements) {
-        $.each(arrayMacroElements, function (i,item){
-            $("#selectMacro").append($("<option>").text(item).attr("value",item));
+        $.each(arrayMacroElements, function (i, item) {
+            $("#selectMacro").append($("<option>").text(item).attr("value", item));
         });
     }
 
-    $(document).ready(function () {
+    $("#selectMacro").ready(function () {
         $.ajax({
             type: "POST",
             url: "classificaUtenti",
             dataType: "json",
-            data: {option:"selectMicro"},
+            data: {option: "selectMicro"},
             success: function (response) {
                 var arrayMicroElements = $.map(response, function (el) {
                     return el;
@@ -398,9 +383,26 @@
         });
     });
 
+    $("#selectMacro").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMicro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMicroElements(arrayMicroElements);
+            }
+        });
+    });
+
+
     function appendMicroElements(arrayMicroElements) {
-        $.each(arrayMicroElements, function (i,item){
-            $("#selectMicro").append($("<option>").text(item).attr("value",item));
+        $("#selectMicro").empty();
+        $.each(arrayMicroElements, function (i, item) {
+            $("#selectMicro").append($("<option>").text(item).attr("value", item));
         });
     }
 </script>
@@ -408,37 +410,62 @@
 //*************** cancella e ricrea tabella
 <script>
     $("#mostraRisultati").click(function () {
+
+        var macro = $("#selectMacro").val();
+        var micro = $("#selectMicro").val();
+        var dataRicerca = {};
+
+        if(micro != null){
+
+            dataRicerca = {
+                selectMacro:macro, selectMicro:micro
+            }
+        }else {
+            dataRicerca = {
+                selectMacro:macro, selectMicro:0
+            }
+        }
+
         $.ajax({
             type: "POST",
             url: "classificaUtenti",
             dataType: "json",
-            data: {option:"selectMicro"},
+            data: dataRicerca,
             success: function (response) {
-                var arrayMicroElements = $.map(response, function (el) {
+                var arrayUtenti = $.map(response, function (el) {
                     return el;
                 });
-                updatePage(arrayMicroElements);
+                updatePage(arrayUtenti);
             }
         });
     });
 
-    function updatePage(arrayMicroElements){
+    function updatePage(arrayUtenti) {
         $("#tabellaRisultati tbody tr").remove();
-        var el = document.getElementById('selectMicro').value;
-                <?php foreach ($arrayUtenti as $row):?>
-                    if (el == '<?php echo $row['MicroCategoria']?>') {
-                        $("#tabellaRisultati").find("tbody")
-                                .append($("<tr>")
-                                .append($("<td></td>").text("<?php echo $row['Nome']?>"))
-                                .append($("<td></td>").text("<?php echo $row['FeedBack']?>"))
-                                .append($("<td></td>").text("<?php echo $row['MicroCategoria']?>"))
-                                .append($("<td></td>").text("<?php echo $row['MacroCategoria']?>"))
-                                .append($("</tr>"))
-                            )
-                    }
-                <?php endforeach; ?>
-
+        $.each(arrayUtenti, function (i, el) {
+            $("#tabellaRisultati").find("tbody")
+                .append($("<tr>")
+                    .append($("<th></th>")
+                        .attr("scope", "row")
+                        .text(i + 1))
+                    .append($("<td>")
+                        .text(el)
+                    )
+                );
+        });
     }
+</script>
+
+
+<script>
+    $("#radioMacro").click(function () {
+        $("#selectMicro").attr("disabled", true);
+    });
+
+    $("#radioMicro").click(function () {
+        $("#selectMicro").removeAttr("disabled");
+    });
 
 </script>
+
 </body>

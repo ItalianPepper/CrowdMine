@@ -19,13 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             header("Content-Type: application/json");
             echo json_encode($result);
-        }
-    }
-
-
-    if (isset($_POST["option"])) {
-
-        if ($_POST["option"] == "selectMicro") {
+        } else if ($_POST["option"] == "selectMicro") {
             //$macroCategoriaManager = new AnnuncioManager();
 
             // $result = $macroCategoriaManager->getListMacroCategorie();
@@ -36,16 +30,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($result);
         }
 
+    }else if(isset($_POST["selectMacro"]) && isset($_POST["selectMicro"])){
+        if($_POST["selectMicro"] == 0){
+            $result = arrayUtentiMacro();
+
+            header("Content-Type: application/json");
+            echo json_encode($result);
+        }else{
+            $result = arrayUtentiMicro();
+
+            header("Content-Type: application/json");
+            echo json_encode($result);
+
+        }
     }
 
 }
 
-function arrayUtenti(){
-    $arrayUtentiFunc = array ( array("Nome" => "Giuseppe", "FeedBack" => "84", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
-                            array("Nome" => "Giorgio", "FeedBack" => "48", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
-                            array("Nome" => "Gigi", "FeedBack" => "8", "MicroCategoria" => "JAVA", "MacroCategoria" => "Informatica"),
-                        );
-    return $arrayUtentiFunc;
+function arrayUtentiMacro(){
+    $arrayUtentiMacro = array("Giorgio", "Pasquale", "Giggino");
+    return $arrayUtentiMacro;
+}
+
+function arrayUtentiMicro(){
+    $arrayUtentiMicro = array("Rino", "Gino", "dollaro");
+    return $arrayUtentiMicro;
 }
 
 function stubMacroCategorie()
