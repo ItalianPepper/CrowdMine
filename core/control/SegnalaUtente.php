@@ -24,13 +24,12 @@ if (isset($_SESSSION['user'])) {
             $manager->updateUtente($userEsterno);
 
 
-
         } elseif (($userEsterno->getRuolo() == "moderatore") && ($user->getRuolo() == "moderatore")) {
             $userEsterno->setStato("segnalato");
             $manager->updateUtente($userEsterno);
 
             //da modificare e reindirizzarlo al control;
-            header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR."visitaProfiloUtente");
+            header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata."?user=".$userEsterno->getId());
         }
     }
     else{

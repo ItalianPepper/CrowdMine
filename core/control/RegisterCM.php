@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         header("Location:" . DOMINIO_SITO . "/auth");
         throw new IllegalArgumentException("Campo telefono non settato");
     }
-     
+
     if (isset($_POST['datanascita'])) {
         $userDateOfBirth = $_POST["datanascita"];
 
@@ -63,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         header("Location:" . DOMINIO_SITO . "/auth");
         throw new IllegalArgumentException("Campo data di nascita non settato");
     }
-    
     if (isset($_POST['citta'])) {
         $userCity = $_POST["citta"];
 
@@ -162,11 +161,18 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         throw new IllegalArgumentException("Email non valida");
     }
     
-    if (empty($userPassword) || !preg_match(Patterns::$PASSWORD, $userPassword)) {
+    if (empty($userPassword)){
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Password non inserita";
         header("Location:" . DOMINIO_SITO . "/auth");
         throw new IllegalArgumentException("Password non inserita");
+    }else {
+        if (!preg_match(Patterns::$PASSWORD, $userPassword)) {
+            $_SESSION['toast-type'] = "error";
+            $_SESSION['toast-message'] = "Password non valida, inserire almeno 8 caratteri, di cui almeno uno minuscolo, uno maiuscolo e un numero";
+            header("Location:" . DOMINIO_SITO . "/auth");
+            throw new IllegalArgumentException("Password non valida");
+        }
     }
     
     if (empty($userPasswordRetyped) || ($userPasswordRetyped != $userPassword)) {
@@ -175,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         header("Location:" . DOMINIO_SITO . "/auth");
         throw new IllegalArgumentException("Le password devono essere uguali");
     }
-     if (empty($userPI) || !preg_match(Patterns::$PI_GENERIC, $userPI)) {
+     if (!empty($userPI) && !preg_match(Patterns::$PI_GENERIC, $userPI)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Partita iva non valida";
         header("Location:" . DOMINIO_SITO . "/auth");
@@ -183,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     }
      
     if(($utenteManager->checkEmail($userMail)) == false){
-       $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, "attivato","user", null);
+       $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, StatoUtente::ATTIVO,RuoloUtente::UTENTE,$userDescription, null);
        $utenteManager->register($userToReg);
        $user = $utenteManager-> login($userMail, $userPassword);    
     }

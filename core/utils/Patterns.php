@@ -10,7 +10,7 @@ class Patterns {
     public static $MATRICOLA = "/^[0-9]{2,12}$/";
     public static $NAME_GENERIC = "/^[a-zA-Z0-9_ èàòù]+$/";
     public static $TELEPHONE = "/^[0-9]{5,10}$/";
-    public static $GENERIC_DATE = "/([0-9]{2}\/[0-9]{2}\/[0-9]{4})/";
+    public static $GENERIC_DATE = "/([0-9]{4}-[0-9]{2}-[0-9]{2})/";
     public static $MD5_SLASH = "/^[a-f0-9]{32}\|[a-f0-9]{32}$/";
     public static $PI_GENERIC = "/^[0-9]{11}$/";
 

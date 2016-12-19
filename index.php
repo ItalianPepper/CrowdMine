@@ -161,7 +161,7 @@ try {
             case 'banUtente':
                 include_once CONTROL_DIR . "BanUtente.php";
                 break;
-            case 'visualizzaProfiloPersonale':
+            case 'ProfiloPersonale':
                 include_once CONTROL_DIR . "VisualizzaProfiloPersonaleControl.php";
                 break;
             case 'cercaAnnunci':

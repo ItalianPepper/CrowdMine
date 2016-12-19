@@ -55,9 +55,12 @@ class UtenteManager extends Manager{
      * @param $user
      */
     private function insertUtente($user){
-        $INSERT_UTENTE = "INSERT INTO 'utente' (nome, cognome, descrizione, telefono, dataNascita, citta, email, password, stato, ruolo, immagineProfilo) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-        $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(),$user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
-        self::getDB()->query($query);
+        $INSERT_UTENTE = "INSERT INTO `utente`( `nome`, `cognome`, `descrizione`, `telefono`, `data_nascita`, `citta`, `email`, `password`, `ruolo`, `stato`, `immagine_profilo`, `partita_iva`) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+        $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(),$user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getRuolo(),$user->getStato(), $user->getImmagineProfilo(), $user->getPartitaIva());
+        echo $query;
+        if (!Manager::getDB()->query($query)) {
+            throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
     }
 
     /**
