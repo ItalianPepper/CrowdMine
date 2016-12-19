@@ -931,7 +931,7 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-tag" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2">
+                                                                        <select class="form-control select2" name="idMacro">
                                                                             <?php
                                                                             foreach ($macroList as $macro) {
                                                                                 if(array_search($macro, $macroListUtente)!==FALSE) { ?>
@@ -944,11 +944,11 @@ if (isset($_SESSION["microUtente"])){
                                                                     <div class="form-footer">
                                                                         <div class="form-group" id="creaMicro">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <input type="text" class="form-control" placeholder="Crea una nuova Microcategoria">
+                                                                                <input type="text" class="form-control" placeholder="Crea una nuova Microcategoria" name="newMicro">
 
                                                                                 <button type="submit" class="btn btn-success pull-right">Salva</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input').toggleWith('#add-micro')">Cancella</button>
                                                                                 <button type="button" class="btn btn-primary pull-right" onclick="$('#micro-input').toggleWith('#micro-input1')" >Seleziona</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input').toggleWith('#add-micro')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -987,8 +987,8 @@ if (isset($_SESSION["microUtente"])){
                                                                         <div class="form-group" id="selectMicro">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
                                                                                 <button type="submit" class="btn btn-success pull-right">Salva</button>
-                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input1').toggleWith('#add-micro')">Cancella</button>
                                                                                 <button type="button" class="btn btn-primary pull-right" onclick="$('#micro-input1').toggleWith('#micro-input')">Crea</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#micro-input1').toggleWith('#add-micro')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
