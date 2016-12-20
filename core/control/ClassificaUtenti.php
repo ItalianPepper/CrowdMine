@@ -10,6 +10,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["option"])) {
 
+        if ($_POST["option"] == "selectMicro2") {
+            $result = stubMicroCategorie2();
+
+            header("Content-Type: application/json");
+            echo json_encode($result);
+        }
+
+        if ($_POST["option"] == "selectMicro3") {
+            $result = stubMicroCategorie3();
+
+            header("Content-Type: application/json");
+            echo json_encode($result);
+        }
+
         if ($_POST["option"] == "selectMacro") {
             //$macroCategoriaManager = new AnnuncioManager();
 
@@ -19,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             header("Content-Type: application/json");
             echo json_encode($result);
+
         } else if ($_POST["option"] == "selectMicro") {
             //$macroCategoriaManager = new AnnuncioManager();
 
@@ -30,13 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($result);
         }
 
-    }else if(isset($_POST["selectMacro"]) && isset($_POST["selectMicro"])){
-        if($_POST["selectMicro"] == 0){
+    } else if (isset($_POST["selectMacro"]) && isset($_POST["selectMicro"])) {
+        if ($_POST["selectMicro"] == 0) {
             $result = arrayUtentiMacro();
 
             header("Content-Type: application/json");
             echo json_encode($result);
-        }else{
+        } else {
             $result = arrayUtentiMicro();
 
             header("Content-Type: application/json");
@@ -47,24 +62,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 
-function arrayUtentiMacro(){
-    $arrayUtentiMacro = array("Giorgio", "Pasquale", "Giggino");
+function arrayUtentiMacro()
+{
+    $arrayUtentiMacro = array("Nome" => "Giorgio", "Pasquale", "Giggino");
     return $arrayUtentiMacro;
 }
 
-function arrayUtentiMicro(){
-    $arrayUtentiMicro = array("Rino", "Gino", "dollaro");
+function arrayUtentiMicro()
+{
+    $arrayUtentiMicro = array("Lorenzo", "Leonardo", "Massimo");
     return $arrayUtentiMicro;
 }
 
 function stubMacroCategorie()
 {
-    $arrayTest = array("Informatica", "Ristorazione", "Bancario" );
+    $arrayTest = array("Informatica", "Ristorazione", "Bancario");
     return $arrayTest;
 }
 
 function stubMicroCategorie()
 {
     $microsName = array("PHP", "C", "JAVA", "C++");
+    return $microsName;
+}
+
+function stubMicroCategorie2()
+{
+    $microsName = array("Cameriere", "Caposala", "Cuoco");
+    return $microsName;
+}
+
+function stubMicroCategorie3()
+{
+    $microsName = array("Direttore", "Dipendente");
     return $microsName;
 }
