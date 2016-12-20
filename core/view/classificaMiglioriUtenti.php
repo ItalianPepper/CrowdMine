@@ -296,7 +296,7 @@
                             </label>
                         </div>
                         <div class="radio radio">
-                            <input type="radio" name="radio2" id="radioMicro" value="option2">
+                            <input type="radio" name="radio2" id="radioMicro" value="option2" checked>
                             <label for="radioMicro">
                                 Micro Categoria
                             </label>
@@ -347,6 +347,17 @@
 
 
 <script>
+    $("#radioMacro").click(function () {
+        $("#selectMicro").attr("disabled", true);
+    });
+
+    $("#radioMicro").click(function () {
+        $("#selectMicro").removeAttr("disabled");
+    });
+</script>
+
+
+<script>
     $(document).ready(function () {
         $.ajax({
             type: "POST",
@@ -393,12 +404,58 @@
                 var arrayMicroElements = $.map(response, function (el) {
                     return el;
                 });
-                appendMicroElements(arrayMicroElements);
+
+                var macro = $("#selectMacro").val();
+                var micro = $("#selectMicro").val();
+
+                if (macro == "Informatica") {
+                    appendMicroElements(arrayMicroElements);
+                }
             }
         });
     });
 
+    $("#selectMacro").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMicro2"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
 
+                var macro = $("#selectMacro").val();
+                var micro = $("#selectMicro").val();
+
+                if (macro == "Ristorazione") {
+                    appendMicroElements(arrayMicroElements);
+                }
+            }
+        });
+    });
+
+    $("#selectMacro").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMicro3"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+
+                var macro = $("#selectMacro").val();
+                var micro = $("#selectMicro").val();
+
+                if (macro == "Bancario") {
+                    appendMicroElements(arrayMicroElements);
+                }
+            }
+        });
+    });
     function appendMicroElements(arrayMicroElements) {
         $("#selectMicro").empty();
         $.each(arrayMicroElements, function (i, item) {
@@ -415,14 +472,14 @@
         var micro = $("#selectMicro").val();
         var dataRicerca = {};
 
-        if(micro != null){
+        if (micro != null) {
 
             dataRicerca = {
-                selectMacro:macro, selectMicro:micro
+                selectMacro: macro, selectMicro: micro
             }
-        }else {
+        } else {
             dataRicerca = {
-                selectMacro:macro, selectMicro:0
+                selectMacro: macro, selectMicro: 0
             }
         }
 
@@ -445,27 +502,11 @@
         $.each(arrayUtenti, function (i, el) {
             $("#tabellaRisultati").find("tbody")
                 .append($("<tr>")
-                    .append($("<th></th>")
-                        .attr("scope", "row")
-                        .text(i + 1))
-                    .append($("<td>")
-                        .text(el)
-                    )
+                    .append($("<th></th>").attr("scope", "row").text(i + 1))
+                    .append($("<td>").text(el))
                 );
         });
     }
-</script>
-
-
-<script>
-    $("#radioMacro").click(function () {
-        $("#selectMicro").attr("disabled", true);
-    });
-
-    $("#radioMicro").click(function () {
-        $("#selectMicro").removeAttr("disabled");
-    });
-
 </script>
 
 </body>
