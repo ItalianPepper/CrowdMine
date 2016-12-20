@@ -84,6 +84,9 @@ try {
             case 'statisticheAvanzateAdmin':
                 include_once VIEW_DIR ."statisticheAvanzateAdmin.php";
                 break;
+            case '404':
+                include_once VIEW_DIR ."404.html";
+                break;
             case 'paginaStatistiche':
                 include_once VIEW_DIR . "paginaStatistiche.php";
                 break;

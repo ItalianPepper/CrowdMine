@@ -291,7 +291,7 @@
                 <div class="card">
                     <div class="card-header">Statistiche Macro Categorie</div>
                     <div class="card-body">
-                        <div class="container-canvas"> <!--classe da definire-->
+                        <div>
                             <canvas id="statisticheMacro"></canvas>
                         </div>
                     </div>
