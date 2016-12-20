@@ -254,6 +254,15 @@ try {
             case 'visualizzaAnnunciConflitto';
                 include_once CONTROL_DIR . "annunciConflitto.php";
                 break;
+            case 'annunciReclamati';
+                include_once CONTROL_DIR . "annunciReclamati.php";
+                break;
+            case 'annunciModificati';
+                include_once CONTROL_DIR . "annunciModificati.php";
+                break;
+            case 'annunciRevisione';
+                include_once CONTROL_DIR . "annunciRevisione.php";
+                break;
             case 'annuncio';
                 include_once VIEW_DIR . "annuncioStileNuovo.php";
                 break;

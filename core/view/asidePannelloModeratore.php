@@ -47,7 +47,9 @@
                 <div class="dropdown-menu">
                     <ul>
                         <li><a href="visualizzaUtentiBannati">Lista Utenti Bannati</a></li>
-                        <li><a href="annunciConflitto">Annunci in conflitto</a></li>
+                        <li><a href="annunciReclamati">Annunci reclamati</a></li>
+                        <li><a href="annunciRevisione">Annunci in revisione</a></li>
+                        <li><a href="annunciModificati">Annunci modificati</a></li>
                         <li><a href="visualizzaIndexStatistiche">Statistiche</a></li>
                     </ul>
                 </div>
