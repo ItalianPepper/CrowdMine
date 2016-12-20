@@ -814,7 +814,7 @@
 						<!--Statistiche-->
 						<div role="tabpanel" class="tab-pane" id="tab4">
 							<div class="row">
-								<div class="col-md-3 col-sm-12">
+								<div class="col-lg3 col-md-3 col-xs-12 col-sm-12">
 									<div class="section">
 										<div class="section-title">
 											Your user name
@@ -824,18 +824,16 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+								<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 									<div class="section">
 										<div class="section-title">Statistica Feedback Totale</div>
 										<div class="section-body">
-											<div class="ct-chart-pie ct-perfect-fourth"></div>
-											<div class="col-sm-4">
-												<ul class="chart-label">
-													<li class="ct-label ct-series-a">Feedback positivi</li>
-													<li class="ct-label ct-series-b">Feedback negativi</li>
-												</ul>
-											</div>
-											<div class="col-md-6">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                              <div>
+                                                <canvas id="statisticheUtente"></canvas>
+                                              </div>
+                                            </div>
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												<table class="table">
 													<thead>
 													<tr>
@@ -888,6 +886,7 @@
 
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+<script src="<?php echo STYLE_DIR; ?>assets\js\Chart.min.js"></script>
 <script>
     $(document).ready(function () {
         $(".rating-content").click(function () {
@@ -917,6 +916,45 @@
             }
         })
     });
+
+//testing
+    $("#tab4").ready(function(){
+        drawGraphicUser()
+    });
+
+
+    function drawGraphicUser() {
+
+        var ctxUtente = document.getElementById("statisticheUtente").getContext("2d");
+
+        var UtenteData = {
+            labels:["Macro1", "Macro2", "Macro3", "Macro4", "Macro5"],
+            datasets: [
+                {
+                    label:"",
+                    data:[20,30,50,70,60],
+                    backgroundColor: ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"],
+                    borderColor: ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        var UtenteChart = new Chart.PolarArea(ctxUtente,{
+            data: UtenteData,
+            options: {
+                pointHitRadius: 3,
+                responsive: true,
+                tooltipEvents: [],
+                showTooltips: true,
+                onAnimationComplete: function () {
+                    this.showTooltip(this.segments, true);
+                },
+                tooltipTemplate: "<%= label %>  -  <%= value %>"
+            }
+
+        });
+    }
 </script>
 </body>
 </html>
