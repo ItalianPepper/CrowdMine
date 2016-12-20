@@ -6,6 +6,20 @@
  * Date: 27/11/16
  * Time: 14:21
  */
+
+
+class RichiestaInviataCandidatura{
+    const INVIATA = "inviata";
+    const NON_INVIATA = "non_inviata";
+    const NON_VALUTATA  = "non_valutata";
+}
+
+class RichiestaAccettataCandidatura{
+    const NON_VALUTATO = "non_valutato";
+    const ACCETTATO = "accettato";
+    const RIFIUTATO  = "rifiutato";
+}
+
 class Candidatura
 {
     private $id;

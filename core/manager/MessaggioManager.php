@@ -25,13 +25,8 @@ class MessaggioManager extends Manager
      * @param Double $idDestinatario
      * @param Messaggio $messaggio
      */
-    public function sendMessaggio($messaggio){
-        $id = $messaggio->getId();
-        $corpo = $messaggio->getCorpo();
-        $letto = $messaggio->getLetto();
-        $data = $messaggio->getData();
-        $idMittente = $messaggio->getIdUtenteMittente();
-        $idDestinatario = $messaggio->getIdUtenteDestinatario();
+    public function sendMessaggio($id, $corpo, $letto, $data, $idMittente, $idDestinatario){
+        $messaggio = new Messaggio($id, $corpo, $letto, $data, $idMittente, $idDestinatario);
         $INSERT_MESSAGGIO = "INSERT INTO `Messaggio` (`id`, `corpo`, `data`, `letto`, `id_utente_mittente`, `id_utente_destinatario`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
         $query = sprintf($INSERT_MESSAGGIO, $id, $corpo, $letto, $data, $idMittente, $idDestinatario);
         if (!Manager::getDB()->query($query)) {
@@ -50,8 +45,7 @@ class MessaggioManager extends Manager
      */
     public function loadMessaggi($idUtente){
         $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = $idUtente;";
-        $query = sprintf($LOAD_MESSAGGIO);
-        $result = Manager::getDB()->query($query);
+        $result = Manager::getDB()->query($LOAD_MESSAGGIO);
         $messaggi = array();
         if ($result) {
             while ($obj = $result->fetch_assoc()) {
@@ -70,12 +64,11 @@ class MessaggioManager extends Manager
      */
     public function loadMessaggio($idMittente, $idDestinatario){
         $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = $idMittente AND `id_utente_destinatario` = $idDestinatario ORDER BY 'data' ASC;";
-        $query = sprintf($LOAD_MESSAGGIO);
-        $result = Manager::getDB()->query($query);
+        $result = Manager::getDB()->query($LOAD_MESSAGGIO);
         $messaggi = array();
         if ($result) {
             while ($obj = $result->fetch_assoc()) {
-                $messaggio = new Messaggio($obj['id'], $obj['id_utente_mittente	'], $obj['id_utente_destinatario'], $obj['corpo'], $obj['data'], $obj['letto']);
+                $messaggio = new Messaggio($obj['id'], $obj['id_utente_mittente'], $obj['id_utente_destinatario'], $obj['corpo'], $obj['data'], $obj['letto']);
                 $messaggi[] = $messaggio;
             }
         }
@@ -87,14 +80,27 @@ class MessaggioManager extends Manager
      * @param $idMittente
      * @param $idDestinatario
      */
-    public function sendRichiestaCollaborazione($idMittente, $idDestinatario){
-
+    public function sendRichiestaCollaborazione($id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata, $richiesta_inviata, $richiesta_accettata){
+        $INSERT_COLLABORAZIONE = "INSERT INTO `candidatura` (`id`, `id_utente`, `id_annuncio`, `corpo`, `data_risposta`, `data_inviata`, `richiesta_inviata`, , `richiesta_accettata`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+        $query = sprintf($INSERT_COLLABORAZIONE, $id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata, $richiesta_inviata, $richiesta_accettata);
+        if (!Manager::getDB()->query($query)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
     }
 
     /**
      * @param $idAnnuncio
      */
     public function agreeCollaborazione($idAnnuncio){
+        $COLLABORAZIONE = "UPDATE `candidatura` SET richiesta_accettata = `accettato` WHERE `id_annuncio` = $idAnnuncio;";
+        if (!Manager::getDB()->query($COLLABORAZIONE)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }    }
 
-    }
 }

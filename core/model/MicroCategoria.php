@@ -18,7 +18,7 @@ class MicroCategoria
      * @param $nome
      * @param $idMacrocategoria
      */
-    public function __construct($id, $idMacrocategoria, $nome)
+    public function __construct($id = null, $idMacrocategoria, $nome)
     {
         $this->id = $id;
         $this->nome = $nome;
