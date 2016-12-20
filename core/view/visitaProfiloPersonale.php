@@ -543,24 +543,28 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-lock" aria-hidden="true"></i>
 																			</span>
-                                                                        <input name="PasswordAttuale" type="text" class="form-control" placeholder="Password attuale" aria-describedby="basic-addon1" value="">
+                                                                        <input required id="password-attuale" name="PasswordAttuale" type="text" class="form-control" placeholder="Password attuale" aria-describedby="basic-addon1" value="">
                                                                     </div>
                                                                     <div class="input-group">
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-lock" aria-hidden="true"></i>
 																			</span>
-                                                                        <input name="NuovaPassword" type="text" class="form-control" placeholder="Nuova Password" aria-describedby="basic-addon1" value="">
+                                                                        <input required id="nuova-password" name="NuovaPassword" type="text" class="form-control" placeholder="Nuova Password" aria-describedby="basic-addon1" value="">
                                                                     </div>
                                                                     <div class="input-group">
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-lock" aria-hidden="true"></i>
 																			</span>
-                                                                        <input name="ConfermaNuovaPassword" type="text" class="form-control" placeholder="Conferma nuova Password" aria-describedby="basic-addon1" value="">
+                                                                        <input required id="conferma-nuova-password" name="ConfermaNuovaPassword" type="text" class="form-control" placeholder="Conferma nuova Password" aria-describedby="basic-addon1" value="">
+                                                                    </div>
+                                                                    <div class="alert alert-danger  alert-dismissible"
+                                                                         role="alert"
+                                                                         id="password-errors" style="display: none">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right" id="save-pass-button">Salva</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1264,6 +1268,7 @@ if (isset($_SESSION["microUtente"])){
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\passwordCheckUtils.js"></script>
 
 
 <script>

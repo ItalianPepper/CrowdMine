@@ -28,6 +28,6 @@ class Patterns {
     and at least one letter -> (?=.*[A-Za-z])
     and it has to be a number, a letter or one of the following: !@#$% -> [0-9A-Za-z!@#$%]
     and there have to be at least 8 characters -> {8,}*/
-    public static $PASSWORD = '/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,}$/';
+    public static $PASSWORD = '/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[A-Za-z0-9!@#$%]{8,}$/';
 
 }
