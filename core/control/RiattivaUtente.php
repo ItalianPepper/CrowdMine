@@ -19,10 +19,9 @@ if (isset($_SESSION['user'])) {
     $idUtenteEsterno = $_POST['idUser'];
     $userEsterno = $manager->findUtenteById($idUtenteEsterno);
 
-    if (isset($userEsterno) && ($userEsterno->getId()==null) ) {
+    if (isset($userEsterno) && ($userEsterno->getId()!=null) ) {
         if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
             $userEsterno->setStato("attivo");
-            $_SESSION['utenteEsterno'] = serialize($userEsterno);
             $manager->updateUtente($userEsterno);
 
             if($urlDellaChiamata == "ProfiloUtente"){

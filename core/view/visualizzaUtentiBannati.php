@@ -241,42 +241,42 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="overlined-row">
-								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
-									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="pull-left">
-													<div class="media-heading">
-															<h4 class="title">Severino Ammirati</h4>
-															<h5 class="timeing"> Bannato il 12/10/2012</h5>
-															<h5> Autore: <a>Fabiano Pecorelli</a></h5>
-														</div>
-												</div>
-												
-												<div class="pull-right" style="margin-top: 4px">
-													<button type="button" class="btn btn-warning btn-xs" disabled>
-														<i class="fa fa-bullhorn"></i> Ricorso
-													</button>
-												</div>
-												
-												<div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
-													<div class="media-action">
-														<button class="btn btn-link"><i class="fa fa-check"></i> Riattiva</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="overlined-row">
+                                <div class="media social-post">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                        </a>
+                                    </div>
+                                    <div class="section">
+                                        <div class="section-body">
+                                            <div class="media-body">
+                                                <div class="pull-left">
+                                                    <div class="media-heading">
+                                                        <h4 class="title">Severino Ammirati</h4>
+                                                        <h5 class="timeing"> Bannato il 12/10/2012</h5>
+                                                        <h5> Autore: <a>Fabiano Pecorelli</a></h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="pull-right" style="margin-top: 4px">
+                                                    <button type="button" class="btn btn-warning btn-xs" disabled>
+                                                        <i class="fa fa-bullhorn"></i> Ricorso
+                                                    </button>
+                                                </div>
+
+                                                <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
+                                                    <div class="media-action">
+                                                        <button class="btn btn-link"><i class="fa fa-check"></i> Riattiva</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>

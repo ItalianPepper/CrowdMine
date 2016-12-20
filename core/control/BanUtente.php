@@ -20,11 +20,10 @@ if (isset($_SESSION['user'])) {
     $utenteEsterno = $manager->findUtenteById($idUtenteEsterno);
 
     //controllo se esiste l'utente
-    if (isset($utenteEsterno) && ($utenteEsterno->getId()==null) ) {
+    if (isset($utenteEsterno) && ($utenteEsterno->getId()!=null) ) {
         if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
             $utenteEsterno->setStato("bannato");
             $manager->updateUtente($userEsterno);
-            $_SESSION['utenteEsterno'] = serialize($utenteEsterno);
             if($urlDellaChiamata == "ProfiloUtente"){
                 //permette di essere reindirizzato dalla pagina da cui viene chiamato il control
                 header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata."?user=".$userEsterno->getId());
