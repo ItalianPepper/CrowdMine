@@ -118,6 +118,13 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     if (isset($_POST['immagine'])) {
         $userImage = $_POST["immagine"];
     }
+    if ($_POST['accetto']) {
+    } else {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Bisogna autorizzare il trattamento dei dati per potersi registrare!";
+        header("Location:" . DOMINIO_SITO . "/auth");
+        throw new IllegalArgumentException("Bisogna autorizzare il trattamento dei dati per potersi registrare!");
+    }
     
     if (empty($userName) || !preg_match(Patterns::$NAME_GENERIC, $userName)) {
         $_SESSION['toast-type'] = "error";

@@ -34,11 +34,11 @@
                     <form class="nav navbar-nav navbar-right" method="post" action="effettuaLogin" onsubmit="return Modulo()" id="modulo">
                         <div class="col-md-12 col-xs-12" style=" padding-top: 3%">
                             <div class="form-group col-md-5 col-xs-5">
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email">
                             </div>
                             <div class="form-group col-md-5 col-xs-5">
 
-                                <input style="margin-bottom: 0px;" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                <input style="margin-bottom: 0px;" type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Password">
                                 <a href="#" class="text-center ">Hai dimenticato la password?</a>
                             </div>
                             <button type="submit" class="btn btn-success col-md-2 col-xs-2">Sign in</button>
