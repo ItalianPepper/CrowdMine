@@ -158,6 +158,9 @@ try {
             case 'tabUtenti':
                 include_once CONTROL_DIR . "TabUtenti.php";
                 break;
+            case 'statisticheUtente':
+                include_once CONTROL_DIR . "TabStatisticheUtente.php";
+                break;
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;

@@ -829,7 +829,7 @@
 										<div class="section-title">Statistica Feedback Totale</div>
 										<div class="section-body">
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                              <div>
+                                              <div style="width:600px; height:600px;">
                                                 <canvas id="statisticheUtente"></canvas>
                                               </div>
                                             </div>
@@ -917,30 +917,41 @@
         })
     });
 
-//testing
-    $("#tab4").ready(function(){
-        drawGraphicUser()
+
+    $("#tab4").ready(function () {
+        $.ajax({
+            url: "statisticheUtente",
+            type: "POST",
+            dataType: "json",
+            data: {option: "graphicsUser"},
+            success: function (response) {
+                var arrayFeedback = $.map(response, function (el) {
+                    return el;
+                });
+                drawGraphicUser(arrayFeedback);
+            }
+        });
     });
 
 
-    function drawGraphicUser() {
+    function drawGraphicUser(arrayFeedback) {
 
         var ctxUtente = document.getElementById("statisticheUtente").getContext("2d");
 
         var UtenteData = {
-            labels:["Macro1", "Macro2", "Macro3", "Macro4", "Macro5"],
+            labels:["Feedback Positivi","Feedback Negativi"],
             datasets: [
                 {
                     label:"",
-                    data:[20,30,50,70,60],
-                    backgroundColor: ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"],
-                    borderColor: ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"],
+                    data:arrayFeedback,
+                    backgroundColor: ["#FF6384", "#4BC0C0"],
+                    borderColor: ["#FF6384", "#4BC0C0"],
                     borderWidth: 1
                 }
             ]
         };
 
-        var UtenteChart = new Chart.PolarArea(ctxUtente,{
+        var UtenteChart = new Chart.Doughnut(ctxUtente,{
             data: UtenteData,
             options: {
                 pointHitRadius: 3,
