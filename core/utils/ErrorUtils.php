@@ -11,6 +11,7 @@ class ErrorUtils {
     public static $INSERIMENTO_FALLITO = "Impossibile inserire nel database";
     public static $AGGIORNAMENTO_FALLITO = "Impossibile aggiornare il database";
     public static $CANCELLAZIONE_FALLITA = "Impossibile cancellare dal database";
+    public static $LOGIN_FALLITO = "Email o password non trovata";
     public static $CONTATTO_NON_TROVATO = "Nessun contatto trovato";
     public static $ELABORATO_NON_TROVATO = "Nessun elaborato trovato";
     public static $RISPOSTA_NON_TROVATA = "Nessuna risposta trovata";

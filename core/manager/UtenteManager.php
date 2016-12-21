@@ -46,7 +46,7 @@ class UtenteManager extends Manager{
      */
     private function createUserFromRow($row){
         if($row==null) return null;
-        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['descrizione'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagine_profilo']);
+        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['descrizione'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['ruolo'], $row['stato'], $row['immagine_profilo']);
     }
 
     /**
@@ -119,9 +119,14 @@ class UtenteManager extends Manager{
         $connection = self::getDB();
         $GET_UTENTE_BY_LOGIN = "SELECT * FROM utente WHERE email='%s' AND password='%s';";
         $query = sprintf($GET_UTENTE_BY_LOGIN, $email, $password);
-        $result = $connection->query($query);
+        $result=Manager::getDB()->query($query);
+
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$LOGIN_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
         $row = $result->fetch_assoc();
-        if (!$row || mysqli_num_rows($row) <= 0) {
+        if (!$row || mysqli_num_rows($result) <= 0) {
             return false;
         } else {
             return $user = $this->createUserFromRow($row);

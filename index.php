@@ -117,7 +117,7 @@ try {
                 include_once VIEW_DIR . "profilo.php";
                 break;
             case 'auth':
-                StringUtils::checkPermission("not_logged");
+                StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
                 include_once VIEW_DIR . "login-registrazione.php";
                 break;
             case 'register':
@@ -133,11 +133,11 @@ try {
                 include_once CONTROL_DIR . "InserisciEsperienza.php";
                 break;
             case 'effettuaLogin':
-                StringUtils::checkPermission("not_logged");
-		include_once CONTROL_DIR . "LoginCM.php";
+                StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
+		        include_once CONTROL_DIR . "LoginCM.php";
                 break;
             case 'logout':
-                StringUtils::checkPermission("all");
+                StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "Logout.php";
                 break;
             case 'livesearch':
@@ -207,8 +207,7 @@ try {
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
                 break;
             case 'IndexMacrocategorie':
-                include_once MODEL_DIR . "Utente.php";
-                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
+                StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
                 break;
             case 'visualizzaIndexMicrocategorie':
