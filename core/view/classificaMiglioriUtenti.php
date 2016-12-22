@@ -332,6 +332,22 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <?php
+                            $arrayUtenti = array(
+                                array("Nome" => "Giuseppe", "FeedBack" => "84", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+                                array("Nome" => "Giorgio", "FeedBack" => "48", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+                                array("Nome" => "Gigi", "FeedBack" => "8", "MicroCategoria" => "JAVA", "MacroCategoria" => "Informatica"),
+                            );
+                            ?>
+
+                            <?php foreach ($arrayUtenti as $row): ?>
+                                <tr>
+                                    <td><? echo $row['Nome']; ?></td>
+                                    <td><? echo $row['FeedBack']; ?></td>
+                                    <td><? echo $row['MicroCategoria']; ?></td>
+                                    <td><? echo $row['MacroCategoria']; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -464,49 +480,38 @@
     }
 </script>
 
-//*************** cancella e ricrea tabella
 <script>
+
     $("#mostraRisultati").click(function () {
-
-        var macro = $("#selectMacro").val();
-        var micro = $("#selectMicro").val();
-        var dataRicerca = {};
-
-        if (micro != null) {
-
-            dataRicerca = {
-                selectMacro: macro, selectMicro: micro
-            }
-        } else {
-            dataRicerca = {
-                selectMacro: macro, selectMicro: 0
-            }
-        }
-
         $.ajax({
             type: "POST",
             url: "classificaUtenti",
             dataType: "json",
-            data: dataRicerca,
+            data: {option: "selectMicro"},
             success: function (response) {
-                var arrayUtenti = $.map(response, function (el) {
+                var arrayMicroElements = $.map(response, function (el) {
                     return el;
                 });
-                updatePage(arrayUtenti);
+                updatePage(arrayMicroElements);
             }
         });
-    });
 
-    function updatePage(arrayUtenti) {
-        $("#tabellaRisultati tbody tr").remove();
-        $.each(arrayUtenti, function (i, el) {
-            $("#tabellaRisultati").find("tbody")
-                .append($("<tr>")
-                    .append($("<th></th>").attr("scope", "row").text(i + 1))
-                    .append($("<td>").text(el))
-                );
-        });
-    }
+        function updatePage(arrayMicroElements) {
+            $("#tabellaRisultati tbody tr").remove();
+            var el = document.getElementById('selectMicro').value;
+            <?php foreach ($arrayUtenti as $row):?>
+            if (el == '<?php echo $row['MicroCategoria']?>') {
+                $("#tabellaRisultati").find("tbody")
+                    .append($("<tr>")
+                        .append($("<td></td>").text("<?php echo $row['Nome']?>"))
+                        .append($("<td></td>").text("<?php echo $row['FeedBack']?>"))
+                        .append($("<td></td>").text("<?php echo $row['MicroCategoria']?>"))
+                        .append($("<td></td>").text("<?php echo $row['MacroCategoria']?>"))
+                        .append($("</tr>"))
+                    )
+            }
+            <?php endforeach; ?>
+        }
 </script>
 
 </body>

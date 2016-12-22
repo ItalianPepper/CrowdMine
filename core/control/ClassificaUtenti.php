@@ -45,33 +45,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($result);
         }
 
-    } else if (isset($_POST["selectMacro"]) && isset($_POST["selectMicro"])) {
-        if ($_POST["selectMicro"] == 0) {
-            $result = arrayUtentiMacro();
-
-            header("Content-Type: application/json");
-            echo json_encode($result);
-        } else {
-            $result = arrayUtentiMicro();
-
-            header("Content-Type: application/json");
-            echo json_encode($result);
-
-        }
     }
 
 }
 
-function arrayUtentiMacro()
-{
-    $arrayUtentiMacro = array("Nome" => "Giorgio", "Pasquale", "Giggino");
-    return $arrayUtentiMacro;
-}
-
-function arrayUtentiMicro()
-{
-    $arrayUtentiMicro = array("Lorenzo", "Leonardo", "Massimo");
-    return $arrayUtentiMicro;
+function arrayUtenti(){
+    $arrayUtentiFunc = array ( array("Nome" => "Giuseppe", "FeedBack" => "84", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+        array("Nome" => "Giorgio", "FeedBack" => "48", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
+        array("Nome" => "Gigi", "FeedBack" => "8", "MicroCategoria" => "JAVA", "MacroCategoria" => "Informatica"),
+    );
+    return $arrayUtentiFunc;
 }
 
 function stubMacroCategorie()
@@ -97,3 +80,47 @@ function stubMicroCategorie3()
     $microsName = array("Direttore", "Dipendente");
     return $microsName;
 }
+
+/*
+     $("#mostraRisultati").click(function () {
+
+     var macro = $("#selectMacro").val();
+     var micro = $("#selectMicro").val();
+     var dataRicerca = {};
+
+     if (micro != null) {
+
+     dataRicerca = {
+     selectMacro: macro, selectMicro: micro
+     }
+     } else {
+     dataRicerca = {
+     selectMacro: macro, selectMicro: 0
+     }
+     }
+
+     $.ajax({
+     type: "POST",
+     url: "classificaUtenti",
+     dataType: "json",
+     data: dataRicerca,
+     success: function (response) {
+     var arrayUtenti = $.map(response, function (el) {
+     return el;
+     });
+     updatePage(arrayUtenti);
+     }
+     });
+     });
+
+
+     function updatePage(arrayUtenti) {
+     $("#tabellaRisultati tbody tr").remove();
+     $.each(arrayUtenti, function (i, el) {
+     $("#tabellaRisultati").find("tbody")
+     .append($("<tr>")
+     .append($("<th></th>").attr("scope", "row").text(i + 1))
+     .append($("<td>").text(el))
+     );
+     });
+     }*/
