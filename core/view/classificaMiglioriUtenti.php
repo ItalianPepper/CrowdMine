@@ -337,9 +337,9 @@
                                 array("Nome" => "Giuseppe", "FeedBack" => "84", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
                                 array("Nome" => "Giorgio", "FeedBack" => "48", "MicroCategoria" => "PHP", "MacroCategoria" => "Informatica"),
                                 array("Nome" => "Gigi", "FeedBack" => "8", "MicroCategoria" => "JAVA", "MacroCategoria" => "Informatica"),
+                                array("Nome" => "Gigione", "FeedBack" => "11", "MicroCategoria" => "Cameriere", "MacroCategoria" => "Ristorazione"),
                             );
                             ?>
-
                             <?php foreach ($arrayUtenti as $row): ?>
                                 <tr>
                                     <td><? echo $row['Nome']; ?></td>
@@ -374,6 +374,8 @@
 
 
 <script>
+    
+
     $(document).ready(function () {
         $.ajax({
             type: "POST",
@@ -495,7 +497,7 @@
                 updatePage(arrayMicroElements);
             }
         });
-
+    })
         function updatePage(arrayMicroElements) {
             $("#tabellaRisultati tbody tr").remove();
             var el = document.getElementById('selectMicro').value;
@@ -512,6 +514,8 @@
             }
             <?php endforeach; ?>
         }
+
+
 </script>
 
 </body>

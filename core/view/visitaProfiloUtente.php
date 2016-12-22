@@ -846,27 +846,21 @@
 													<tbody>
 													<tr>
 														<th scope="row">1</th>
-														<td>Mark</td>
-														<td>Otto</td>
-														<td>@mdo</td>
+														<td>PHP</td>
+														<td>8</td>
+														<td>2</td>
 													</tr>
 													<tr>
 														<th scope="row">2</th>
-														<td>Jacob</td>
-														<td>Thornton</td>
-														<td>@fat</td>
+														<td>Cameriere</td>
+														<td>13</td>
+														<td>10</td>
 													</tr>
 													<tr>
 														<th scope="row">3</th>
-														<td>Larry</td>
-														<td>the Bird</td>
-														<td>@twitter</td>
-													</tr>
-													<tr>
-														<th scope="row">4</th>
-														<td>Larry</td>
-														<td>the Bird</td>
-														<td>@twitter</td>
+														<td>Dipendente</td>
+														<td>9</td>
+														<td>8</td>
 													</tr>
 													</tbody>
 												</table>
