@@ -133,8 +133,11 @@ try {
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "InserisciEsperienza.php";
                 break;
-            case 'listaNotificheControl':
+            case 'listaNotifiche':
                 include_once CONTROL_DIR . "listaNotifiche.php";
+                break;
+            case 'pannelloNotifiche':
+                include_once CONTROL_DIR . "pannelloNotifiche.php";
                 break;
             case 'effettuaLogin':
                 StringUtils::checkPermission("not_logged");
