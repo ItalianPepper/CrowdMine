@@ -1,4 +1,4 @@
-<?php
+ <?php
 include_once CONTROL_DIR  .  'UtentiSegnalatiControl.php';
 
 if (isset($_SESSION["utentiSegnalati"])){

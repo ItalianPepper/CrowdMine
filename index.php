@@ -194,6 +194,9 @@ try {
             case 'aggiungiMicroUtente':
                 include_once CONTROL_DIR . "AggiungiMicroUtenteControl.php";
                 break;
+            case 'ListaUtentiBannati':
+                include_once CONTROL_DIR . "ListaUtentiBannati.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
@@ -222,7 +225,7 @@ try {
             case 'visualizzaRicorsiAnnunci':
                 include_once VIEW_DIR . "visualizzaRicorsiAnnunci.php";
                 break;
-            case 'visualizzaUtentiBannati':
+            case 'utentiBannati':
                 include_once VIEW_DIR . "visualizzaUtentiBannati.php";
                 break;
             case 'visualizzaUtentiSegnalati':
