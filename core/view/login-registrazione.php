@@ -143,7 +143,7 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <div class="input-group">
-                                    <input type="email" name="email" class="form-control" placeholder="Email*">
+                                    <input type="email" name="email" class="form-control" placeholder="name@exemple.com*">
                                     <div class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
                                     </div>
