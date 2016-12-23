@@ -28,8 +28,8 @@ if (isset($_SESSION['user'])) {
                 //permette di essere reindirizzato dalla pagina da cui viene chiamato il control
                 header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata."?user=".$userEsterno->getId());
             }
-            elseif ($urlDellaChiamata == "visualizzaUtentiBannati"){
-                header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata);
+            elseif ($urlDellaChiamata == "utentiBannati"){
+                header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR."ListaUtentiBannati");
             }
             else {
                 //significa che è stato manomessa la form, modificato il campo url da dove chiama

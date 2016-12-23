@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-
-
 <head>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
@@ -262,7 +260,7 @@
                             </a>
                             <div class="dropdown-menu">
                                 <div class="profile-info">
-                                    <h4 class="username"><?php $user->getNome()." ".$user->getCognome() ?></h4>
+                                    <h4 class="username"><?php $visitedUser->getNome()." ".$visitedUser->getCognome() ?></h4>
                                 </div>
                                 <ul class="action">
                                     <li>
@@ -299,87 +297,93 @@
                     <div class="card-body app-heading">
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
-                            <div class="title"><span class="highlight"><?php echo $user->getNome()." ".$user->getCognome();?></span></div>
-                            <div class="description"><?php echo $user->getDescrizione();?></div>
+                            <div class="title"><span class="highlight"><?php echo $visitedUser->getNome()." ".$visitedUser->getCognome();?></span></div>
+                            <div class="description"><?php echo $visitedUser->getDescrizione();?></div>
                         </div>
 
                         <?php
-                        if ($user->getRuolo() == "amministratore") {
-                            if (($utenteEsterno->getRuolo() == "utente") && ($utenteEsterno->getStato()!="bannato")) {
-                                ?>
+                        if(isset($user)) {
+                            if ($user->getRuolo() == RuoloUtente::AMMINISTRATORE) {
+                                if (($visitedUser->getRuolo() == RuoloUtente::UTENTE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                    ?>
 
-                                <div>
-                                    <form action="" method="post">
-                                        <button type="button" class="btn btn-success btn btn-default btn-xs">Eleggi a
-                                            Moderatore
-                                        </button>
-                                    </form>
-                                </div>
-                                <?php
-                            } elseif (($utenteEsterno->getRuolo() == "moderatore") && ($utenteEsterno->getStato()!="bannato")) {
-                                ?>
-                                <div>
-                                    <form action="" method="post">
-                                        <button type="button" class="btn btn-danger btn btn-default btn-xs">Destituisci
-                                            Moderatore
-                                        </button>
-                                    </form>
-                                </div>
+                                    <div>
+                                        <form action="" method="post">
+                                            <button type="button" class="btn btn-success btn btn-default btn-xs">Eleggi
+                                                a
+                                                Moderatore
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <?php
+                                } elseif (($visitedUser->getRuolo() == RuoloUtente::MODERATORE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                    ?>
+                                    <div>
+                                        <form action="" method="post">
+                                            <button type="button" class="btn btn-danger btn btn-default btn-xs">
+                                                Destituisci
+                                                Moderatore
+                                            </button>
+                                        </form>
+                                    </div>
 
-                                <?php
+                                    <?php
+                                }
                             }
-                        }
-                        ?>
+                            ?>
 
-                        <?php
-                        if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
-                            if (($utenteEsterno->getStato() == "attivo")) {
-                                ?>
-                                <div>
-                                    <form action="banUtente" method="post">
-                                        <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId();?>">
-                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
-                                        <button type="submit" class="btn btn-danger btn btn-default btn-xs">Ban Utente
-                                        </button>
-                                    </form>
-                                </div>
-                                <?php
-                            } elseif ($utenteEsterno->getStato() == "bannato") {
+                            <?php
+                            if (($user->getRuolo() == RuoloUtente::MODERATORE) || ($user->getRuolo() == RuoloUtente::AMMINISTRATORE)) {
+                                if (($visitedUser->getStato() == StatoUtente::ATTIVO)) {
+                                    ?>
+                                    <div>
+                                        <form action="banUtente" method="post">
+                                            <input type="hidden" name="idUser" value="<?php $user->getId(); ?>">
+                                            <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
+                                            <button type="submit" class="btn btn-danger btn btn-default btn-xs">Ban
+                                                Utente
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <?php
+                                } elseif ($visitedUser->getStato() == StatoUtente::BANNATO) {
 
+                                    ?>
+                                    <div>
+                                        <form action="riattivaUtente" method="post">
+                                            <input type="hidden" name="idUser" value="<?php $visitedUser->getId(); ?>">
+                                            <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
+                                            <button type="submit" class="btn btn-success btn btn-default btn-xs">
+                                                Riattiva
+                                                Utente
+                                            </button>
+                                        </form>
+                                    </div>
+
+
+                                    <?php
+                                }
+                            }
+                            ?>
+
+
+                            <?php
+
+                            if ($visitedUser->getStato() == StatoUtente::ATTIVO) {
                                 ?>
+
                                 <div>
-                                    <form action="riattivaUtente" method="post">
-                                        <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId(); ?>">
-                                        <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
-                                        <button type="submit" class="btn btn-success btn btn-default btn-xs">Riattiva
+                                    <form action="segnalaUtente" method="post">
+                                        <input type="hidden" name="idUser" value="<?php $visitedUser->getId(); ?>">
+                                        <button type="submit" class="btn btn-warning btn btn-default btn-xs">Segnala
                                             Utente
                                         </button>
                                     </form>
                                 </div>
 
-
                                 <?php
+
                             }
-                        }
-                        ?>
-
-
-                        <?php
-
-                        if ($utenteEsterno->getStato() == "attivo") {
-                            ?>
-
-                            <div>
-                                <form action="segnalaUtente" method="post">
-                                    <input type="hidden" name="idUser" value="<?php $utenteEsterno->getId(); ?>">
-                                    <button type="submit" class="btn btn-warning btn btn-default btn-xs">Segnala
-                                        Utente
-                                    </button>
-                                </form>
-                            </div>
-
-                            <?php
-
                         }
                         ?>
 
@@ -425,7 +429,7 @@
                                                         Nome
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 simple-row">
-                                                        <?php echo $user->getNome()?>
+                                                        <?php echo $visitedUser->getNome()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -433,7 +437,7 @@
                                                         Cognome
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        <?php echo $user->getCognome()?>
+                                                        <?php echo $visitedUser->getCognome()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -441,7 +445,7 @@
                                                         Data di nascita
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        <?php echo $user->getDataNascita()?>
+                                                        <?php echo $visitedUser->getDataNascita()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -449,7 +453,7 @@
                                                         Localit&agrave;
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        <?php echo $user->getCitta()?>
+                                                        <?php echo $visitedUser->getCitta()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -457,7 +461,7 @@
                                                         Email
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        <?php echo $user->getEmail()?>
+                                                        <?php echo $visitedUser->getEmail()?>
                                                     </div>
                                                 </div>
 

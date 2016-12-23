@@ -10,7 +10,9 @@
 include_once MODEL_DIR . 'Utente.php';
 
 class Permissions extends RuoloUtente{
+    const BANNED_ONLY = "banned_only";
     const NOT_LOGGED_ONLY = "not_logged_only";
+    const ALL = "all";
 }
 
 class StringUtils {
@@ -31,38 +33,63 @@ class StringUtils {
      * @param string $redirect if user does not match role, redirect to this URL
      * @return mixed instance of Utente, if user is logged
      */
-    public static function checkPermission($level, $redirect=null) {
+    public static function checkPermission($level, $redirect=null)
+    {
 
         /*default value for redirect, authentication page*/
-        $redirect = ($redirect==null)? DOMINIO_SITO . "/auth":$redirect;
+        $redirect = ($redirect == null) ? DOMINIO_SITO . "/auth" : $redirect;
+        $bannedRedirect = DOMINIO_SITO . "/banned";
+
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
             //redirect to home page, user is already logged*/
             $redirect = DOMINIO_SITO . "/";
             $user = unserialize($_SESSION['user']);
+            $stato = $user->getStato();
+
+            /*if user is not enabled, redirect to ban page*/
+            if($stato != StatoUtente::ATTIVO && $stato != StatoUtente::REVISIONE){
+
+                if($level == Permissions::BANNED_ONLY ){
+                    return $user;
+                }else {
+                    header('Location: ' . $bannedRedirect);
+                    exit();
+                }
+            }
+
+            /*here user is not banned, so launch redirect if ban is required*/
+            if($level == Permissions::BANNED_ONLY ){
+                header('Location: ' . $redirect);
+                exit();
+            }
+
             /*matching between user role and required role*/
-            if ($user->getRuolo() == $level) {
+            if ($user->getRuolo() == $level || $level == Permissions::ALL) {
                 return $user;
             }
 
             /*extra permissions for each role*/
-            switch($user->getRuolo()){
+            switch ($user->getRuolo()) {
                 /*admin has access to all pages*/
                 case RuoloUtente::AMMINISTRATORE:
                     return $user;
                     break;
                 /*moderator can access to logged user's pages*/
                 case RuoloUtente::MODERATORE:
-                    if($level == Permissions::UTENTE)
+                    if ($level == Permissions::UTENTE)
                         return $user;
-                break;
+                    break;
             }
 
+            /*no matchings, access denied*/
             header('Location: ' . $redirect);
+            exit();
+
         }
 
-
-        if($level!=Permissions::NOT_LOGGED_ONLY)
+        /*here user is not logged*/
+        if($level!=Permissions::NOT_LOGGED_ONLY && level!=Permissions::ALL)
             header('Location: ' . $redirect);
 
     }
