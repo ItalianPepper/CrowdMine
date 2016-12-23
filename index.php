@@ -130,11 +130,11 @@ try {
                 include_once VIEW_DIR . "login-registrazione.php";
                 break;
             case 'register':
-                StringUtils::checkPermission("not_logged");
+                StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
                 include_once VIEW_DIR . "login-registrazione.php";
                 break;
             case 'effettuaRegistrazione':
-                StringUtils::checkPermission("not_logged");
+                StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
                 include_once CONTROL_DIR . "RegisterCM.php";
                 break;
             case 'inserimentoEsperienza':

@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     $userType = NULL;
     $userDescription = NULL;
     $userImage = NULL;
-    
+
     if (isset($_POST['nome'])) {
         $userName = $_POST["nome"];
 
@@ -196,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     }
      
     if(($utenteManager->checkEmail($userMail)) == false){
-       $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, StatoUtente::ATTIVO,RuoloUtente::UTENTE,$userDescription, null);
+       $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, StatoUtente::ATTIVO,RuoloUtente::UTENTE,$userDescription,null,$userPI);
        $utenteManager->register($userToReg);
        $user = $utenteManager-> login($userMail, $userPassword);    
     }
