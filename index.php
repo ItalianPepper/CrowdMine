@@ -58,6 +58,7 @@ try {
     include_once UTILS_DIR . "ErrorUtils.php";
     include_once UTILS_DIR . "StringUtils.php";
     include_once EXCEPTION_DIR . "ApplicationException.php";
+    include_once MODEL_DIR  .  'Utente.php';
 
     if (!defined("TESTING")) {
         switch (isset($_URL[0]) ? $_URL[0] : '') {
@@ -172,6 +173,7 @@ try {
                 include_once CONTROL_DIR . "inserisciFeedbackControl.php";
                 break;
             case 'modificaPassword':
+                $user = StringUtils::checkPermission(RuoloUtente::UTENTE);
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
                 break;
             case 'rimuoviMacroUtenteControl':

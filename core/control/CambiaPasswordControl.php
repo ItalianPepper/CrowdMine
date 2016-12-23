@@ -10,7 +10,7 @@ include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 include_once UTILS_DIR . 'ErrorUtils.php';
 include_once UTILS_DIR . 'Patterns.php';
-include_once EXCEPTION_DIR . "IllegalArgumentException.php";
+include_once EXCEPTION_DIR . 'IllegalArgumentException.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -64,14 +64,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         throw new IllegalArgumentException("Nuova password non corretta");
     }
 
-    header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-    /* $userManager = new UtenteManager();
+    $userManager = new UtenteManager();
     $res = $userManager->checkPassword($user->getId(), $currPass);
 
     if(res){
+        //$user = new Utente($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo)
         $user->setPassword($newPass);
         updateUtente($user);
-    }*/
+    }
+    else {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Password non corretta";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
+        throw new IllegalArgumentException("Password non corretta");
+    }
+
+    header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
 
 }
 
