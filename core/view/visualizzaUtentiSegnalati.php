@@ -35,7 +35,7 @@ if (isset($_SESSION["utentiSegnalati"])){
 <body>
 <div class="app app-default">
 
-    <?php include "asidePannelloModeratore.php" ?>
+    <?php include "asidePannelloBackend.php" ?>
 
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">

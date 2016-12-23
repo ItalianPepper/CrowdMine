@@ -71,6 +71,7 @@ try {
                 include_once VIEW_DIR . "visitaProfiloUtente.php";
                 break;
             case 'ProfiloUtente':
+                $user = StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "ProfiloUtenteControl.php";
                 break;
             case 'visitaProfiloPersonale':
@@ -116,6 +117,9 @@ try {
                 StringUtils::checkPermission("all");
                 include_once VIEW_DIR . "profilo.php";
                 break;
+            case 'banned':
+                include_once VIEW_DIR . "paginaBanUtente.php";
+                break;
             case 'auth':
                 StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
                 include_once VIEW_DIR . "login-registrazione.php";
@@ -137,7 +141,6 @@ try {
 		        include_once CONTROL_DIR . "LoginCM.php";
                 break;
             case 'logout':
-                StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "Logout.php";
                 break;
             case 'livesearch':
@@ -210,7 +213,7 @@ try {
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
                 break;
             case 'IndexMacrocategorie':
-                StringUtils::checkPermission(Permissions::MODERATORE);
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
                 break;
             case 'visualizzaIndexMicrocategorie':

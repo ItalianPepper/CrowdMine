@@ -1,6 +1,17 @@
 <aside class="app-sidebar" id="sidebar">
     <div class="sidebar-header">
-        <a class="sidebar-brand" href="#"><span class="highlight"> Moderatore </span></a>
+        <a class="sidebar-brand" href="#"><span class="highlight">
+                <?php
+                    switch($user->getRuolo()) {
+                        case RuoloUtente::MODERATORE:
+                            echo "Moderatore";
+                        break;
+                        case RuoloUtente::AMMINISTRATORE:
+                            echo "Admin";
+                        break;
+                    }
+                ?>
+                </span></a>
         <button type="button" class="sidebar-toggle">
             <i class="fa fa-times"></i>
         </button>
@@ -32,8 +43,8 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="indexMacrocategorie">Macrocategorie</a></li>
-                        <li><a href="visualizzaIndexMicrocategorie">Microcategorie</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/IndexMacrocategorie">Macrocategorie</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/visualizzaIndexMicrocategorie">Microcategorie</a></li>
                     </ul>
                 </div>
             </li>

@@ -10,21 +10,18 @@ include_once VIEW_DIR . "ViewUtils.php";
 include_once CONTROL_DIR . "ControlUtils.php";
 include_once MANAGER_DIR . "UtenteManager.php";
 
-$visitedUserId = 1;  //default page
 
 $utenteManager = new UtenteManager();
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if (isset($_URL) && isset($_URL[1])) {
 
-    if (isset($_GET["user"])) {
+    $visitedUserId = (int)testInput($_URL[1]);
 
-        $visitedUserId = (int)testInput($_GET["user"]);
+    $visitedUser = $utenteManager->findUtenteById($visitedUserId);
 
-        $user = $utenteManager->findUtenteById($visitedUserId);
-        if($user!=null) {
-            include_once VIEW_DIR . "visitaProfiloUtente.php";
-            exit(0);
-        }
+    if(isset($visitedUser)) {
+        include_once VIEW_DIR . "visitaProfiloUtente.php";
+        exit(0);
     }
 }
 

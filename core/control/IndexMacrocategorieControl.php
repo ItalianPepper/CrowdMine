@@ -23,20 +23,16 @@ $numPages = ceil($numMacros/$MACROS_PER_PAGE);
 if (isset($_URL) && isset($_URL[1])) {
     $page = (int)testInput($_URL[1]);
 
+    //page index must be between 1 and numpages
     if($page<1 || $page>$numPages)
         $page = 1;
 }
 
-
+/*start/end boundaries for page*/
 $pageStart = ($page-1)*$MACROS_PER_PAGE;
 $pageEnd = min($page*$MACROS_PER_PAGE,$numMacros);
 
-/*
- * add getMacros(page,pageSize) by page Method to Manager
- *  pseudo.
- *      SELECT * FROM macro BETWEEN pageStart AND pageEnd
-*/
-//$macros = Array(new MacroCategoria(1,"Informatica"),new MacroCategoria(2,"Graphic Design"));
+/*array of macros per page-1, index here starts by 0 */
 $macros = $macroManager->getMacrosPage($page-1,$MACROS_PER_PAGE);
 
 
@@ -44,7 +40,6 @@ $macroPageInfo = "Showing ".$pageStart.
     " to ".$pageEnd.
     " of ".$numMacros." entries";
 
-//include is more coherent if interaction begins in this control
 include_once VIEW_DIR."visualizzaIndexMacrocategorie.php";
 
 ?>

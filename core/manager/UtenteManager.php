@@ -46,7 +46,7 @@ class UtenteManager extends Manager{
      */
     private function createUserFromRow($row){
         if($row==null) return null;
-        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['descrizione'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['ruolo'], $row['stato'], $row['immagine_profilo']);
+        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'],$row['descrizione'], $row['immagine_profilo'],$row['partita_iva']);
     }
 
     /**
