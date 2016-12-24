@@ -17,14 +17,16 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-    <?php include_once VIEW_DIR ."noscriptView.php";  ?>
-    
+    <?php include_once VIEW_DIR . "noscriptView.php"; ?>
+
     <style>
         div.section .profile {
             margin-bottom: 0px;
         }
 
     </style>
+
+
 
 
 </head>
@@ -227,14 +229,9 @@
                                 <ul>
                                     <li class="dropdown-header">Notification</li>
                                     <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">8</span>
-                                            <div class="message">
-                                                <div class="content">
-                                                    <div class="title">New Order</div>
-                                                    <div class="description">$400 total</div>
-                                                </div>
-                                            </div>
+                                        <a href="CrowdMine/VisualizzaSingoloFeedback?feedbackID=1" ">
+                                            <span class="badge badge-danger pull-right">1</span>
+                                            Feedback Lasciati
                                         </a>
                                     </li>
                                     <li>
@@ -553,9 +550,11 @@
                                                             <!-- id annuncio -->
                                                             <input name="annuncio-id" value="1" style="display: none">
                                                             <!--id utente che ha scritto l'annuncio-->
-                                                            <input name="user-annuncio-id" value="1" style="display: none">
+                                                            <input name="user-annuncio-id" value="1"
+                                                                   style="display: none">
                                                             <!--id utente che lasci il feedback-->
-                                                            <input name="user-submit-id" value="3" style="display: none">
+                                                            <input name="user-submit-id" value="3"
+                                                                   style="display: none">
 
 
                                                             <textarea name="feedback-textArea" rows="3"

@@ -204,9 +204,15 @@ try {
             case 'inserisciAnnuncio';
                 include_once VIEW_DIR . "inserisciAnnuncio.php";
                 break;
-                case 'modificaAnnuncio';
+            case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
-                break;        
+                break;
+            case 'VisualizzaSingoloFeedback';
+                include_once CONTROL_DIR . "VisualizzaSingoloFeedback.php";
+                break;
+            case 'ViewSingleFeedback';
+                include_once CONTROL_DIR . "ViewSingleFeedback.php";
+                break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;

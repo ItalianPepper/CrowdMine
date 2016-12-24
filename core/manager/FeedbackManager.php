@@ -78,6 +78,26 @@ class FeedbackManager extends Manager
         return $f;
     }
 
+    public function getFeedbackByIdLO($idFeedback,$IdUtenteValutato){
+        $feebackListObject = null;
+        $GET_FEEDBACK_BY_ID = "SELECT feedback.id,feedback.titolo,feedback.corpo,
+            feedback.valutazione,utente.nome,utente.cognome,utente.immagine_profilo 
+            FROM feedback, utente WHERE feedback.id_valutato=$IdUtenteValutato 
+            AND utente.id=feedback.id_utente 
+            AND feedback.id=$idFeedback
+            AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))";
+        $resSet = self::getDB()->query($GET_FEEDBACK_BY_ID);
+        return $this->feedbackLOToArray($resSet);
+     /*   if ($resSet) {
+            while ($obj = $resSet->fetch_assoc()) {
+                $feebackListObject = new FeedbackListObject($obj['id'],$obj['titolo'],$obj['corpo'],
+                    $obj['nome'],$obj['cognome'],
+                    $obj['immagine_profilo'],$obj['valutazione']);
+            }
+        }
+        return $feebackListObject;*/
+    }
+
     public function setStatus($id,$stato){
         $UPDATE_STATUS="UPDATE feedback SET stato='$stato' WHERE feedback.id=$id";
         $resSet = self::getDB()->query($UPDATE_STATUS);
