@@ -27,7 +27,6 @@ class MessaggioManager extends Manager
      * @param Messaggio $messaggio
      */
     public function sendMessaggio($id, $corpo, $letto, $data, $idMittente, $idDestinatario){
-        $messaggio = new Messaggio($id, $corpo, $letto, $data, $idMittente, $idDestinatario);
         $INSERT_MESSAGGIO = "INSERT INTO `Messaggio` (`id`, `corpo`, `data`, `letto`, `id_utente_mittente`, `id_utente_destinatario`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
         $query = sprintf($INSERT_MESSAGGIO, $id, $corpo, $letto, $data, $idMittente, $idDestinatario);
         if (!Manager::getDB()->query($query)) {
@@ -36,7 +35,7 @@ class MessaggioManager extends Manager
             } else
                 throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
         }
-        return $messaggio;
+        return true;
     }
 
     /**
@@ -50,11 +49,34 @@ class MessaggioManager extends Manager
         $messaggi = array();
         if ($result) {
             while ($obj = $result->fetch_assoc()) {
-                $messaggio = new Messaggio($obj['id'], $obj['id_utente_mittente	'], $obj['id_utente_destinatario'], $obj['corpo'], $obj['data'], $obj['letto']);
+                $messaggio = new Messaggio($obj['id'], $obj['id_utente_mittente'], $obj['id_utente_destinatario'], $obj['corpo'], $obj['data'], $obj['letto']);
                 $messaggi[] = $messaggio;
             }
         }
         return $messaggi;
+    }
+
+
+    /**
+     * @param $idUtente
+     * @return array
+     */
+    public function listaDestinatari($idUtente){
+        $LOAD_MESSAGGIO = "SELECT DISTINCT u.* FROM utente u, messaggio m WHERE 
+                            (m.id_utente_mittente = u.id OR m.id_utente_destinatario = u.id) 
+                            AND (m.id_utente_mittente = $idUtente OR m.id_utente_destinatario = $idUtente) 
+                            AND u.id <> $idUtente";
+        $result = Manager::getDB()->query($LOAD_MESSAGGIO);
+        $utenti = array();
+        if ($result) {
+            while ($obj = $result->fetch_assoc()) {
+                $utente = new Utente($obj['id'], $obj['nome'], $obj['cognome'], $obj['telefono'], $obj['dataNascita'],
+                    $obj['citta'], $obj['email'], $obj['password'], $obj['ruolo'], $obj['stato'], $obj['immagine_profilo'],
+                    $obj['partita_iva']);
+                $utenti[] = $utente;
+            }
+        }
+        return $utenti;
     }
 
     /**
@@ -63,8 +85,9 @@ class MessaggioManager extends Manager
      * @param $idMittente
      * @param $idDestinatario
      */
-    public function loadMessaggio($idMittente, $idDestinatario){
-        $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = $idMittente AND `id_utente_destinatario` = $idDestinatario ORDER BY 'data' ASC;";
+    public function loadConversation($idMittente, $idDestinatario){
+        $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = $idMittente AND `id_utente_destinatario` = $idDestinatario
+                            OR `id_utente_mittente` = $idDestinatario AND `id_utente_destinatario` = $idMittente ORDER BY 'data' ASC;";
         $result = Manager::getDB()->query($LOAD_MESSAGGIO);
         $messaggi = array();
         if ($result) {
@@ -74,6 +97,69 @@ class MessaggioManager extends Manager
             }
         }
         return $messaggi;
+    }
+
+
+    public function deleteConversation($idMittente, $idDestinatario){
+        $LOAD_MESSAGGIO = "DELETE FROM `Messaggio` WHERE `id_utente_mittente` = $idMittente AND `id_utente_destinatario` = $idDestinatario
+                            OR `id_utente_mittente` = $idDestinatario AND `id_utente_destinatario` = $idMittente;";
+        if (!Manager::getDB()->query($LOAD_MESSAGGIO)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+
+    /**
+     * @param $idMittente
+     * @param $idDestinatario
+     * @return array
+     */
+    public function messaggiNonLetti($idMittente, $idDestinatario){
+        $LOAD_MESSAGGIO = "SELECT * FROM `Messaggio` WHERE `id_utente_mittente` = $idMittente AND `id_utente_destinatario` = $idDestinatario
+                            AND letto=0 ORDER BY 'data' ASC;";
+        $result = Manager::getDB()->query($LOAD_MESSAGGIO);
+        $messaggi = array();
+        if ($result) {
+            while ($obj = $result->fetch_assoc()) {
+                $messaggio = new Messaggio($obj['id'], $obj['id_utente_mittente'], $obj['id_utente_destinatario'], $obj['corpo'], $obj['data'], $obj['letto']);
+                $messaggi[] = $messaggio;
+            }
+        }
+        return $messaggi;
+    }
+
+    /**
+     * @param $idMittente
+     * @param $idDestinatario
+     * @return array
+     */
+    public function numberMessaggiNotVisualized($idUtente){
+        $LOAD_MESSAGGIO = "SELECT COUNT(DISTINCT id) FROM messaggio  WHERE  id_utente_destinatario = $idUtente AND letto=0;";
+        $result = Manager::getDB()->query($LOAD_MESSAGGIO);
+        if ($result) {
+            $obj = $result->fetch_assoc();
+            return $obj['COUNT(DISTINCT id)'];
+            }
+    }
+
+
+    /**
+     * @param $idMittente
+     * @param $idDestinatario
+     * @return array
+     */
+    public function setMessaggiNonLetti($idMittente, $idDestinatario){
+        $LOAD_MESSAGGIO = "UPDATE `Messaggio` SET letto = 1 WHERE `id_utente_mittente` = $idMittente 
+                            AND `id_utente_destinatario` = $idDestinatario;";
+        if (!Manager::getDB()->query($LOAD_MESSAGGIO)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
     }
 
     /**
@@ -92,6 +178,9 @@ class MessaggioManager extends Manager
         }
     }
 
+
+
+
     /**
      * @param $idAnnuncio
      */
@@ -102,6 +191,8 @@ class MessaggioManager extends Manager
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
             } else
                 throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-        }    }
+        }
+    }
+
 
 }
