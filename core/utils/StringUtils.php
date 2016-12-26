@@ -47,10 +47,15 @@ class StringUtils {
             $user = unserialize($_SESSION['user']);
             $stato = $user->getStato();
 
-            /*if user is not enabled, redirect to ban page (obviously level != banned_only )*/
-            if($stato != StatoUtente::ATTIVO && $stato != StatoUtente::REVISIONE && $level != Permissions::BANNED_ONLY ){
-                header('Location: ' . $bannedRedirect);
-                exit();
+            /*if user is not enabled, redirect to ban page*/
+            if($stato != StatoUtente::ATTIVO && $stato != StatoUtente::REVISIONE){
+
+                if($level == Permissions::BANNED_ONLY ){
+                    return $user;
+                }else {
+                    header('Location: ' . $bannedRedirect);
+                    exit();
+                }
             }
 
             /*here user is not banned, so launch redirect if ban is required*/

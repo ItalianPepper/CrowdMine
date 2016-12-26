@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     $userType = NULL;
     $userDescription = NULL;
     $userImage = NULL;
-    
+
     if (isset($_POST['nome'])) {
         $userName = $_POST["nome"];
 
@@ -149,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     
     if (empty($userDateOfBirth) || !preg_match(Patterns::$GENERIC_DATE, $userDateOfBirth)) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Data di nascita non valida";
+        $_SESSION['toast-message'] = "Data di nascita non valida, inserire la data di nascita nel formato: dd/mm/yyyy";
         header("Location:" . DOMINIO_SITO . "/auth");
         throw new IllegalArgumentException("Data di nascita non valida");
     }
@@ -161,9 +161,9 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         throw new IllegalArgumentException("Nome citta' non valido");
     }
     
-    if (empty($userMail) || !preg_match(Patterns::$EMAIL, $userMail)) {
+    if (empty($userMail) || !preg_match(Patterns::$EMAIL, $userMail)) { 
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Email non valida";
+        $_SESSION['toast-message'] = "Email non valida, inserire l'email nel formato: name@exemple.com";
         header("Location:" . DOMINIO_SITO . "/auth");
         throw new IllegalArgumentException("Email non valida");
     }
@@ -196,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     }
      
     if(($utenteManager->checkEmail($userMail)) == false){
-       $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, StatoUtente::ATTIVO,RuoloUtente::UTENTE,$userDescription, null);
+       $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, StatoUtente::ATTIVO,RuoloUtente::UTENTE,$userDescription,null,$userPI);
        $utenteManager->register($userToReg);
        $user = $utenteManager-> login($userMail, $userPassword);    
     }

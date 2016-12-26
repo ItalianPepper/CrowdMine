@@ -118,18 +118,23 @@ try {
                 include_once VIEW_DIR . "profilo.php";
                 break;
             case 'banned':
+                $user=StringUtils::checkPermission(Permissions::BANNED_ONLY);
                 include_once VIEW_DIR . "paginaBanUtente.php";
+                break;
+            case 'ricorso':
+                $user=StringUtils::checkPermission(Permissions::BANNED_ONLY);
+                include_once CONTROL_DIR . "ricorsoControl.php";
                 break;
             case 'auth':
                 StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
                 include_once VIEW_DIR . "login-registrazione.php";
                 break;
             case 'register':
-                StringUtils::checkPermission("not_logged");
+                StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
                 include_once VIEW_DIR . "login-registrazione.php";
                 break;
             case 'effettuaRegistrazione':
-                StringUtils::checkPermission("not_logged");
+                StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
                 include_once CONTROL_DIR . "RegisterCM.php";
                 break;
             case 'inserimentoEsperienza':
