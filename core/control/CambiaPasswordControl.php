@@ -63,20 +63,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
         throw new IllegalArgumentException("Nuova password non corretta");
     }
-
+    $user = new Utente(1, "nome_1", "cognome_1", "descrizione_1", "telefono_1", "1994-01-01",
+        "citta_1", "email_1", "password_1", StatoUtente::ATTIVO, RuoloUtente::UTENTE);
     $userManager = new UtenteManager();
     $res = $userManager->checkPassword($user->getId(), $currPass);
 
-    if(res){
-        //$user = new Utente($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo)
+    if($res===TRUE) {
         $user->setPassword($newPass);
-        updateUtente($user);
+        $userManager->updateUtente($user);
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "L'operazione del cambio della password è stata eseguita con successo";
     }
     else {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Password non corretta";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-        throw new IllegalArgumentException("Password non corretta");
+        $_SESSION['toast-message'] = "La password inserita non è corretta";
     }
 
     header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");

@@ -69,8 +69,8 @@ class UtenteManager extends Manager{
      * @param $user
      */
     public function updateUtente($user){
-        $UPDATE_UTENTE = "UPDATE utente SET descrizione='%s', telefono='%s', dataNascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagineProfilo='%s';";
-        $query = sprintf($UPDATE_UTENTE, $user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo());
+        $UPDATE_UTENTE = "UPDATE utente SET descrizione='%s', telefono='%s', data_nascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagine_profilo='%s' WHERE id='%s';";
+        $query = sprintf($UPDATE_UTENTE, $user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo(), $user->getId());
         self::getDB()->query($query);
     }
 
@@ -240,13 +240,13 @@ class UtenteManager extends Manager{
      * @return bool
      */
     public function checkPassword($userId, $password){
-        $CHECK_PSWD = "SELECT * FROM utente WHERE id='%s' AND password='%s';";
+        $CHECK_PSWD = "SELECT * FROM utente WHERE id='%d' AND password='%s';";
         $query = sprintf($CHECK_PSWD, $userId, $password);
         $result = self::getDB()->query($query);
-        if($result->num_rows < 1){
-            return false;
+        if(($result->num_rows) < 1){
+            return FALSE;
         }else{
-            return true;
+            return TRUE;
         }
     }
 
