@@ -303,5 +303,24 @@ class UtenteManager extends Manager{
         }
     }
 
+    /**
+     * Get a list of User that follow a microcategory
+     *
+     * @param Microcategoria $microcategoria A Microcategoria object
+     *
+     * @return Utente[] A list of User that follows a microcategoria
+     */
+    public function microcategoryUtente($microcategoria){
+        $users = array();
+        $FIND_USERS_BY_MACRO = "SELECT utente.id, utente.nome, utente.cognome, utente.descrizione, utente.telefono, utente.data_nascita, utente.citta, utente.email, utente.password, utente.ruolo, utente.stato, utente.immagine_profilo FROM utente, annuncio, riferito WHERE riferito.id_annuncio = annuncio.id and annuncio.id_utente=utente.id and riferito.id_microcategoria = %s;";
+        $query = sprintf($FIND_USERS_BY_MACRO, $microcategoria->getId());
+        $result = self::getDB()->query($query);
+        foreach($result->fetch_assoc() as $r){
+            $user = $this->createUserFromRow($r);
+            array_push($users, $user);
+        }return $users;
+    }
+
+
 
 }
