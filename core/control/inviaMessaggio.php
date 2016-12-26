@@ -2,7 +2,7 @@
     
     include_once MODEL_DIR . "Utente.php";
     include_once MODEL_DIR . "Messaggio.php";
-    include_once MANAGER_DIR . "MessaggioManagerStub.php";
+    include_once MANAGER_DIR . "MessaggioManager.php";
     include_once MANAGER_DIR . "UtenteManagerStub.php";
     
     ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
@@ -16,7 +16,7 @@
     $id_destinatario = $_POST["id"];
     
     ## MANAGER ##
-    $manager_msg = new MessaggioManagerStub();
+    $manager_msg = new MessaggioManager();
     $manager_utente = new UtenteManagerStub();
     
     ## RECUPERO IL DESTINATARIO DELLA CONVERSAZIONE ###
@@ -24,7 +24,8 @@
     $utente_destinatario = $manager_utente->getUtenteByID($id_utente_destinatario);  //[STUB getUtentebyID]
     
     //echo $utente_destinatario->getNome()."    ";
-    $risultato = $manager_msg->inviaMessaggio($utente_connesso->getId(), $id_destinatario);
+    //$risultato = $manager_msg->inviaMessaggio($utente_connesso->getId(), $id_destinatario);
+    $risultato = $manager_msg->sendMessaggio(null, "ciao", false, null, 1, 1);
     
     if($risultato){
         echo '<div class="alert alert-success">'."\n";

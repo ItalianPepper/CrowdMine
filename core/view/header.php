@@ -96,7 +96,3 @@
   </div>
 </nav>
 
-
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/app.js"></script>
-  
