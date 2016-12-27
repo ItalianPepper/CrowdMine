@@ -13,6 +13,7 @@ $arrayCommenti = array();
 
 if($idUtente == null) {//in futuro sarà di sessione
     $annunci = $managerAnnunci->getAnnunciHomePageUtenteVisitatore();
+
 } else {
     //qui si devono impostare i filtri a seconda delle microcategorie di interesse dell'utente loggato
     array_push($filters,new SearchByNotStatus(ELIMINATO));
@@ -23,8 +24,8 @@ if($idUtente == null) {//in futuro sarà di sessione
     for ($i=0; $i<count($annunci); $i++) {
         array_push($arrayCommenti, $managerAnnunci->getCommentsbyId($annunci[$i]->getId()));
     }
-    $_SESSION['listaCommenti'] = serialize($arrayCommenti);
-    $_SESSION['annunciHome'] = serialize($annunci);
+    $_SESSION['commenti'] = serialize($arrayCommenti);
+    $_SESSION['annunci'] = serialize($annunci);
     include_once VIEW_DIR . "home.php";
 
 ?>

@@ -2,8 +2,10 @@
 include_once MODEL_DIR . "/Annuncio.php";
 include_once MODEL_DIR . "/Commento.php";
 
+$annunci = null;
 if (isset($_SESSION["annunciRicercati"])) {
     $annunci = unserialize($_SESSION["annunciRicercati"]);
+    unset($_SESSION["annunciRicercati"]);
     if (isset($_SESSION['listaCommenti'])) {
         $commenti = unserialize($_SESSION['listaCommenti']);
     }

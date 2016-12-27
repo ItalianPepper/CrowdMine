@@ -1,26 +1,27 @@
 <?php
-include_once MODEL_DIR . "/Annuncio.php";
-include_once MODEL_DIR . "/Commento.php";
 
-if (isset($_SESSION["annunciHome"])) {
-    $annunci = unserialize($_SESSION["annunciHome"]);
-    unset($_SESSION["annunciHome"]);
-    if (isset($_SESSION['listaCommenti'])) {
-        $commenti = unserialize($_SESSION['listaCommenti']);
+$annunci = null;
+$commenti = null;
+
+if (isset($_SESSION['annunci'])) {
+    $annunci = unserialize($_SESSION['annunci']);
+    unset($_SESSION['annunci']);
+    if (isset($_SESSION['commenti'])) {
+        $commenti = unserialize($_SESSION['commenti']);
+        unset($_SESSION['commenti']);
+        echo "its'ok";
     }
 } else {
-    header("Location:" . DOMINIO_SITO . "/getHome");
+    echo "no";
 }
 
-
-
-
 include_once VIEW_DIR . 'header.php';
-
 ?>
 
+
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <title></title>
 
@@ -48,13 +49,13 @@ include_once VIEW_DIR . 'header.php';
 
         ?>
 
-    <script>
-        $(document).ready(function(){
-            $(".btn.btn-link.<?php echo $id?> ").click(function(){
-                $(".row.col-md-12.col-sm-12.card.contenitore.<?php echo $id?>").toggle(250);
+        <script>
+            $(document).ready(function(){
+                $(".btn.btn-link.<?php echo $id?> ").click(function(){
+                    $(".row.col-md-12.col-sm-12.card.contenitore.<?php echo $id?>").toggle(250);
+                });
             });
-        });
-    </script>
+        </script>
 
         <?php
     }
@@ -240,7 +241,9 @@ include_once VIEW_DIR . 'header.php';
                             </div>
 
                             <div class="offerta col-md-12 col-sm-12">
-                                <h1><?php echo $annunci[$i]->getTitolo();?></h1>
+                                <form action="annuncioControl" method="post">
+                                    <h1><?php echo $annunci[$i]->getTitolo();?></h1>
+                                </form>
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-2 preferites">
@@ -296,7 +299,7 @@ include_once VIEW_DIR . 'header.php';
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
+                                                aria-hidden="true">×</span></button>
                                     <h4 class="modal-title">Aggiungere ai preferiti?</h4>
                                 </div>
                                 <form action="aggiungiPreferitiControl" method="post">
@@ -363,7 +366,7 @@ include_once VIEW_DIR . 'header.php';
                                          style="float: right; margin-top: -8%; margin-right: -23%">
                                         <a href="segnalaCommento?id=<?php echo $commenti[$i][$j]->getId(); ?>">
                                             <button
-                                                style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                                    style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
                                                 <i class="fa fa-close"></i>
                                             </button>
                                         </a>
@@ -402,7 +405,7 @@ include_once VIEW_DIR . 'header.php';
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
+                                                aria-hidden="true">×</span></button>
                                     <h4 class="modal-title">Conferma candidatura</h4>
                                 </div>
                                 <form action="aggiungiCandidaturaControl" method="post">
@@ -522,4 +525,5 @@ include_once VIEW_DIR . 'header.php';
 </body>
 
 </html>
+
 

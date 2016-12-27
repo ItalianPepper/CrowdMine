@@ -183,11 +183,9 @@ include_once VIEW_DIR . 'header.php';
 
                 </div>
             </div>
-</div>
 <?php
         }
 ?>
-</div>
 
         <script>
             $(document).ready(function() {
@@ -237,6 +235,3 @@ include_once VIEW_DIR . 'header.php';
         }
         ?>
 
-</body>
-
-</html>

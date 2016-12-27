@@ -388,11 +388,11 @@ class AnnuncioManager
      * @param string $date
      * @throws ApplicationException
      */
-    public function commentAnnuncio($idAnnuncio, $idUtente, $comment, $date)
+    public function commentAnnuncio($idAnnuncio, $idUtente, $comment, $date, $stato)
     {
-        $INSERT_COMMENT = "INSERT INTO `Commento`(`id_annuncio`, `id_utente`,`corpo`, `data`) VALUES ('%s', '%s', '%s', '%s');";
+        $INSERT_COMMENT = "INSERT INTO `commento` (`id`, `id_annuncio`, `id_utente`, `corpo`, `data`, `stato`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s');";
 
-        $query = sprintf($INSERT_COMMENT, $idAnnuncio, $idUtente, $comment, $date);
+        $query = sprintf($INSERT_COMMENT, $idAnnuncio, $idUtente, $comment, $date, $stato);
         if (!Manager::getDB()->query($query)) {
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }

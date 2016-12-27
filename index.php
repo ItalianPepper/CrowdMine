@@ -230,7 +230,7 @@ try {
             case 'disattivaAnnuncioControl';
                 include_once CONTROL_DIR . "disattivaAnnuncio.php";
                 break;
-            case 'commentaAnnuncio';
+            case 'commentaAnnuncioControl';
                 include_once CONTROL_DIR . "commentaAnnuncio.php";
                 break;
             case 'annunciProprietari';
@@ -271,6 +271,12 @@ try {
                 break;
             case 'segnalaCommento';
                 include_once CONTROL_DIR . "segnalaCommento.php";
+                break;
+            case 'annunci';
+                include_once VIEW_DIR . "annunci.php";
+                break;
+            case 'annunciControl';
+                include_once CONTROL_DIR . "annunciControl.php";
                 break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
