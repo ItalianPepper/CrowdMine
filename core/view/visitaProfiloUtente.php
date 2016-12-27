@@ -22,7 +22,19 @@
             margin-bottom: 0px;
         }
 
+        .app-container .app-heading.no-flex{
+            display:inline-block;
+            width:100%;
+        }
+
+        body .app-container .app-heading .app-title{
+            min-height:80px;
+        }
+
     </style>
+
+
+    <?php $fullname = $visitedUser->getNome()." ".$visitedUser->getCognome();?>
 
 
 </head>
@@ -260,7 +272,7 @@
                             </a>
                             <div class="dropdown-menu">
                                 <div class="profile-info">
-                                    <h4 class="username"><?php $visitedUser->getNome()." ".$visitedUser->getCognome() ?></h4>
+                                    <h4 class="username"><?php echo $fullname; ?></h4>
                                 </div>
                                 <ul class="action">
                                     <li>
@@ -294,100 +306,97 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body app-heading">
-                        <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-                        <div class="app-title">
-                            <div class="title"><span class="highlight"><?php echo $visitedUser->getNome()." ".$visitedUser->getCognome();?></span></div>
-                            <div class="description"><?php echo $visitedUser->getDescrizione();?></div>
+                    <div class="card-body app-heading no-flex">
+                        <div class="pull-left" style="display: flex;">
+                            <img class="profile-img pull-left" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                            <div class="app-title pull-left">
+                                <div class="title"><span class="highlight"><?php echo $fullname;?></span></div>
+                                <div class="description"><?php echo $visitedUser->getDescrizione();?></div>
+                            </div>
                         </div>
-
-                        <?php
-                        if(isset($user)) {
-                            if ($user->getRuolo() == RuoloUtente::AMMINISTRATORE) {
-                                if (($visitedUser->getRuolo() == RuoloUtente::UTENTE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
-                                    ?>
-
-                                    <div>
-                                        <form action="" method="post">
-                                            <button type="button" class="btn btn-success btn btn-default btn-xs">Eleggi
-                                                a
-                                                Moderatore
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <?php
-                                } elseif (($visitedUser->getRuolo() == RuoloUtente::MODERATORE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
-                                    ?>
-                                    <div>
-                                        <form action="" method="post">
-                                            <button type="button" class="btn btn-danger btn btn-default btn-xs">
-                                                Destituisci
-                                                Moderatore
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <?php
-                                }
-                            }
-                            ?>
-
+                        <div class="profile-buttons-container pull-right">
+                            <div class="profile-buttons">
                             <?php
-                            if (($user->getRuolo() == RuoloUtente::MODERATORE) || ($user->getRuolo() == RuoloUtente::AMMINISTRATORE)) {
-                                if (($visitedUser->getStato() == StatoUtente::ATTIVO)) {
-                                    ?>
-                                    <div>
-                                        <form action="banUtente" method="post">
-                                            <input type="hidden" name="idUser" value="<?php $user->getId(); ?>">
-                                            <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
-                                            <button type="submit" class="btn btn-danger btn btn-default btn-xs">Ban
-                                                Utente
+                            if(isset($user)) {
+                                if ($user->getRuolo() == RuoloUtente::AMMINISTRATORE) {
+                                    if (($visitedUser->getRuolo() == RuoloUtente::UTENTE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                        ?>
+
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/eleggiModeratore','Sei sicuro di voler rendere <strong><?php echo $fullname ?></strong> un moderatore?' )"
+                                                    class="btn btn-success btn btn-default btn-xs"
+                                                    data-toggle="modal" data-target="#ConfirmModal">
+                                                Eleggi a Moderatore
                                             </button>
-                                        </form>
-                                    </div>
-                                    <?php
-                                } elseif ($visitedUser->getStato() == StatoUtente::BANNATO) {
-
-                                    ?>
-                                    <div>
-                                        <form action="riattivaUtente" method="post">
-                                            <input type="hidden" name="idUser" value="<?php $visitedUser->getId(); ?>">
-                                            <input type="hidden" name="urlDellaChiamata" value="visitaProfiloUtente">
-                                            <button type="submit" class="btn btn-success btn btn-default btn-xs">
-                                                Riattiva
-                                                Utente
+                                        </div>
+                                        <?php
+                                    } elseif (($visitedUser->getRuolo() == RuoloUtente::MODERATORE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                        ?>
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/destituisciModeratore','Sei sicuro di voler destituire <strong><?php echo $fullname ?></strong> dal ruolo di moderatore?' )"
+                                                    class="btn btn-danger btn btn-default btn-xs"
+                                                    data-toggle="modal" data-target="#ConfirmModal">
+                                                Destituisci Moderatore
                                             </button>
-                                        </form>
-                                    </div>
+                                        </div>
 
-
-                                    <?php
+                                        <?php
+                                    }
                                 }
-                            }
-                            ?>
-
-
-                            <?php
-
-                            if ($visitedUser->getStato() == StatoUtente::ATTIVO) {
                                 ?>
 
-                                <div>
-                                    <form action="segnalaUtente" method="post">
-                                        <input type="hidden" name="idUser" value="<?php $visitedUser->getId(); ?>">
-                                        <button type="submit" class="btn btn-warning btn btn-default btn-xs">Segnala
-                                            Utente
-                                        </button>
-                                    </form>
-                                </div>
+                                <?php
+                                if (($user->getRuolo() == RuoloUtente::MODERATORE) || ($user->getRuolo() == RuoloUtente::AMMINISTRATORE)) {
+                                    if (($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                        ?>
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/banUtente','Sei sicuro di voler bannare <strong><?php echo $fullname ?></strong>?' )"
+                                                    class="btn btn-danger btn btn-default btn-xs"
+                                                     data-toggle="modal" data-target="#ConfirmModal">
+                                                     Ban Utente
+                                            </button>
+                                        </div>
+                                        <?php
+                                    } elseif ($visitedUser->getStato() == StatoUtente::BANNATO) {
+
+                                        ?>
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/riattivaUtente','Riattivare <strong><?php echo $fullname ?></strong>?' )"
+                                                    class="btn btn-success btn btn-default btn-xs"
+                                                    data-toggle="modal" data-target="#ConfirmModal">
+                                                Riattiva Utente
+                                            </button>
+                                        </div>
+
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+
 
                                 <?php
 
-                            }
-                        }
-                        ?>
+                                if ($visitedUser->getStato() == StatoUtente::ATTIVO) {
+                                    ?>
+                                    <div class="profile-action">
+                                        <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/segnalaUtente','Sei sicuro di voler segnalare <strong><?php echo $fullname ?></strong>?' )"
+                                                class="btn btn-warning btn btn-default btn-xs"
+                                                data-toggle="modal" data-target="#ConfirmModal">
+                                            Segnala Utente
+                                        </button>
+                                    </div>
 
+                                    <?php
+
+                                }
+                            }
+                            ?>
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -1020,6 +1029,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="CancellaAccount" method="POST" class="form form-horizontal" id="tel-input">
+
+                                        <input type="hidden" name="idUser" value="<?php echo $visitedUser->getId(); ?>">
+                                        <input type="hidden" name="referer" value="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$visitedUser->getId(); ?>">
+
+                                        <div class="modal-header">
+                                            <strong>Conferma operazione</strong>
+                                        </div>
+                                        <div class="modal-body"></div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Conferma</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1028,6 +1058,13 @@
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+
+                <script>
+                    function setModalForm(action,text){
+                        $("#ConfirmModal form").attr("action",action);
+                        $(".modal-body").html("<p>"+text+"</p>")
+                    }
+                </script>
 
                 <?php
 

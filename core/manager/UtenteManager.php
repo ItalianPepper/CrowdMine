@@ -75,6 +75,57 @@ class UtenteManager extends Manager{
     }
 
     /**
+     * Set an Utente as DISATTIVATO
+     *
+     * @param $user
+     */
+    public function disableUtente($user){
+        self::updateStatusUtente($user,StatoUtente::DISATTIVATO);
+    }
+
+    /**
+     * Update status of Utente
+     *
+     * @param $user
+     * @param $status
+     * @throws ApplicationException
+     */
+    public function updateStatusUtente($user, $status){
+
+        $UPDATE_UTENTE = "UPDATE utente SET stato='%s' WHERE id='%s';";
+        $query = sprintf($UPDATE_UTENTE, $status, $user->getId());
+
+        self::getDB()->query($query);
+
+        if (Manager::getDB()->error) {
+            throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        $user->setStato($status);
+    }
+
+    /**
+     * Update role of Utente
+     *
+     * @param $user
+     * @param $role
+     * @throws ApplicationException
+     */
+    public function updateRoleUtente($user, $role){
+
+        $UPDATE_UTENTE = "UPDATE utente SET ruolo='%s' WHERE id='%s';";
+        $query = sprintf($UPDATE_UTENTE, $role, $user->getId());
+
+        self::getDB()->query($query);
+
+        if (Manager::getDB()->error) {
+            throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        $user->setRuolo($role);
+    }
+
+    /**
      * Find Utente by is key value
      *
      * @param $userId

@@ -48,11 +48,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $utenteManager->login($userMail, $userPassword);
 
     if ($user != false) {
-        $_SESSION['user'] = serialize($user);
-        $_SESSION['loggedin'] = true;
-        $_SESSION['toast-type'] = "success";
-        $_SESSION['toast-message'] = "Bentornato " . $user->getNome() . " :)";
-        header("Location: " . $_SERVER['HTTP_REFERER']);
+        if($user->getStato()==StatoUtente::DISATTIVATO){
+            $_SESSION['toast-type'] = "error";
+            $_SESSION['toast-message'] = "Account disattivato dall'utente";
+            header("Location:" . DOMINIO_SITO . "/auth");
+            throw new IllegalArgumentException("Account disattivato dall'utente");
+        }else {
+            $_SESSION['user'] = serialize($user);
+            $_SESSION['loggedin'] = true;
+            $_SESSION['toast-type'] = "success";
+            $_SESSION['toast-message'] = "Bentornato " . $user->getNome() . " :)";
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+        }
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Password o email errata";

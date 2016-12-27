@@ -2,40 +2,33 @@
 /**
  * Created by PhpStorm.
  * User: Hacca
- * Date: 13/12/2016
- * Time: 16:03
+ * Date: 05/12/2016
+ * Time: 10:33
  */
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
+include_once CONTROL_DIR . 'ControlUtils.php';
 
 $manager = new UtenteManager();
 
-// prendo in input da dove chiamo questa pagina
-$urlDellaChiamata = $_POST_['urlDellaChiamata'];
+$referer = DOMINIO_SITO;
 
-if (isset($_SESSSION['user'])) {
-    $user = $_SESSION['user'];
-    $idUtenteEsterno = $_POST['idUser'];
-    $userEsterno = $manager->findUtenteById($idUtenteEsterno);
-    if(isset($userEsterno) && ($userEsterno->getId()==null) ) {
-        if ($userEsterno->getRuolo() == "utente") {
-            $userEsterno->setStato("segnalato");
-            $manager->updateUtente($userEsterno);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($user)) {
 
+    $referer = getReferer($referer,"referer");
 
-        } elseif (($userEsterno->getRuolo() == "moderatore") && ($user->getRuolo() == "moderatore")) {
-            $userEsterno->setStato("segnalato");
-            $manager->updateUtente($userEsterno);
+    if(isset($_POST['idUser'])){
 
-            //da modificare e reindirizzarlo al control;
-            header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata."?user=".$userEsterno->getId());
+        $idVisitedUser = $_POST['idUser'];
+        $visitedUser = $manager->findUtenteById($idVisitedUser);
+        //controllo se esiste l'utente
+        if (isset($visitedUser) && ($visitedUser->getId()!=null) ) {
+
+            $manager->updateStatusUtente($visitedUser,StatoUtente::SEGNALATO);
+
         }
     }
-    else{
-        header("location: " . DOMINIO_SITO);
-    }
-
-} else {
-    header("location: " . DOMINIO_SITO);
 }
+
+header("location: " . $referer);
