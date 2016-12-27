@@ -207,6 +207,9 @@ try {
             case 'ListaUtentiBannati':
                 include_once CONTROL_DIR . "ListaUtentiBannati.php";
                 break;
+            case "ricercaUtente":
+                include_once CONTROL_DIR . "RicercaUtente.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
@@ -228,6 +231,9 @@ try {
                 break;
             case 'visualizzaIndexStatistiche':
                 include_once VIEW_DIR . "visualizzaIndexStatistiche.php";
+                break;
+            case 'risultatoRicercaUtente':
+                include_once VIEW_DIR . "RisultatiRicercaUtente.php";
                 break;
             case 'visualizzaRicorsiAlBan':
                 include_once VIEW_DIR . "visualizzaRicorsiAlBan.php";

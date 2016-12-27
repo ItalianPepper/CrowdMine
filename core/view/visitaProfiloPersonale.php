@@ -364,6 +364,7 @@ if (isset($_SESSION["microUtente"])){
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
                             <div class="title"><span class="highlight"><?php echo $utente->getNome()." ".$utente->getCognome()?></span></div>
+                            <div class="description"><?php echo $utente->getDescrizione();?></div>
                         </div>
                     </div>
                 </div>

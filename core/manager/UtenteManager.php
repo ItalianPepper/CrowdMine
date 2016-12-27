@@ -89,17 +89,17 @@ class UtenteManager extends Manager{
         return $this->createUserFromRow($row);
     }
 
+
     /**
-     * Find a List of Utente by yours username
+     * Find a List of Utente
      *
-     * @param $nome
-     * @param $cognome
+     * @param $input
      * @return array
      */
-    private function findUtenteByUserName($nome, $cognome){
+    public function findUserOneInput ($input){
         $users = array();
-        $GET_UTENTE_BY_USERNAME = "SELECT * FROM utente WHERE nome='%s' cognome='%s';";
-        $query = sprintf($GET_UTENTE_BY_USERNAME, $nome, $cognome);
+        $getListUsers = "SELECT * FROM utente WHERE  nome LIKE %'%s'% OR cognome LIKE %'%s'% OR email LIKE %'%s'% ;";
+        $query = sprintf($getListUsers,$input,$input,$input);
         $result = self::getDB()->query($query);
         foreach ($result->fetch_assoc() as $row) {
             $user = $this->createUserFromRow($row);
@@ -107,6 +107,27 @@ class UtenteManager extends Manager{
         }
         return $users;
     }
+
+    /**
+     * Find a List of Utente
+     *
+     * @param $inputOne
+     * @param $inputTwo
+     * @return array
+     */
+    public function findUserTwoInput ($inputOne,$inputTwo){
+        $users = array();
+        $getListUsers = "SELECT * FROM utente WHERE (nome LIKE %'%s'% AND cognome LIKE %'%s'%) OR ( nome LIKE %'%s'% AND cognome LIKE %'%s'%) ;";
+        $query = sprintf($getListUsers,$inputOne,$inputTwo,$inputTwo,$inputOne);
+        $result = self::getDB()->query($query);
+        foreach ($result->fetch_assoc() as $row) {
+            $user = $this->createUserFromRow($row);
+            array_push($users, $user);
+        }
+
+        return $users;
+    }
+
 
     /**
      * Find a user
