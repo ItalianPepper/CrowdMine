@@ -77,6 +77,10 @@ class MessaggioManagerStub extends Manager
             //L'utente destintario SIMONE ha due candidature con Alfredo per l'annuncio 4 e l'annuncio 5
             $lista_Candidature[0] = new Candidatura(1, $id_Utente, 4, "Ciao, vorrei candidarmi a questo annuncio", null, null, null, null); //L'annuncio ha id=4 e il proprietario è l'utente connesso: ALFREDO
             $lista_Candidature[1] = new Candidatura(2, $id_Utente, 5, "Ciao, vorrei candidarmi a questo annuncio", null, null, null, null); //L'annuncio ha id=5 e il proprietario è l'utente connesso: ALFREDO
+            $lista_Candidature[2] = new Candidatura(3, $id_Utente, 5, "Ciao, vorrei candidarmi a questo annuncio", null, null, null, null); //L'annuncio ha id=5 e il proprietario è l'utente connesso: ALFREDO
+            $lista_Candidature[3] = new Candidatura(4, $id_Utente, 6, "Ciao, vorrei candidarmi a questo annuncio", null, null, null, null); //L'annuncio ha id=5 e il proprietario è l'utente connesso: ALFREDO
+    
+            
         }else return null;
        
         return $lista_Candidature; //ritorna un vettore di Candidature con tutti gli ID degli annunci in cui id_Utente è candidato
