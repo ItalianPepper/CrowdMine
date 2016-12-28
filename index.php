@@ -176,7 +176,9 @@ try {
                 break;
             
             
-            
+            case 'notificheUtente':
+                include_once VIEW_DIR . "notificheUtente.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
