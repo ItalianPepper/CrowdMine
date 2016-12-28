@@ -298,7 +298,7 @@
                                             </div>
                                             <!-- FORM INSERIMENTO !-->
                                             <div class="row">
-                                                <form class="form form-horizontal" id="macro-input" style="display:none">
+                                                <form class="form form-horizontal" id="macro-input" style="display:none" action="InserisciNuovaMacroControl" method="post">
                                                     <div class="col-lg-2 col-md-2 hidden-sm hidden-xs <?php echo $rowType ?>">
 
                                                     </div>
@@ -307,7 +307,7 @@
 															<span class="input-group-addon" id="basic-addon1">
 																<i class="fa fa-tag" aria-hidden="true"></i>
 															</span>
-                                                            <input type="text" class="form-control" placeholder="Nuova Categoria" aria-describedby="basic-addon1" value="">
+                                                            <input type="text" class="form-control" placeholder="Nuova Categoria" aria-describedby="basic-addon1" value="" name="nuova-macro-nome">
                                                         </div>
                                                         <div class="form-footer">
                                                             <div class="form-group">

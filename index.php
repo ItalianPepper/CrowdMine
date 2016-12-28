@@ -288,6 +288,9 @@ try {
             case 'cancellaMacroControl';
                 include_once CONTROL_DIR . "cancellaMacroControl.php";
                 break;
+            case 'InserisciNuovaMacroControl';
+                include_once CONTROL_DIR . "InserisciNuovaMacroControl.php";
+                break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;

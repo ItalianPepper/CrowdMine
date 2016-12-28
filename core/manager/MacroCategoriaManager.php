@@ -9,6 +9,7 @@
 
 include_once MODEL_DIR . 'MacroCategoria.php';
 include_once MANAGER_DIR . 'Manager.php';
+include_once CONTROL_DIR."ControlUtils.php";
 
 /**
  * Class MacroCategoriaManager
@@ -34,7 +35,7 @@ class MacroCategoriaManager extends Manager
         if ($this->verifyMacroCategoria($macroCategoria)) {
             $this->insertMacroCategoria($nome);
         } else {
-            header("Location: ". DOMINIO_SITO ); // ADD TOAST NOTIFICATION
+            header("Location: ". getReferer(DOMINIO_SITO) ); // ADD TOAST NOTIFICATION
             throw new IllegalArgumentException(ErrorUtils::$VALORE_DUPLICATO);
         }
     }
