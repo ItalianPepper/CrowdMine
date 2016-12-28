@@ -492,12 +492,19 @@
                                             <div id="profile-collapse5" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-                                                                <span class="label label-primary">Informatica</span>
-                                                                <span class="label label-success">Graphic Design</span>
+                                                        <?php
+                                                        if(count($macroListUtente)>0) { ?>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
+                                                                    <?php
+                                                                    foreach ($macroListUtente as $macro) {
+                                                                        randomColorLabel($macro->getNome() . $macro->getId(), $macro->getNome());
+                                                                        echo " ";
+                                                                    } ?>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                            <?php
+                                                        }?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -514,20 +521,41 @@
                                             <div id="profile-collapse6" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-                                                                <span class="label label-default">Informatica</span>
-                                                                <span class="label label-info">Php</span>
-                                                                <span class="label label-warning">Javascript</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12 overlined-row">
-                                                                <span class="label label-default">Graphic Design</span>
-                                                                <span
-                                                                        class="label label-danger">Adobe Illustrator</span>
-                                                            </div>
-                                                        </div>
+                                                        <?php
+                                                            $rowType = "simple-row";
+
+                                                            for($i=0;$i<count($macroListUtente);$i++) {
+                                                                $macro = $macroListUtente[$i];
+                                                                $found = false;
+
+                                                                foreach ($microListUtente as $micro) {
+
+                                                                    $m = $micro->getMicroCategoria();
+
+                                                                    if($m->getIdMacrocategoria()==$macro->getId()) {
+
+                                                                        if($found == false){
+                                                                            $found = true;
+
+                                                                            echo '<div class="row">
+                                                                                    <div class="col-lg-12 col-md-12 col-xs-12 '.$rowType.'">';
+                                                                            echo '    <span class="label label-default">'.$macro->getNome().'</span> ';
+
+
+                                                                            if($rowType== "simple-row") $rowType = "overlined-row";
+
+                                                                        }
+                                                                        randomColorLabel($m->getNome() . $m->getId(), $m->getNome());
+                                                                        echo " ";
+                                                                    }
+
+                                                                    if($found){
+                                                                        echo '  </div></div>';
+                                                                    }
+                                                                }
+                                                            }
+                                                        ?>
+
                                                     </div>
                                                 </div>
                                             </div>
