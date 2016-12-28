@@ -163,6 +163,140 @@ class MessaggioManager extends Manager
     }
 
     /**
+     * @param $id_candidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function setInviaCandidatura($id_candidatura){
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata' WHERE `id` = $id_candidatura ;";
+        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+
+
+    /**
+     * @param $id_candidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function setRifiutaCollaborazione($id_candidatura){
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'rifiutato' WHERE `id` = $id_candidatura ;";
+        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+
+
+    /**
+     * @param $id_candidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+
+    public function isInviaCollaborazione($id_candidatura){
+        $SET_CANDIDATURA = "SELECT COUNT(DISTINCT id) FROM candidatura  WHERE id = $id_candidatura AND richiesta_inviata = 'inviata';";
+        $result = Manager::getDB()->query($SET_CANDIDATURA);
+        if ($result) {
+            $obj = $result->fetch_assoc();
+            if ($obj['COUNT(DISTINCT id)'] > 0){
+                return true;
+             }else
+                return false;
+        }
+    }
+
+    /**
+     * @param $id_candidatura
+     * @return bool
+     */
+    public function isAccettaCollaborazione($id_candidatura){
+        $SET_CANDIDATURA = "SELECT COUNT(DISTINCT id) FROM candidatura  WHERE id = $id_candidatura AND richiesta_accettata = 'accettato';";
+        $result = Manager::getDB()->query($SET_CANDIDATURA);
+        if ($result) {
+            $obj = $result->fetch_assoc();
+            if ($obj['COUNT(DISTINCT id)'] > 0){
+                return true;
+            }else
+                return false;
+        }
+    }
+
+    /**
+     * @param $id_candidatura
+     * @return bool
+     */
+    public function isRifiutaCollaborazione($id_candidatura){
+        $SET_CANDIDATURA = "SELECT COUNT(DISTINCT id) FROM candidatura  WHERE id = $id_candidatura AND richiesta_accettata = 'rifiutato';";
+        $result = Manager::getDB()->query($SET_CANDIDATURA);
+        if ($result) {
+            $obj = $result->fetch_assoc();
+            if ($obj['COUNT(DISTINCT id)'] > 0){
+                return true;
+            }else
+                return false;
+        }
+    }
+
+
+    /**
+     * @param $id_candidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function setRifiutaCandidato($id_candidatura){
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET  richiesta_inviata = 'non_inviata' WHERE `id` = $id_candidatura ;";
+        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+
+
+    /**
+     * @param $id_candidatura
+     * @return bool
+     */
+    public function isRifiutaCandidato($id_candidatura){
+        $SET_CANDIDATURA = "SELECT COUNT(DISTINCT id) FROM candidatura  WHERE id = $id_candidatura AND richiesta_inviata = 'non_inviata';";
+        $result = Manager::getDB()->query($SET_CANDIDATURA);
+        if ($result) {
+            $obj = $result->fetch_assoc();
+            if ($obj['COUNT(DISTINCT id)'] > 0){
+                return true;
+            }else
+                return false;
+        }
+    }
+
+    /**
+     * @param $id_candidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function setAccettaCollaborazione($id_candidatura){
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_accettata = 'accettato' WHERE `id` = $id_candidatura ;";
+        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+
+    /**
      *
      * @param $idMittente
      * @param $idDestinatario
@@ -176,9 +310,26 @@ class MessaggioManager extends Manager
             } else
                 throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
         }
+        return true;
     }
 
-
+    /**
+     * @param $id_utente
+     * @param $id_destinatario
+     * @return array
+     */
+    public function isCandidato ($id_utente, $id_destinatario){
+        $LOAD_CANDIDATURE = "SELECT c.* FROM candidatura c, annuncio a WHERE c.id_utente = $id_destinatario AND a.id = c.id_annuncio AND a.id_utente = $id_utente";
+        $result = Manager::getDB()->query($LOAD_CANDIDATURE);
+        $candidature = array();
+        if ($result) {
+            while ($obj = $result->fetch_assoc()) {
+                $candidatura = new Candidatura($obj['id'], $obj['id_utente'], $obj['id_annuncio'], $obj['corpo'], $obj['data_risposta'], $obj['data_inviata'], $obj['richiesta_inviata'], $obj['richiesta_accettata']);
+                $candidature[] = $candidatura;
+            }
+        }
+        return $candidature;
+    }
 
 
     /**
