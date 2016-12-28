@@ -284,7 +284,10 @@ try {
                 break;
                 case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
-                break;        
+                break;
+            case 'cancellaMacroControl';
+                include_once CONTROL_DIR . "cancellaMacroControl.php";
+                break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;

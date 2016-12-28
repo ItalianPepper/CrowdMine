@@ -39,6 +39,11 @@ class MacroCategoriaManager extends Manager
         }
     }
 
+    public function deleteMacrocategoria($macrocategoria){
+        $id = $macrocategoria->getId();
+        $RIMUOVI_MACROCATEGORIA = "DELETE FROM macrocategoria WHERE id =$id";
+        Manager::getDB()->query($RIMUOVI_MACROCATEGORIA);
+    }
     private function insertMacroCategoria($nome)
     {
         $INSERT_MACRO_CATEGORIA = "INSERT INTO `macrocategoria`(`nome`) VALUES ('%s')";
