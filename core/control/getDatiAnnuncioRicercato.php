@@ -32,6 +32,7 @@ include_once MODEL_DIR . "/Commento.php";
     } else {
         $luogo = null;
     }
+
     if(isset($_POST['tipologia'])) {
         if (($_POST['tipologia']) != null) {
             $tipologia = $_POST['tipologia'];
@@ -60,10 +61,17 @@ include_once MODEL_DIR . "/Commento.php";
         $data = null;
     }
 
-    if(count($filters)==0){
+    if (isset($_POST['macrocategorie'])) {
+        echo $_POST['macrocategorie'];
+    } else {
+        echo "unset";
+    }
+
+
+if(count($filters)==0){
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Nessun filtro settato";
-        include_once VIEW_DIR . "ricercaAnnuncio.php";
+        //include_once VIEW_DIR . "ricercaAnnuncio.php";
     } else {
         try {
             //aggiungo altri filtri per non mostrare gli annunci eliminati e disattivati
@@ -78,11 +86,11 @@ include_once MODEL_DIR . "/Commento.php";
                 $_SESSION['listaCommenti'] = serialize($arrayCommenti);
                 $_SESSION['annunciRicercati'] = serialize($annunci);
                 $_SESSION['provenienza'] = serialize("ricerca");
-                include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
+                //include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
             } else {
                 $_SESSION['toast-type'] = "error";
                 $_SESSION['toast-message'] = "Nessun annuncio trovato";
-                include_once VIEW_DIR . "ricercaAnnuncio.php";
+                //include_once VIEW_DIR . "ricercaAnnuncio.php";
             }
 
         } catch (ApplicationException $e) {

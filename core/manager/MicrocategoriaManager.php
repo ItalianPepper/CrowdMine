@@ -87,6 +87,17 @@ class MicrocategoriaManager extends Manager
 
     }
 
+    public function findMicrocategoriaByIdMacro($idMacro){
+        $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id_macrocategoria='%s';";
+        $query = sprintf($FIND_MICRO_BY_ID, $idMacro);
+        $result = self::getDB()->query($query);
+        $row = $result->fetch_assoc();
+        return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
+
+    }
+
+
+
     public function findMicrocategoriaByNome($nome){
         $GET_MICRO_BY_NOME = "SELECT * FROM 'microcategoria' WHERE nome  ='%s'";
         $query = sprintf($GET_MICRO_BY_NOME, $nome);

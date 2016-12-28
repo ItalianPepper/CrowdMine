@@ -5,6 +5,11 @@
  * @version 1.0
  * @since 30/05/16
  */
+
+if (isset($_SESSION['macro'])) {
+    $macro = unserialize($_SESSION['macro']);
+
+}
 include_once VIEW_DIR . 'header.php';
 
 ?>
@@ -42,7 +47,7 @@ include_once VIEW_DIR . 'header.php';
                 data: {nome: stringa},
                 cache: false,
                 success: function (data) {
-                    var sel = document.getElementById("macro");
+                    var sel = document.getElementsByName("macrocategorie");
                     sel.innerHTML = data;
                 },
 
@@ -53,7 +58,7 @@ include_once VIEW_DIR . 'header.php';
 
         function caricaMicro(){
             var stringa = "micro";
-            var index = document.getElementById("macro").options[document.getElementById("macro").selectedIndex].value;
+            var index = document.getElementsByName("macrocategorie").options[document.getElementsByName("macrocategorie").selectedIndex].value;
             $.ajax({
                 type: "GET",
                 url: "asynAnnunci",
@@ -61,7 +66,7 @@ include_once VIEW_DIR . 'header.php';
                 cache: false,
 
                 success: function (data){
-                    var sel = document.getElementById("micro");
+                    var sel = document.getElementsByName("mcrocategorie");
                     sel.innerHTML = data;
                 }
             });
@@ -277,7 +282,7 @@ include_once VIEW_DIR . 'header.php';
                                         <option>Seleziona la macro categoria</option>
                                     </select>
 
-                                    <select id="micro"  name="microcategorie" style="margin-top: 3%">
+                                    <select id="micro" name="microcategorie" style="margin-top: 3%">
                                         <option selected="selected">Seleziona prima la macro</option>
                                     </select>
 
