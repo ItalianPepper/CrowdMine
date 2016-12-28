@@ -1,60 +1,5 @@
 <!DOCTYPE html>
 <html>
-<?php
-include_once MODEL_DIR."Utente.php";
-include_once MODEL_DIR.'MacroCategoria.php';
-include_once MODEL_DIR.'MicroCategoria.php';
-//include_once CONTROL_DIR.'SelezionaMacroControl.php';
-include_once MODEL_DIR  . 'MicroListObject.php';
-//include_once CONTROL_DIR  .  'SelezionaMicroControl.php';
-
-/*
-if(isset($_SESSSION['user'])){
-    $utente = $_SESSION['user'];
-}
-else{
-    $utente = new Utente("empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty");
-    //header("/home.php");
-}
-
-if (isset($_SESSION["macro"])){
-    $macroList = unserialize($_SESSION['macro']);
-    unset($_SESSION["macro"]);
-} else {
-    $_SESSION['toast-type'] = "error";
-    $_SESSION['toast-message'] = "macro non settata";
-    header("Location: " . DOMINIO_SITO);
-}
-
-if (isset($_SESSION["macroUtente"])){
-    $macroListUtente = unserialize($_SESSION['macroUtente']);
-    unset($_SESSION["macroUtente"]);
-} else {
-    $_SESSION['toast-type'] = "error";
-    $_SESSION['toast-message'] = "macro Utente non settata";
-    header("Location: " . DOMINIO_SITO);
-}
-
-if (isset($_SESSION["micro"])){
-    $microList = unserialize($_SESSION['micro']);
-    unset($_SESSION["micro"]);
-} else {
-    $_SESSION['toast-type'] = "error";
-    $_SESSION['toast-message'] = "micro non settata";
-    header("Location: " . DOMINIO_SITO);
-}
-
-if (isset($_SESSION["microUtente"])){
-    $microListUtente = unserialize($_SESSION['microUtente']);
-    unset($_SESSION["microUtente"]);
-} else {
-    $_SESSION['toast-type'] = "error";
-    $_SESSION['toast-message'] = "micro Utente non settata";
-    header("Location: " . DOMINIO_SITO);
-}
-*/
-?>
-
 <head>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
@@ -77,17 +22,12 @@ if (isset($_SESSION["microUtente"])){
     <script type="text/javascript">
         function caricaMicro(){
             var stringa = "micro";
-            var index = document.getElementById("macro").options[document.getElementById("macro").selectedIndex].value;
-            $.ajax({
-                type: "GET",
-                url: "asynAnnunci",
-                data: {nome:stringa,idMacro:index},
-                cache: false,
-                success: function (data){
-                    var sel = document.getElementById("micro");
-                    sel.innerHTML = data;
-                }
-            });
+            var index = $("#macro").val();
+            $.post("asyncMicroListByMacro",
+                {nome:stringa,idMacro:index},
+                function (data){
+                    var sel = $("#micro").html(data);
+                });
         }
     </script>
 
@@ -365,7 +305,7 @@ if (isset($_SESSION["microUtente"])){
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
                             <div class="title"><span class="highlight"><?php echo $user->getNome()." ".$user->getCognome()?></span></div>
-                            <div class="description"><?php echo $utente->getDescrizione();?></div>
+                            <div class="description"><?php echo $user->getDescrizione();?></div>
                         </div>
                     </div>
                 </div>
@@ -889,7 +829,8 @@ if (isset($_SESSION["microUtente"])){
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
                                                                 <span class="label label-default"><?php echo $micro->getMacroCategoria()->getNome() ?></span>
-                                                                <span class="label label-info"><?php echo $micro->getMicroCategoria()->getNome() ?></span>
+
+                                                                <?php randomColorLabel($micro->getMicroCategoria()->getNome(),$micro->getMicroCategoria()->getNome()) ?>
                                                             </div>
                                                             <div class="dropdown corner-dropdown">
 
@@ -940,11 +881,11 @@ if (isset($_SESSION["microUtente"])){
                                                                         <select class="form-control select2" name="idMacro" id="id-macro-selected">
                                                                             <?php
                                                                             foreach ($macroList as $macro) {
-                                                                                if(array_search($macro, $macroListUtente)!==FALSE) { ?>
+                                                                                ?>
                                                                                     <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
-                                                                                <?php   }
+                                                                                <?php
                                                                             } ?>
-                                                                            <option value="" selected>Seleziona la Macrocategoria</option>
+                                                                            <option value="" disabled selected>Seleziona la Macrocategoria</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-footer">
@@ -978,11 +919,11 @@ if (isset($_SESSION["microUtente"])){
                                                                         <select class="form-control select2" id="macro" onchange="caricaMicro()">
                                                                             <?php
                                                                             foreach ($macroList as $macro) {
-                                                                                if(array_search($macro, $macroListUtente)!==FALSE) { ?>
+                                                                                 ?>
                                                                                     <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
-                                                                                <?php   }
+                                                                                <?php
                                                                             } ?>
-                                                                            <option value="" selected>Seleziona la Macrocategoria</option>
+                                                                            <option value="" disabled selected>Seleziona la Macrocategoria</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="input-group">
@@ -990,7 +931,7 @@ if (isset($_SESSION["microUtente"])){
 																				<i class="fa fa-tags" aria-hidden="true"></i>
 																			</span>
                                                                         <select class="form-control select2" id="micro" name="idMicro" form="micro-input1">
-                                                                            <option value="" selected>Seleziona la Microcategoria</option>
+                                                                            <option value="" disabled selected>Seleziona la Microcategoria</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-footer">

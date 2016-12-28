@@ -207,15 +207,16 @@ try {
                 include_once CONTROL_DIR . "RimuoviMicroUtenteControl.php";
                 break;
             case 'SegnalazioneUtenteControl':
-                include_once MODEL_DIR . "Utente.php";
-                //StringUtils::checkPermission(RuoloUtente::MODERATORE);
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "SegnalazioneUtenteControl.php";
                 break;
             case 'aggiungiMacroUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "AggiungiMacroUtenteControl.php";
                 break;
-            case 'asynAnnunci':
-                include_once CONTROL_DIR . "asynAnnunci.php";
+            case 'asyncMicroListByMacro':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "asyncMicroListByMacro.php";
                 break;
             case 'aggiungiMicroUtente':
                 include_once CONTROL_DIR . "AggiungiMicroUtenteControl.php";
@@ -265,9 +266,9 @@ try {
             case 'utentiBannati':
                 include_once VIEW_DIR . "visualizzaUtentiBannati.php";
                 break;
-            case 'visualizzaUtentiSegnalati':
+            case 'UtentiSegnalati':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
-                include_once VIEW_DIR . "visualizzaUtentiSegnalati.php";
+                include_once CONTROL_DIR . "UtentiSegnalatiControl.php";
                 break;
             case 'annuncioUtenteLoggato';
                 include_once VIEW_DIR . "annuncioUtenteLoggato.php";

@@ -86,7 +86,6 @@ class MacroCategoriaManager extends Manager
             $macro = new MacroCategoria(null,$obj['nome']);
         }
         return $macro;
-
     }
 
     /**
@@ -103,16 +102,78 @@ class MacroCategoriaManager extends Manager
         return 0;
     }
 
+
     /**
-     * verify if the MacroCategoria already exists
-     * @param $macroCategoria
+     * get all macros, splitted in pages
+     *
+     * @param $page
+     * @param $pageSize
+     * @return array
      */
-    public function getMacrosPage($page,$pageSize)
+    public function getMacrosPage($page, $pageSize)
     {
         $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE 1 LIMIT %s,%s";
         $query = sprintf($GET_MACRO_BY_NAME,$page*$pageSize,$pageSize);
         $rs = Manager::getDB()->query($query);
         return $this->macroToArray($rs);
+    }
+
+    /**
+     * get all macros inside the sistem
+     * @param $macroCategoria
+     */
+    public function getAllMacros()
+    {
+        $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE 1";
+        $query = sprintf($GET_MACRO_BY_NAME);
+        $rs = Manager::getDB()->query($query);
+        return $this->macroToArray($rs);
+    }
+
+    /**
+     * get all macros for a certain userid
+     * @param $macroCategoria
+     */
+    public function getUserMacros($userid)
+    {
+        $GET_MACROS_BY_USERID = "SELECT macrocategoria.id,macrocategoria.nome 
+                              FROM macrocategoria JOIN microcategoria
+                                   ON macrocategoria.id = microcategoria.id_macrocategoria
+                                   JOIN competente
+                                   ON microcategoria.id = competente.id_microcategoria
+                              WHERE competente.id_utente = '%s'
+                              GROUP BY macrocategoria.id";
+        $query = sprintf($GET_MACROS_BY_USERID,$userid);
+        $rs = Manager::getDB()->query($query);
+        return $this->macroToArray($rs);
+    }
+
+    /**
+     * get a macro for a certain userid
+     * @param $macroCategoria
+     */
+    public function getUserMacro($userid,$macroid)
+    {
+        $GET_MACRO_BY_USERID = "SELECT macrocategoria.id,macrocategoria.nome 
+                              FROM macrocategoria JOIN microcategoria
+                                   ON macrocategoria.id = microcategoria.id_macrocategoria
+                                   JOIN competente
+                                   ON microcategoria.id = competente.id_microcategoria
+                              WHERE competente.id_utente = '%s' AND macrocategoria.id = '%s'
+                              GROUP BY macrocategoria.id";
+        $query = sprintf($GET_MACRO_BY_USERID,$userid,$macroid);
+        $rs = Manager::getDB()->query($query);
+
+        if (!$rs) {
+            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        if($rs->num_rows < 1){
+            return false;
+        }else{
+            $obj = $rs->fetch_assoc();
+            return new MacroCategoria($obj['id'], $obj['nome']);
+        }
     }
 
     /**

@@ -22,8 +22,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($user)) {
 
         $idVisitedUser = $_POST['idUser'];
         $visitedUser = $manager->findUtenteById($idVisitedUser);
-        //controllo se esiste l'utente
-        if (isset($visitedUser) && ($visitedUser->getId()!=null) ) {
+        //check if user exists
+        if (isset($visitedUser) && ($visitedUser->getId()!=null)) {
+
+            /*
+             * if the visitedUser is an admin, it cannot be banned.
+             * Same if visitedUser is a moderator and the current user is not an admin.
+            */
+            if($visitedUser->getRuolo() == RuoloUtente::AMMINISTRATORE ||
+                ($visitedUser->getRuolo() == RuoloUtente::MODERATORE && $user->getRuolo() != RuoloUtente::AMMINISTRATORE) ){
+                $_SESSION['toast-type'] = "error";
+                $_SESSION['toast-message'] = "Accesso Negato";
+                header("Location:" . $referer);
+                throw new IllegalArgumentException("Accesso Negato");
+            }
 
             $manager->updateStatusUtente($visitedUser,StatoUtente::BANNATO);
 

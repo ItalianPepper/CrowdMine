@@ -253,7 +253,12 @@ class UtenteManager extends Manager{
         $query = sprintf($GET_UTENTI_SEGNALATI, StatoUtente::SEGNALATO);
         $result = $connection->query($query);
         $users = array();
-        foreach($result->fetch_assoc() as $u){
+
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$LOGIN_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        while($u = $result->fetch_assoc()){
             $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }

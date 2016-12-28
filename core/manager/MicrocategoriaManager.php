@@ -2,6 +2,7 @@
 
 include_once MODEL_DIR . 'Macrocategoria.php';
 include_once MODEL_DIR . 'Microcategoria.php';
+include_once MODEL_DIR . 'MicroListObject.php';
 include_once MANAGER_DIR  .  'Manager.php';
 /**
  * Created by PhpStorm.
@@ -28,7 +29,7 @@ class MicrocategoriaManager extends Manager
      * @return Microcategoria
      */
     public function createMicrocategoria($id, $nomeMicro, $idMacro){
-        return new Microcategoria($id, $nomeMicro, $idMacro);
+        return new Microcategoria($idMacro,$nomeMicro,$id);
     }
 
     /**
@@ -79,6 +80,75 @@ class MicrocategoriaManager extends Manager
             return false;
     }
 
+    /**
+     * get all micros for a certain userid
+     * @param $microCategoria
+     */
+    public function getUserMicros($userid)
+    {
+        $GET_MICROS_BY_USERID = "SELECT microcategoria.id,microcategoria.nome,microcategoria.id_macrocategoria,macrocategoria.nome as macroNome 
+                              FROM microcategoria JOIN competente
+                                   ON microcategoria.id = competente.id_microcategoria
+                                    JOIN macrocategoria
+                                   ON macrocategoria.id = microcategoria.id_macrocategoria
+                              WHERE competente.id_utente = '%s' AND macrocategoria.nome!= microcategoria.nome
+                              GROUP BY microcategoria.id";
+
+        $query = sprintf($GET_MICROS_BY_USERID,$userid);
+        $result = self::getDB()->query($query);
+
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        $listaMicro = array();
+        while($m=$result->fetch_assoc()){
+            $micro = new MicroListObject($this->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']),
+                                        new MacroCategoria($m['id_macrocategoria'], $m['macroNome']));
+            array_push($listaMicro,$micro);
+        }
+        return $listaMicro;
+    }
+
+    /**
+     * get all micros for a certain Macro
+     * @param $microCategoria
+     */
+    public function getMicrosByMacro($macroid)
+    {
+        //join with macro, to avoid special micros
+        $GET_MICROS_BY_MACROID = "SELECT microcategoria.id,microcategoria.nome,microcategoria.id_macrocategoria 
+                              FROM microcategoria JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id
+                              WHERE microcategoria.id_macrocategoria = '%s' AND macrocategoria.nome!= microcategoria.nome
+                              GROUP BY microcategoria.id";
+
+        $query = sprintf($GET_MICROS_BY_MACROID,$macroid);
+        $result = self::getDB()->query($query);
+        $listaMicro = array();
+        while($m=$result->fetch_assoc()){
+            $micro = $this->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
+            array_push($listaMicro,$micro);
+        }
+        return $listaMicro;
+    }
+
+    /**
+     * @param $idMicro
+     */
+    public function getSpecialMicro($idMicro){
+        $GET_SPECIAL_MICRO = "SELECT microcategoria.* 
+                                FROM microcategoria,macrocategoria
+                                WHERE microcategoria.nome = macrocategoria.nome AND macrocategoria.id='%s'";
+        $query = sprintf($GET_SPECIAL_MICRO, $idMicro);
+        $result = self::getDB()->query($query);
+        if($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
+        }else
+            return false;
+    }
+
     public function findMicrocategoriaById($idMicro){
         $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id=%s;";
 
@@ -88,8 +158,11 @@ class MicrocategoriaManager extends Manager
         $GET_MICRO_BY_NOME = "SELECT * FROM 'microcategoria' WHERE nome  ='%s'";
         $query = sprintf($GET_MICRO_BY_NOME, $nome);
         $result = self::getDB()->query($query);
-        $row = $result->fetch_assoc();
-        return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
+        if($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
+        }else
+            return false;
     }
 
     /**
@@ -101,9 +174,9 @@ class MicrocategoriaManager extends Manager
         $FIND_ALL = "SELECT * FROM 'microcategoria'";
         $result = self::getDB()->query($FIND_ALL);
         $listaMicro = array();
-        foreach($result->fetch_assoc() as $m){
+        while($m = $result->fetch_assoc()){
             $micro = $this->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
-            array_push($micro);
+            array_push($listaMicro,$micro);
         }
         return $listaMicro;
     }

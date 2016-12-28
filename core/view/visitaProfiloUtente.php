@@ -388,7 +388,6 @@
                                     </div>
 
                                     <?php
-
                                 }
                             }
                             ?>
@@ -1033,7 +1032,7 @@
                         <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <form action="CancellaAccount" method="POST" class="form form-horizontal" id="tel-input">
+                                    <form action="" method="POST" class="form form-horizontal" id="tel-input">
 
                                         <input type="hidden" name="idUser" value="<?php echo $visitedUser->getId(); ?>">
                                         <input type="hidden" name="referer" value="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$visitedUser->getId(); ?>">

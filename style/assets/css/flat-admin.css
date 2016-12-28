@@ -1932,7 +1932,7 @@ a:hover {
 	padding: 15px;
 	word-wrap: break-word;
 	border-top: none; }
-  .overlined-row .checkbox{
+  .overlined-row .checkbox, .simple-row .checkbox{
 	margin: 0 !important;
 	float: right; }
 

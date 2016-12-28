@@ -27,7 +27,7 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="visualizzaUtentiSegnalati">Utenti</a></li>
+                        <li><a href="UtentiSegnalati">Utenti</a></li>
                         <li><a href="visualizzaAnnunciSegnalati">Annunci</a></li>
                         <li><a href="visualizzaFeedbackSegnalati">Feedback</a></li>
                         <li><a href="visualizzaCommentiSegnalati">Commenti</a></li>
