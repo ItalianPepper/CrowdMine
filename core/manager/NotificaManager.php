@@ -8,7 +8,7 @@ include_once MODEL_DIR . "Notifica.php";
  * Date: 30/11/2016
  * Time: 11.16
  */
-class NotificaManager extends Manager
+class NotificaManager extends Manager implements SplObserver
 {
     /**
      * NotificaManager constructor.
@@ -25,9 +25,9 @@ class NotificaManager extends Manager
      * @param Double $idDestinatario
      */
 
-    public function createNotifica($id, $data, $tipo, $info, $letto)
+    public function createNotifica($data, $tipo, $info, $letto,$id=null)
     {
-        $notifica = new Notifica($id, $data, $tipo, $info, $letto);
+        $notifica = new Notifica($data, $tipo, $info, $letto,$id);
         return $notifica;
     }
 
@@ -41,6 +41,8 @@ class NotificaManager extends Manager
             } else
                 throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
         }
+        $id = mysqli_insert_id();
+        return $id;
     }
 
 
@@ -124,6 +126,21 @@ class NotificaManager extends Manager
             }
         }
         return $listIdNotifica;
+    }
+
+    public function update(SplSubject $subject)
+    {
+        $notifica = $subject->getNotifica();
+        $notificaId = $this->insertNotifica($notifica->getData(), $notifica->getTipo(), $notifica->getInfo(), $notifica->getLetto(),$notifica->getId());
+
+        $json = json_decode($notifica->getInfo());
+        $idOggetto = $json["ID"];
+
+        $um = new UtenteManager();
+        $destinatari = $um->getListaDestinatari($idOggetto);
+
+        $this->sendToDispatcher($destinatari, $notificaId);
+
     }
 
 }
