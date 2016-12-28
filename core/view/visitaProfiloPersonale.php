@@ -735,38 +735,7 @@
                                                                 </div>
                                                             </div>
                                                         <?php } ?>
-                                                        <!--<div class="row">
-                                                            <div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-                                                                <span class="label label-primary">Informatica</span>
-                                                            </div>
 
-                                                            <div class="dropdown corner-dropdown">
-
-                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="#">Rimuovi</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-                                                                <span class="label label-success">Graphic Design</span>
-                                                            </div>
-
-                                                            <div class="dropdown corner-dropdown">
-
-                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="#">Rimuovi</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
--->
                                                         <div class="row" id="add-macro">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
                                                                 <a onclick="$('#add-macro').toggleWith('#macro-input')" >
@@ -842,23 +811,6 @@
                                                                 </ul>
                                                             </div>
                                                         </div> <?php }?>
-                                                        <!--<div class="row">
-                                                            <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
-                                                                <span class="label label-default">Informatica</span>
-                                                                <span class="label label-warning">Javascript</span>
-                                                            </div>
-
-                                                            <div class="dropdown corner-dropdown">
-
-                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="#">Rimuovi</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>-->
-
                                                         <div class="row" id="add-micro">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
                                                                 <a onclick="$('#add-micro').toggleWith('#micro-input')" >
@@ -878,7 +830,7 @@
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-tag" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2" name="idMacro" id="id-macro-selected">
+                                                                        <select class="form-control select2" name="macro" id="id-macro-selected">
                                                                             <?php
                                                                             foreach ($macroList as $macro) {
                                                                                 ?>
@@ -916,7 +868,7 @@
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-tag" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2" id="macro" onchange="caricaMicro()">
+                                                                        <select class="form-control select2" name="macro" id="macro" onchange="caricaMicro()">
                                                                             <?php
                                                                             foreach ($macroList as $macro) {
                                                                                  ?>

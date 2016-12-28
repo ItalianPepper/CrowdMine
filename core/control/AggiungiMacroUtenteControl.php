@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Id aggiungi Macro non settata";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
+        header("Location:" . DOMINIO_SITO . "/ProfiloPersonale");
         throw new IllegalArgumentException("Id aggiungi Macro non settata");
     }
 

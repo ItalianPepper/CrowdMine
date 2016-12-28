@@ -334,7 +334,10 @@ class UtenteManager extends Manager{
     public function addMicroCategoria($user,$microcategoria){
         $ADD_MICROCATEGORIA = "INSERT INTO competente (id_microcategoria, id_utente) VALUES('%s', '%s');";
         $query = sprintf($ADD_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
-        self::getDB()->query($query);
+        $result = self::getDB()->query($query);
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
     }
 
     /**
@@ -343,8 +346,30 @@ class UtenteManager extends Manager{
      */
     public function removeMicroCategoria($user, $microcategoria){
         $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
-        $query = sprintf($REMOVE_MICROCATEGORIA, $user, $microcategoria);
-        self::getDB()->query($query);
+        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoria,$user);
+        $result = self::getDB()->query($query);
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+    }
+
+    /**
+     * @param $userId
+     * @param $macroId
+     */
+    public function removeMacroCategoria($userid, $macroId){
+        $REMOVE_MACROCATEGORIA = "DELETE FROM competente WHERE EXISTS
+                                        (	SELECT 1
+	                                        FROM microcategoria JOIN macrocategoria
+		                                          ON microcategoria.id_macrocategoria = macrocategoria.id
+	                                        WHERE macrocategoria.id='%s' AND microcategoria.id = competente.id_microcategoria
+	                                        AND competente.id_utente='%s')";
+        $query = sprintf($REMOVE_MACROCATEGORIA, $macroId,$userid);
+
+        $result = self::getDB()->query($query);
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
     }
 
     /**

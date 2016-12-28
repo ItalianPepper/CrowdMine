@@ -57,4 +57,11 @@ class MicroCategoria
         $this->nome = $nome;
     }
 
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 }

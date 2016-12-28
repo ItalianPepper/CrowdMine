@@ -7,6 +7,7 @@
  */
 include_once MANAGER_DIR.'UtenteManager.php';
 include_once MODEL_DIR.'MicroCategoria.php';
+include_once CONTROL_DIR . "ControlUtils.php";
 include_once MANAGER_DIR.'MicrocategoriaManager.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,45 +17,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     /**
      * Checking if the POST variable are septate
      */
-    if (isset($_POST['idMicro']) && !isset($_POST['newMicro'])) {
-        $microId = strip_tags(htmlspecialchars(addslashes($_POST['idMicro'])));
-    } else if (isset($_POST['newMicro'])){
-        if(!isset($_POST['idMacro'])){
+
+    if(isset($_POST['macro'])){
+        $idMacro = testInput($_POST['macro']);
+    }else{
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Macro non settata";
+        header("Location:" . DOMINIO_SITO . "/ProfiloPersonale");
+        throw new IllegalArgumentException("Macro non settata");
+    }
+
+
+    if(isset($_POST['newMicro'])) {
+        //micro creation
+        $micro = new MicroCategoria($idMacro,testInput($_POST['newMicro']));
+        $microId = $microManager->addMicrocategoria($micro);
+
+        if($microId==0){
             $_SESSION['toast-type'] = "error";
-            $_SESSION['toast-message'] = "Macro non settata";
-            header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-            throw new IllegalArgumentException("Macro non settata");
-        } else if(empty($_POST['idMacro'])){
-            $_SESSION['toast-type'] = "error";
-            $_SESSION['toast-message'] = "Macro id empty";
-            header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-            throw new IllegalArgumentException("Macro id empty");
-        } else if(empty($_POST['newMicro'])) {
-            $_SESSION['toast-type'] = "error";
-            $_SESSION['toast-message'] = "Nome nuova Micro empty";
-            header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-            throw new IllegalArgumentException("Nome nuova Micro empty");
-        } else {
-            $micro = new MicroCategoria(strip_tags(htmlspecialchars(addslashes($_POST['idMacro']))),
-                strip_tags(htmlspecialchars(addslashes($_POST['mewMicro']))));
+            $_SESSION['toast-message'] = "Micro non valida";
+            header("Location:" . DOMINIO_SITO . "/ProfiloPersonale");
+            throw new IllegalArgumentException("Micro non valida");
         }
-    } else {
-        $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Id aggiungi Micro non settata";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-        throw new IllegalArgumentException("Id aggiungi Micro non settata");
+
+        $micro->setId($microId);
+    }else{
+        //micro add
+        if (isset($_POST['idMicro'])) {
+            $microId = testInput($_POST['idMicro']);
+        }else {
+            $_SESSION['toast-type'] = "error";
+            $_SESSION['toast-message'] = "Micro non settata";
+            header("Location:" . DOMINIO_SITO . "/ProfiloPersonale");
+            throw new IllegalArgumentException("Micro non settata");
+        }
+
+        $micro = $microManager->findMicrocategoriaById($microId);
+
     }
 
-    if (empty($microId) && empty($micro)){
+    if($micro==false){
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Id aggiungi micro empty";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
-        throw new IllegalArgumentException("Id aggiungi micro empty");
-    } else if(empty($micro)) {
-       // $micro = $microManager->findMicrocategoriaById($microId);
+        $_SESSION['toast-message'] = "Micro inesistente";
+        header("Location:" . DOMINIO_SITO . "/ProfiloPersonale");
+        throw new IllegalArgumentException("Micro inesistente");
     }
-
-    //$userManager->addMicroCategoria($user, $microId);
-
-    header("Location:" . DOMINIO_SITO . "/visitaProfiloPersonale");
+    $userManager->addMicroCategoria($user, $micro);
+    $_SESSION['toast-type'] = "success";
+    $_SESSION['toast-message'] = "Microcategoria Aggiunta";
 }
+
+header("Location:" . DOMINIO_SITO . "/ProfiloPersonale");
