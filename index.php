@@ -58,6 +58,7 @@ try {
     include_once UTILS_DIR . "ErrorUtils.php";
     include_once UTILS_DIR . "StringUtils.php";
     include_once EXCEPTION_DIR . "ApplicationException.php";
+    include_once MODEL_DIR  .  'Utente.php';
 
     if (!defined("TESTING")) {
         switch (isset($_URL[0]) ? $_URL[0] : '') {
@@ -73,6 +74,10 @@ try {
             case 'ProfiloUtente':
                 $user = StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "ProfiloUtenteControl.php";
+                break;
+            case 'ProfiloPersonale':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "ProfiloPersonaleControl.php";
                 break;
             case 'visitaProfiloPersonale':
                 include_once VIEW_DIR . "visitaProfiloPersonale.php";
@@ -155,19 +160,31 @@ try {
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
             case 'segnalaUtente':
+                $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "SegnalaUtente.php";
                 break;
             case 'feedbackListRetrive':
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
             	break;
-            case 'cancellaAccount':
+            case 'CancellaAccount':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "CancellazioneUtente.php";
                 break;
             case 'riattivaUtente':
+                $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "RiattivaUtente.php";
                 break;
             case 'banUtente':
+                $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "BanUtente.php";
+                break;
+            case 'eleggiModeratore':
+                $user = StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                include_once CONTROL_DIR . "EleggiModeratore.php";
+                break;
+            case 'destituisciModeratore':
+                $user = StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                include_once CONTROL_DIR . "DestituisciModeratore.php";
                 break;
             case 'ProfiloPersonale':
                 include_once CONTROL_DIR . "VisualizzaProfiloPersonaleControl.php";
@@ -180,6 +197,7 @@ try {
                 include_once CONTROL_DIR . "inserisciFeedbackControl.php";
                 break;
             case 'modificaPassword':
+                $user = StringUtils::checkPermission(RuoloUtente::UTENTE);
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
                 break;
             case 'rimuoviMacroUtenteControl':
@@ -205,16 +223,23 @@ try {
             case 'ListaUtentiBannati':
                 include_once CONTROL_DIR . "ListaUtentiBannati.php";
                 break;
+            case "ricercaUtente":
+                include_once CONTROL_DIR . "RicercaUtente.php";
+                break;
             case 'paginaPrincipaleModeratore':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
                 break;
             case 'visualizzaAnnunciSegnalati':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "visualizzaAnnunciSegnalati.php";
                 break;
             case 'visualizzaFeedbackSegnalati':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "visualizzaFeedbackSegnalati.php";
                 break;
             case 'visualizzaIndexMacrocategorie':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "visualizzaIndexMacrocategorie.php";
                 break;
             case 'IndexMacrocategorie':
@@ -222,10 +247,14 @@ try {
                 include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
                 break;
             case 'visualizzaIndexMicrocategorie':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "visualizzaIndexMicrocategorie.php";
                 break;
             case 'visualizzaIndexStatistiche':
                 include_once VIEW_DIR . "visualizzaIndexStatistiche.php";
+                break;
+            case 'risultatoRicercaUtente':
+                include_once VIEW_DIR . "RisultatiRicercaUtente.php";
                 break;
             case 'visualizzaRicorsiAlBan':
                 include_once VIEW_DIR . "visualizzaRicorsiAlBan.php";
@@ -237,6 +266,7 @@ try {
                 include_once VIEW_DIR . "visualizzaUtentiBannati.php";
                 break;
             case 'visualizzaUtentiSegnalati':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "visualizzaUtentiSegnalati.php";
                 break;
             case 'annuncioUtenteLoggato';

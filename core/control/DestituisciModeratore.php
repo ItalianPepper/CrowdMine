@@ -2,38 +2,33 @@
 /**
  * Created by PhpStorm.
  * User: Hacca
- * Date: 18/12/2016
- * Time: 16:55
+ * Date: 05/12/2016
+ * Time: 10:33
  */
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
+include_once CONTROL_DIR . 'ControlUtils.php';
 
 $manager = new UtenteManager();
 
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-    $idUtenteEsterno = $_POST['idUser'];
-    $userEsterno = $manager->findUtenteById($idUtenteEsterno);
-    if (isset($userEsterno) && ($userEsterno->getId()!=null) ) {
-        if ($user->getRuolo() == "amministratore"){
-            $userEsterno->setRuolo("utente");
-            $manager->updateUtente($userEsterno);
+$referer = DOMINIO_SITO;
 
-            header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR."ProfiloUtente?user=".$userEsterno->getId());
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($user)) {
 
-        }else{
-            //L'utente non è un amministratore
-            header("location: " . DOMINIO_SITO);
+    $referer = getReferer($referer,"referer");
+
+    if(isset($_POST['idUser'])){
+
+        $idVisitedUser = $_POST['idUser'];
+        $visitedUser = $manager->findUtenteById($idVisitedUser);
+        //controllo se esiste l'utente
+        if (isset($visitedUser) && ($visitedUser->getId()!=null) ) {
+
+            $manager->updateRoleUtente($visitedUser,RuoloUtente::UTENTE);
+
         }
     }
-    else{
-        //L'utente esterno non esiste la form è stata modificata
-        header("location: " . DOMINIO_SITO);
-    }
+}
 
-}
-else {
-    //L'utente non è settato nella sessione
-    header("location: " . DOMINIO_SITO);
-}
+header("location: " . $referer);

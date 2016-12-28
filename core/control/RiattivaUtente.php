@@ -2,49 +2,33 @@
 /**
  * Created by PhpStorm.
  * User: Hacca
- * Date: 15/12/2016
- * Time: 12:19
+ * Date: 05/12/2016
+ * Time: 10:33
  */
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
+include_once CONTROL_DIR . 'ControlUtils.php';
 
 $manager = new UtenteManager();
-$urlDellaChiamata = $_POST_['urlDellaChiamata'];
 
+$referer = DOMINIO_SITO;
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($user)) {
 
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-    $idUtenteEsterno = $_POST['idUser'];
-    $userEsterno = $manager->findUtenteById($idUtenteEsterno);
+    $referer = getReferer($referer,"referer");
 
-    if (isset($userEsterno) && ($userEsterno->getId()!=null) ) {
-        if (($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")) {
-            $userEsterno->setStato("attivo");
-            $manager->updateUtente($userEsterno);
+    if(isset($_POST['idUser'])){
 
-            if($urlDellaChiamata == "ProfiloUtente"){
-                //permette di essere reindirizzato dalla pagina da cui viene chiamato il control
-                header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR.$urlDellaChiamata."?user=".$userEsterno->getId());
-            }
-            elseif ($urlDellaChiamata == "utentiBannati"){
-                header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR."ListaUtentiBannati");
-            }
-            else {
-                //significa che è stato manomessa la form, modificato il campo url da dove chiama
-                header("location: " . DOMINIO_SITO);
-            }
+        $idVisitedUser = $_POST['idUser'];
+        $visitedUser = $manager->findUtenteById($idVisitedUser);
+        //controllo se esiste l'utente
+        if (isset($visitedUser) && ($visitedUser->getId()!=null) ) {
 
-        }else {
-            header("location: " . DOMINIO_SITO);
+            $manager->updateStatusUtente($visitedUser,StatoUtente::ATTIVO);
+
         }
-
-    } else {
-        header("location: " . DOMINIO_SITO);
     }
-
-
-} else {
-    header("location: " . DOMINIO_SITO);
 }
+
+header("location: " . $referer);

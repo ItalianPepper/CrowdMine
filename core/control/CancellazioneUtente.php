@@ -15,19 +15,18 @@ include_once MANAGER_DIR."Manager.php";
 $manager = new UtenteManager();
 
 
-if(isset($_SESSION['user'])){
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($user)){
 
-    $user = unserialize($_SESSION['user']);
     $password = $_POST['inputPassword'];
     if($user->getPassword()==$password){
-        $manager->deleteUserData($user);
+        $manager->disableUtente($user);
         session_destroy();
-        header ("location: ".DOMINIO_SITO);
+        header ("location: ".DOMINIO_SITO."/auth");
     }
     else{
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Password errata";
-        header ("location: ".DOMINIO_SITO.DIRECTORY_SEPARATOR."visitaProfiloPersonale");
+        header ("location: ".DOMINIO_SITO.DIRECTORY_SEPARATOR."ProfiloPersonale");
     }
 }
 else{

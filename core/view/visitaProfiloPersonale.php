@@ -4,11 +4,11 @@
 include_once MODEL_DIR."Utente.php";
 include_once MODEL_DIR.'MacroCategoria.php';
 include_once MODEL_DIR.'MicroCategoria.php';
-include_once CONTROL_DIR.'SelezionaMacroControl.php';
+//include_once CONTROL_DIR.'SelezionaMacroControl.php';
 include_once MODEL_DIR  . 'MicroListObject.php';
-include_once CONTROL_DIR  .  'SelezionaMicroControl.php';
+//include_once CONTROL_DIR  .  'SelezionaMicroControl.php';
 
-
+/*
 if(isset($_SESSSION['user'])){
     $utente = $_SESSION['user'];
 }
@@ -52,6 +52,7 @@ if (isset($_SESSION["microUtente"])){
     $_SESSION['toast-message'] = "micro Utente non settata";
     header("Location: " . DOMINIO_SITO);
 }
+*/
 ?>
 
 <head>
@@ -363,7 +364,8 @@ if (isset($_SESSION["microUtente"])){
                     <div class="card-body app-heading">
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
-                            <div class="title"><span class="highlight"><?php echo $utente->getNome()." ".$utente->getCognome()?></span></div>
+                            <div class="title"><span class="highlight"><?php echo $user->getNome()." ".$user->getCognome()?></span></div>
+                            <div class="description"><?php echo $utente->getDescrizione();?></div>
                         </div>
                     </div>
                 </div>
@@ -414,7 +416,7 @@ if (isset($_SESSION["microUtente"])){
                                                                 Email
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-                                                                <?php echo $utente->getEmail();?>
+                                                                <?php echo $user->getEmail();?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
@@ -473,7 +475,7 @@ if (isset($_SESSION["microUtente"])){
                                                                 Tel.
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-                                                                <?php echo $utente->getTelefono();?>
+                                                                <?php echo $user->getTelefono();?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
@@ -498,7 +500,7 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-phone" aria-hidden="true"></i>
 																			</span>
-                                                                        <input id="numberTelephoneChange" type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="<?php echo $utente->getTelefono()?>">
+                                                                        <input id="numberTelephoneChange" type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="<?php echo $user->getTelefono()?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -592,7 +594,7 @@ if (isset($_SESSION["microUtente"])){
                                                                 Nome
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-8 simple-row">
-                                                                <?php echo $utente->getNome() ?>
+                                                                <?php echo $user->getNome() ?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
@@ -616,7 +618,7 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="text" class="form-control" placeholder="Nuovo Nome" aria-describedby="basic-addon1" value="<?php echo $utente->getNome() ?>">
+                                                                        <input type="text" class="form-control" placeholder="Nuovo Nome" aria-describedby="basic-addon1" value="<?php echo $user->getNome() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -634,7 +636,7 @@ if (isset($_SESSION["microUtente"])){
                                                                 Cognome
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-                                                                <?php echo $utente->getCognome() ?>
+                                                                <?php echo $user->getCognome() ?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
@@ -658,7 +660,7 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="text" class="form-control" placeholder="Nuovo Cognome" aria-describedby="basic-addon1" value="<?php echo $utente->getCognome() ?>">
+                                                                        <input type="text" class="form-control" placeholder="Nuovo Cognome" aria-describedby="basic-addon1" value="<?php echo $user->getCognome() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -676,7 +678,7 @@ if (isset($_SESSION["microUtente"])){
                                                                 Data di nascita
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-                                                                <?php echo $utente->getDataNascita() ?>
+                                                                <?php echo $user->getDataNascita() ?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
@@ -700,7 +702,7 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-calendar" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="date" class="form-control" aria-describedby="basic-addon1" value="<?php echo $utente->getDataNascita() ?>">
+                                                                        <input type="date" class="form-control" aria-describedby="basic-addon1" value="<?php echo $user->getDataNascita() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -718,7 +720,7 @@ if (isset($_SESSION["microUtente"])){
                                                                 Localit&agrave;
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-                                                                <?php echo $utente->getCitta() ?>
+                                                                <?php echo $user->getCitta() ?>
                                                             </div>
 
                                                             <div class="dropdown corner-dropdown">
@@ -742,7 +744,7 @@ if (isset($_SESSION["microUtente"])){
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-map-marker" aria-hidden="true"></i>
 																			</span>
-                                                                        <input type="text" class="form-control" placeholder="Nuova Localit&agrave;" aria-describedby="basic-addon1" value="<?php echo $utente->getCitta() ?>">
+                                                                        <input type="text" class="form-control" placeholder="Nuova Localit&agrave;" aria-describedby="basic-addon1" value="<?php echo $user->getCitta() ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -1216,7 +1218,7 @@ if (isset($_SESSION["microUtente"])){
                                             <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse5">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
-                                                        Cancellalazione Account
+                                                        Cancellazione Account
                                                     </h4>
                                                     <p>Se lo desideri, puoi eliminare il tuo account dal sistema</p>
                                                 </div>
@@ -1231,17 +1233,15 @@ if (isset($_SESSION["microUtente"])){
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <form action="CancellalaAccount" class="form form-horizontal" id="tel-input">
-                                                                <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-                                                                    <div class="form-footer">
-                                                                        <div class="form-group">
-                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit" class="btn btn-danger pull-right">Cancellala Account</button>
-                                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
+                                                                <div class="form-footer">
+                                                                    <div class="form-group">
+                                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                            <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#CancelAccountModal">Cancella Account</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1265,7 +1265,27 @@ if (isset($_SESSION["microUtente"])){
                             fugiat nullaip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                             velit esse cillum dolore eu fugiat nulla
                         </div>
+                    </div>
 
+                    <div class="modal fade" id="CancelAccountModal" tabindex="-1" role="dialog" aria-labelledby="CancelAccountModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="CancellaAccount" method="POST" class="form form-horizontal" id="tel-input">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Sei sicuro di voler eliminare il tuo Account?</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Inserisci la password per cancellare il tuo Account.</p>
+                                        <input type="password" class="form-control" name="inputPassword" placeholder="Password" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                        <button type="submit" class="btn btn-sm btn-success">Cancella Account</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
