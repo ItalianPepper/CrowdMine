@@ -72,7 +72,7 @@ class UtenteManager extends Manager{
         $query = sprintf($CERCA_UTENTE, $userId);
         $result = $connection->query($query);
         $row = $result->fetch_assoc();
-        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['dataNascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['immagineProfilo']);
+        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['dataNascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], null);
     }
 
     /**
@@ -81,7 +81,7 @@ class UtenteManager extends Manager{
      * @param $nome
      * @param $cognome
      * @return array
-     */
+    
     private function findUtenteByUserName($nome, $cognome){
         $users = array();
         $GET_UTENTE_BY_USERNAME = "SELECT * FROM utente WHERE nome='%s' cognome='%s';";
@@ -93,7 +93,8 @@ class UtenteManager extends Manager{
         }
         return $users;
     }
-
+     */
+    
     /**
      * Find a user
      *
