@@ -310,10 +310,10 @@ class UtenteManager extends Manager{
      *
      * @return Utente[] A list of User that follows a microcategoria
      */
-    public function microcategoryUtente($microcategoria){
+    public function getListUtentiByMicrocategoria($microcategoria){
         $users = array();
-        $FIND_USERS_BY_MACRO = "SELECT utente.id, utente.nome, utente.cognome, utente.descrizione, utente.telefono, utente.data_nascita, utente.citta, utente.email, utente.password, utente.ruolo, utente.stato, utente.immagine_profilo FROM utente, annuncio, riferito WHERE riferito.id_annuncio = annuncio.id and annuncio.id_utente=utente.id and riferito.id_microcategoria = %s;";
-        $query = sprintf($FIND_USERS_BY_MACRO, $microcategoria->getId());
+        $FIND_USERS_BY_MICRO = "SELECT utente.id, utente.nome, utente.cognome, utente.descrizione, utente.telefono, utente.data_nascita, utente.citta, utente.email, utente.password, utente.ruolo, utente.stato, utente.immagine_profilo FROM utente, annuncio, riferito WHERE riferito.id_annuncio = annuncio.id and annuncio.id_utente=utente.id and riferito.id_microcategoria = %s;";
+        $query = sprintf($FIND_USERS_BY_MICRO, $microcategoria->getId());
         $result = self::getDB()->query($query);
         foreach($result->fetch_assoc() as $r){
             $user = $this->createUserFromRow($r);
@@ -321,6 +321,27 @@ class UtenteManager extends Manager{
         }return $users;
     }
 
+    public function getListUtentiByMacrocategoria($macrocategoria){
+        $users = array();
+        $FIND_USERS_BY_MACRO = "SELECT utente.id, utente.nome, utente.cognome, utente.descrizione, utente.telefono, utente.data_nascita, utente.citta, utente.email, utente.password, utente.ruolo, utente.stato, utente.immagine_profilo FROM utente, annuncio, riferito, microcategoria WHERE riferito.id_annuncio = annuncio.id and annuncio.id_utente=utente.id and riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s';";
+        $query = sprintf($FIND_USERS_BY_MACRO, $macrocategoria->getId());
+        $result = self::getDB()->query($query);
+        foreach($result->fetch_assoc() as $r){
+            $user = $this->createUserFromRow($r);
+            array_push($users, $user);
+        }return $users;
+    }
 
-
+    public function getMicroCategoryByUtente($user){
+        $list = array();
+        $idUtente = $user->getId();
+        $GET_CATEGORY_BY_ID = "SELECT microcategoria.id, microcategoria.nome, microcategoria.id_macrocategoria FROM microcategoria, competente WHERE competente.id_utente = '%s' AND microcategoria.id = competente.id_microcategoria";
+        $query = sprintf($GET_CATEGORY_BY_ID, $idUtente);
+        $result = self::getDB()->query($query);
+        foreach($result->fetch_assoc() as $m){
+            $microManager = new MicrocategoriaManager();
+            $micro = $microManager->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
+            array_push($list, $micro);
+        }return $list;
+    }
 }
