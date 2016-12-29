@@ -347,7 +347,7 @@
 
                                 <?php
                                 if (($user->getRuolo() == RuoloUtente::MODERATORE) || ($user->getRuolo() == RuoloUtente::AMMINISTRATORE)) {
-                                    if (($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                    if ($visitedUser->getStato() != StatoUtente::BANNATO && $visitedUser->getStato() != StatoUtente::RICORSO) {
                                         ?>
                                         <div class="profile-action">
                                             <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/banUtente','Sei sicuro di voler bannare <strong><?php echo $fullname ?></strong>?' )"
@@ -357,7 +357,7 @@
                                             </button>
                                         </div>
                                         <?php
-                                    } elseif ($visitedUser->getStato() == StatoUtente::BANNATO) {
+                                    } elseif ($visitedUser->getStato() == StatoUtente::BANNATO || $visitedUser->getStato() == StatoUtente::RICORSO) {
 
                                         ?>
                                         <div class="profile-action">

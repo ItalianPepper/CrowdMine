@@ -224,7 +224,8 @@ try {
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "AggiungiMicroUtenteControl.php";
                 break;
-            case 'ListaUtentiBannati':
+            case 'UtentiBannati':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "ListaUtentiBannati.php";
                 break;
             case "ricercaUtente":
@@ -265,9 +266,6 @@ try {
                 break;
             case 'visualizzaRicorsiAnnunci':
                 include_once VIEW_DIR . "visualizzaRicorsiAnnunci.php";
-                break;
-            case 'utentiBannati':
-                include_once VIEW_DIR . "visualizzaUtentiBannati.php";
                 break;
             case 'UtentiSegnalati':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);

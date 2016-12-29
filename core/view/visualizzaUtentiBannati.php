@@ -1,15 +1,5 @@
 <!DOCTYPE html>
 <html>
-
-<?php
-if (isset($_SESSION["utentiBannati"])){
-    $utentiBannati =  unserialize($_SESSION["utentiBannati"]);
-    unset($_SESSION["utentiBannati"]);
-}else{
-    header("Location: " . DOMINIO_SITO);
-}
-?>
-
 <head>
     <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
@@ -222,8 +212,8 @@ if (isset($_SESSION["utentiBannati"])){
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="media social-post">
                                         <div class="media-left">
-                                            <a href="#">
-                                                <img src="<?php echo $utente->getImmagineProfilo(); ?>"/>
+                                            <a href="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$utente->getId()?>">
+                                                <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
                                             </a>
                                         </div>
                                         <div class="section">
@@ -232,14 +222,20 @@ if (isset($_SESSION["utentiBannati"])){
                                                     <div class="pull-left">
                                                         <div class="media-heading">
                                                             <h4 class="title"><?php echo $utente->getNome()." ".$utente->getCognome(); ?></h4>
+                                                            <div class="description"><?php echo $utente->getDescrizione() ?></div>
                                                         </div>
+                                                    </div>
+                                                    <div class="pull-right" style="margin-top: 4px">
+                                                        <button type="button" class="btn btn-warning btn-xs" <?php if($utente->getStato()!=StatoUtente::RICORSO) echo "disabled";?>>
+                                                            <i class="fa fa-bullhorn"></i> Ricorso
+                                                        </button>
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-xs-12 pull-left"
                                                          style="padding:0px">
                                                         <div class="media-action">
                                                             <form action="riattivaUtente" method="post">
                                                                 <input type="hidden" name="idUser" value="<?php echo $utente->getId(); ?>">
-                                                                <input type="hidden " name="urlDellaChiamata" value="utentiBannati" >
+                                                                <input type="hidden" name="referer" value="UtentiBannati" >
                                                                 <button type="submit" class="btn btn-link"><i class="fa fa-check"></i>
                                                                     Riattiva
                                                                 </button>

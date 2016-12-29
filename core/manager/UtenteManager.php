@@ -279,7 +279,7 @@ class UtenteManager extends Manager implements SplSubject {
         $query = sprintf($GET_UTENTI_BANNATI, StatoUtente::BANNATO);
         $result = $connection->query($query);
         $users = array();
-        foreach($result->fetch_assoc() as $u){
+        while($u=$result->fetch_assoc()){
             $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }
@@ -291,10 +291,11 @@ class UtenteManager extends Manager implements SplSubject {
      */
     public function getAppealUtente(){
         $users = array();
-        $GET_APPEAL_USERS = "SELECT * FROM 'utente' WHERE stato='%s'";
-        $query = sprintf($GET_APPEAL_USERS, StatoUtente::RICORSO);
+        $GET_APPEAL_USERS = "SELECT * FROM utente WHERE stato='%s' OR stato='%s' ";
+        $query = sprintf($GET_APPEAL_USERS, StatoUtente::RICORSO,StatoUtente::BANNATO);
         $result = self::getDB()->query($query);
-        foreach($result->fetch_assoc() as $u){
+        $users = array();
+        while($u=$result->fetch_assoc()){
             $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }

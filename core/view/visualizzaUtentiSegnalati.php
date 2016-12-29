@@ -212,11 +212,6 @@
 						<div class="row">
 							<div class="col-lg-12 col-md-12 col-xs-12">
 								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-<!--											<img src="<?php /*echo STYLE_DIR; */?>assets\images\profile.png"/>
--->										</a>
-									</div>
                                     <div class="section">
                                         <?php
                                         for ($i=0; $i<count($usersReported);$i++) {
