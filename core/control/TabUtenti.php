@@ -10,33 +10,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["macrocategorie"])) {
 
-        if ($_POST["macrocategorie"] == "utenti") {
+        if ($_POST["macrocategorie"] == "utenti") { //fatto
 
-            // $utenteManager = new UtenteManager();
-            //$resultMacro = $utenteManager->getTopRatedMacroCategorieUtenti();
-
-            $resultMacroUtenti = stubMacroUtenti();
+            $macroCategoriaManager = new MacroCategoriaManager();
+            $resultMacroUtenti = $macroCategoriaManager->findBestMacrocategoria();
 
             header("Content-Type:application/json");
             echo json_encode($resultMacroUtenti);
 
-
         } else if ($_POST["macrocategorie"] == "annunci") {
+            $annuncioManager = new AnnuncioManager();
 
             $resultMacroAnnunci = stubMacroAnnunci();
             header("Content-Type:application/json");
             echo json_encode($resultMacroAnnunci);
         }
 
-    } else if (isset($_POST["macroCategoriaUtenti"]) && isset($_POST["initpage"])) {
+    } else if (isset($_POST["macroCategoriaUtenti"]) && isset($_POST["initpage"])) { //fatto
 
-        //$utenteManager = new UtenteManager();
-
-        //$resultMicro = array();
-
-        //$resultMicro = $utenteManager->getListTopRatedMicroCategorie($macroCategoriaSelected);
-
-        $resultMicroUtenti = stubMicroUtenti();
+        $macro = $_POST["macroCategoriaUtenti"];
+        $microCategoriaManager = new MicrocategoriaManager();
+        $resultMicroUtenti = $microCategoriaManager->findBestMicrocategoria($macro);
 
         header("Content-Type:application/json");
         echo json_encode($resultMicroUtenti);
