@@ -10,16 +10,6 @@ include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 
 $manager = new UtenteManager();
+$utentiBannati = $manager->getAppealUtente();
 
-if(isset($_SESSION['user'])){
-    $user = unserialize($_SESSION['user']);
-    if(($user->getRuolo() == "moderatore") || ($user->getRuolo() == "amministratore")){
-        $userList = $manager->getBannedUtente();
-        $_SESSION['utentiBannati'] = serialize($userList);
-        header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR."utentiBannati");
-    }else{
-        header("location: " . DOMINIO_SITO);
-    }
-}else{
-    header("location: " . DOMINIO_SITO);
-}
+include_once VIEW_DIR . "visualizzaUtentiBannati.php";

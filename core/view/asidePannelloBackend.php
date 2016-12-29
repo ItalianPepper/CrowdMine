@@ -57,7 +57,7 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="visualizzaUtentiBannati">Lista Utenti Bannati</a></li>
+                        <li><a href="UtentiBannati">Lista Utenti Bannati</a></li>
                         <li><a href="visualizzaIndexStatistiche">Statistiche</a></li>
                     </ul>
                 </div>

@@ -68,9 +68,6 @@ try {
             case 'template':
                 header("location: http://crowdmine.altervista.org/dist/html/");
                 break;
-            case 'visitaProfiloUtente':
-                include_once VIEW_DIR . "visitaProfiloUtente.php";
-                break;
             case 'ProfiloUtente':
                 $user = StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "ProfiloUtenteControl.php";
@@ -78,9 +75,6 @@ try {
             case 'ProfiloPersonale':
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "ProfiloPersonaleControl.php";
-                break;
-            case 'visitaProfiloPersonale':
-                include_once VIEW_DIR . "visitaProfiloPersonale.php";
                 break;
             case 'visualizzaStatisticheMacroCategorie':
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
@@ -185,11 +179,7 @@ try {
             case 'destituisciModeratore':
                 $user = StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "DestituisciModeratore.php";
-                break;
-            case 'ProfiloPersonale':
-                include_once CONTROL_DIR . "VisualizzaProfiloPersonaleControl.php";
-                break;
-            case 'cercaAnnunci':
+                break;            case 'cercaAnnunci':
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "CercaAnnunci.php";
                 break;
@@ -224,7 +214,8 @@ try {
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "AggiungiMicroUtenteControl.php";
                 break;
-            case 'ListaUtentiBannati':
+            case 'UtentiBannati':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "ListaUtentiBannati.php";
                 break;
             case "ricercaUtente":
@@ -265,9 +256,6 @@ try {
                 break;
             case 'visualizzaRicorsiAnnunci':
                 include_once VIEW_DIR . "visualizzaRicorsiAnnunci.php";
-                break;
-            case 'utentiBannati':
-                include_once VIEW_DIR . "visualizzaUtentiBannati.php";
                 break;
             case 'UtentiSegnalati':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);

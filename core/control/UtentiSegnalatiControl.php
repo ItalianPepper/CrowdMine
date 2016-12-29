@@ -14,4 +14,7 @@ $userManager = new UtenteManager();
 
 $usersReported = $userManager->getReportedUtente();
 
+if($user->getRuolo()==RuoloUtente::AMMINISTRATORE)
+$usersAdmin = $userManager->getAdminStateUtente();
+
 include VIEW_DIR."/visualizzaUtentiSegnalati.php";
