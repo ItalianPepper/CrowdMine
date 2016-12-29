@@ -1,26 +1,29 @@
 <?php
 
 
-include_once MANAGER_DIR . 'AnnuncioManager.php';
+include_once MANAGER_DIR ."/AnnuncioManager.php";
+
+$idUtente = 4;
 
 
-$manager = new AnnuncioManager(); /* Declaration and initialization a manager variable */
-
-//qui mancano le implementazioni dei manager utente per la registrazione e la login
-//$utente = unserialize($_SESSION['utente']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to user's info, given from session*/
-//$idUtente = $utente->getId(); /* Declaration and initialization a user variable contain the user id */
-$idAnnuncio = $_POST["idAnnuncio"];
-
-try{
-    $manager->removeFromFavorites($idAnnuncio,1);
-    $_SESSION['toast-type'] = "success";
-    $_SESSION['toast-message'] = "L'annuncio è stato rimosso dai preferiti";
-    header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");
-} catch (ApplicationException $a){
-    $_SESSION['toast-type'] = "error";
-    $_SESSION['toast-message'] = "Errore nel rimuovere l'annuncio dai preferiti";
-    header("Location:" . DOMINIO_SITO . "/annuncioUtenteLoggato");
+if (isset($_GET["id"])) {
+    $idAnnuncio = $_GET["id"];
+    $managerAnnuncio = new AnnuncioManager(); /* Declaration and initialization a manager variable */
+    try {
+        $preferiti = $managerAnnuncio->removeFromFavorites($idAnnuncio, $idUtente);
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "L'annuncio è stato rimosso dai preferiti";
+        include_once CONTROL_DIR . "visualizzaPreferiti.php";
+    } catch (ApplicationException $a) {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Problemi con la rimozione dai preferiti";
+        include_once CONTROL_DIR . "visualizzaPreferiti.php";
+    }
 }
 
+
+else {
+    echo "qui ci va la pagina 404 di errore";
+}
 
 ?>

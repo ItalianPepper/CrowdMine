@@ -253,17 +253,17 @@ include_once VIEW_DIR . 'header.php';
                             <i class="fa fa-legal" aria-hidden="true" style="font-size: 200%"></i>
                         </a>
 
-                        <a href="rimuoviPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
-                            <i class="fa fa-close" aria-hidden="true" style="font-size: 200%"></i>
+                        <a href="aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
+                            <i class="fa fa-star" aria-hidden="true" style="font-size: 200%"></i>
                         </a>
 
                     </div>
 
                     <div class="card-body">
                         <div class="comment more" style="word-wrap: break-word;">
-                            <?php echo $annunci[$i]->getDescrizione();?>
+                                <?php echo $annunci[$i]->getDescrizione();?>
                         </div>
-                        <br>
+                            <br>
 
                         <div style="margin-top: 3%">
                             <span class="label label-primary">Informatica</span>

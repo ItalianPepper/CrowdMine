@@ -26,7 +26,8 @@ if($idUtente == null) {//in futuro sarà di sessione
     }
     $_SESSION['commenti'] = serialize($arrayCommenti);
     $_SESSION['annunci'] = serialize($annunci);
-    include_once VIEW_DIR . "home.php";
+    //include_once VIEW_DIR . "home.php";
+    include_once VIEW_DIR . "annuncioNew.php";
 
 ?>
 

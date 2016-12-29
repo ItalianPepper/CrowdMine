@@ -1,19 +1,23 @@
 <?php
 include_once MANAGER_DIR ."/AnnuncioManager.php";
-$managerAnnuncio = new AnnuncioManager(); /* Declaration and initialization a manager variable */
-$idAnnuncio = $_POST["idAnnuncio"]; /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to annuncio's info, given from session */
-try{
-    $managerAnnuncio->reportAnnuncio($idAnnuncio);
-    $_SESSION['toast-type'] = "success";
-    $_SESSION['toast-message'] = "L'annuncio è stato segnalato";
-    header("Location:" . DOMINIO_SITO . "/visualizzaAnnunciRicercati");
 
-} catch (ApplicationException $a){
-    $_SESSION['toast-type'] = "error";
-    $_SESSION['toast-message'] = "Problemi con la segnalazione";
-    header("Location: " . DOMINIO_SITO ."/visualizzaAnnunciRicercati");
+if (isset($_GET["id"])) {
+    $idAnnuncio = $_GET["id"];
+    $managerAnnuncio = new AnnuncioManager(); /* Declaration and initialization a manager variable */
+    try{
+        $managerAnnuncio->reportAnnuncio($idAnnuncio);
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "L'annuncio è stato segnalato";
+        include_once CONTROL_DIR . "visualizzaHome.php";
+
+    } catch (ApplicationException $a){
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Problemi con la segnalazione";
+        include_once CONTROL_DIR . "visualizzaHome.php";
+    }
+
+} else {
+    echo "qui ci va la pagina 404 di errore";
 }
-
-
 
 ?>

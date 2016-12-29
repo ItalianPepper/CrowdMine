@@ -1,28 +1,43 @@
 <?php
 
 
-include MANAGER_DIR . 'AnnuncioManager.php';
+include_once MANAGER_DIR ."/AnnuncioManager.php";
 
-$manager = new AnnuncioManager(); /* Declaration and initialization a manager variable */
+$idUtente = 4;
 
-//qui mancano le implementazioni dei manager utente per la registrazione e la login
-//$utente = unserialize($_SESSION['utente']); /* Declaration and initialization a user variable contain an unserialized version of a parameter who reference to user's info, given from session*/
-//$idUtente = $utente->getId(); /* Declaration and initialization a user variable contain the user id */
-$dataAggiuntaAiPreferiti = new DateTime();
-$data = $dataAggiuntaAiPreferiti->format("Y-m-d H:i:s");
-try{
-    $idAnnuncio = $_POST["idAnnuncio"];
-    $manager->addToFavorites($idAnnuncio,1,$data);
-    $_SESSION['toast-type'] = "success";
-    $_SESSION['toast-message'] = "L'annuncio è stato aggiunto ai preferiti";
-    header("Location:" . DOMINIO_SITO . "/getHome");
-} catch (ApplicationException $a){
-    $_SESSION['toast-type'] = "error";
-    $_SESSION['toast-message'] = "Errore nell'aggiungere l'annuncio ai preferiti";
-    header("Location:" . DOMINIO_SITO . "/getHome");
+$dataPubblicazione = new DateTime();
+$data = $dataPubblicazione->format("Y-m-d H:i:s");
+
+if (isset($_GET["id"])) {
+    $idAnnuncio = $_GET["id"];
+    $managerAnnuncio = new AnnuncioManager(); /* Declaration and initialization a manager variable */
+    $preferiti = $managerAnnuncio->getFavorite($idUtente);
+    for ($i = 0; $i < count($preferiti); $i++) {
+        if ($preferiti[$i]->getId() == $idAnnuncio) {
+            $_SESSION['toast-type'] = "error";
+            $_SESSION['toast-message'] = "L'annuncio è già stato aggiunto ai preferiti";
+            include_once CONTROL_DIR . "visualizzaHome.php";
+        }
+    }
+
+    try {
+        $managerAnnuncio->addToFavorites($idAnnuncio, $idUtente, $data);
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "L'annuncio è stato aggiunto ai preferiti";
+        include_once CONTROL_DIR . "visualizzaHome.php";
+    } catch (ApplicationException $a) {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Problemi con l'aggiunta ai preferiti";
+        include_once CONTROL_DIR . "visualizzaHome.php";
+    }
 }
 
 
-
+else {
+        echo "qui ci va la pagina 404 di errore";
+    }
 
 ?>
+
+
+

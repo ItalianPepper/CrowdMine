@@ -1,16 +1,32 @@
 <?php
-include_once MANAGER_DIR . "/AnnuncioManager.php";
-/**
- * Created by PhpStorm.
- * User: Angelo
- * Date: 13/12/2016
- * Time: 16:54
- */
-//$utente = unserialize($_SESSION["utente"]);
-//$idUtente = $utente->getId();
-$idUtente = "1";
-$managerAnnuncio = new AnnuncioManager();
-$ann = $managerAnnuncio->getFavorite($idUtente);
-$_SESSION["listaAnnunciPreferiti"] = serialize($ann);
-include_once VIEW_DIR. "annunciPreferiti.php";
+
+include_once MANAGER_DIR . 'AnnuncioManager.php';
+include_once CONTROL_DIR . "ControlUtils.php";
+include_once EXCEPTION_DIR . "IllegalArgumentException.php";
+include_once FILTER_DIR . 'SearchByDateInterval.php';
+include_once MODEL_DIR . "/Commento.php";
+
+$idUtente = 4;
+$managerAnnunci = new AnnuncioManager();
+$filters = array();
+$arrayCommenti = array();
+
+if($idUtente != null) {//in futuro sarà di sessione
+    $annunci = $managerAnnunci->getFavorite($idUtente);
+
+} else {
+    //qui si devono impostare i filtri a seconda delle microcategorie di interesse dell'utente loggato
+    array_push($filters,new SearchByNotStatus(ELIMINATO));
+    array_push($filters,new SearchByNotStatus(DISATTIVATO));
+    array_push($filters,new SearchByNotStatus(REVISIONE));
+    $annunci = $managerAnnunci->searchAnnuncio($filters);
+}
+for ($i=0; $i<count($annunci); $i++) {
+    array_push($arrayCommenti, $managerAnnunci->getCommentsbyId($annunci[$i]->getId()));
+}
+$_SESSION['commenti'] = serialize($arrayCommenti);
+$_SESSION['annunci'] = serialize($annunci);
+include_once VIEW_DIR . "annunciPreferiti.php";
+
 ?>
+
