@@ -764,6 +764,7 @@
                                                                                     <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
                                                                                 <?php   }
                                                                             } ?>
+                                                                            <option value="" disabled selected>Seleziona la Macrocategoria</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-footer">

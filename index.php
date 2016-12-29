@@ -241,9 +241,9 @@ try {
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "IndexMacrocategorieControl.php";
                 break;
-            case 'visualizzaIndexMicrocategorie':
+            case 'IndexMicrocategorie':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
-                include_once VIEW_DIR . "visualizzaIndexMicrocategorie.php";
+                include_once CONTROL_DIR . "IndexMicrocategorieControl.php";
                 break;
             case 'visualizzaIndexStatistiche':
                 include_once VIEW_DIR . "visualizzaIndexStatistiche.php";
@@ -270,14 +270,24 @@ try {
             case 'inserisciAnnuncio';
                 include_once VIEW_DIR . "inserisciAnnuncio.php";
                 break;
-                case 'modificaAnnuncio';
+            case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
                 break;
             case 'cancellaMacroControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "cancellaMacroControl.php";
                 break;
+            case 'cancellaMicroControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
+                include_once CONTROL_DIR . "cancellaMicroControl.php";
+                break;
             case 'InserisciNuovaMacroControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "InserisciNuovaMacroControl.php";
+                break;
+            case 'InserisciNuovaMicroControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
+                include_once CONTROL_DIR . "InserisciNuovaMicroControl.php";
                 break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');

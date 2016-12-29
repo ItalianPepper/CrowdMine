@@ -56,7 +56,7 @@ class MicrocategoriaManager extends Manager
      * @param Microcategoria $microcategoria
      */
     public function deleteMicrocategoria($microcategoria){
-        $RIMUOVI_MICROCATEGORIA = "DELETE FROM 'microcategoria' WHERE id = '%s'";
+        $RIMUOVI_MICROCATEGORIA = "DELETE FROM microcategoria WHERE id = '%s'";
         $query = sprintf($RIMUOVI_MICROCATEGORIA, $microcategoria->getId());
         self::getDB()->query($query);
     }
@@ -67,7 +67,7 @@ class MicrocategoriaManager extends Manager
      * @param Microcategoria $microcategoria
      */
     public function editMicrocategoria($microcategoria){
-        $CHANGE_NOME_MICRO = "UPDATE 'microcategoria' SET nome='%s', id_macrocategoria='%s' WHERE id='%s'";
+        $CHANGE_NOME_MICRO = "UPDATE microcategoria SET nome='%s', id_macrocategoria='%s' WHERE id='%s'";
         $query = sprintf($CHANGE_NOME_MICRO, $microcategoria->getNome(), $microcategoria->getIdMacrocategoria());
         self::getDB()->query($query);
     }
@@ -85,6 +85,49 @@ class MicrocategoriaManager extends Manager
         }else
             return false;
     }
+
+    /**
+     * total size of micros excluding special micros
+     * @return int
+     */
+    public function getMicroCount(){
+        $GET_MICRO_COUNT = "SELECT COUNT(microcategoria.id) as num
+                            FROM microcategoria JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id
+                            WHERE macrocategoria.nome != microcategoria.nome";
+        $rs = Manager::getDB()->query($GET_MICRO_COUNT);
+        if($rs){
+            $obj = mysqli_fetch_assoc($rs);
+            return $obj['num'];
+        }
+        return 0;
+    }
+
+    /**
+     * get all micros, splitted in pages
+     *
+     * @param $page
+     * @param $pageSize
+     * @return array
+     */
+    public function getMicrosPage($page, $pageSize)
+    {
+        $GET_MICRO_PAGE = "SELECT microcategoria.*,macrocategoria.nome as macroNome 
+                            FROM microcategoria JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id
+                            WHERE macrocategoria.nome != microcategoria.nome LIMIT %s,%s";
+        $query = sprintf($GET_MICRO_PAGE,$page*$pageSize,$pageSize);
+
+        $rs = Manager::getDB()->query($query);
+        $listaMicro = array();
+        while($m=$rs->fetch_assoc()){
+            $micro = new MicroListObject($this->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']),
+                new MacroCategoria($m['id_macrocategoria'], $m['macroNome']));
+            array_push($listaMicro,$micro);
+        }
+        return $listaMicro;
+    }
+
 
     /**
      * get all micros for a certain userid
