@@ -92,21 +92,37 @@ class MacroCategoriaManager extends Manager
      * @return array|bool
      */
 
-public function findListMacorocategoria()
-{
-    $lista = array();
-    $FIND_LIST_MACROCATEGORIA =
-        "SELECT macrocategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto 
-             FROM macrocategoria, competente, microcategoria 
-             WHERE microcategoria.id = competente.id_microcategoria AND macrocategoria.id IN (SELECT microcategoria.id_macrocategoria FROM macrocategoria) 
-             GROUP BY macrocategoria.nome;";
-    $result = self::getDB()->query($FIND_LIST_MACROCATEGORIA);
-    if (result != 0) {
-        foreach ($result->fetch_assoc() as $l) {
-            array_push($lista, $l);
+    public function findListMacorocategoria()
+    {
+        $lista = array();
+        $FIND_LIST_MACROCATEGORIA =
+            "SELECT macrocategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto 
+                 FROM macrocategoria, competente, microcategoria 
+                 WHERE microcategoria.id = competente.id_microcategoria AND macrocategoria.id IN (SELECT microcategoria.id_macrocategoria FROM macrocategoria) 
+                 GROUP BY macrocategoria.nome;";
+        $result = self::getDB()->query($FIND_LIST_MACROCATEGORIA);
+        if (result != 0) {
+            foreach ($result->fetch_assoc() as $l) {
+                array_push($lista, $l);
+            }
+            return $lista;
         }
-        return $lista;
+        return false;
     }
-    return false;
-}
+
+    public function findBestMacrocategoria(){
+        $lista = array();
+        $FIND_BEST_USER_BY_MACROCATEGORIA =
+            "SELECT macrocategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto
+             FROM microcategoria, macrocategoria, competente
+             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = macrocategoria.id
+             GROUP BY competente.id_microcategoria
+             ;";
+        $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
+        if(result != 0){
+            foreach($result->fetch_assoc() as $l){
+                array_push($lista, $l);
+            }return $lista;
+        }return false;
+    }
 }
