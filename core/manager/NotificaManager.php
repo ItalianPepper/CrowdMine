@@ -33,7 +33,7 @@ class NotificaManager extends Manager implements SplObserver
 
     public function insertNotifica($data, $tipo, $info, $letto)
     {
-        $INSERT_NOTIFICA = "INSERT INTO `Notifica` ( 'date` , `tipo`, `info` , `letto` ) VALUES (%s', '%s', '%s', '%s');";
+        $INSERT_NOTIFICA = "INSERT INTO Notifica ( 'date' , 'tipo', 'info' , 'letto' ) VALUES ('%s', '%s', '%s', '%s')";
         $query = sprintf($INSERT_NOTIFICA, $data, $tipo, $info, $letto);
         if (!Manager::getDB()->query($query)) {
             if (Manager::getDB()->errno == 1062) {
@@ -58,7 +58,7 @@ class NotificaManager extends Manager implements SplObserver
         $size = count($listaUtenti);
         for ($i = 0; $i < $size; $i++) {
             $idDestinatario = $listaUtenti[$i];
-            $INSERT_IN_DISPATCHER = "INSERT INTO `Dispatcher_notifica` (`id_utente`, `id_notifica`) VALUES ('%s', '%s');";
+            $INSERT_IN_DISPATCHER = "INSERT INTO Dispatcher_notifica ('id_utente', 'id_notifica') VALUES ('%s', '%s')";
             $query = sprintf($INSERT_IN_DISPATCHER, $idDestinatario, $idNotifica);
             if (!Manager::getDB()->query($query)) {
                 if (Manager::getDB()->errno == 1062) {
@@ -116,7 +116,7 @@ class NotificaManager extends Manager implements SplObserver
      */
     public function loadFromDispatcher($idUtente)
     {
-        $LOAD_DISPATCHER = "SELECT * FROM `Dispatcher_notifica` WHERE `id_utente` = $idUtente;";
+        $LOAD_DISPATCHER = "SELECT * FROM Dispatcher_notifica WHERE id_utente= $idUtente;";
         $result = Manager::getDB()->query($LOAD_DISPATCHER);
         $listIdNotifica = array();
         if ($result) {
@@ -140,41 +140,41 @@ class NotificaManager extends Manager implements SplObserver
     {
         $wrapperNotifica = $subject->getWrapperNotifica();
 
-        $tipoNotifica = $wrapperNotifica["TIPONOTIFICA"];
+        $tipoNotifica = $wrapperNotifica["tipo_notifica"];
         $destinatari = $wrapperNotifica["lista_utenti"];
 
         if ($tipoNotifica == tipoNotifica::INSERIMENTO) {
 
-            $tipoOggetto = $wrapperNotifica["TIPOOGETTO"];
-            $idOggetto = $wrapperNotifica["ID"];
-            $nomeOggetto = $wrapperNotifica["NOME"];
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
             $data = new DateTime();
 
             $this->notifyInserimento($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $data,$destinatari);
 
         } else if ($tipoNotifica == tipoNotifica::RISOLUZIONE) {
-            $tipoOggetto = $wrapperNotifica["TIPOOGETTO"];
-            $idOggetto = $wrapperNotifica["ID"];
-            $nomeOggetto = $wrapperNotifica["NOME"];
-            $esito = $wrapperNotifica["ESITO"];
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
+            $esito = $wrapperNotifica[ElementiInfoNotifica::ESITO_OGGETTO];
             $data = new DateTime();
 
             $this->notifyRisoluzione($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $esito, $data,$destinatari);
 
         } else if ($tipoNotifica == tipoNotifica::DECISIONE) {
-            $tipoOggetto = $wrapperNotifica["TIPOOGETTO"];
-            $idOggetto = $wrapperNotifica["ID"];
-            $nomeOggetto = $wrapperNotifica["NOME"];
-            $tipo = $wrapperNotifica["TIPO"];
-            $esito = $wrapperNotifica["ESITO"];
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
+            $tipo = $wrapperNotifica[ElementiInfoNotifica::TIPO_PER_DECISIONE];
+            $esito = $wrapperNotifica[ElementiInfoNotifica::ESITO_OGGETTO];
             $data = new DateTime();
 
             $this->notifyDecisione($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $tipo, $esito, $data, $destinatari);
 
         } else if ($tipoNotifica == tipoNotifica::SEGNALAZIONE) {
-            $tipoOggetto = $wrapperNotifica["TIPOOGETTO"];
-            $idOggetto = $wrapperNotifica["ID"];
-            $nomeOggetto = $wrapperNotifica["NOME"];
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
             $data = new DateTime();
 
             $this->notifySegnalazione($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $data,$destinatari);
