@@ -273,6 +273,27 @@ class UtenteManager extends Manager implements SplSubject {
     /**
      * @return array
      */
+    public function getAdminStateUtente(){
+        $connection = self::getDB();
+        $GET_UTENTI_SEGNALATI_IN_ADMIN = "SELECT * FROM utente WHERE stato='%s'";
+        $query = sprintf($GET_UTENTI_SEGNALATI_IN_ADMIN, StatoUtente::AMMINISTRATORE);
+        $result = $connection->query($query);
+        $users = array();
+
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        while($u = $result->fetch_assoc()){
+            $user = $this->createUserFromRow($u);
+            array_push($users, $user);
+        }
+        return $users;
+    }
+
+    /**
+     * @return array
+     */
     public function getBannedUtente(){
         $connection = self::getDB();
         $GET_UTENTI_BANNATI = "SELECT * FROM utente WHERE stato='%s'";
