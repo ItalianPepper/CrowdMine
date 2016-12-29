@@ -29,15 +29,16 @@ class MacroCategoriaManager extends Manager
      * @param $nome
      * @return MacroCategoria
      */
-    public function createMacrocategoria($nome)
-    {
-        $macroCategoria = new MacroCategoria($nome);
-        if ($this->verifyMacroCategoria($macroCategoria)) {
-            $this->insertMacroCategoria($nome);
-        } else {
-            header("Location: ". getReferer(DOMINIO_SITO) ); // ADD TOAST NOTIFICATION
-            throw new IllegalArgumentException(ErrorUtils::$VALORE_DUPLICATO);
+    public function addMacrocategoria($nome){
+        $AGGIUNGI_MACRO = "INSERT INTO macrocategoria(nome) VALUES('%s')";
+        $query = sprintf($AGGIUNGI_MACRO, $nome);
+
+        if (!Manager::getDB()->query($query)) {
+            return 0;
         }
+
+        /*auto generated id of the micro previously created*/
+        return Manager::getDB()->insert_id;
     }
 
     public function deleteMacrocategoria($macrocategoria){

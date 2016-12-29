@@ -237,9 +237,6 @@
                                                         <ul class="dropdown-menu pull-right"
                                                             aria-labelledby="dropdownMenu">
                                                             <li>
-                                                                <a onclick="$('#edit-macro<?php echo $macro->getId()?>').toggleWith('#edit-macro-input<?php echo $macro->getId()?>')">Modifica</a>
-                                                            </li>
-                                                            <li>
                                                                 <a onclick="$('#macro-<?php echo $macro->getId()?>').submit()">Rimuovi</a>
                                                             </li>
                                                             <form  id="macro-<?php echo $macro->getId()?>" action="cancellaMacroControl" method="post">
@@ -248,41 +245,6 @@
                                                             </form>
                                                         </ul>
                                                     </div>
-                                                </div>
-                                                <!-- FORM MODIFICA !-->
-                                                <div class="row">
-                                                    <form class="form form-horizontal" id="edit-macro-input<?php echo $macro->getId()?>"
-                                                          style="display:none">
-                                                        <div class="col-lg-2 col-md-2 hidden-sm hidden-xs <?php echo $rowType ?>">
-
-                                                        </div>
-                                                        <div class="col-lg-5 col-md-6 col-xs-12 <?php echo $rowType ?>">
-                                                            <div class="input-group">
-															<span class="input-group-addon" id="basic-addon1">
-																<i class="fa fa-tag" aria-hidden="true"></i>
-															</span>
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Nuova Macrocategoria"
-                                                                       aria-describedby="basic-addon1"
-                                                                       value="<?php echo $macro->getNome()?>">
-                                                            </div>
-                                                            <div class="form-footer">
-                                                                <div class="form-group">
-                                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                        <button type="submit"
-                                                                                class="btn btn-primary pull-right">
-                                                                            Save
-                                                                        </button>
-                                                                        <button type="button"
-                                                                                class="btn btn-default pull-right"
-                                                                                onclick="$('#edit-macro-input<?php echo $macro->getId()?>').toggleWith('#edit-macro<?php echo $macro->getId()?>')">
-                                                                            Cancel
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
                                                 </div>
                                                 <?php
                                             }

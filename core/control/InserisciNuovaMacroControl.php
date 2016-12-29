@@ -7,7 +7,9 @@
  */
 include_once CONTROL_DIR . "ControlUtils.php";
 include_once MANAGER_DIR . "MacroCategoriaManager.php";
+include_once MANAGER_DIR . "MicrocategoriaManager.php";
 include_once MODEL_DIR . "MacroCategoria.php";
+include_once MODEL_DIR . "MicroCategoria.php";
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $macroName = null;
@@ -17,7 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $macroName = $_POST["nuova-macro-nome"];
             if (preg_match(Patterns::$NAME_GENERIC, $macroName)) {
                 $macroCategoriaManager = new MacroCategoriaManager();
-                $macroCategoriaManager->createMacrocategoria($macroName);
+                $microManager = new MicrocategoriaManager();
+                $idNewMacro = $macroCategoriaManager->addMacrocategoria($macroName);
+                $micro = new Microcategoria( $idNewMacro,$macroName);
+                $microManager->addMicrocategoria($micro);
+
                 $_SESSION['toast-type'] = "success";
                 $_SESSION['toast-message'] = "MacroCategoria inserita con successo";
                 header("Location:" . getReferer(DOMINIO_SITO));
