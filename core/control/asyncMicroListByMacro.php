@@ -11,12 +11,14 @@ include_once MANAGER_DIR . "MicrocategoriaManager.php";
 include_once MODEL_DIR . "MacroCategoria.php"; // questo model va tolto, serve solo per provare lo stub
 include_once MANAGER_DIR ."AnnuncioManager.php";
 include_once MANAGER_DIR ."UtenteManager.php";
+include_once CONTROL_DIR ."ControlUtils.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-   // $user = unserialize($_SESSION['user']);
+
+    if(!isset($_POST["nome"]) || !isset($_POST["idMacro"])) exit();
 
     if($_POST["nome"]=="micro"){
-        $idMacro = $_POST["idMacro"];
+        $idMacro = testInput($_POST["idMacro"]);
         $microManager = new MicrocategoriaManager();
 
         $microList = $microManager->getMicrosByMacro($idMacro);

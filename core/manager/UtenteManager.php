@@ -82,6 +82,37 @@ class UtenteManager extends Manager implements SplSubject {
     }
 
     /**
+     * let a user block another one
+     * @param $userWhoID
+     * @param $userByID
+     * @throws ApplicationException
+     */
+    public function blockUser($userWhoID, $userByID){
+
+        $BLOCCA_UTENTE = "INSERT INTO `bloccato` (`id_utente`, `id_utente_bloccato`) VALUES ('%s', '%s')";
+        $query = sprintf($BLOCCA_UTENTE, $userByID, $userWhoID);
+
+        if (!Manager::getDB()->query($query)) {
+            throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+    }
+
+    /**
+     * remove blocked user
+     * @param $userWhoID
+     * @param $userByID
+     * @throws ApplicationException
+     */
+    public function removeBlockedUser($userWhoID, $userByID){
+        $REMOVE_BLOCK = "DELETE FROM bloccato WHERE id_utente_bloccato='%s' AND id_utente='%s'";
+        $query = sprintf($REMOVE_BLOCK, $userWhoID,$userByID);
+        $result = self::getDB()->query($query);
+        if (!$result) {
+            throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+    }
+
+    /**
      * Set an Utente as DISATTIVATO
      *
      * @param $user
@@ -147,6 +178,29 @@ class UtenteManager extends Manager implements SplSubject {
         return $this->createUserFromRow($row);
     }
 
+
+    /**
+     * get a list of blocked users for a certain user
+     *
+     * @param $userId
+     * @return array
+     */
+    public function getBlockedForUser($userId){
+        $users = array();
+        $getListUsers = "SELECT * 
+                            FROM bloccato JOIN utente
+                              ON bloccato.id_utente_bloccato = utente.id
+                            WHERE bloccato.id_utente = %s";
+        $query = sprintf($getListUsers, $userId);
+
+        $result = self::getDB()->query($query);
+        while($row = $result->fetch_assoc()) {
+            $user = $this->createUserFromRow($row);
+            array_push($users, $user);
+        }
+        return $users;
+    }
+
     /**
      * Find a List of Utente
      *
@@ -155,10 +209,15 @@ class UtenteManager extends Manager implements SplSubject {
      */
     public function findUserOneInput ($input){
         $users = array();
-        $getListUsers = "SELECT * FROM utente WHERE  nome LIKE %'%s'% OR cognome LIKE %'%s'% OR email LIKE %'%s'% OR ruolo LIKE %'%s'%;";
-        $query = sprintf($getListUsers,$input,$input,$input);
+        if(!empty($input)) {
+            $getListUsers = "SELECT * FROM utente WHERE  nome LIKE '%s' OR cognome LIKE '%s' OR email LIKE '%s' ;";
+            $in = "%" . $input . "%";
+            $query = sprintf($getListUsers, $in, $in, $in);
+        }else{
+            $query = "SELECT * FROM utente WHERE 1;";
+        }
         $result = self::getDB()->query($query);
-        foreach ($result->fetch_assoc() as $row) {
+        while($row = $result->fetch_assoc()) {
             $user = $this->createUserFromRow($row);
             array_push($users, $user);
         }

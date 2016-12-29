@@ -26,6 +26,8 @@ $macroList = $macroManager->getAllMacros();
 
 $microListUtente = $microManager->getUserMicros($user->getId());
 
+$blockedUsers = $utenteManager->getBlockedForUser($user->getId());
+
 include_once VIEW_DIR . "visitaProfiloPersonale.php";
 
 ?>

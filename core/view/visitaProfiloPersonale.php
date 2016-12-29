@@ -20,15 +20,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function caricaMicro() {
+        function caricaMicro(){
             var stringa = "micro";
             var index = $("#macro").val();
             $.post("asyncMicroListByMacro",
-                {nome: stringa, idMacro: index},
-                function (data) {
+                {nome:stringa,idMacro:index},
+                function (data){
                     var sel = $("#micro").html(data);
                 });
         }
+        function ricercaUtente(stringa){
+            $.post("asyncRicercaUtente",
+                {nome: stringa},
+                function (data) {
+                    var valore = $('.select2-search__field').val();
+                    $("#user-search").html(data);
+                    $("#user-search").select2("destroy");
+                    $("#user-search").select2();
+                    $("#user-search").select2("open");
+
+                    search_select();
+                    $('.select2-search__field').val(valore);
+                });
+        }
+
+        $(document).on('focus', '.select2', function() {
+            search_select();
+        });
+
+        function search_select() {
+            $('.select2-search__field').on("keydown", function (e) {
+                setTimeout(function(){
+
+                    var stringa = $('.select2-search__field').val();
+                    ricercaUtente(stringa);
+                },10); //very important, let pass some time to get the true value
+            })
+        }
+
+        ricercaUtente("");
+
     </script>
 
 </head>
@@ -1313,31 +1344,30 @@
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="section">
                                         <div class="panel panel-default compact-panel">
-                                            <a class="panel-default collapse-title" data-toggle="collapse"
-                                               href="#privacy-collapse1">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse1">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Blocca Utente
                                                     </h4>
-                                                    <p>Vedi l'elenco ed effettua i cambiamenti che desideri
-                                                        apportare</p>
+                                                    <p>Vedi l'elenco ed effettua i cambiamenti che desideri apportare</p>
                                                 </div>
                                             </a>
                                             <div id="privacy-collapse1" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-
+                                                        <?php
+                                                        foreach($blockedUsers as $u){?>
+                                                            <div class="row">
+                                                            <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
                                                                 <div class="media social-post profile-block">
                                                                     <div class="media-left">
-                                                                        <a href="#">
+                                                                        <a href="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$u->getId()?>">
                                                                             <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                                                                         </a>
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <div class="media-heading">
-                                                                            <h4 class="title"><?php ?></h4>
+                                                                            <h4 class="title"><?php echo $u->getNome()." ".$u->getCognome();?></h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1345,22 +1375,19 @@
 
                                                             <div class="dropdown corner-dropdown">
 
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                     <span class="caret"></span>
                                                                 </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li><a href="#">Sblocca</a></li>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a href="<?php echo "sbloccaUtente?idUtente=".$u->getId()?>">Sblocca</a></li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
 
+                                                        </div>
+                                                        <?php }?>
                                                         <div class="row" id="add-userblock">
                                                             <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-                                                                <a onclick="$('#add-userblock').toggleWith('#userblock-input')">
+                                                                <a onclick="$('#add-userblock').toggleWith('#userblock-input')" >
                                                                     <i class="fa fa-plus"></i>
                                                                     Blocca nuovo utente
                                                                 </a>
@@ -1368,37 +1395,25 @@
                                                         </div>
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="userblock-input"
-                                                                  style="display:none">
+                                                            <form class="form form-horizontal" id="userblock-input" action="bloccaUtente" method = "post" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-user"
-                                                                                   aria-hidden="true"></i>
+																			<span class="input-group-addon" id="basic-addon1">
+																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-                                                                        <select class="form-control select2">
-                                                                            <option value="AL">Fabiano Pecorelli
-                                                                            </option>
-                                                                            <option value="WY">Antonio Luca D'avanzo
-                                                                            </option>
+                                                                        <select class="form-control select2" name="blockUserid" id="user-search">
+                                                                            <option value="AL">Fabiano Pecorelli</option>
+                                                                            <option value="WY">Antonio Luca D'avanzo</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
                                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Salva
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#userblock-input').toggleWith('#add-userblock')">
-                                                                                    Cancella
-                                                                                </button>
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#userblock-input').toggleWith('#add-userblock')">Cancella</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>

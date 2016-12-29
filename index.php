@@ -214,9 +214,21 @@ try {
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "asyncMicroListByMacro.php";
                 break;
+            case 'asyncRicercaUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "asyncRicercaUtente.php";
+                break;
             case 'aggiungiMicroUtente':
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "AggiungiMicroUtenteControl.php";
+                break;
+            case 'bloccaUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "BloccaUtenteControl.php";
+                break;
+            case 'sbloccaUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "SbloccaUtenteControl.php";
                 break;
             case 'UtentiBannati':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);

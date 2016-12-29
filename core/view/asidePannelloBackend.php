@@ -44,7 +44,7 @@
                 <div class="dropdown-menu">
                     <ul>
                         <li><a href="<?php echo DOMINIO_SITO;?>/IndexMacrocategorie">Macrocategorie</a></li>
-                        <li><a href="<?php echo DOMINIO_SITO;?>/visualizzaIndexMicrocategorie">Microcategorie</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/IndexMicrocategorie">Microcategorie</a></li>
                     </ul>
                 </div>
             </li>
