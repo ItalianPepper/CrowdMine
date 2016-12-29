@@ -29,6 +29,10 @@ class SoggettiNotifiche{
     const UTENTE = "utente";
     const CANDIDATURA = "candidatura";
     const CONTROVERSIA_MOD = "controvesia_mod";
+    const SEGNALAZIONE_ANNUNCIO ="segnalazione_annuncio";
+    const SEGNALAZIONE_COMMENTO ="segnalazione_commento";
+    const SEGNALAZIONE_FEEDBACK ="segnalazione_feedback";
+    const SEGNALAZIONE_UTENTE = "segnalazione_utente";
 }
 class Notifica implements JsonSerializable{
     private $id;

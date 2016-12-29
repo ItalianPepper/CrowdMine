@@ -19,18 +19,31 @@ class NotificaManager extends Manager implements SplObserver
     }
 
     /**
-     * Forword a Notifica object
+     * Create a Notifica object not persistent
      *
-     * @param Notifica $notifica
-     * @param Double $idDestinatario
+     * @param $data
+     * @param $tipo
+     * @param $info
+     * @param $letto
+     * @param $id
+     * @return Notifica, object
      */
-
     public function createNotifica($data, $tipo, $info, $letto,$id=null)
     {
         $notifica = new Notifica($data, $tipo, $info, $letto,$id);
         return $notifica;
     }
 
+    /**
+     * Insert a Notifica object in the database
+     *
+     * @param $data
+     * @param $tipo
+     * @param $info
+     * @param $letto
+     * @return int $id
+     * @throws ApplicationException
+     */
     public function insertNotifica($data, $tipo, $info, $letto)
     {
         $INSERT_NOTIFICA = "INSERT INTO Notifica ( 'date' , 'tipo', 'info' , 'letto' ) VALUES ('%s', '%s', '%s', '%s')";

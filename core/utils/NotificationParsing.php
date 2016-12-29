@@ -20,6 +20,13 @@ class NotificationParsing
 
     }
 
+    /**This function return a list of notify-object formatted by the role of user.
+     *
+     * @param $notifyObject
+     * @param $typeUser
+     *
+     * @return array
+     */
     public function formattingNotify($notifyObject, $typeUser)
     {
         $size = sizeof($notifyObject);
@@ -39,22 +46,22 @@ class NotificationParsing
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
                         $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
                         $href = sprintf($href, $id);
-                        $result[$href] = NotificationParsing::$INSERIMENTO_ANNUNCIO;
+                        $result[$href] = NotificationParsing::INSERIMENTO_ANNUNCIO;
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
                         $href = $this->rounting(SoggettiNotifiche::COMMENTO);
                         $href = sprintf($href, $id);
                         $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
-                        $result[$href] = sprintf(NotificationParsing::$INSERIMENTO_COMMENTO, $referName);
+                        $result[$href] = sprintf(NotificationParsing::INSERIMENTO_COMMENTO, $referName);
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
                         $href = $this->rounting(SoggettiNotifiche::FEEDBACK);
                         $href = sprintf($href, $id);
                         $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
-                        $result[$href] = sprintf(NotificationParsing::$INSERIMENTO_FEEDBACK, $referName);
+                        $result[$href] = sprintf(NotificationParsing::INSERIMENTO_FEEDBACK, $referName);
                     } else if ($obj == SoggettiNotifiche::CANDIDATURA) {
                         $href = $this->rounting(SoggettiNotifiche::CANDIDATURA);
                         $href = sprintf($href, $id);
                         $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
-                        $result[$href] = sprintf(NotificationParsing::$INSERIMENTO_CANDIDATURA, $referName);
+                        $result[$href] = sprintf(NotificationParsing::INSERIMENTO_CANDIDATURA, $referName);
                     }
 
                 } else if ($type == tipoNotifica::RISOLUZIONE) {
@@ -67,27 +74,27 @@ class NotificationParsing
                         $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
                         $href = sprintf($href, $id);
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_POSITIVA, "annuncio");
+                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "annuncio");
                         } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_NEGATIVA, "annuncio");
+                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "annuncio");
                         }
 
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
                         $href = $this->rounting(SoggettiNotifiche::COMMENTO);
                         $href = sprintf($href, $id);
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_POSITIVA, "commento");
+                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "commento");
                         } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_NEGATIVA, "commento");
+                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "commento");
                         }
 
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
                         $href = $this->rounting(SoggettiNotifiche::FEEDBACK);
                         $href = sprintf($href, $id);
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_POSITIVA, "feedback");
+                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "feedback");
                         } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_NEGATIVA, "feedback");
+                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "feedback");
                         }
 
                     }
@@ -103,9 +110,9 @@ class NotificationParsing
                         $href = $this->rounting(SoggettiNotifiche::CANDIDATURA);
                         $href = sprintf($href, $id);
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::$DECISIONE_CANDIDATURA_DOMANDA_ACCETTATA, $referName);
+                            $result[$href] = sprintf(NotificationParsing::DECISIONE_CANDIDATURA_DOMANDA_ACCETTATA, $referName);
                         } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::$DECISIONE_CANDIDATURA_DOMANDA_RIFIUTATA, $referName);
+                            $result[$href] = sprintf(NotificationParsing::DECISIONE_CANDIDATURA_DOMANDA_RIFIUTATA, $referName);
                         }
                     }
                 }
@@ -126,25 +133,26 @@ class NotificationParsing
                     $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
 
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
-                        $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_ANNUNCIO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_ANNUNCIO, $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
-                        $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_COMMENTO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
-                        $href = $this->rounting(SoggettiNotifiche::FEEDBACK);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_FEEDBACK);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
                     } else if ($obj == SoggettiNotifiche::UTENTE) {
-                        $href = $this->rounting(SoggettiNotifiche::UTENTE);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_UTENTE);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_UTENTE, $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
                     }
                 }
             }
             return $result;
+
         } else if ($typeUser == RuoloUtente::AMMINISTRATORE) {
             $result = array();
 
@@ -159,25 +167,25 @@ class NotificationParsing
                     $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
 
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
-                        $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_ANNUNCIO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_ANNUNCIO, $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
-                        $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_COMMENTO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
-                        $href = $this->rounting(SoggettiNotifiche::FEEDBACK);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_FEEDBACK);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
                     } else if ($obj == SoggettiNotifiche::UTENTE) {
-                        $href = $this->rounting(SoggettiNotifiche::UTENTE);
+                        $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_UTENTE);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$MOD_SEGNALAZIONE_UTENTE, $referName);
+                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
                     } else if ($obj == SoggettiNotifiche::CONTROVERSIA_MOD) {
                         $href = $this->rounting(SoggettiNotifiche::CONTROVERSIA_MOD);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::$ADM_CONTROVERSIA_TRA_MOD);
+                        $result[$href] = sprintf(NotificationParsing::ADM_CONTROVERSIA_TRA_MOD);
                     }
                 }
             }
@@ -185,20 +193,42 @@ class NotificationParsing
         }
     }
 
+    /**This function return a standard link to page
+     *
+     * @param $destination
+     * @return string
+     */
     private function rounting($destination)
     {
         if ($destination == SoggettiNotifiche::ANNUNCIO) {
             return DOMINIO_SITO . "/Annuncio&id=%s";
+
         } else if ($destination == SoggettiNotifiche::COMMENTO) {
             return DOMINIO_SITO . "/Annuncio&id=%s";
+
         } else if ($destination == SoggettiNotifiche::FEEDBACK) {
             return DOMINIO_SITO . "/Feedback&id=%s";
+
         } else if ($destination == SoggettiNotifiche::CANDIDATURA) {
             return DOMINIO_SITO . "/Annuncio=%s";
+
         } else if ($destination == SoggettiNotifiche::UTENTE) {
             return DOMINIO_SITO . "/VisitaProfiloUtente&id=%s";
+
         } else if ($destination == SoggettiNotifiche::CONTROVERSIA_MOD) {
             return DOMINIO_SITO . "/ControversiaMod&id=%s";
+
+        } else if ($destination == SoggettiNotifiche::SEGNALAZIONE_UTENTE) {
+            return DOMINIO_SITO . "/VisualizzaUtentiSegnalati&id=%s";
+
+        } else if ($destination == SoggettiNotifiche::SEGNALAZIONE_ANNUNCIO) {
+            return DOMINIO_SITO . "/VisualizzaAnnunciSegnalati&id=%s";
+
+        } else if ($destination == SoggettiNotifiche::SEGNALAZIONE_COMMENTO) {
+            return DOMINIO_SITO . "/VisualizzaCommentiSegnalati&id=%s";
+
+        } else if ($destination == SoggettiNotifiche::SEGNALAZIONE_FEEDBACK) {
+            return DOMINIO_SITO . "/VisualizzaFeedbackSegnalati&id=%s";
         }
     }
 }
