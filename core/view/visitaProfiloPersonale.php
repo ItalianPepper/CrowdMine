@@ -379,9 +379,9 @@
                                                href="#profile-collapse1">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
-                                                        Indirizzi Email
+                                                        Indirizzo Email
                                                     </h4>
-                                                    <p>Aggiungi o rimuovi indirizzi email</p>
+                                                    <p>Visualizza il tuo indirizzo email</p>
                                                 </div>
                                             </a>
                                             <div id="profile-collapse1" class="panel-collapse collapse">
@@ -394,61 +394,8 @@
                                                             <div class="col-lg-9 col-md-9 col-xs-9 simple-row">
                                                                 <?php echo $user->getEmail(); ?>
                                                             </div>
-
-                                                            <div class="dropdown corner-dropdown">
-
-                                                                <button class="btn btn-default dropdown-toggle"
-                                                                        type="button" id="dropdownMenu1"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="true">
-                                                                    <span class="caret"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu pull-right"
-                                                                    aria-labelledby="dropdownMenu1">
-                                                                    <li>
-                                                                        <a onclick="$('#edit-mail').toggleWith('#edit-mail-input')">Modifica</a>
-                                                                    </li>
-                                                                    <li><a href="#">Rimuovi</a></li>
-                                                                </ul>
-                                                            </div>
                                                         </div>
-                                                        <!-- FORM MODIFICA !-->
-                                                        <div class="row">
-                                                            <form class="form form-horizontal" id="edit-mail-input"
-                                                                  style="display:none">
-                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
-                                                                </div>
-                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-                                                                    <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-envelope"
-                                                                                   aria-hidden="true"></i>
-																			</span>
-                                                                        <input type="text" class="form-control"
-                                                                               placeholder="Nuova Email"
-                                                                               aria-describedby="basic-addon1"
-                                                                               value="fakemail@gmail.com">
-                                                                    </div>
-                                                                    <div class="form-footer">
-                                                                        <div class="form-group">
-                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button type="submit"
-                                                                                        class="btn btn-primary pull-right">
-                                                                                    Salva
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                        class="btn btn-default pull-right"
-                                                                                        onclick="$('#edit-mail-input').toggleWith('#edit-mail')">
-                                                                                    Cancella
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
