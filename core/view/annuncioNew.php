@@ -276,8 +276,33 @@ include_once VIEW_DIR . 'header.php';
                             <i class="fa fa-comments-o"></i><?php echo count($commenti[$i]) ?>Comments
                         </button>
                         <button class="btn btn-default <?php echo $annunci[$i]->getId();?>">info</button>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal3">Candidati</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $annunci[$i]->getId();?>">Candidati</button>
                     </div>
+
+                    <div class="modal fade" id="myModal<?php echo $annunci[$i]->getId();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Candidati</h4>
+                                </div>
+                                <form action="aggiungiCandidaturaControl" method="post">
+                                <div class="modal-body">
+                                        Inserisci Descrizione
+                                        <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.. <?php echo $annunci[$i]->getId();?>"></textarea>
+                                        <input type="text" value="<?php echo $annunci[$i]->getId();?>" name="idAnnuncio" hidden>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <button type="submit" class="btn btn-sm btn-success">Candidati</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
 
                     <div class="row col-md-12 col-sm-12 card contenitore <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
                         <?php

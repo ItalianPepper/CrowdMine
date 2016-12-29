@@ -272,9 +272,6 @@ try {
             case 'segnalaCommento';
                 include_once CONTROL_DIR . "segnalaCommento.php";
                 break;
-            case 'annunci';
-                include_once VIEW_DIR . "annunci.php";
-                break;
             case 'annuncioNew';
                 include_once VIEW_DIR . "annuncioNew.php";
                 break;

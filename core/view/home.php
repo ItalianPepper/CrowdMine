@@ -1,3 +1,4 @@
+
 <?php
 
 $annunci = null;
@@ -53,9 +54,20 @@ include_once VIEW_DIR . 'header.php';
             $(document).ready(function(){
                 $(".btn.btn-link.<?php echo $id?> ").click(function(){
                     $(".row.col-md-12.col-sm-12.card.contenitore.<?php echo $id?>").toggle(250);
+                    $(".row.col-md-12.col-sm-12.card.info.<?php echo $id?>").hide(250);
                 });
             });
         </script>
+
+        <script>
+            $(document).ready(function(){
+                $(".btn.btn-default.<?php echo $id?> ").click(function(){
+                    $(".row.col-md-12.col-sm-12.card.contenitore.<?php echo $id?>").hide(250);
+                    $(".row.col-md-12.col-sm-12.card.info.<?php echo $id?>").toggle(250);
+                });
+            });
+        </script>
+
 
         <?php
     }
@@ -72,38 +84,30 @@ include_once VIEW_DIR . 'header.php';
 
     @media (min-width: 1px) {
         h1 {
-            font-size: xx-small;
+            font-size: medium;
         }
-        h5 {
-            font-size: xx-small;
-        }
+
     }
 
     @media (min-width: 750px) {
         h1 {
-            font-size: 13px;
+            font-size: medium;
         }
-        h5 {
-            font-size: xx-small;
-        }
+
     }
 
     @media (min-width: 970px) {
         h1 {
             font-size: x-large;
         }
-        h5 {
-            font-size: x-small;
-        }
+
     }
 
     @media (min-width: 1200px) {
         h1 {
             font-size: xx-large;
         }
-        h5 {
-            font-size: small;
-        }
+
     }
 
     a.morelink {
@@ -214,7 +218,7 @@ include_once VIEW_DIR . 'header.php';
         </div>
     </script>
 
-    <div class="col-md-12 col-sm-12 app-container">
+    <div class="col-md-12 col-sm-12 col-xs-12 app-container">
 
 
 
@@ -222,305 +226,248 @@ include_once VIEW_DIR . 'header.php';
         <?php
         for ($i = 0; $i < count($annunci); $i++) {
 
-            ?>
+        ?>
 
-            <div class="row" style="margin-right: 20%; height: auto; margin-bottom: 5%">
+        <div class="col-md-10 col-sm-10" style="margin-top: 5%">
 
-                <div class="card">
+            <div class="card">
 
-                    <div class="row col-md-12 col-sm-12 col-xs-12 card-header" style="margin-left: 0%">
-                        <div class="col-md-3 col-sm-3 media-left">
+                <div class="card-header ">
+
+                    <div class="card-title" style="float: left">
+
+                        <div class="media" style="width: 20%; float: left">
                             <a href="#">
                                 <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
                             </a>
                         </div>
-                        <div class="col-md-7 annuncioTitle" style="width: 100%;">
 
-                            <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
-                                <h1>JetBrains</h1>
+                        <div style="float: left; margin-left: 5%;">
+                            <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">JetBrains</h1>
+                            <h1><?php echo $annunci[$i]->getTitolo();?></h1>
+
+                        </div>
+
+                    </div>
+
+                    <a href="segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
+                        <i class="fa fa-legal" aria-hidden="true" style="font-size: 200%"></i>
+                    </a>
+
+                    <a href="aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
+                        <i class="fa fa-star" aria-hidden="true" style="font-size: 200%"></i>
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="comment more" style="word-wrap: break-word;">
+                        <?php echo $annunci[$i]->getDescrizione();?>
+                    </div>
+                    <br>
+
+                    <div style="margin-top: 3%">
+                        <span class="label label-primary">Informatica</span>
+                        <span class="label label-primary">Informatica</span>
+                    </div>
+                </div>
+
+                <div class="media-comment" style="">
+                    <button class="btn btn-link <?php echo $annunci[$i]->getId();?>">
+                        <i class="fa fa-comments-o"></i><?php echo count($commenti[$i]) ?>Comments
+                    </button>
+                    <button class="btn btn-default <?php echo $annunci[$i]->getId();?>">info</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $annunci[$i]->getId();?>">Candidati</button>
+                </div>
+
+                <div class="modal fade" id="myModal<?php echo $annunci[$i]->getId();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Candidati</h4>
                             </div>
-
-                            <div class="offerta col-md-12 col-sm-12">
-                                <form action="annuncioControl" method="post">
-                                    <h1><?php echo $annunci[$i]->getTitolo();?></h1>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-md-1 col-sm-2 preferites">
-                            <a>
-                                <button style="
-                                background-color: Transparent;
-                                background-repeat:no-repeat;
-                                border: none;
-                                cursor:pointer;
-                                overflow: hidden;
-                                outline:none;">
-                                    <i class="fa fa-star-o" style="font-size: 200%;" data-toggle="modal"
-                                       data-target="#myModal2"></i>
-                                </button>
-                            </a>
-                            <ul class="card-action">
-                                <li class="dropdown">
-                                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-cog" style="font-size: 200%;"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#" data-toggle="modal" data-target="#myModal">Segnala</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                        <h4 class="modal-title">Conferma segnalazione</h4>
-                                    </div>
-                                    <form action="segnalaAnnuncioControl" method="post">
-                                        <div class="modal-body">Inserisci una descrizione per segnalare
-                                            <textarea name="descrizione" rows="3" class="form-control"
-                                                      placeholder="Descrizione.."></textarea>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
-                                                Chiudi
-                                            </button>
-                                            <button type="submit" class="btn btn-sm btn-danger">Segnala</button>
-                                        </div>
-                                    </form>
+                            <form action="aggiungiCandidaturaControl" method="post">
+                                <div class="modal-body">
+                                    Inserisci Descrizione
+                                    <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.. <?php echo $annunci[$i]->getId();?>"></textarea>
+                                    <input type="text" value="<?php echo $annunci[$i]->getId();?>" name="idAnnuncio" hidden>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                                aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title">Aggiungere ai preferiti?</h4>
-                                </div>
-                                <form action="aggiungiPreferitiControl" method="post">
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
-                                            Chiudi
-                                        </button>
-                                        <button type="submit" class="btn btn-sm btn-success">Aggiungi</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row col-md-12 col-sm-12 col-xs-12 card-body"
-                         style="margin-left: 0; border-bottom: 1px solid #eee; padding-bottom: 2%">
-                        <div class="media-body comment more">
-                            <?php echo $annunci[$i]->getDescrizione();?>
-                        </div>
-
-                    </div>
-
-                    <div class="row col-md-12 col-sm-12 col-xs-12 media-categories"
-                         style="margin-left: 2%; margin-bottom: 2%; display: flex">
-                        <h5>Macro:<span class="label label-primary">Informatica</span></h5>
-                        <h5>Micro: <span class="label label-warning">Web Developer</span></h5>
-                        <h5>Luogo:<span class="label label-primary"><?php echo $annunci[$i]->getLuogo();?></span></h5>
-                        <h5>Retribuzione:<span class="label label-primary"><?php echo $annunci[$i]->getRetribuzione();?>€</span></h5><br>
-                    </div>
-                    <div class="row col-md-12 col-sm-12 col-xs-12 media-categories"
-                         style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%; display: flex">
-                        <h5>Data:<span class="label label-primary"><?php echo $annunci[$i]->getData();?></span></h5>
-                        <h5>Tipologia: <span class="label label-primary"><?php echo $annunci[$i]->getTipologia();?></span></h5>
-                        <h5>Stato: <span class="label label-primary"><?php echo $annunci[$i]->getStato();?></span></h5>
-                    </div>
-
-                    <div class="media-comment" style="">
-                        <button class="btn btn-link <?php echo $annunci[$i]->getId();?>">
-                            <i class="fa fa-comments-o"></i><?php echo count($commenti[$i]) ?>Comments
-                        </button>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal3">Candidati</button>
-                    </div>
-
-
-                    <div class="row col-md-12 col-sm-12 card contenitore <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
-                        <?php
-                        for ($j = 0; $j < count($commenti[$i]); $j++) {
-                            if ($annunci[$i]->getId() == $commenti[$i][$j]->getIdAnnuncio()) {
-                                ?>
-
-                                <div class="row col-md-12 col-sm-12 comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
-                                    <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
-                                        <a href="#">
-                                            <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
-                                        </a>
-                                    </div>
-                                    <div class="media-heading">
-                                        <h4 class="title">Scott White</h4>
-                                        <h5 class="timeing"><?php
-                                            echo $commenti[$i][$j]->getData();
-                                            ?></h5>
-                                    </div>
-                                    <div class="col-md-5 col-sm-5 options"
-                                         style="float: right; margin-top: -8%; margin-right: -23%">
-                                        <a href="segnalaCommento?id=<?php echo $commenti[$i][$j]->getId(); ?>">
-                                            <button
-                                                    style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                <i class="fa fa-close"></i>
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="media-content">
-                                        <?php
-                                        echo $commenti[$i][$j]->getCorpo();
-                                        ?>
-                                    </div>
-
-                                </div>
-
-
-                                <?php
-                            }
-                        }
-
-                        ?>
-                        <div class="col-md-12 form-commento">
-                            <form action="commentaAnnuncioControl" method="post">
-                                <div class="col-md-10 input-comment">
-                                    <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
-                                           name="commento">
-                                    <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
-                                </div>
-                                <div class="col-md-2 btn-comment">
-                                    <button type="submit" class="btn btn-info">Commenta</button>
-                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <button type="submit" class="btn btn-sm btn-success">Candidati</button>
                             </form>
                         </div>
-
                     </div>
-
-                    <div class="modal fade" id="myModal<?php echo $annunci[$i]->getId();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                                aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title">Conferma candidatura</h4>
-                                </div>
-                                <form action="aggiungiCandidaturaControl" method="post">
-                                    <div class="modal-body">Inserisci una descrizione per candidarti<?php echo $annunci[$i]->getId();?>
-                                        <textarea name="descrizione" rows="3" class="form-control"
-                                                  placeholder="Descrizione.."></textarea>
-                                        <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
-                                            Chiudi
-                                        </button>
-                                        <button type="submit" class="btn btn-sm btn-success">Conferma</button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
                 </div>
             </div>
 
 
-            <?php
-        }
-
-        ?>
 
 
+            <div class="row col-md-12 col-sm-12 card contenitore <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
+                <?php
+                for ($j = 0; $j < count($commenti[$i]); $j++) {
+                    if ($annunci[$i]->getId() == $commenti[$i][$j]->getIdAnnuncio()) {
+                        ?>
+
+                        <div class="comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                            <div class="media-heading">
+                                <h4 class="title">Scott White</h4>
+                                <h5 class="timeing"><?php
+                                    echo $commenti[$i][$j]->getData();
+                                    ?></h5>
+                            </div>
+                            <div class="col-md-5 col-sm-5 options"
+                                 style="float: right; margin-top: -8%; margin-right: -23%">
+                                <a href="segnalaCommento?id=<?php echo $commenti[$i][$j]->getId(); ?>">
+                                    <button
+                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="media-content">
+                                <?php
+                                echo $commenti[$i][$j]->getCorpo();
+                                ?>
+                            </div>
+
+                        </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
-        <script type="text/javascript">
-            function toggleMe(a){
-                var e=document.getElementById(a);
-                if(!e)return true;
-                if(e.style.display=="none"){
-                    e.style.display="block"
+                        <?php
+                    }
                 }
-                else{
-                    e.style.display="none"
-                }
-                return true;
+
+                ?>
+
+                <div class="col-md-12 form-commento">
+                    <form action="commentaAnnuncioControl" method="post">
+                        <div class="col-md-10 input-comment">
+                            <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
+                                   name="commento">
+                            <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
+                        </div>
+                        <div class="col-md-2 btn-comment">
+                            <button type="submit" class="btn btn-info">Commenta</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="row col-md-12 col-sm-12 card info <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
+                <h5>
+                    <i class="fa fa-location-arrow"></i>
+                    <?php echo $annunci[$i]->getLuogo();?></h5>
+                <h5>
+                    <i class="fa fa-money"></i>
+                    <?php echo $annunci[$i]->getRetribuzione();?></h5>
+                <h5>
+                    <i class="fa fa-clock-o"></i>
+                    <?php echo $annunci[$i]->getData();?></h5>
+                <h5>
+                    <i class="fa fa-briefcase"></i>
+                    <?php echo $annunci[$i]->getTipologia();?></h5>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <?php
+    }
+
+    ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+    <script type="text/javascript">
+        function toggleMe(a){
+            var e=document.getElementById(a);
+            if(!e)return true;
+            if(e.style.display=="none"){
+                e.style.display="block"
             }
-        </script>
-        <script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
-        <script>
-            $(document).ready(function() {
-                var showChar = 500;
-                var ellipsestext = "...";
-                var moretext = "altro";
-                var lesstext = "..meno";
-                $('.more').each(function() {
-                    var content = $(this).html();
-
-                    if(content.length > showChar) {
-
-                        var c = content.substr(0, showChar);
-                        var h = content.substr(showChar-1, content.length - showChar);
-
-                        var html = c + '<span class="moreelipses">'+ellipsestext+'</span>&nbsp;<span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">'+moretext+'</a></span>';
-
-                        $(this).html(html);
-                    }
-
-                });
-
-                $(".morelink").click(function(){
-                    if($(this).hasClass("less")) {
-                        $(this).removeClass("less");
-                        $(this).html(moretext);
-                    } else {
-                        $(this).addClass("less");
-                        $(this).html(lesstext);
-                    }
-                    $(this).parent().prev().toggle();
-                    $(this).prev().toggle();
-                    return false;
-                });
-            });
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <?php
-
-        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-            ?>
-            <script>
-                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-            </script>
-            <?php
-            unset($_SESSION['toast-type']);
-            unset($_SESSION['toast-message']);
+            else{
+                e.style.display="none"
+            }
+            return true;
         }
+    </script>
+    <script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+    <script>
+        $(document).ready(function() {
+            var showChar = 100;
+            var ellipsestext = "...";
+            var moretext = "altro";
+            var lesstext = "..meno";
+            $('.more').each(function() {
+                var content = $(this).html();
+
+                if(content.length > showChar) {
+
+                    var c = content.substr(0, showChar);
+                    var h = content.substr(showChar-1, content.length - showChar);
+
+                    var html = c + '<span class="moreelipses">'+ellipsestext+'</span>&nbsp;<span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">'+moretext+'</a></span>';
+
+                    $(this).html(html);
+                }
+
+            });
+
+            $(".morelink").click(function(){
+                if($(this).hasClass("less")) {
+                    $(this).removeClass("less");
+                    $(this).html(moretext);
+                } else {
+                    $(this).addClass("less");
+                    $(this).html(lesstext);
+                }
+                $(this).parent().prev().toggle();
+                $(this).prev().toggle();
+                return false;
+            });
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <?php
+
+    if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
         ?>
+        <script>
+            toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+        </script>
+        <?php
+        unset($_SESSION['toast-type']);
+        unset($_SESSION['toast-message']);
+    }
+    ?>
 
 </body>
 
