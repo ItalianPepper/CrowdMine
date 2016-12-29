@@ -201,9 +201,11 @@ try {
                 include_once CONTROL_DIR . "CambiaPasswordControl.php";
                 break;
             case 'rimuoviMacroUtenteControl':
+                $user = StringUtils::checkPermission(RuoloUtente::UTENTE);
                 include_once CONTROL_DIR . "RimuoviMacroUtenteControl.php";
                 break;
             case 'rimuoviMicroUtenteControl':
+                $user = StringUtils::checkPermission(RuoloUtente::UTENTE);
                 include_once CONTROL_DIR . "RimuoviMicroUtenteControl.php";
                 break;
             case 'SegnalazioneUtenteControl':
@@ -219,6 +221,7 @@ try {
                 include_once CONTROL_DIR . "asyncMicroListByMacro.php";
                 break;
             case 'aggiungiMicroUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "AggiungiMicroUtenteControl.php";
                 break;
             case 'ListaUtentiBannati':
@@ -281,7 +284,13 @@ try {
                 break;
                 case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
-                break;        
+                break;
+            case 'cancellaMacroControl';
+                include_once CONTROL_DIR . "cancellaMacroControl.php";
+                break;
+            case 'InserisciNuovaMacroControl';
+                include_once CONTROL_DIR . "InserisciNuovaMacroControl.php";
+                break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;

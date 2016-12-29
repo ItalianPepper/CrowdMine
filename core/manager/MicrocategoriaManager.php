@@ -39,9 +39,15 @@ class MicrocategoriaManager extends Manager
      * @param Macrocategoria $macrocategoria
      */
     public function addMicrocategoria($microcategoria){
-        $AGGIUNGI_MICRO = "INSERT INTO 'microcategoria' (nome, id_macrocategoria) VALUES('%s', '%s')";
+        $AGGIUNGI_MICRO = "INSERT INTO microcategoria(nome,id_macrocategoria) VALUES('%s', '%s')";
         $query = sprintf($AGGIUNGI_MICRO, $microcategoria->getNome(), $microcategoria->getIdMacrocategoria());
-        self::getDB()->query($query);
+
+        if (!Manager::getDB()->query($query)) {
+            return 0;
+        }
+
+        /*auto generated id of the micro previously created*/
+        return Manager::getDB()->insert_id;
     }
 
     /**
@@ -150,8 +156,14 @@ class MicrocategoriaManager extends Manager
     }
 
     public function findMicrocategoriaById($idMicro){
-        $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id=%s;";
-
+        $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id='%s';";
+        $query = sprintf($FIND_MICRO_BY_ID, $idMicro);
+        $result = self::getDB()->query($query);
+        if($result->num_rows == 1){
+            $row = $result->fetch_assoc();
+            return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
+        }else
+            return false;
     }
 
     public function findMicrocategoriaByNome($nome){

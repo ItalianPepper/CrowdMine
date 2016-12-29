@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -238,7 +239,13 @@
                                                             <li>
                                                                 <a onclick="$('#edit-macro<?php echo $macro->getId()?>').toggleWith('#edit-macro-input<?php echo $macro->getId()?>')">Modifica</a>
                                                             </li>
-                                                            <li><a href="#">Rimuovi</a></li>
+                                                            <li>
+                                                                <a onclick="$('#macro-<?php echo $macro->getId()?>').submit()">Rimuovi</a>
+                                                            </li>
+                                                            <form  id="macro-<?php echo $macro->getId()?>" action="cancellaMacroControl" method="post">
+                                                                <input type="hidden" value="<?php echo $macro->getId()?>" name="id-macro">
+                                                                <input type="hidden" value="<?php echo $macro->getNome()?>" name="nome-macro">
+                                                            </form>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -291,7 +298,7 @@
                                             </div>
                                             <!-- FORM INSERIMENTO !-->
                                             <div class="row">
-                                                <form class="form form-horizontal" id="macro-input" style="display:none">
+                                                <form class="form form-horizontal" id="macro-input" style="display:none" action="InserisciNuovaMacroControl" method="post">
                                                     <div class="col-lg-2 col-md-2 hidden-sm hidden-xs <?php echo $rowType ?>">
 
                                                     </div>
@@ -300,7 +307,7 @@
 															<span class="input-group-addon" id="basic-addon1">
 																<i class="fa fa-tag" aria-hidden="true"></i>
 															</span>
-                                                            <input type="text" class="form-control" placeholder="Nuova Categoria" aria-describedby="basic-addon1" value="">
+                                                            <input type="text" class="form-control" placeholder="Nuova Categoria" aria-describedby="basic-addon1" value="" name="nuova-macro-nome">
                                                         </div>
                                                         <div class="form-footer">
                                                             <div class="form-group">
@@ -341,6 +348,7 @@
 
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
 
         <script>
             /*evidenzio altro nella barra laterale*/
@@ -353,6 +361,18 @@
                 $(this).toggle('fast');
             };
         </script>
+
+        <?php
+        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+            ?>
+            <script>
+                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+            </script>
+            <?php
+            unset($_SESSION['toast-type']);
+            unset($_SESSION['toast-message']);
+        }
+        ?>
 
 </body>
 </html>

@@ -9,6 +9,7 @@
 
 include_once MODEL_DIR . 'MacroCategoria.php';
 include_once MANAGER_DIR . 'Manager.php';
+include_once CONTROL_DIR."ControlUtils.php";
 
 /**
  * Class MacroCategoriaManager
@@ -34,11 +35,16 @@ class MacroCategoriaManager extends Manager
         if ($this->verifyMacroCategoria($macroCategoria)) {
             $this->insertMacroCategoria($nome);
         } else {
-            header("Location: ". DOMINIO_SITO ); // ADD TOAST NOTIFICATION
+            header("Location: ". getReferer(DOMINIO_SITO) ); // ADD TOAST NOTIFICATION
             throw new IllegalArgumentException(ErrorUtils::$VALORE_DUPLICATO);
         }
     }
 
+    public function deleteMacrocategoria($macrocategoria){
+        $id = $macrocategoria->getId();
+        $RIMUOVI_MACROCATEGORIA = "DELETE FROM macrocategoria WHERE id =$id";
+        Manager::getDB()->query($RIMUOVI_MACROCATEGORIA);
+    }
     private function insertMacroCategoria($nome)
     {
         $INSERT_MACRO_CATEGORIA = "INSERT INTO `macrocategoria`(`nome`) VALUES ('%s')";

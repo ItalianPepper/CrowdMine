@@ -22,8 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $microList = $microManager->getMicrosByMacro($idMacro);
         $microUtenteList = $microManager->getUserMicros($user->getId());
 
-        if(count($microList)>0 && count($microUtenteList)>0) {
-            $toReturn = "<option value='' disabled selected>Seleziona la Microcategoria</option>";
+            $toReturn = "";
             foreach ($microList as $micro) {
 
                 $found = false;
@@ -38,10 +37,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 if($found==false)
                     $toReturn = $toReturn . "<option value=" . $micro->getId() . ">" . $micro->getNome() . "</option>";
             }
-            echo $toReturn;
-        } else {
-            echo "<option value='' disabled selected>Non ci sono micro per questa macro.</option>";
-        }
+
+            if($toReturn=="")
+                echo "<option value='' disabled selected>Non ci sono micro per questa macro.</option>";
+            else
+                echo $toReturn."<option value='' disabled selected>Seleziona la Microcategoria</option>";
     }
 
 }
