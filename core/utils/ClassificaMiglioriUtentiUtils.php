@@ -12,6 +12,23 @@ class ClassificaMiglioriUtentiUtils
     private $nome;
     private $feedbackPositivi;
     private $microCategoria;
+    private $macroCategoria;
+
+
+    /**
+     * ClassificaMiglioriUtentiUtils constructor.
+     * @param $nome
+     * @param $feedbackPositivi
+     * @param $microCategoria
+     * @param $macroCategoria
+     */
+    public function __construct($nome, $feedbackPositivi, $microCategoria, $macroCategoria)
+    {
+        $this->nome = $nome;
+        $this->feedbackPositivi = $feedbackPositivi;
+        $this->microCategoria = $microCategoria;
+        $this->macroCategoria = $macroCategoria;
+    }
 
     /**
      * @return mixed
@@ -76,21 +93,7 @@ class ClassificaMiglioriUtentiUtils
     {
         $this->macroCategoria = $macroCategoria;
     }
-    private $macroCategoria;
 
-    /**
-     * ClassificaMiglioriUtentiUtils constructor.
-     * @param $nome
-     * @param $feedbackPositivi
-     * @param $microCategoria
-     * @param $macroCategoria
-     */
-    public function __construct($nome, $feedbackPositivi, $microCategoria, $macroCategoria)
-    {
-        $this->nome = $nome;
-        $this->feedbackPositivi = $feedbackPositivi;
-        $this->microCategoria = $microCategoria;
-        $this->macroCategoria = $macroCategoria;
-    }
+
 
 }

@@ -11,6 +11,23 @@ class StatisticheProfiloUtenteUtils
     private $id;
     private $microCategoria;
     private $feedbackPositivi;
+    private $feedbackNegativi;
+
+
+    /**
+     * StatisticheProfiloUtenteUtils constructor.
+     * @param $id
+     * @param $microCategoria
+     * @param $feedbackPositivi
+     * @param $feedbackNegativi
+     */
+    public function __construct($id, $microCategoria, $feedbackPositivi, $feedbackNegativi)
+    {
+        $this->id = $id;
+        $this->microCategoria = $microCategoria;
+        $this->feedbackPositivi = $feedbackPositivi;
+        $this->feedbackNegativi = $feedbackNegativi;
+    }
 
     /**
      * @return mixed
@@ -75,22 +92,5 @@ class StatisticheProfiloUtenteUtils
     {
         $this->feedbackNegativi = $feedbackNegativi;
     }
-    private $feedbackNegativi;
-
-    /**
-     * StatisticheProfiloUtenteUtils constructor.
-     * @param $id
-     * @param $microCategoria
-     * @param $feedbackPositivi
-     * @param $feedbackNegativi
-     */
-    public function __construct($id, $microCategoria, $feedbackPositivi, $feedbackNegativi)
-    {
-        $this->id = $id;
-        $this->microCategoria = $microCategoria;
-        $this->feedbackPositivi = $feedbackPositivi;
-        $this->feedbackNegativi = $feedbackNegativi;
-    }
-
 
 }
