@@ -24,14 +24,14 @@ class NotificationParsing
     {
         $size = sizeof($notifyObject);
 
-        if ($typeUser == "USER") {
+        if ($typeUser == RuoloUtente::UTENTE) {
             $result = array();
             for ($i = 0; $i < $size; $i++) {
 
                 $type = $notifyObject[$i]->getTipo();
                 $infoNotify = json_decode($notifyObject[$i]->getInfo(), true);
 
-                if ($type == "INSERIMENTO") {
+                if ($type == tipoNotifica::INSERIMENTO) {
 
                     $obj = $infoNotify["TIPOOGGETTO"];
                     $id = $infoNotify["ID"];
@@ -57,7 +57,7 @@ class NotificationParsing
                         $result[$href] = sprintf(NotificationParsing::$INSERIMENTO_CANDIDATURA, $referName);
                     }
 
-                } else if ($type == "RISOLUZIONE") {
+                } else if ($type == tipoNotifica::RISOLUZIONE) {
 
                     $obj = $infoNotify["TIPOOGGETTO"];
                     $id = $infoNotify["ID"];
@@ -84,15 +84,15 @@ class NotificationParsing
                     } else if ($obj == "FEEDBACK") {
                         $href = $this->rounting("FEEDBACK");
                         $href = sprintf($href, $id);
-                        if ($esit == "true") {
+                        if ($esit == true) {
                             $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_POSITIVA, "feedback");
-                        } else if ($esit == "false") {
+                        } else if ($esit == false) {
                             $result[$href] = sprintf(NotificationParsing::$RISOLUZIONE_NEGATIVA, "feedback");
                         }
 
                     }
 
-                } else if ($type == "DECISIONE") {
+                } else if ($type == tipoNotifica::DECISIONE) {
                     $obj = $infoNotify["TIPOOGGETTO"];
                     $id = $infoNotify["ID"];
                     $referName = $infoNotify["NOME"];
@@ -101,9 +101,9 @@ class NotificationParsing
                     if ($obj == "CANDIDATURA") {
                         $href = $this->rounting("CANDIDATURA");
                         $href = sprintf($href, $id);
-                        if ($esit == "true") {
+                        if ($esit == true) {
                             $result[$href] = sprintf(NotificationParsing::$DECISIONE_CANDIDATURA_DOMANDA_ACCETTATA, $referName);
-                        } else if ($esit == "false") {
+                        } else if ($esit == false) {
                             $result[$href] = sprintf(NotificationParsing::$DECISIONE_CANDIDATURA_DOMANDA_RIFIUTATA, $referName);
                         }
                     }
@@ -113,13 +113,13 @@ class NotificationParsing
             }
             return $result;
 
-        } else if ($typeUser == "MODERATOR") {
+        } else if ($typeUser == RuoloUtente::MODERATORE) {
             $result = array();
             for ($i = 0; $i < $size; $i++) {
                 $type = $notifyObject[$i]->getTipo();
                 $infoNotify = json_decode($notifyObject[$i]->getInfo(), true);
 
-                if ($type = "SEGNALAZIONE") {
+                if ($type == tipoNotifica::SEGNALAZIONE) {
 
                     $obj = $infoNotify["TIPOOGGETTO"];
                     $id = $infoNotify["ID"];
@@ -145,14 +145,14 @@ class NotificationParsing
                 }
             }
             return $result;
-        } else if ($typeUser == "ADMIN") {
+        } else if ($typeUser == RuoloUtente::AMMINISTRATORE){
             $result = array();
 
             for ($i = 0; $i < $size; $i++) {
                 $type = $notifyObject[$i]->getTipo();
                 $infoNotify = json_decode($notifyObject[$i]->getInfo(), true);
 
-                if ($type = "SEGNALAZIONE") {
+                if ($type == tipoNotifica::SEGNALAZIONE) {
 
                     $obj = $infoNotify["TIPOOGGETTO"];
                     $id = $infoNotify["ID"];

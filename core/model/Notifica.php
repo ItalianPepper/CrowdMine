@@ -11,6 +11,7 @@ class tipoNotifica{
     const INSERIMENTO = "inserimento";
     const RISOLUZIONE = "risoluzione";
     const DECISIONE = "decisione";
+    const SEGNALAZIONE = "segnalazione";
 }
 
 class Notifica implements JsonSerializable{
