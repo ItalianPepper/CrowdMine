@@ -11,13 +11,16 @@ include_once MODEL_DIR . 'Annuncio.php';
  * Time: 23.25
  */
 
-class UtenteManager extends Manager{
+class UtenteManager extends Manager implements SplSubject {
+
+    private $_observers;
+    private $wrapperNotifica;
     /**
      * UtenteManager constructor.
      */
     public function __construct()
     {
-
+        $this->_observers = new SplObjectStorage();
     }
 
     /**
@@ -69,6 +72,10 @@ class UtenteManager extends Manager{
      * @param $user
      */
     public function updateUtente($user){
+        if($user->getStato() == StatoUtente::SEGNALATO){
+            $username = $user->getNome()." ".$user->getCognome();
+            $this->inviaNotificaDiSegnalazione($user->getId(), $username);
+        }
         $UPDATE_UTENTE = "UPDATE utente SET descrizione='%s', telefono='%s', data_nascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagine_profilo='%s' WHERE id='%s';";
         $query = sprintf($UPDATE_UTENTE, $user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo(), $user->getId());
         self::getDB()->query($query);
@@ -140,7 +147,6 @@ class UtenteManager extends Manager{
         return $this->createUserFromRow($row);
     }
 
-
     /**
      * Find a List of Utente
      *
@@ -149,7 +155,7 @@ class UtenteManager extends Manager{
      */
     public function findUserOneInput ($input){
         $users = array();
-        $getListUsers = "SELECT * FROM utente WHERE  nome LIKE %'%s'% OR cognome LIKE %'%s'% OR email LIKE %'%s'% ;";
+        $getListUsers = "SELECT * FROM utente WHERE  nome LIKE %'%s'% OR cognome LIKE %'%s'% OR email LIKE %'%s'% OR ruolo LIKE %'%s'%;";
         $query = sprintf($getListUsers,$input,$input,$input);
         $result = self::getDB()->query($query);
         foreach ($result->fetch_assoc() as $row) {
@@ -188,7 +194,6 @@ class UtenteManager extends Manager{
      * @return bool|Utente
      */
     private function findUtenteByLogin($email, $password){
-        $connection = self::getDB();
         $GET_UTENTE_BY_LOGIN = "SELECT * FROM utente WHERE email='%s' AND password='%s';";
         $query = sprintf($GET_UTENTE_BY_LOGIN, $email, $password);
         $result=Manager::getDB()->query($query);
@@ -421,4 +426,48 @@ class UtenteManager extends Manager{
             array_push($list, $micro);
         }return $list;
     }
+
+    public function inviaNotificaDiSegnalazione($idOggetto, $nome){
+        $tipo = "segnalazione";
+        $listaDestinatari = $this->findUserOneInput(RuoloUtente::MODERATORE);
+        $this->setWrapperNotifica($idOggetto, $tipo, $nome, $listaDestinatari);
+        $this->notify();
+    }
+
+    public function attach(SplObserver $observer){
+        $this->_observers->attach($observer);
+    }
+
+    public function detach(SplObserver $observer){
+        $this->_observers->detach($observer);
+    }
+
+    public function notify(){
+        foreach($this->_observers as $observer){
+            $observer->update($this);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWrapperNotifica(){
+        return $this->wrapperNotifica;
+    }
+
+    /**
+     * @param $idOggetto
+     * @param $tipo
+     * @param $nome
+     * @param null $listaMittenti
+     */
+    public function setWrapperNotifica($idOggetto, $tipo, $nome, $listaDestinatari = null){
+        $this->wrapperNotifica = array(
+            "id_oggetto" => $idOggetto,
+            "tipo_oggetto" => $tipo,
+            "nome" => $nome,
+            "lista_mittenti" => $listaDestinatari
+        );
+    }
+
 }
