@@ -76,8 +76,8 @@ class UtenteManager extends Manager implements SplSubject {
             $username = $user->getNome()." ".$user->getCognome();
             $this->inviaNotificaDiSegnalazione($user->getId(), $username);
         }
-        $UPDATE_UTENTE = "UPDATE utente SET descrizione='%s', telefono='%s', data_nascita='%s', citta='%s', email='%s', password='%s', stato='%s', ruolo='%s', immagine_profilo='%s' WHERE id='%s';";
-        $query = sprintf($UPDATE_UTENTE, $user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getStato(), $user->getRuolo(), $user->getImmagineProfilo(), $user->getId());
+        $UPDATE_UTENTE = "UPDATE utente SET nome='%s', cognome='%s', descrizione='%s', telefono='%s', data_nascita='%s', citta='%s', email='%s', password='%s', ruolo='%s', stato='%s', immagine_profilo='%s', partita_iva='%s' WHERE id='%s';";
+        $query = sprintf($UPDATE_UTENTE, $user->getNome(),$user->getCognome(), $user->getDescrizione(), $user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getRuolo(), $user->getStato(), $user->getImmagineProfilo(), $user->getPartitaIva(), $user->getId());
         self::getDB()->query($query);
     }
 

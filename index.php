@@ -164,6 +164,10 @@ try {
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "CancellazioneUtente.php";
                 break;
+            case 'modificaDati':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "ModificaDati.php";
+                break;
             case 'riattivaUtente':
                 $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "RiattivaUtente.php";

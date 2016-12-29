@@ -204,7 +204,7 @@ class Utente {
      */
     public function setDescrizione($descrizione)
     {
-        $this->cognome = $descrizione;
+        $this->descrizione = $descrizione;
     }
 
     /**
