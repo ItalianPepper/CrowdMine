@@ -91,6 +91,7 @@ class MicrocategoriaManager extends Manager
         return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
     }
 
+
     /**
      * Get the list of all Microcategoria into the dataBase
      *
@@ -145,6 +146,30 @@ class MicrocategoriaManager extends Manager
                 array_push($lista, $l);
             }return $lista;
         }return false;
+    }
+
+    public function getMaxPageCompetente($macrocategoria){
+        $row = null;
+        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, competente WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
+        $query = sprintf($GET_NUMBER, $macrocategoria->getId());
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            $row = $result->fetch_row();
+        }return $row;
+    }
+
+    public function getMaxPageRiferito($macrocategoria){
+        $row = null;
+        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, riferito WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
+        $query = sprintf($GET_NUMBER, $macrocategoria->getId());
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            $row = $result->fetch_row();
+        }return $row;
     }
 
 }

@@ -89,11 +89,24 @@ class MacroCategoriaManager extends Manager
     }
 
     /**
+     * @return array
+     */
+    public function findAll(){
+        $FIND_ALL = "SELECT * FROM macrocategoria";
+        $result = self::getDB()->query($FIND_ALL);
+        $listaMacro = array();
+        foreach($result->fetch_assoc() as $m){
+            $micro = new MacroCategoria($m['id'], $m['nome']);
+            array_push($micro);
+        }
+        return $listaMacro;
+    }
+
+    /**
      * @return array|bool
      */
 
-    public function findListMacrocategoria()
-    {
+    public function findListMacrocategoria(){
         $lista = array();
         $FIND_LIST_MACROCATEGORIA =
             "SELECT macrocategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto 
