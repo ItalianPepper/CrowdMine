@@ -28,6 +28,7 @@ class Utente {
     private $id;
     private $nome;
     private $cognome;
+    private $descrizione;
     private $telefono;
     private $dataNascita;
     private $citta;
@@ -36,12 +37,14 @@ class Utente {
     private $stato;
     private $ruolo;
     private $immagineProfilo;
+    private $partitaIva;
 
     /**
      * Utente constructor.
      * @param $id
      * @param $nome
      * @param $cognome
+     * @param $descrizione
      * @param $telefono
      * @param $dataNascita
      * @param $citta
@@ -51,11 +54,12 @@ class Utente {
      * @param $ruolo
      * @param $immagineProfilo
      */
-    public function __construct($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo)
+    public function __construct($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo,$descrizione=null, $immagineProfilo=null, $partitaIva=null)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->cognome = $cognome;
+        $this->descrizione = $descrizione;
         $this->telefono = $telefono;
         $this->dataNascita = $dataNascita;
         $this->citta = $citta;
@@ -64,6 +68,7 @@ class Utente {
         $this->stato = $stato;
         $this->ruolo = $ruolo;
         $this->immagineProfilo = $immagineProfilo;
+        $this->partitaIva = $partitaIva;
     }
 
     /**
@@ -88,6 +93,14 @@ class Utente {
     public function getCognome()
     {
         return $this->cognome;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescrizione()
+    {
+        return $this->descrizione;
     }
 
     /**
@@ -163,11 +176,35 @@ class Utente {
     }
 
     /**
+     * @return null
+     */
+    public function getPartitaIva()
+    {
+        return $this->partitaIva;
+    }
+
+    /**
+     * @param null $partitaIva
+     */
+    public function setPartitaIva($partitaIva)
+    {
+        $this->partitaIva = $partitaIva;
+    }
+
+    /**
      * @param mixed $cognome
      */
     public function setCognome($cognome)
     {
         $this->cognome = $cognome;
+    }
+
+    /**
+     * @param mixed $descrizione
+     */
+    public function setDescrizione($descrizione)
+    {
+        $this->descrizione = $descrizione;
     }
 
     /**

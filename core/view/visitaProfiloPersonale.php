@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
+    <title>Profilo Personale</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -9,13 +9,61 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function caricaMicro(){
+            var stringa = "micro";
+            var index = $("#macro").val();
+            $.post("asyncMicroListByMacro",
+                {nome:stringa,idMacro:index},
+                function (data){
+                    var sel = $("#micro").html(data);
+                });
+        }
+        function ricercaUtente(stringa){
+            $.post("asyncRicercaUtente",
+                {nome: stringa},
+                function (data) {
+                    var valore = $('.select2-search__field').val();
+                    $("#user-search").html(data);
+                    $("#user-search").select2("destroy");
+                    $("#user-search").select2();
+                    $("#user-search").select2("open");
+
+                    search_select();
+                    $('.select2-search__field').val(valore);
+                });
+        }
+
+        $(document).on('focus', '.select2', function() {
+            search_select();
+        });
+
+        function search_select() {
+            $('.select2-search__field').on("keydown", function (e) {
+                setTimeout(function(){
+
+                    var stringa = $('.select2-search__field').val();
+                    ricercaUtente(stringa);
+                },10); //very important, let pass some time to get the true value
+            })
+        }
+
+        ricercaUtente("");
+
+    </script>
+
 </head>
+
 <body>
 <div class="app app-default">
     <aside class="app-sidebar" id="sidebar">
@@ -287,8 +335,10 @@
                     <div class="card-body app-heading">
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="app-title">
-                            <div class="title"><span class="highlight">Scott White</span></div>
-                            <div class="description">Frontend Developer</div>
+                            <div class="title"><span
+                                        class="highlight"><?php echo $user->getNome() . " " . $user->getCognome() ?></span>
+                            </div>
+                            <div class="description"><?php echo $user->getDescrizione(); ?></div>
                         </div>
                     </div>
                 </div>
@@ -303,1039 +353,1186 @@
                                 <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Profilo</a>
                             </li>
                             <li role="tab2">
-                                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Privacy e sicurezza</a>
+                                <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Privacy e
+                                    sicurezza</a>
                             </li>
                             <li role="tab3">
-                                <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Annunci e offerte di lavoro</a>
+                                <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Annunci e offerte di
+                                    lavoro</a>
                             </li>
-							<li role="tab4">
+                            <li role="tab4">
                                 <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Segnalazioni</a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body no-padding tab-content">
-					
+
                         <div role="tabpanel" class="tab-pane active" id="tab1">
                             <div class="row">
-								<div class="col-lg-12 col-md-12 col-xs-12">
-										<div class="section">
-											<div class="section-title"><i class="icon fa fa-user" aria-hidden="true"></i>
-												Elementi base
-											</div>
-											<div class="panel panel-default compact-panel">
-												<a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse1">
-													<div class="panel-heading">
-														<h4 class="media-heading">
-															Indirizzi Email
-														</h4>
-														<p>Aggiungi o rimuovi indirizzi email</p>
-													</div>
-												</a>
-												<div id="profile-collapse1" class="panel-collapse collapse">
-													<div class="panel-body">
-														<div class="col-lg-12 col-md-12 col-xs-12">
-															<div class="row" id="edit-mail">
-																<div class="col-lg-2 col-md-2 col-xs-3 simple-row">
-																	Email
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-																	fakemail@gmail.com
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-mail').toggleWith('#edit-mail-input')">Modifica</a></li>
-																	<li><a href="#">Rimuovi</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-mail-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-envelope" aria-hidden="true"></i>
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="section">
+                                        <div class="section-title"><i class="icon fa fa-user" aria-hidden="true"></i>
+                                            Elementi base
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#profile-collapse1">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Indirizzo Email
+                                                    </h4>
+                                                    <p>Visualizza il tuo indirizzo email</p>
+                                                </div>
+                                            </a>
+                                            <div id="profile-collapse1" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="row" id="edit-mail">
+                                                            <div class="col-lg-2 col-md-2 col-xs-3 simple-row">
+                                                                Email
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-9 simple-row">
+                                                                <?php echo $user->getEmail(); ?>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#profile-collapse2">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Numero di telefono
+                                                    </h4>
+                                                    <p>Modifica numero di telefono</p>
+                                                </div>
+                                            </a>
+                                            <div id="profile-collapse2" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="row" id="edit-tel">
+                                                            <div class="col-lg-2 col-md-2 col-xs-3 simple-row">
+                                                                Tel.
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-9 simple-row">
+                                                                <?php echo $user->getTelefono(); ?>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle"
+                                                                        type="button" id="dropdownMenu1"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right"
+                                                                    aria-labelledby="dropdownMenu1">
+                                                                    <li>
+                                                                        <a onclick="$('#edit-tel').toggleWith('#edit-tel-input')">Modifica</a>
+                                                                    </li>
+                                                                    <li><a href="#">Rimuovi</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM MODIFICA !-->
+                                                        <div class="row">
+                                                            <form class="form form-horizontal" id="edit-tel-input"
+                                                                  style="display:none">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-phone"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova Email" aria-describedby="basic-addon1" value="fakemail@gmail.com">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-mail-input').toggleWith('#edit-mail')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="add-mail">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<a onclick="$('#add-mail').toggleWith('#mail-input')" >
-																	<i class="fa fa-plus"></i>
-																		Aggiungi indirizzo email
-																	</a>
-																</div>
-															</div>
-															<!-- FORM INSERIMENTO !-->
-															<div class="row">
-																<form class="form form-horizontal" id="mail-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-envelope" aria-hidden="true"></i>
+                                                                        <input id="numberTelephoneChange" type="text"
+                                                                               class="form-control"
+                                                                               placeholder="Nuovo Numero"
+                                                                               aria-describedby="basic-addon1"
+                                                                               value="<?php echo $user->getTelefono() ?>">
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#edit-tel-input').toggleWith('#edit-tel')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#profile-collapse3">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Cambia password
+                                                    </h4>
+                                                    <p>Segli un'unica password per proteggere i tuoi dati</p>
+                                                </div>
+                                            </a>
+                                            <div id="profile-collapse3" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <!-- FORM INSERIMENTO !-->
+                                                        <div class="row" id="edit-mail">
+                                                            <div class="col-lg-9 col-md-9 col-xs-12 simple-row">
+                                                                La nuova password deve essere composta da almeno 8
+                                                                caratteri, deve contenere maiuscole e minuscole, e deve
+                                                                essere presente almeno un numero.
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <form action="modificaPassword" method="post"
+                                                                  class="form form-horizontal" id="tel-input">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-lock"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova Email" aria-describedby="basic-addon1" value="">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#mail-input').toggleWith('#add-mail')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="panel panel-default compact-panel">
-												<a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse2">
-													<div class="panel-heading">
-														<h4 class="media-heading">
-															Numeri di telefono
-														</h4>
-														<p>Modifica o aggiungi numeri di telefono</p>
-													</div>
-												</a>
-												<div id="profile-collapse2" class="panel-collapse collapse">
-													<div class="panel-body">
-														<div class="col-lg-12 col-md-12 col-xs-12">
-															<div class="row" id="edit-tel">
-																<div class="col-lg-2 col-md-2 col-xs-3 simple-row">
-																	Tel.
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-9 simple-row">
-																	+39 333456789
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-tel').toggleWith('#edit-tel-input')">Modifica</a></li>
-																	<li><a href="#">Rimuovi</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-tel-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-phone" aria-hidden="true"></i>
+                                                                        <input required id="password-attuale"
+                                                                               name="PasswordAttuale" type="text"
+                                                                               class="form-control"
+                                                                               placeholder="Password attuale"
+                                                                               aria-describedby="basic-addon1" value="">
+                                                                    </div>
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-lock"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="+39 333456789">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-tel-input').toggleWith('#edit-tel')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="add-tel">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<a onclick="$('#add-tel').toggleWith('#tel-input')" >
-																	<i class="fa fa-plus"></i>
-																		Aggiungi numero di telefono
-																	</a>
-																</div>
-															</div>
-															<!-- FORM INSERIMENTO !-->
-															<div class="row">
-																<form class="form form-horizontal" id="tel-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-phone" aria-hidden="true"></i>
+                                                                        <input required id="nuova-password"
+                                                                               name="NuovaPassword" type="text"
+                                                                               class="form-control"
+                                                                               placeholder="Nuova Password"
+                                                                               aria-describedby="basic-addon1" value="">
+                                                                    </div>
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-lock"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Numero" aria-describedby="basic-addon1" value="">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#tel-input').toggleWith('#add-tel')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="panel panel-default compact-panel">
-												<a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse3">
-													<div class="panel-heading">
-														<h4 class="media-heading">
-															Cambia password
-														</h4>
-														<p>Segli un'unica password per proteggere i tuoi dati</p>
-													</div>
-												</a>
-												<div id="profile-collapse3" class="panel-collapse collapse">
-													<div class="panel-body">
-														<div class="col-lg-12 col-md-12 col-xs-12">
-															<!-- FORM INSERIMENTO !-->
-															<div class="row" id="edit-mail">
-																<div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-																	La nuova password deve essere composta da almeno 6 caratteri, deve contenere maiuscole e minuscole. Non sono ammessi caratteri speciali.
-																</div>
-															</div>
-															<div class="row">
-																<form class="form form-horizontal" id="tel-input">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-lock" aria-hidden="true"></i>
+                                                                        <input required id="conferma-nuova-password"
+                                                                               name="ConfermaNuovaPassword" type="text"
+                                                                               class="form-control"
+                                                                               placeholder="Conferma nuova Password"
+                                                                               aria-describedby="basic-addon1" value="">
+                                                                    </div>
+                                                                    <div class="alert alert-danger  alert-dismissible"
+                                                                         role="alert"
+                                                                         id="password-errors" style="display: none">
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right"
+                                                                                        id="save-pass-button">Salva
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#profile-collapse4">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Dati anagrafici
+                                                    </h4>
+                                                    <p>Visualizza e modifica i dati anagrafici del tuo account</p>
+                                                </div>
+                                            </a>
+                                            <div id="profile-collapse4" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="row" id="edit-name">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 simple-row">
+                                                                Nome
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-8 simple-row">
+                                                                <?php echo $user->getNome() ?>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle"
+                                                                        type="button" id="dropdownMenu1"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right"
+                                                                    aria-labelledby="dropdownMenu1">
+                                                                    <li>
+                                                                        <a onclick="$('#edit-name').toggleWith('#edit-name-input')">Modifica</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM MODIFICA !-->
+                                                        <div class="row">
+                                                            <form action="modificaDati" method="post"
+                                                                  class="form form-horizontal" id="edit-name-input"
+                                                                  style="display:none">
+                                                                <input type="hidden" name="formName" value="name">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-user"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Password attuale" aria-describedby="basic-addon1" value="">
-																		</div>
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-lock" aria-hidden="true"></i>
+                                                                        <input type="text" name="name"
+                                                                               class="form-control"
+                                                                               placeholder="Nuovo Nome"
+                                                                               aria-describedby="basic-addon1"
+                                                                        >
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#edit-name-input').toggleWith('#edit-name')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row" id="edit-surname">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
+                                                                Cognome
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
+                                                                <?php echo $user->getCognome() ?>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle"
+                                                                        type="button" id="dropdownMenu1"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right"
+                                                                    aria-labelledby="dropdownMenu1">
+                                                                    <li>
+                                                                        <a onclick="$('#edit-surname').toggleWith('#edit-surname-input')">Modifica</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM MODIFICA !-->
+                                                        <div class="row">
+                                                            <form action="modificaDati" method="post"
+                                                                  class="form form-horizontal" id="edit-surname-input"
+                                                                  style="display:none">
+                                                                <input type="hidden" name="formName" value="surname">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-user"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova Password" aria-describedby="basic-addon1" value="">
-																		</div>
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-lock" aria-hidden="true"></i>
+                                                                        <input type="text" name="surname"
+                                                                               class="form-control"
+                                                                               placeholder="Nuovo Cognome"
+                                                                               aria-describedby="basic-addon1"
+                                                                        >
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#edit-surname-input').toggleWith('#edit-surname')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row" id="edit-description">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
+                                                                Descrizione
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
+                                                                <?php
+                                                                    $description = $user->getDescrizione();
+                                                                    if(($description == "") || (!isset($description))){
+                                                                        echo "Nessuna Descrizione inserita.";
+                                                                    }
+                                                                    else{
+                                                                        echo $user->getDescrizione();
+                                                                    }
+
+                                                                ?>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle"
+                                                                        type="button" id="dropdownMenu1"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right"
+                                                                    aria-labelledby="dropdownMenu1">
+
+                                                                    <?php
+                                                                    $description = $user->getDescrizione();
+                                                                    if ((isset($description)) || ($user->getDescrizione() == "")) {
+                                                                        ?>
+                                                                        <li>
+                                                                            <a onclick="$('#edit-description').toggleWith('#edit-description-input')">Aggiungi</a>
+                                                                        </li>
+                                                                    <?php } else { ?>
+                                                                        <li>
+                                                                            <a onclick="$('#edit-description').toggleWith('#edit-description-input')">Modifica</a>
+                                                                        </li>
+                                                                    <?php } ?>
+
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM MODIFICA !-->
+                                                        <div class="row">
+                                                            <form action="modificaDati" method="post"
+                                                                  class="form form-horizontal"
+                                                                  id="edit-description-input" style="display:none">
+                                                                <input type="hidden" name="formName"
+                                                                       value="description">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-map-marker"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Conferma nuova Password" aria-describedby="basic-addon1" value="">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="panel panel-default compact-panel">
-												<a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse4">
-													<div class="panel-heading">
-														<h4 class="media-heading">
-															Dati anagrafici
-														</h4>
-														<p>Visualizza e modifica i dati anagrafici del tuo account</p>
-													</div>
-												</a>
-												<div id="profile-collapse4" class="panel-collapse collapse">
-													<div class="panel-body">
-														<div class="col-lg-12 col-md-12 col-xs-12">
-															<div class="row" id="edit-name">
-																<div class="col-lg-2 col-md-2 col-xs-4 simple-row">
-																	Nome
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 simple-row">
-																	Scott
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-name').toggleWith('#edit-name-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-name-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-user" aria-hidden="true"></i>
+                                                                        <input type="text" name="description"
+                                                                               placeholder="Descrizione"
+                                                                               class="form-control"
+                                                                               aria-describedby="basic-addon1">
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#edit-description-input').toggleWith('#edit-description')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row" id="edit-birthdate">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
+                                                                Data di nascita
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
+                                                                <?php echo $user->getDataNascita() ?>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle"
+                                                                        type="button" id="dropdownMenu1"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right"
+                                                                    aria-labelledby="dropdownMenu1">
+                                                                    <li>
+                                                                        <a onclick="$('#edit-birthdate').toggleWith('#edit-birthdate-input')">Modifica</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM MODIFICA !-->
+                                                        <div class="row">
+                                                            <form action="modificaDati" method="post"
+                                                                  class="form form-horizontal" id="edit-birthdate-input"
+                                                                  style="display:none">
+                                                                <input type="hidden" name="formName" value="birthdate">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-calendar"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Nome" aria-describedby="basic-addon1" value="Scott">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-name-input').toggleWith('#edit-name')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-surname">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Cognome
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	White
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-surname').toggleWith('#edit-surname-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-surname-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-user" aria-hidden="true"></i>
+                                                                        <input type="date" name="birthdate"
+                                                                               class="form-control"
+                                                                               aria-describedby="basic-addon1"
+                                                                               value="<?php echo $user->getDataNascita() ?>">
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#edit-birthdate-input').toggleWith('#edit-birthdate')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row" id="edit-location">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
+                                                                Localit&agrave;
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
+                                                                <?php echo $user->getCitta() ?>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle"
+                                                                        type="button" id="dropdownMenu1"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right"
+                                                                    aria-labelledby="dropdownMenu1">
+                                                                    <li>
+                                                                        <a onclick="$('#edit-location').toggleWith('#edit-location-input')">Modifica</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM MODIFICA !-->
+                                                        <div class="row">
+                                                            <form action="modificaDati" method="post"
+                                                                  class="form form-horizontal" id="edit-location-input"
+                                                                  style="display:none">
+                                                                <input type="hidden" name="formName" value="location">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-map-marker"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Cognome" aria-describedby="basic-addon1" value="White">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-surname-input').toggleWith('#edit-surname')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-profess">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Professione
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	Web Designer
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-profess').toggleWith('#edit-profess-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-profess-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-user" aria-hidden="true"></i>
+                                                                        <input type="text" name="location"
+                                                                               class="form-control"
+                                                                               placeholder="Nuova Localit&agrave;"
+                                                                               aria-describedby="basic-addon1"
+                                                                        >
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#edit-location-input').toggleWith('#edit-location')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row" id="edit-partitaIva">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
+                                                                Partita IVA
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
+                                                                <?php
+                                                                $patitaIva = $user->getPartitaIva();
+                                                                if (($user->getPartitaIva() == "") || (!isset($patitaIva))) {
+                                                                    echo "Non hai inserito la partita IVA";
+                                                                } else {
+                                                                    echo $user->getPartitaIva();
+                                                                }
+                                                                ?>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle"
+                                                                        type="button" id="dropdownMenu1"
+                                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right"
+                                                                    aria-labelledby="dropdownMenu1">
+                                                                    <?php
+                                                                    $patitaIva = $user->getPartitaIva();
+                                                                    if ((isset($patitaIva)) || ($user->getPartitaIva() == "")) {
+                                                                        ?>
+                                                                        <li>
+                                                                            <a onclick="$('#edit-partitaIva').toggleWith('#edit-partitaIva-input')">Aggiungi</a>
+                                                                        </li>
+                                                                    <?php } else { ?>
+                                                                        <li>
+                                                                            <a onclick="$('#edit-partitaIva').toggleWith('#edit-partitaIva-input')">Modifica</a>
+                                                                        </li>
+                                                                    <?php } ?>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM MODIFICA !-->
+                                                        <div class="row">
+                                                            <form action="modificaDati" method="post"
+                                                                  class="form form-horizontal"
+                                                                  id="edit-partitaIva-input" style="display:none">
+                                                                <input type="hidden" name="formName" value="partitaIva">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-map-marker"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			
-																			<select class="form-control select2">
-																				<option value="AL">Alabama</option>
-																				<option value="WY">Wyoming</option>
-																			</select>
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-profess-input').toggleWith('#edit-profess')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-birthdate">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Data di nascita
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	22/04/1989
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-birthdate').toggleWith('#edit-birthdate-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-birthdate-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-calendar" aria-hidden="true"></i>
+                                                                        <input type="text" name="partitaIva"
+                                                                               class="form-control"
+                                                                               placeholder="Partita IVA"
+                                                                               aria-describedby="basic-addon1">
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#edit-partitaIva-input').toggleWith('#edit-partitaIva')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section">
+                                        <div class="section-title"><i class="icon fa fa-user" aria-hidden="true"></i>
+                                            Gestione categorie
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#profile-collapse5">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Visualizza, aggiungi macrocategorie
+                                                    </h4>
+                                                    <p>Visualizza, aggiungi ed elimina le macrocategorie di
+                                                        competenza</p>
+                                                </div>
+                                            </a>
+                                            <div id="profile-collapse5" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <?php
+                                                        foreach ($macroListUtente as $macro) { ?>
+                                                            <div class="row">
+                                                                <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
+                                                                    <span class="label label-primary"><?php echo $macro->getNome() ?></span>
+                                                                </div>
+
+                                                                <div class="dropdown corner-dropdown">
+                                                                    <button class="btn btn-default dropdown-toggle"
+                                                                            id="dropdownMenu1" data-toggle="dropdown"
+                                                                            aria-haspopup="true" aria-expanded="true">
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu pull-right"
+                                                                        aria-labelledby="dropdownMenu1">
+                                                                        <li>
+                                                                            <a href="<?php echo "rimuoviMacroUtenteControl?idMacro=" . $macro->getId() ?>">Rimuovi</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
+
+                                                        <div class="row" id="add-macro">
+                                                            <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
+                                                                <a onclick="$('#add-macro').toggleWith('#macro-input')">
+                                                                    <i class="fa fa-plus"></i>
+                                                                    Aggiungi macrocategoria
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM INSERIMENTO !-->
+                                                        <div class="row">
+                                                            <form class="form form-horizontal"
+                                                                  action="aggiungiMacroUtente" method="post"
+                                                                  id="macro-input" style="display:none">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+
+                                                                    <div class="input-group">
+                                                        	            <span class="input-group-addon"
+                                                                              id="basic-addon1">
+																            <i class="fa fa-tag" aria-hidden="true"></i>
+															            </span>
+
+                                                                        <select class="form-control select2"
+                                                                                name="getIdMacro" form="macro-input">
+                                                                            <?php
+                                                                            foreach ($macroList as $macro) {
+                                                                                if (array_search($macro, $macroListUtente) === FALSE) { ?>
+                                                                                    <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
+                                                                                <?php }
+                                                                            } ?>
+                                                                            <option value="" disabled selected>Seleziona
+                                                                                la Macrocategoria
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        class="btn btn-primary pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#macro-input').toggleWith('#add-macro')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#profile-collapse6">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Visualizza, aggiungi microcategorie
+                                                    </h4>
+                                                    <p>Visualizza, aggiungi ed elimina le microcategorie di
+                                                        competenza</p>
+                                                </div>
+                                            </a>
+                                            <div id="profile-collapse6" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <?php
+                                                        foreach ($microListUtente as $micro) { ?>
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
+                                                                    <span class="label label-default"><?php echo $micro->getMacroCategoria()->getNome() ?></span>
+
+                                                                    <?php randomColorLabel($micro->getMicroCategoria()->getNome(), $micro->getMicroCategoria()->getNome()) ?>
+                                                                </div>
+                                                                <div class="dropdown corner-dropdown">
+
+                                                                    <button class="btn btn-default dropdown-toggle"
+                                                                            type="button" id="dropdownMenu1"
+                                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                                            aria-expanded="true">
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu pull-right"
+                                                                        aria-labelledby="dropdownMenu1">
+                                                                        <li>
+                                                                            <a href="<?php echo "rimuoviMicroUtenteControl?idMicro=" . $micro->getMicroCategoria()->getId() ?>">Rimuovi</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div> <?php } ?>
+                                                        <div class="row" id="add-micro">
+                                                            <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
+                                                                <a onclick="$('#add-micro').toggleWith('#micro-input')">
+                                                                    <i class="fa fa-plus"></i>
+                                                                    Aggiungi microcategoria
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM INSERIMENTO !-->
+                                                        <div class="row">
+                                                            <form class="form form-horizontal" id="micro-input"
+                                                                  style="display:none" action="aggiungiMicroUtente"
+                                                                  method="post">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-tag"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="date" class="form-control" aria-describedby="basic-addon1" value="1989-04-22">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-birthdate-input').toggleWith('#edit-birthdate')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-location">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Localit&agrave;
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	Fisciano
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-location').toggleWith('#edit-location-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-location-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                        <select class="form-control select2"
+                                                                                name="macro" id="id-macro-selected">
+                                                                            <?php
+                                                                            foreach ($macroList as $macro) {
+                                                                                ?>
+                                                                                <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
+                                                                                <?php
+                                                                            } ?>
+                                                                            <option value="" disabled selected>Seleziona
+                                                                                la Macrocategoria
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group" id="creaMicro">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <input type="text" class="form-control"
+                                                                                       placeholder="Crea una nuova Microcategoria"
+                                                                                       name="newMicro" required
+                                                                                       id="create-new-micro">
+
+                                                                                <button type="submit"
+                                                                                        id="save-new-micro"
+                                                                                        class="btn btn-success pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-primary pull-right"
+                                                                                        onclick="$('#micro-input').toggleWith('#micro-input1')">
+                                                                                    Seleziona
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#micro-input').toggleWith('#add-micro')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="alert alert-danger  alert-dismissible"
+                                                                         role="alert"
+                                                                         id="micro-errors" style="display: none">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="row">
+                                                            <form class="form form-horizontal" id="micro-input1"
+                                                                  style="display:none" action="aggiungiMicroUtente"
+                                                                  method="post">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-tag"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova Localit&agrave;" aria-describedby="basic-addon1" value="Fisciano">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-location-input').toggleWith('#edit-location')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															
-															<div class="row" id="edit-cap">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	CAP
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	84048
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-cap').toggleWith('#edit-cap-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-cap-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                        <select class="form-control select2"
+                                                                                name="macro" id="macro"
+                                                                                onchange="caricaMicro()">
+                                                                            <?php
+                                                                            foreach ($macroList as $macro) {
+                                                                                ?>
+                                                                                <option value="<?php echo $macro->getId() ?>"><?php echo $macro->getNome() ?></option>
+                                                                                <?php
+                                                                            } ?>
+                                                                            <option value="" disabled selected>Seleziona
+                                                                                la Macrocategoria
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="input-group">
+																			<span class="input-group-addon"
+                                                                                  id="basic-addon1">
+																				<i class="fa fa-tags"
+                                                                                   aria-hidden="true"></i>
 																			</span>
-																			<input type="text" class="form-control" placeholder="Nuovo Cap;" aria-describedby="basic-addon1" value="84048">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-cap-input').toggleWith('#edit-cap')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-iva">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Partita Iva
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	12345678912
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-iva').toggleWith('#edit-iva-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-iva-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-user" aria-hidden="true"></i>
-																			</span>
-																			<input type="text" class="form-control" placeholder="Nuova partita iva" aria-describedby="basic-addon1" value="12345678912">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-iva-input').toggleWith('#edit-iva')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-															<div class="row" id="edit-web">
-																<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																	Sito Web
-																</div>
-																<div class="col-lg-9 col-md-9 col-xs-8 overlined-row">
-																	www.fakesite.com
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a onclick="$('#edit-web').toggleWith('#edit-web-input')">Modifica</a></li>
-																  </ul>
-																</div>
-															</div>
-															<!-- FORM MODIFICA !-->
-															<div class="row">
-																<form class="form form-horizontal" id="edit-web-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-globe" aria-hidden="true"></i>
-																			</span>
-																			<input type="text" class="form-control" placeholder="Sito Web";" aria-describedby="basic-addon1" value="www.fakesite.com">
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#edit-web-input').toggleWith('#edit-web')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="section">
-											<div class="section-title"><i class="icon fa fa-user" aria-hidden="true"></i>
-												Gestione categorie
-											</div>
-											<div class="panel panel-default compact-panel">
-												<a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse5">
-													<div class="panel-heading">
-														<h4 class="media-heading">
-															Visualizza, aggiungi macrocategorie
-														</h4>
-														<p>Visualizza, aggiungi ed elimina le macrocategorie di competenza</p>
-													</div>
-												</a>
-												<div id="profile-collapse5" class="panel-collapse collapse">
-													<div class="panel-body">
-														<div class="col-lg-12 col-md-12 col-xs-12">
-															<div class="row">
-																<div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-																	<span class="label label-primary">Informatica</span>
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a href="#">Rimuovi</a></li>
-																  </ul>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<span class="label label-success">Graphic Design</span>
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a href="#">Rimuovi</a></li>
-																  </ul>
-																</div>
-															</div>
-															
-															<div class="row" id="add-macro">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<a onclick="$('#add-macro').toggleWith('#macro-input')" >
-																	<i class="fa fa-plus"></i>
-																		Aggiungi macrocategoria
-																	</a>
-																</div>
-															</div>
-															<!-- FORM INSERIMENTO !-->
-															<div class="row">
-																<form class="form form-horizontal" id="macro-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-tag" aria-hidden="true"></i>
-																			</span>
-																			<select class="form-control select2">
-																				<option value="AL">Alabama</option>
-																				<option value="WY">Wyoming</option>
-																			</select>
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="panel panel-default compact-panel">
-												<a class="panel-default collapse-title" data-toggle="collapse" href="#profile-collapse6">
-													<div class="panel-heading">
-														<h4 class="media-heading">
-															Visualizza, aggiungi microcategorie
-														</h4>
-														<p>Visualizza, aggiungi ed elimina le microcategorie di competenza</p>
-													</div>
-												</a>
-												<div id="profile-collapse6" class="panel-collapse collapse">
-													<div class="panel-body">
-														<div class="col-lg-12 col-md-12 col-xs-12">
-															<div class="row">
-																<div class="col-lg-6 col-md-9 col-xs-12 simple-row">
-																	<span class="label label-default">Informatica</span>
-																	<span class="label label-info">Php</span>
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a href="#">Rimuovi</a></li>
-																  </ul>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
-																	<span class="label label-default">Informatica</span>
-																	<span class="label label-warning">Javascript</span>
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a href="#">Rimuovi</a></li>
-																  </ul>
-																</div>
-															</div>
-															
-															<div class="row" id="add-micro">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<a onclick="$('#add-micro').toggleWith('#micro-input')" >
-																	<i class="fa fa-plus"></i>
-																		Aggiungi microcategoria
-																	</a>
-																</div>
-															</div>
-															<!-- FORM INSERIMENTO !-->
-															<div class="row">
-																<form class="form form-horizontal" id="micro-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-tag" aria-hidden="true"></i>
-																			</span>
-																			<select class="form-control select2">
-																				<option value="AL">Informatica</option>
-																				<option value="WY">Graphic Design</option>
-																			</select>
-																		</div>
-																		<div class="input-group">
-																			<span class="input-group-addon" id="basic-addon1">
-																				<i class="fa fa-tags" aria-hidden="true"></i>
-																			</span>
-																			<select class="form-control select2">
-																				<option value="AL">Php</option>
-																				<option value="WY">Javascript</option>
-																			</select>
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#micro-input').toggleWith('#add-micro')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											
-										</div>
-								</div>
-							</div>    
-						</div>
+                                                                        <select class="form-control select2" id="micro"
+                                                                                name="idMicro" form="micro-input1">
+                                                                            <option value="" disabled selected>Seleziona
+                                                                                la Microcategoria
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group" id="selectMicro">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit"
+                                                                                        id="save-new-micro1"
+                                                                                        class="btn btn-success pull-right">
+                                                                                    Salva
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-primary pull-right"
+                                                                                        onclick="$('#micro-input1').toggleWith('#micro-input')">
+                                                                                    Crea
+                                                                                </button>
+                                                                                <button type="button"
+                                                                                        class="btn btn-default pull-right"
+                                                                                        onclick="$('#micro-input1').toggleWith('#add-micro')">
+                                                                                    Cancella
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="alert alert-danger  alert-dismissible"
+                                                                         role="alert"
+                                                                         id="micro-errors1" style="display: none">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div role="tabpanel" class="tab-pane" id="tab2">
                             <div class="row">
-								<div class="col-lg-12 col-md-12 col-xs-12">
-									<div class="section">
-										<div class="panel panel-default compact-panel">
-											<a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse1">
-												<div class="panel-heading">
-													<h4 class="media-heading">
-														Blocca Utente
-													</h4>
-													<p>Vedi l'elenco ed effettua i cambiamenti che desideri apportare</p>
-												</div>
-											</a>
-											<div id="privacy-collapse1" class="panel-collapse collapse">
-												<div class="panel-body">
-													<div class="col-lg-12 col-md-12 col-xs-12">
-															<div class="row">
-																<div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-																	
-																	<div class="media social-post profile-block">
-																		<div class="media-left">
-																			<a href="#">
-																			  <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-																			</a>
-																			</div>
-																			<div class="media-body">
-																				<div class="media-heading">
-																				<h4 class="title">Scott White</h4>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-																
-																<div class="dropdown corner-dropdown">
-																	
-																  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-																	<span class="caret"></span>
-																  </button>
-																  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-																	<li><a href="#">Sblocca</a></li>
-																  </ul>
-																</div>
-															</div>
-															
-															<div class="row" id="add-userblock">
-																<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-																	<a onclick="$('#add-userblock').toggleWith('#userblock-input')" >
-																	<i class="fa fa-plus"></i>
-																		Blocca nuovo utente
-																	</a>
-																</div>
-															</div>
-															<!-- FORM INSERIMENTO !-->
-															<div class="row">
-																<form class="form form-horizontal" id="userblock-input" style="display:none">
-																	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-																	
-																	</div>
-																	<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-																		<div class="input-group">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="section">
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse1">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Blocca Utente
+                                                    </h4>
+                                                    <p>Vedi l'elenco ed effettua i cambiamenti che desideri apportare</p>
+                                                </div>
+                                            </a>
+                                            <div id="privacy-collapse1" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <?php
+                                                        foreach($blockedUsers as $u){?>
+                                                            <div class="row">
+                                                            <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
+                                                                <div class="media social-post profile-block">
+                                                                    <div class="media-left">
+                                                                        <a href="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$u->getId()?>">
+                                                                            <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="media-body">
+                                                                        <div class="media-heading">
+                                                                            <h4 class="title"><?php echo $u->getNome()." ".$u->getCognome();?></h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="dropdown corner-dropdown">
+
+                                                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                                    <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                                                    <li><a href="<?php echo "sbloccaUtente?idUtente=".$u->getId()?>">Sblocca</a></li>
+                                                                </ul>
+                                                            </div>
+
+                                                        </div>
+                                                        <?php }?>
+                                                        <div class="row" id="add-userblock">
+                                                            <div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
+                                                                <a onclick="$('#add-userblock').toggleWith('#userblock-input')" >
+                                                                    <i class="fa fa-plus"></i>
+                                                                    Blocca nuovo utente
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FORM INSERIMENTO !-->
+                                                        <div class="row">
+                                                            <form class="form form-horizontal" id="userblock-input" action="bloccaUtente" method = "post" style="display:none">
+                                                                <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
+
+                                                                </div>
+                                                                <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
+                                                                    <div class="input-group">
 																			<span class="input-group-addon" id="basic-addon1">
 																				<i class="fa fa-user" aria-hidden="true"></i>
 																			</span>
-																			<select class="form-control select2">
-																				<option value="AL">Fabiano Pecorelli</option>
-																				<option value="WY">Antonio Luca D'avanzo</option>
-																			</select>
-																		</div>
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-primary pull-right">Save</button>
-																						<button type="button" class="btn btn-default pull-right" onclick="$('#userblock-input').toggleWith('#add-userblock')">Cancel</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-												</div>
-											</div>
-										</div>
-										<div class="panel panel-default compact-panel">
-											<a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse2">
-												<div class="panel-heading">
-													<h4 class="media-heading">
-														Visibilit&agrave; informazioni personali
-													</h4>
-													<p>Scegli quali informazioni del tuo profilo vuoi rendere visibile agli altri utenti</p>
-												</div>
-											</a>
-											<div id="privacy-collapse2" class="panel-collapse collapse">
-												<div class="panel-body">
-													<div class="col-lg-12 col-md-12 col-xs-12">
-														<div class="row">
-															<div class="col-lg-2 col-md-2 col-xs-4 simple-row">
-																Indirizzi Email
-															</div>
-															<div class="col-lg-10 col-md-10 col-xs-8 simple-row">
-																<div class="checkbox">
-																	<input type="checkbox" id="checkbox1">
-																	<label for="checkbox1">
-																		Blocca
-																	</label>
-																  </div>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																Numeri di telefono
-															</div>
-															<div class="col-lg-10 col-md-10 col-xs-8 overlined-row">
-																<div class="checkbox">
-																	<input type="checkbox" id="checkbox2">
-																	<label for="checkbox2">
-																		blocca
-																	</label>
-																  </div>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
-																Dati anagrafici
-															</div>
-															<div class="col-lg-10 col-md-10 col-xs-8 overlined-row">
-																<div class="checkbox">
-																	<input type="checkbox" id="checkbox3">
-																	<label for="checkbox3">
-																		blocca
-																	</label>
-																  </div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="panel panel-default compact-panel">
-											<a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse3">
-												<div class="panel-heading">
-													<h4 class="media-heading">
-														Condivisione di dati con terze parti
-													</h4>
-													<p>Scegli se possiamo condividere le informazioni di base del tuo profilo con terze parti</p>
-												</div>
-											</a>
-											<div id="privacy-collapse3" class="panel-collapse collapse">
-												<div class="panel-body">
-													<div class="col-lg-12 col-md-12 col-xs-12">
-														<div class="row">
-															<div class="col-lg-6 col-md-6 col-xs-8 simple-row">
-																Acconsenti al trattamento di dati personali da terze parti?
-															</div>
-															<div class="col-lg-6 col-md-6 col-xs-4 simple-row">
-																<div class="checkbox">
-																	<input type="checkbox" id="checkbox4">
-																	<label for="checkbox4">
-																		Acconsento
-																	</label>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="panel panel-default compact-panel">
-											<a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse4">
-												<div class="panel-heading">
-													<h4 class="media-heading">
-														Processo di verifica in due passaggi
-													</h4>
-													<p>Attiva questa funzionalit&agrave; per una maggiore protezione nel tuo account</p>
-												</div>
-											</a>
-											<div id="privacy-collapse4" class="panel-collapse collapse">
-												<div class="panel-body">
-													<div class="col-lg-12 col-md-12 col-xs-12">
-														<div class="row">
-															<div class="col-lg-6 col-md-6 col-xs-8 simple-row">
-																Processo di verifica in due passaggi
-															</div>
-															<div class="col-lg-6 col-md-6 col-xs-4 simple-row">
-																<div class="checkbox">
-																	<input type="checkbox" id="checkbox4">
-																	<label for="checkbox4">
-																		Attivato
-																	</label>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="panel panel-default compact-panel">
-											<a class="panel-default collapse-title" data-toggle="collapse" href="#privacy-collapse5">
-												<div class="panel-heading">
-													<h4 class="media-heading">
-														Cancellazione Account
-													</h4>
-													<p>Se lo desideri, puoi eliminare il tuo account dal sistema</p>
-												</div>
-											</a>
-											<div id="privacy-collapse5" class="panel-collapse collapse">
-												<div class="panel-body">
-													<div class="col-lg-12 col-md-12 col-xs-12">
-															<!-- FORM INSERIMENTO !-->
-															<div class="row" id="edit-mail">
-																<div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-																	Eseguendo questa procedura il tuo account sarà rimosso da CrowdMine.
-																</div>
-															</div>
-															<div class="row">
-																<form class="form form-horizontal" id="tel-input">
-																	<div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-																		<div class="form-footer">
-																				<div class="form-group">
-																					<div class="col-lg-12 col-md-12 col-xs-12">
-																						<button type="submit" class="btn btn-danger pull-right">Cancella Account</button>
-																					</div>
-																				 </div>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+                                                                        <select class="form-control select2" name="blockUserid" id="user-search">
+                                                                            <option value="AL">Fabiano Pecorelli</option>
+                                                                            <option value="WY">Antonio Luca D'avanzo</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-footer">
+                                                                        <div class="form-group">
+                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                <button type="submit" class="btn btn-primary pull-right">Salva</button>
+                                                                                <button type="button" class="btn btn-default pull-right" onclick="$('#userblock-input').toggleWith('#add-userblock')">Cancella</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#privacy-collapse2">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Visibilit&agrave; informazioni personali
+                                                    </h4>
+                                                    <p>Scegli quali informazioni del tuo profilo vuoi rendere visibile
+                                                        agli altri utenti</p>
+                                                </div>
+                                            </a>
+                                            <div id="privacy-collapse2" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 simple-row">
+                                                                Indirizzi Email
+                                                            </div>
+                                                            <div class="col-lg-10 col-md-10 col-xs-8 simple-row">
+                                                                <div class="checkbox">
+                                                                    <input type="checkbox" id="checkbox1">
+                                                                    <label for="checkbox1">
+                                                                        Blocca
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
+                                                                Numeri di telefono
+                                                            </div>
+                                                            <div class="col-lg-10 col-md-10 col-xs-8 overlined-row">
+                                                                <div class="checkbox">
+                                                                    <input type="checkbox" id="checkbox2">
+                                                                    <label for="checkbox2">
+                                                                        blocca
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-2 col-md-2 col-xs-4 overlined-row">
+                                                                Dati anagrafici
+                                                            </div>
+                                                            <div class="col-lg-10 col-md-10 col-xs-8 overlined-row">
+                                                                <div class="checkbox">
+                                                                    <input type="checkbox" id="checkbox3">
+                                                                    <label for="checkbox3">
+                                                                        blocca
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#privacy-collapse3">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Condivisione di dati con terze parti
+                                                    </h4>
+                                                    <p>Scegli se possiamo condividere le informazioni di base del tuo
+                                                        profilo con terze parti</p>
+                                                </div>
+                                            </a>
+                                            <div id="privacy-collapse3" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-xs-8 simple-row">
+                                                                Acconsenti al trattamento di dati personali da terze
+                                                                parti?
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-xs-4 simple-row">
+                                                                <div class="checkbox">
+                                                                    <input type="checkbox" id="checkbox4">
+                                                                    <label for="checkbox4">
+                                                                        Acconsento
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#privacy-collapse4">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Processo di verifica in due passaggi
+                                                    </h4>
+                                                    <p>Attiva questa funzionalit&agrave; per una maggiore protezione nel
+                                                        tuo account</p>
+                                                </div>
+                                            </a>
+                                            <div id="privacy-collapse4" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-xs-8 simple-row">
+                                                                Processo di verifica in due passaggi
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-xs-4 simple-row">
+                                                                <div class="checkbox">
+                                                                    <input type="checkbox" id="checkbox4">
+                                                                    <label for="checkbox4">
+                                                                        Attivato
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default compact-panel">
+                                            <a class="panel-default collapse-title" data-toggle="collapse"
+                                               href="#privacy-collapse5">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Cancellazione Account
+                                                    </h4>
+                                                    <p>Se lo desideri, puoi eliminare il tuo account dal sistema</p>
+                                                </div>
+                                            </a>
+                                            <div id="privacy-collapse5" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <!-- FORM INSERIMENTO !-->
+                                                        <div class="row" id="edit-mail">
+                                                            <div class="col-lg-9 col-md-9 col-xs-12 simple-row">
+                                                                Eseguendo questa procedura il tuo account sarà rimosso
+                                                                da CrowdMine.
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
+                                                                <div class="form-footer">
+                                                                    <div class="form-group">
+                                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                            <button class="btn btn-danger pull-right"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#CancelAccountModal">
+                                                                                Cancella Account
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="tab3">
                             ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
@@ -1344,14 +1541,40 @@
                             fugiat nullaip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                             velit esse cillum dolore eu fugiat nulla
                         </div>
-						<div role="tabpanel" class="tab-pane" id="tab4">
+                        <div role="tabpanel" class="tab-pane" id="tab4">
                             ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
                             reprehenderit in voluptate velit esse cillum dolore eu fugiat nullaip ex ea commodo
                             consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                             fugiat nullaip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                             velit esse cillum dolore eu fugiat nulla
                         </div>
-                    
+                    </div>
+
+                    <div class="modal fade" id="CancelAccountModal" tabindex="-1" role="dialog"
+                         aria-labelledby="CancelAccountModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="CancellaAccount" method="POST" class="form form-horizontal"
+                                      id="tel-input">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Sei sicuro di voler eliminare il tuo Account?</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Inserisci la password per cancellare il tuo Account.</p>
+                                        <input type="password" class="form-control" name="inputPassword"
+                                               placeholder="Password" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                                            Chiudi
+                                        </button>
+                                        <button type="submit" class="btn btn-sm btn-success">Cancella Account</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1361,14 +1584,31 @@
 
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-<script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\passwordCheckUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\microCheckUtils.js"></script>
 
-/*toggle element and toggle self element*/
-$.fn.toggleWith = function(id) {
-	$(id).toggle('fast');
-	$(this).toggle('fast');
-};
+
+<script>
+    /*toggle element and toggle self element*/
+    $.fn.toggleWith = function (id) {
+        $(id).toggle('fast');
+        $(this).toggle('fast');
+    };
 </script>
+
+<?php
+if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+    ?>
+    <script>
+        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+    </script>
+    <?php
+    unset($_SESSION['toast-type']);
+    unset($_SESSION['toast-message']);
+}
+?>
+
 
 </body>
 </html>
