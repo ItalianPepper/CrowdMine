@@ -162,6 +162,10 @@ try {
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "stampaConversazione.php";
                 break;
+            case 'stampaCandidature':
+               //StringUtils::checkPermission("all");
+               include_once CONTROL_DIR . "stampaCandidature.php";
+               break;
             case 'inviaMessaggio':
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "inviaMessaggio.php";

@@ -4,7 +4,7 @@
     include_once MODEL_DIR . "Messaggio.php";
     include_once MODEL_DIR . "Candidatura.php";
    
-    include_once MANAGER_DIR . "MessaggioManagerStub.php";
+    include_once MANAGER_DIR . "MessaggioManager.php";
     include_once MANAGER_DIR . "UtenteManagerStub.php";
     
     ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
@@ -18,11 +18,11 @@
     $id_candidatura = $_POST["id"];
     
     ## MANAGER ##
-    $manager_msg = new MessaggioManagerStub();
+    $manager_msg = new MessaggioManager();
     $manager_utente = new UtenteManagerStub();
     
     ## RECUPERO IL  DELLA CONVERSAZIONE ###
-    $invio_candidatura = $manager_msg->collaborazioneInviata($id_candidatura);  //[STUB getUtentebyID]
+    $invio_candidatura = $manager_msg->setInviaCandidatura($id_candidatura);  //[STUB getUtentebyID]
     if($invio_candidatura){
         echo '<div class="alert alert-success">'."\n";
         echo '<strong>Invio con successo!</strong> Hai inviato la collaborazione. Candidatura#'.$id_candidatura;
