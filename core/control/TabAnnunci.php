@@ -4,45 +4,46 @@
 include_once MANAGER_DIR ."MacroCategoriaManager.php";
 include_once MANAGER_DIR ."MicroCategoriaManager.php";*/
 
-$utente = unserialize($_SESSION["user"]); //da rivedere
+/*$utente = unserialize($_SESSION["user"]); //da rivedere
 $permission = $utente->getRuolo();
 
-if ($permission == Utente::AMMINISTRATORE) {}
+if ($permission == Utente::AMMINISTRATORE) {}*/
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        if (isset($_POST["fromdatemicro"]) && isset($_POST["atdatemicro"])) {
+        if (isset($_POST["microcategoria"]) && isset($_POST["fromdatemicro"]) && isset($_POST["todatemicro"])) {
 
             $fromdatemicro = new DateTime($_POST["fromdatemicro"]);
-            $atdatemicro = new DateTime($_POST["atdatemicro"]);
+            $todatemicro = new DateTime($_POST["todatemicro"]);
 
-            if ($fromdatemicro < $atdatemicro) {
+            if ($fromdatemicro < $todatemicro) {
 
-                if ($atdatemicro > $now) {
-                    $atdatemicro = $now;
+                if ($todatemicro > $now) {
+                    $todatemicro = $now;
                 }
 
                 if ($fromdatemicro > $now) {
                     $fromdatemicro = $now;
                 }
+                $micro = $_POST["microcategoria"];
 
-                //$annuncioManager = new AnnuncioManager();
-                //$resultMicro = $annuncioManager->getListAnnunci("MICRO_CATEGORIA", $fromdatemicro, $atdatemicro); //da rivedere
+                $annuncioManager = new AnnuncioManager();
 
-                $resultMicro = stubMicroDate();
+                $resultMicro = $annuncioManager->getNumberAnnunciByMicrocategoriaBetweenDates($micro, $fromdatemicro, $todatemicro);
+
                 header("Content-Type : application/json");
                 echo json_encode($resultMicro);
             }
 
-        } else if (isset($_POST["fromdatemacro"]) && isset($_POST["atdatemacro"])) {
+        } else if (isset($_POST["macrocategoria"]) && isset($_POST["fromdatemacro"]) && isset($_POST["todatemacro"])) {
 
             $fromdatemacro = new DateTime($_POST["fromdatemacro"]);
-            $atdatemacro = new DateTime($_POST["atdatemacro"]);
+            $todatemacro = new DateTime($_POST["todatemacro"]);
 
-            if ($fromdatemacro < $atdatemacro) {
+            if ($fromdatemacro < $todatemacro) {
                 $now = new DateTime();
 
-                if ($atdatemacro > $now) {
+                if ($todatemacro > $now) {
                     $atdatemacro = $now;
                 }
 
@@ -50,10 +51,11 @@ if ($permission == Utente::AMMINISTRATORE) {}
                     $fromdatemicro = $now;
                 }
 
-                //$annuncioManager = new AnnuncioManager();
-                //$resultMacro = $annuncioManager->getListAnnunci("MACRO_CATEOGORIA", $fromdatemicro, $atdatemicro);
+                $macro = $_POST["macrocategoria"];
 
-                $resultMacro = stubMacroDate();
+                $annuncioManager = new AnnuncioManager();
+                $resultMacro = $annuncioManager->getNumberAnnunciByMacrocategoriaBetweenDates($macro, $fromdatemacro, $todatemacro);
+
                 header("Content-Type : application/json");
                 echo json_encode($resultMacro);
             }
@@ -62,19 +64,18 @@ if ($permission == Utente::AMMINISTRATORE) {}
 
             if ($_POST["option"] == "selectMacro") {
 
-                // $macroCategoriaManager = new MacroCategoriaManager();
-                //$listMacroOptions = $macroCategoriaManager->getListMacroCategoria();
+                /*$macroCategoriaManager = new MacroCategoriaManager();
+                $listMacroOptions = $macroCategoriaManager->getListMacroCategoria();*/
 
-                $listMacroOptions = stubMacroCategoria();
+
                 header("Content-Type : application/json");
                 echo json_encode($listMacroOptions);
 
             } else if ($_POST["option"] == "selectMicro") {
 
-                //$microCategoriaManager = new MicrocategoriaManager();
-                //$listMicroOptions = $microCategoriaManager->getListaMicrocategoria();
+                $microCategoriaManager = new MicrocategoriaManager();
+                $listMicroOptions = $microCategoriaManager->findAll();
 
-                $listMicroOptions = stubMicroCategoria();
                 header("Content-Type : application/json");
                 echo json_encode($listMicroOptions);
             }

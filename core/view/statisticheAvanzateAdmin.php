@@ -341,8 +341,8 @@
                                                                    class="form-control">
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <label for="atdatemacro">A</label>
-                                                            <input id="atdatemacro" type="date"
+                                                            <label for="todatemacro">A</label>
+                                                            <input id="todatemacro" type="date"
                                                                    class="form-control">
                                                         </div>
                                                     </div>
@@ -387,8 +387,8 @@
                                                                    class="form-control">
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <label for="atdatemicro">A</label>
-                                                            <input id="atdatemicro" type="date"
+                                                            <label for="todatemicro">A</label>
+                                                            <input id="todatemicro" type="date"
                                                                    class="form-control">
                                                         </div>
                                                     </div>
@@ -563,13 +563,14 @@
     $("#submitMacro").click(function () {
 
         var from = $("#fromdatemacro").val();
-        var at = $("#atdatemacro").val();
+        var to = $("#todatemacro").val();
+        var macro = $("#selectMacro").val();
 
         $.ajax({
             type: "POST",
             url: "tabAnnunci",
             dataType: "json",
-            data: {fromdatemacro:from, atdatemacro:at},
+            data: {macrocategoria:macro,fromdatemacro:from, todatemacro:to},
             success: function(response){
                 var dates = $.map(response, function(value,key){return key});
                 var values = $.map(response, function(value, key){return value});
@@ -582,13 +583,14 @@
     $("#submitMicro").click(function () {
 
         var from = $("#fromdatemicro").val();
-        var at = $("#atdatemicro").val();
+        var to = $("#todatemicro").val();
+        var micro = $("#selectMicro").val();
 
         $.ajax({
             type: "POST",
-            url: "tabAnnunci", //controller della pagina
+            url: "tabAnnunci",
             dataType: "json",
-            data: {fromdatemicro:from, atdatemicro:at},
+            data: {microcategoria:micro,fromdatemicro:from,todatemicro:to},
             success: function(response){
                     var dates = $.map(response, function(value,key){return key});
                     var values = $.map(response, function(value, key){return value});
@@ -598,14 +600,14 @@
     });
 
 
-    $("#fromdatemacro,#atdatemacro").change(function () {
+    $("#fromdatemacro,#todatemacro").change(function () {
 
-        //funzione da attivare ogni qualvolta si seleziona una data.
         var fromDate = $("#fromdatemacro").val();
-        var atDate = $("#atdatemacro").val();
+        var toDate = $("#todatemacro").val();
 
-        if (fromDate != "" && atDate != "") {
-            if (Date.parse(fromDate) > Date.parse(atDate)) {
+        if (fromDate != "" && toDate != "") {
+
+            if (Date.parse(fromDate) > Date.parse(toDate)) {
                 $("#submitMacro").attr("disabled", "true");
             } else {
                 $("#submitMacro").removeAttr("disabled");
@@ -614,15 +616,14 @@
     });
 
 
-    $("#fromdatemicro,#atdatemicro").change(function () {
+    $("#fromdatemicro,#todatemicro").change(function () {
 
-        //funzione da attivare ogni qualvolta si seleziona una data.
         var fromDate = $("#fromdatemicro").val();
-        var atDate = $("#atdatemicro").val();
+        var toDate = $("#todatemicro").val();
 
-        if (fromDate != "" && atDate != "" ) {
+        if (fromDate != "" && toDate != "" ) {
 
-            if (Date.parse(fromDate) > Date.parse(atDate)) {
+            if (Date.parse(fromDate) > Date.parse(toDate)) {
                 $("#submitMicro").attr("disabled", "true");
             } else {
                 $("#submitMicro").removeAttr("disabled");

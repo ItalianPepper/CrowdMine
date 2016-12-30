@@ -5,12 +5,12 @@ $utente = unserialize($_SESSION["user"]); //da rivedere
 $permission = $utente->getTipologia();
 
 if ($permission == "admin") {}*/
-
+//mancano i metodo in annuncio manager
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["macrocategorie"])) {
 
-        if ($_POST["macrocategorie"] == "utenti") { //fatto
+        if ($_POST["macrocategorie"] == "utenti") {
 
             $macroCategoriaManager = new MacroCategoriaManager();
             $resultMacroUtenti = $macroCategoriaManager->findBestMacrocategoria();
@@ -26,18 +26,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($resultMacroAnnunci);
         }
 
-    } else if (isset($_POST["macroCategoriaUtenti"]) && isset($_POST["initpage"])) { //fatto
+    } else if (isset($_POST["macroCategoriaUtenti"]) && isset($_POST["initpage"])) {
 
         $macro = $_POST["macroCategoriaUtenti"];
         $microCategoriaManager = new MicrocategoriaManager();
-        $resultMicroUtenti = $microCategoriaManager->findBestMicrocategoria($macro);
+        $resultMicroUtenti = $microCategoriaManager->findBestMicrocategoriaComptente($macro);
 
         header("Content-Type:application/json");
         echo json_encode($resultMicroUtenti);
 
     } else if (isset($_POST["macroCategoriaAnnunci"]) && isset($_POST["initpage"])) {
+        $macro = $_POST["macroCategoriaAnnunci"];
 
-        $resultMicroAnnunci = stubMicroAnnunci();
+        $microCategoriaManager = new MicrocategoriaManager();
+        $resultMicroAnnunci = $microCategoriaManager->findBestMicrocategoriaRiferito($macro);
+        
         header("Content-Type:application/json");
         echo json_encode($resultMicroAnnunci);
 

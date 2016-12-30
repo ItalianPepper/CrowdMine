@@ -11,33 +11,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($_POST["option"] == "graphics") {
 
-            //  $adsManager = new AnnuncioManager();
+            $adsManager = new AnnuncioManager();
 
-            $adsOfMonth = getListAnnunciOfMonth();
+            $adsOfMonth = $adsManager->getNumberAnnunciPublishedInAMounth();
 
             header("Content-Type : application/json");
             echo json_encode($adsOfMonth);
 
         } else if ($_POST["option"] == "adsNumber") {
 
-            //  $adsManager = new AnnuncioManager();
+            $adsManager = new AnnuncioManager();
 
-            $adsOfToday = getAnnunciOfToday();
+            $adsOfToday = $adsManager->getNumberAnnunciPubblishedToday();
 
             header("Content-Type : application/json");
             echo json_encode($adsOfToday);
         }
     }
-}
-
-function getListAnnunciOfMonth()
-{
-    $arrayTest = array("09/12/2016" => 10, "10/12/2016" => 62, "20/12/2016"=> 45);
-    return $arrayTest;
-}
-
-function getAnnunciOfToday()
-{
-    $testerToday = 220;
-    return $testerToday;
 }
