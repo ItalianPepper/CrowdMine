@@ -167,7 +167,7 @@ class MessaggioManager extends Manager
      * @return bool
      * @throws ApplicationException
      */
-    public function setInviaCandidatura($id_candidatura){
+    public function setInviaCollaborazione($id_candidatura){
         $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata' WHERE `id` = $id_candidatura ;";
         if (!Manager::getDB()->query($SET_CANDIDATURA)) {
             if (Manager::getDB()->errno == 1062) {
@@ -301,7 +301,9 @@ class MessaggioManager extends Manager
      * @param $idMittente
      * @param $idDestinatario
      */
-    public function sendRichiestaCollaborazione($id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata, $richiesta_inviata, $richiesta_accettata){
+    public function createCandidatura($id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata){
+        $richiesta_inviata = 'non_valutata';
+        $richiesta_accettata = 'non_valutato';
         $INSERT_COLLABORAZIONE = "INSERT INTO `candidatura` (`id`, `id_utente`, `id_annuncio`, `corpo`, `data_risposta`, `data_inviata`, `richiesta_inviata`, , `richiesta_accettata`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
         $query = sprintf($INSERT_COLLABORAZIONE, $id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata, $richiesta_inviata, $richiesta_accettata);
         if (!Manager::getDB()->query($query)) {
@@ -311,6 +313,55 @@ class MessaggioManager extends Manager
                 throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
         }
         return true;
+    }
+
+
+    public function getCandidatura($idCandidatura){
+        $CANDIDATURA="SELECT * FROM `Candidatura` WHERE `id` = $idCandidatura;";
+        $result = Manager::getDB()->query($CANDIDATURA);
+        if($result){
+            $obj = $result->fetch_assoc();
+            $candidatura = new Candidatura($obj['id'], $obj['id_utente'], $obj['id_annuncio'], $obj['corpo'], $obj['data_risposta'], $obj['data_inviata'], $obj['richiesta_inviata'], $obj['richiesta_accettata']);
+        }
+        return $candidatura;
+    }
+
+
+    /**
+     * @param $idCandidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function deleteCandidatura($idCandidatura){
+        $ELIMINA_CANDIDATURA = "DELETE FROM `Candidatura` WHERE `id` = $idCandidatura;";
+        if (!Manager::getDB()->query($ELIMINA_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+
+    /**
+     * @param $idCandidatura
+     * @return string
+     */
+    public function getStatoCandidatura($idCandidatura){
+        $CANDIDATURA = "SELECT richiesta_inviata, richiesta_accettata FROM `Candidatura` WHERE `id` = $idCandidatura;";
+        $result = Manager::getDB()->query($CANDIDATURA);
+        while ($obj = $result->fetch_assoc()) {
+            if($obj['richiesta_inviata']=='non_valutata' && $obj['richiesta_accettata']=='non_valutato')
+                return 'Candidatura Inviata';
+            if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='non_valutato')
+                return 'Inviata Collaborazione';
+            if($obj['richiesta_inviata']=='non_inviata' && $obj['richiesta_accettata']=='non_valutato')
+                return 'Candidato rifiutato';
+            if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='accettato')
+                return 'Collaborazione accettata';
+            if($obj['richiesta_inviata']=='non_inviata' && $obj['richiesta_accettata']=='rifiutato')
+                return 'Collaborazione rifiutata';
+        }
     }
 
     /**

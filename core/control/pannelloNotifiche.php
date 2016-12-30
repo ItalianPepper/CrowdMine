@@ -16,19 +16,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $utenteManager = new UtenteManager();
     $notificaManager = new NotificaManager();
 
-    //if(isset($_POST['user'])){
-        //$user = $utenteManager->findUtenteByName($_POST['user']);
-        //$listaNotifiche = null; $notificaManager->getNotificaNotVisualized($user->getId());
-
-        $listaNotifiche = array(
-            "1" => "uno",
-            "2"=> "due",
-            "3"=> "tre");
+    if(isset($_POST['user'])){
+        $user = $utenteManager->findUtenteByName($_POST['user']);
+        $listaNotifiche = null; $notificaManager->getNotificaNotVisualized($user->getId());
 
         header("Content/application: json");
         echo json_encode($listaNotifiche);
 
-    //}
+    }
 
 }else{
 

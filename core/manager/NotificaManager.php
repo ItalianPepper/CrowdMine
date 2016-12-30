@@ -19,22 +19,35 @@ class NotificaManager extends Manager implements SplObserver
     }
 
     /**
-     * Forword a Notifica object
+     * Create a Notifica object not persistent
      *
-     * @param Notifica $notifica
-     * @param Double $idDestinatario
+     * @param $data
+     * @param $tipo
+     * @param $info
+     * @param $letto
+     * @param $id
+     * @return Notifica, object
      */
-
     public function createNotifica($data, $tipo, $info, $letto,$id=null)
     {
         $notifica = new Notifica($data, $tipo, $info, $letto,$id);
         return $notifica;
     }
 
-    public function insertNotifica($id, $data, $tipo, $info, $letto)
+    /**
+     * Insert a Notifica object in the database
+     *
+     * @param $data
+     * @param $tipo
+     * @param $info
+     * @param $letto
+     * @return int $id
+     * @throws ApplicationException
+     */
+    public function insertNotifica($data, $tipo, $info, $letto)
     {
-        $INSERT_NOTIFICA = "INSERT INTO `Notifica` (`id`, `date`, `tipo`, `letto`, `info`) VALUES ('%s', '%s', '%s', '%s', '%s');";
-        $query = sprintf($INSERT_NOTIFICA, $id, $data, $tipo, $info, $letto);
+        $INSERT_NOTIFICA = "INSERT INTO Notifica ( 'date' , 'tipo', 'info' , 'letto' ) VALUES ('%s', '%s', '%s', '%s')";
+        $query = sprintf($INSERT_NOTIFICA, $data, $tipo, $info, $letto);
         if (!Manager::getDB()->query($query)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
@@ -58,7 +71,7 @@ class NotificaManager extends Manager implements SplObserver
         $size = count($listaUtenti);
         for ($i = 0; $i < $size; $i++) {
             $idDestinatario = $listaUtenti[$i];
-            $INSERT_IN_DISPATCHER = "INSERT INTO `Dispatcher_notifica` (`id_utente`, `id_notifica`) VALUES ('%s', '%s');";
+            $INSERT_IN_DISPATCHER = "INSERT INTO Dispatcher_notifica ('id_utente', 'id_notifica') VALUES ('%s', '%s')";
             $query = sprintf($INSERT_IN_DISPATCHER, $idDestinatario, $idNotifica);
             if (!Manager::getDB()->query($query)) {
                 if (Manager::getDB()->errno == 1062) {
@@ -116,7 +129,7 @@ class NotificaManager extends Manager implements SplObserver
      */
     public function loadFromDispatcher($idUtente)
     {
-        $LOAD_DISPATCHER = "SELECT * FROM `Dispatcher_notifica` WHERE `id_utente` = $idUtente;";
+        $LOAD_DISPATCHER = "SELECT * FROM Dispatcher_notifica WHERE id_utente= $idUtente;";
         $result = Manager::getDB()->query($LOAD_DISPATCHER);
         $listIdNotifica = array();
         if ($result) {
@@ -127,20 +140,126 @@ class NotificaManager extends Manager implements SplObserver
         }
         return $listIdNotifica;
     }
-
+    /**
+     * Receive update from subject
+     * @link http://php.net/manual/en/splobserver.update.php
+     * @param SplSubject $subject <p>
+     * The <b>SplSubject</b> notifying the observer of an update.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
     public function update(SplSubject $subject)
     {
-        $notifica = $subject->getNotifica();
-        $notificaId = $this->insertNotifica($notifica->getData(), $notifica->getTipo(), $notifica->getInfo(), $notifica->getLetto(),$notifica->getId());
+        $wrapperNotifica = $subject->getWrapperNotifica();
 
-        $json = json_decode($notifica->getInfo());
-        $idOggetto = $json["ID"];
+        $tipoNotifica = $wrapperNotifica["tipo_notifica"];
+        $destinatari = $wrapperNotifica["lista_utenti"];
 
-        $um = new UtenteManager();
-        $destinatari = $um->getListaDestinatari($idOggetto);
+        if ($tipoNotifica == tipoNotifica::INSERIMENTO) {
 
-        $this->sendToDispatcher($destinatari, $notificaId);
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
+            $data = new DateTime();
 
+            $this->notifyInserimento($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $data,$destinatari);
+
+        } else if ($tipoNotifica == tipoNotifica::RISOLUZIONE) {
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
+            $esito = $wrapperNotifica[ElementiInfoNotifica::ESITO_OGGETTO];
+            $data = new DateTime();
+
+            $this->notifyRisoluzione($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $esito, $data,$destinatari);
+
+        } else if ($tipoNotifica == tipoNotifica::DECISIONE) {
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
+            $tipo = $wrapperNotifica[ElementiInfoNotifica::TIPO_PER_DECISIONE];
+            $esito = $wrapperNotifica[ElementiInfoNotifica::ESITO_OGGETTO];
+            $data = new DateTime();
+
+            $this->notifyDecisione($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $tipo, $esito, $data, $destinatari);
+
+        } else if ($tipoNotifica == tipoNotifica::SEGNALAZIONE) {
+            $tipoOggetto = $wrapperNotifica[ElementiInfoNotifica::TIPO_OGGETTO];
+            $idOggetto = $wrapperNotifica[ElementiInfoNotifica::ID_OGGETTO];
+            $nomeOggetto = $wrapperNotifica[ElementiInfoNotifica::NOME_OGGETTO];
+            $data = new DateTime();
+
+            $this->notifySegnalazione($tipoNotifica, $idOggetto, $tipoOggetto, $nomeOggetto, $data,$destinatari);
+        }
+
+    }
+    
+    /**
+     * This function insert an 'insert-notify' after the observer receive an update from an other manager(subject).
+     * @param $tipoNotifica
+     * @param $idOggetto
+     * @param %tipoOggetto
+     * @param $nomeOggetto
+     * @param $data
+     * @param $destinatari
+     */
+    public function notifyInserimento($tipoNotifica, $idOggetto,$tipoOggetto,$nomeOggetto,$data,$destinatari){
+        $arrayJson = array($idOggetto,$tipoOggetto,$nomeOggetto);
+        $info = json_encode($arrayJson);
+        $idNotifica = $this->insertNotifica($data,$tipoNotifica,$info,false);
+        $this->sendToDispatcher($destinatari, $idNotifica);
+    }
+
+    /**
+     * This function insert an 'resolution-notify' after the observer receive an update from an other manager(subject).
+     * @param $tipoNotifica
+     * @param $idOggetto
+     * @param $tipoOggetto
+     * @param $nomeOggetto
+     * @param $esito
+     * @param $data
+     * @param $destinatari
+     */
+    public function notifyRisoluzione($tipoNotifica, $idOggetto,$tipoOggetto,$nomeOggetto,$esito,$data,$destinatari){
+        $arrayJson = array($idOggetto,$tipoOggetto,$esito,$nomeOggetto);
+        $info = json_encode($arrayJson);
+        $idNotifica = $this->insertNotifica($data,$tipoNotifica,$info,false);
+        $this->sendToDispatcher($destinatari, $idNotifica);
+    }
+
+    /**
+     * This function insert an 'decision-notify' after the observer receive an update from an other manager(subject).
+     * @param $tipoNotifica
+     * @param $idOggetto
+     * @param $tipoOggetto
+     * @param $nomeOggetto
+     * @param $tipo
+     * @param $esito
+     * @param $data
+     * @param $destinatari
+     */
+    public function notifyDecisione($tipoNotifica, $idOggetto,$tipoOggetto,$nomeOggetto,$tipo,$esito,$data,$destinatari){
+        $arrayJson = array($idOggetto,$tipoOggetto,$tipo,$esito,$nomeOggetto);
+        $info = json_encode($arrayJson);
+        $idNotifica = $this->insertNotifica($data,$tipoNotifica,$info,false);
+        $this->sendToDispatcher($destinatari, $idNotifica);
+    }
+
+    /**
+     * This function insert an 'decision-notify' after the observer receive an update from an other manager(subject).
+     * @param $tipoNotifica
+     * @param $idOggetto
+     * @param $tipoOggetto
+     * @param $nomeOggetto
+     * @param $data
+     * @param $destinatari
+     */
+    public function notifySegnalazione($tipoNotifica, $idOggetto,$tipoOggetto,$nomeOggetto,$data,$destinatari){
+        $arrayJson = array($idOggetto,$tipoOggetto,$nomeOggetto);
+        $info = json_encode($arrayJson);
+        $idNotifica = $this->insertNotifica($data,$tipoNotifica,$info,false);
+        $this->sendToDispatcher($destinatari, $idNotifica);
     }
 
 }

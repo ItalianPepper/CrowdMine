@@ -6,13 +6,34 @@
  * Date: 30/11/2016
  * Time: 20:40
  */
-
 class tipoNotifica{
     const INSERIMENTO = "inserimento";
     const RISOLUZIONE = "risoluzione";
     const DECISIONE = "decisione";
+    const SEGNALAZIONE = "segnalazione";
 }
 
+class ElementiInfoNotifica{
+    const TIPO_OGGETTO = "tipo_oggetto";
+    const ID_OGGETTO = "id_oggetto";
+    const NOME_OGGETTO = "nome_oggetto";
+    const ESITO_OGGETTO = "esito_oggetto";
+    const TIPO_PER_DECISIONE = "tipo_decisione";
+}
+
+class SoggettiNotifiche{
+
+    const ANNUNCIO = "annuncio";
+    const COMMENTO = "commento";
+    const FEEDBACK = "feedback";
+    const UTENTE = "utente";
+    const CANDIDATURA = "candidatura";
+    const CONTROVERSIA_MOD = "controvesia_mod";
+    const SEGNALAZIONE_ANNUNCIO ="segnalazione_annuncio";
+    const SEGNALAZIONE_COMMENTO ="segnalazione_commento";
+    const SEGNALAZIONE_FEEDBACK ="segnalazione_feedback";
+    const SEGNALAZIONE_UTENTE = "segnalazione_utente";
+}
 class Notifica implements JsonSerializable{
     private $id;
     private $data;
