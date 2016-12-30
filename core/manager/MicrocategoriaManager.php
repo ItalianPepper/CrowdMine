@@ -113,7 +113,7 @@ class MicrocategoriaManager extends Manager
      *
      * @return array $lista
      */
-    public function findBestMicrocategoria($macrocategoria, $numPagina){
+    public function findBestMicrocategoriaCompetente($macrocategoria, $numPagina){
         $lista = array();
         $FIND_BEST_USER_BY_MICROCATEGORIA =
             "SELECT microcategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto
@@ -130,5 +130,21 @@ class MicrocategoriaManager extends Manager
         }return false;
     }
 
+    public function findBestMicrocategoriaRiferito($macrocategoria, $numPagina){
+        $lista = array();
+        $FIND_BEST_USER_BY_MICROCATEGORIA =
+            "SELECT microcategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto
+             FROM microcategoria, riferito
+             WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
+             LIMIT 10 OFFSET %d
+             GROUP BY riferito.id_microcategoria;";
+        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria, $numPagina*10-10+1);
+        $result = self::getDB()->query($query);
+        if(result != 0){
+            foreach($result->fetch_assoc() as $l){
+                array_push($lista, $l);
+            }return $lista;
+        }return false;
+    }
 
 }
