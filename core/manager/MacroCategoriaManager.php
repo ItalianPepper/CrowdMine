@@ -92,7 +92,7 @@ class MacroCategoriaManager extends Manager
      * @return array|bool
      */
 
-    public function findListMacorocategoria()
+    public function findListMacrocategoria()
     {
         $lista = array();
         $FIND_LIST_MACROCATEGORIA =

@@ -10,19 +10,11 @@ if ($permission == "admin") {}*/
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    //$macroCategoriaManager = new AnnuncioManager();
+    $macroCategoriaManager = new MacroCategoriaManager();
 
-    // $result = $macroCategoriaManager->getListMacroCategorie();
-
-    $result = stubMacroCategorie();
+    $result = $macroCategoriaManager->findListMacrocategoria();
 
     header("Content-Type: application/json");
     echo json_encode($result);
 
-}
-
-function stubMacroCategorie()
-{
-    $arrayTest = array("Informatica" => 120, "Ristorazione" => 87, "Bancario" => 113);
-    return $arrayTest;
 }

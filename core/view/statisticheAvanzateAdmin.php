@@ -779,7 +779,7 @@
             type: "POST",
             url: "tabUtenti",
             dataType: "json",
-            data:{pagination:"maxPage"},
+            data:{type:type,macro:nameMacro,maxPage:"dimensionPaging"},
             success:function (response) {
                 var dimensionPaging = response;
                 $("#pagination").attr("dimension-paging",dimensionPaging);

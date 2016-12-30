@@ -17,6 +17,7 @@ if ($permission == Utente::AMMINISTRATORE) {}*/
             $todatemicro = new DateTime($_POST["todatemicro"]);
 
             if ($fromdatemicro < $todatemicro) {
+                $now = new DateTime();
 
                 if ($todatemicro > $now) {
                     $todatemicro = $now;
@@ -64,8 +65,8 @@ if ($permission == Utente::AMMINISTRATORE) {}*/
 
             if ($_POST["option"] == "selectMacro") {
 
-                /*$macroCategoriaManager = new MacroCategoriaManager();
-                $listMacroOptions = $macroCategoriaManager->getListMacroCategoria();*/
+                $macroCategoriaManager = new MacroCategoriaManager();
+                $listMacroOptions = $macroCategoriaManager->findAll();
 
 
                 header("Content-Type : application/json");
@@ -80,28 +81,4 @@ if ($permission == Utente::AMMINISTRATORE) {}*/
                 echo json_encode($listMicroOptions);
             }
         }
-}
-
-function stubMicroCategoria()
-{
-    $microsName = array("PHP", "C", "JAVA", "C++");
-    return $microsName;
-}
-
-function stubMacroCategoria()
-{
-    $macrosName = array("Informatica", "Matematica", "Ristorazione");
-    return $macrosName;
-}
-
-function stubMacroDate()
-{
-    $macroValues = array("21/12/2016" => 22, "22/12/2016" => 54, "23/12/2016" => 37);
-    return $macroValues;
-}
-
-function stubMicroDate()
-{
-    $microValues = array("21/12/2016" => 10, "22/12/2016" => 27, "23/12/2016" => 45);
-    return $microValues;
 }

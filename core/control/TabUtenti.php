@@ -13,15 +13,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($_POST["macrocategorie"] == "utenti") {
 
             $macroCategoriaManager = new MacroCategoriaManager();
-            $resultMacroUtenti = $macroCategoriaManager->findBestMacrocategoria();
+            $resultMacroUtenti = $macroCategoriaManager->findBestMacrocategoriaCompetente();
 
             header("Content-Type:application/json");
             echo json_encode($resultMacroUtenti);
 
         } else if ($_POST["macrocategorie"] == "annunci") {
-            $annuncioManager = new AnnuncioManager();
 
-            $resultMacroAnnunci = stubMacroAnnunci();
+            $macroCategoriaManager = new MacroCategoriaManager();
+            $resultMacroAnnunci = $macroCategoriaManager->findBestMacrocategoriaCompetente();
+
             header("Content-Type:application/json");
             echo json_encode($resultMacroAnnunci);
         }
@@ -29,18 +30,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if (isset($_POST["macroCategoriaUtenti"]) && isset($_POST["initpage"])) {
 
         $macro = $_POST["macroCategoriaUtenti"];
+        $numPage = $_POST["initpage"];
+
         $microCategoriaManager = new MicrocategoriaManager();
-        $resultMicroUtenti = $microCategoriaManager->findBestMicrocategoriaComptente($macro);
+        $resultMicroUtenti = $microCategoriaManager->findBestMicrocategoriaCompetente($macro,$numPage);
 
         header("Content-Type:application/json");
         echo json_encode($resultMicroUtenti);
 
     } else if (isset($_POST["macroCategoriaAnnunci"]) && isset($_POST["initpage"])) {
+
         $macro = $_POST["macroCategoriaAnnunci"];
+        $numPage = $_POST["initpage"];
 
         $microCategoriaManager = new MicrocategoriaManager();
-        $resultMicroAnnunci = $microCategoriaManager->findBestMicrocategoriaRiferito($macro);
-        
+        $resultMicroAnnunci = $microCategoriaManager->findBestMicrocategoriaRiferito($macro,$numPage);
+
         header("Content-Type:application/json");
         echo json_encode($resultMicroAnnunci);
 
@@ -51,72 +56,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $numberPage = $_POST["pagination"];
             $macroCategoriaUtenti = $_POST["macrocategoria"];
 
-            $resultUtenti = stubMicroPagingUtenti();
+            $microCategoriaManager = new MicrocategoriaManager();
+            $resultMicroUtenti = $microCategoriaManager->findBestMicrocategoriaCompetente($macroCategoriaUtenti,$numberPage);
+
             header("Content-Type:application/json");
-            echo json_encode($resultUtenti);
+            echo json_encode($resultMicroUtenti);
 
         } else if ($_POST["type"] == "Annunci") {
 
             $numberPage = $_POST["pagination"];
             $macroCategoriaAnnunci = $_POST["macrocategoria"];
 
+            $microCategoriaManager = new MicrocategoriaManager();
+            $resultMicroAnnunci = $microCategoriaManager->findBestMicrocategoriaRiferito($macroCategoriaAnnunci ,$numberPage);
 
-            $resultAnnunci = stubMacroPagingAnnunci();
             header("Content-Type:application/json");
-            echo json_encode($resultAnnunci);
+            echo json_encode($resultMicroAnnunci);
 
         }
 
-    } else if (isset($_POST["pagination"])) {
+    } else if (isset($_POST["type"]) && isset($_POST["macro"]) && isset($_POST["maxPage"])) {
 
-        if ($_POST["pagination"] == "maxPage") {
+        if ($_POST["maxPage"] == "dimensionPaging") {
 
-            $resultMaxPage = stubMaxPage();
-            header("Content-Type:application/json");
-            echo json_encode($resultMaxPage);
+            if ($_POST["type"] == "Utenti") {
+
+                $microCategoriaManager = new MicrocategoriaManager();
+                $resultMaxPage = $microCategoriaManager->getMaxPageCompetente();
+
+                header("Content-Type:application/json");
+                echo json_encode($resultMaxPage);
+
+            }else if($_POST["type"]=="Annunci"){
+
+                $microCategoriaManager = new MicrocategoriaManager();
+                $resultMaxPage = $microCategoriaManager->getMaxPageRiferito();
+
+                header("Content-Type:application/json");
+                echo json_encode($resultMaxPage);
+            }
         }
 
     }
-}
-
-function stubMacroAnnunci()
-{
-    $arrayTest = array("Informatica", "Ristorazione", "Sanitario", "Servizi", "Turismo", "Matematica");
-    return $arrayTest;
-}
-
-function stubMacroUtenti()
-{
-    $arrayTest = array("Bancario", "Servizi", "Informatica", "Farmaceutica", "Chimica", "Turismo");
-    return $arrayTest;
-}
-
-function stubMicroUtenti()
-{
-    $arrayTestMicroUtenti = array("PHP", "C", "JAVA", "SQL");
-    return $arrayTestMicroUtenti;
-}
-
-function stubMicroAnnunci()
-{
-    $arrayTestUtenti = array("Agricoltura", "Edilizia", "Monachesimo", "Ascetismo");
-    return $arrayTestUtenti;
-}
-
-function stubMaxPage()
-{
-    $testMaxPage = 7;
-    return $testMaxPage;
-}
-
-function stubMicroPagingUtenti()
-{
-    $arrayUser = array("MicroUtenti", "MicroUtenti", "MicroUtenti", "MicroUtenti", "MicroUtenti", "MicroUtenti");
-    return $arrayUser;
-}
-
-function stubMacroPagingAnnunci()
-{
-    $arrayAnnunci = array("MicroAnnunci", "MicroAnnunci", "MicroAnnunci", "MicroAnnunci", "MicroAnnunci", "MicroAnnunci");
-    return $arrayAnnunci;
 }
