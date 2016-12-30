@@ -8,7 +8,7 @@ $(document).ready(function () {
 
         var macroSelected = $("#id-macro-selected").val();
 
-        if (macroSelected.length == 0) {
+        if (macroSelected==null || macroSelected.length == 0) {
 
 
             var htmlLengthError = '<button type="button" class="close" data-dismiss="alert"' +
@@ -30,7 +30,7 @@ $(document).ready(function () {
 
         var macroSelected = $("#id-macro-selected").val();
 
-        if (macroSelected.length != 0) {
+        if (macroSelected==null || macroSelected.length != 0) {
             $("#micro-errors").fadeOut().css("display", "none");
             $("#save-new-micro").prop("disabled", false);
             ;
@@ -42,10 +42,11 @@ $(document).ready(function () {
     "use strict";
     $("#save-new-micro1").click(function () {
 
+
         var macroSelected = $("#macro").val();
         var microSelected = $("#micro").val();
 
-        if (macroSelected.length == 0) {
+        if (macroSelected==null || macroSelected.length == 0) {
             var htmlLengthError = '<button type="button" class="close" data-dismiss="alert"' +
                 '                                                            aria-label="Close">' +
                 '                                                        <span aria-hidden="true"></button>' +
@@ -56,7 +57,7 @@ $(document).ready(function () {
             $("#micro-errors1").css("display", "block");
             $("#save-new-micro1").prop("disabled", true);
         }
-        else if (microSelected.length == 0) {
+        else if (microSelected==null || microSelected.length == 0) {
             var htmlLengthError = '<button type="button" class="close" data-dismiss="alert"' +
                 '                                                            aria-label="Close">' +
                 '                                                        <span aria-hidden="true"></button>' +
@@ -76,7 +77,7 @@ $(document).ready(function () {
 
         var macroSelected = $("#macro").val();
 
-        if (macroSelected.length != 0) {
+        if (macroSelected==null || macroSelected.length != 0) {
             $("#micro-errors1").fadeOut().css("display", "none");
             $("#save-new-micro1").prop("disabled", false);
             ;
@@ -90,7 +91,7 @@ $(document).ready(function () {
 
         var macroSelected = $("#micro").val();
 
-        if (macroSelected.length != 0) {
+        if (macroSelected==null || macroSelected.length != 0) {
             $("#micro-errors1").fadeOut().css("display", "none");
             $("#save-new-micro1").prop("disabled", false);
             ;
