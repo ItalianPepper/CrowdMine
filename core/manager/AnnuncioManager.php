@@ -568,4 +568,19 @@ class AnnuncioManager
         }return $lista;
     }
 
+    public function getNumberAnnunciPubblishedToday(){
+        $lista = array();
+        $data = data("Y-m-d");
+        $FIND_ANNUNCI = "SELECT COUNT(annuncio.data) FROM annuncio WHERE annuncio.data = '%s'";
+        $query = sprintf($FIND_ANNUNCI, $data);
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            foreach($result->fetch_assoc() as $r){
+                array_push($lista, $r);
+            }
+        }return $lista;
+    }
+
 }
