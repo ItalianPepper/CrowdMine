@@ -27,6 +27,14 @@ class Manager {
         }
         return self::$c;
     }
+
+    public static function formatNullString($string){
+        if($string==null || empty($string)){
+            return 'null';
+        }else{
+            return "'$string'";
+        }
+    }
 }
 
 ?>

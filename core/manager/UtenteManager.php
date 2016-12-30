@@ -58,8 +58,8 @@ class UtenteManager extends Manager implements SplSubject {
      * @param $user
      */
     private function insertUtente($user){
-        $INSERT_UTENTE = "INSERT INTO `utente`( `nome`, `cognome`, `descrizione`, `telefono`, `data_nascita`, `citta`, `email`, `password`, `ruolo`, `stato`, `immagine_profilo`, `partita_iva`) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-        $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(),$user->getDescrizione(),$user->getTelefono(), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getRuolo(),$user->getStato(), $user->getImmagineProfilo(), $user->getPartitaIva());
+        $INSERT_UTENTE = "INSERT INTO `utente`( `nome`, `cognome`, `descrizione`, `telefono`, `data_nascita`, `citta`, `email`, `password`, `ruolo`, `stato`, `immagine_profilo`, `partita_iva`) VALUES('%s', '%s', %s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s);";
+        $query = sprintf($INSERT_UTENTE, $user->getNome(), $user->getCognome(), Manager::formatNullString($user->getDescrizione()), Manager::formatNullString($user->getTelefono()), $user->getDataNascita(), $user->getCitta(), $user->getEmail(), $user->getPassword(), $user->getRuolo(),$user->getStato(), $user->getImmagineProfilo(), Manager::formatNullString($user->getPartitaIva()));
         echo $query;
         if (!Manager::getDB()->query($query)) {
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
