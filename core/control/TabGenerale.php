@@ -1,9 +1,6 @@
 <?php
 
-/*$utente = unserialize($_SESSION["user"]); //da rivedere
-$permission = $utente->getTipologia();*/
-
-//if ($permission == "admin") {}
+include_once MANAGER_DIR . "AnnuncioManager.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

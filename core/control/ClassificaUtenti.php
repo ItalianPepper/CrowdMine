@@ -6,6 +6,9 @@
  * Time: 11:21
  */
 
+include_once MANAGER_DIR . "MacroCategoriaManager.php";
+include_once MANAGER_DIR . "MicroCategoriaManager.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["option"])) {

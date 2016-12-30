@@ -834,7 +834,7 @@
                                               </div>
                                             </div>
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<table class="table">
+												<table id="feedbackTable" class="table">
 													<thead>
 													<tr>
 														<th>#</th>
@@ -844,7 +844,7 @@
 													</tr>
 													</thead>
 													<tbody>
-													<tr>
+													<!--<tr>
 														<th scope="row">1</th>
 														<td>PHP</td>
 														<td>8</td>
@@ -861,7 +861,7 @@
 														<td>Dipendente</td>
 														<td>9</td>
 														<td>8</td>
-													</tr>
+													</tr>-->
 													</tbody>
 												</table>
 											</div>
@@ -928,6 +928,21 @@
     });
 
 
+    $("#tab4").ready(function(){
+        $.ajax({
+            url: "statisticheUtente",
+            type: "POST",
+            dataType: "json",
+            data: {option: "tableUser"},
+            success: function (response) {
+                appendingResultToTable(response);
+                });
+
+            }
+        });
+    });
+
+
     function drawGraphicUser(arrayFeedback) {
 
         var ctxUtente = document.getElementById("statisticheUtente").getContext("2d");
@@ -959,6 +974,27 @@
             }
 
         });
+    }
+
+
+    function appendingResultToTable(elements){
+
+        $.each(elements, function(i,el){
+
+           $("#feedbackTable").find("tbody")
+
+                .append($("<tr>")
+                    .append($("<th></th>")
+                        .attr("scope", "row")
+                        .text(i + 1))
+                    .append($("<td>")
+                        .text("nomeMicro"))
+                    .append($("<td>")
+                        .text("feedbackPositivi"))
+                    .append($("<td>")
+                        .text("feedbacknegativi"))
+                )
+        }
     }
 </script>
 </body>

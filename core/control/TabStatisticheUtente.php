@@ -1,4 +1,6 @@
 <?php
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST["option"])){
 
@@ -7,6 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = stubPercentFeedback();
             header("Content-Type:application/json");
             echo json_encode($result);
+
+        }else if($_POST["option"] == "tableUser"){
+
+
+            $result = array();
+            header("Content-Type:application/json");
+            echo json_encode($result);
+
         }
     }
 }

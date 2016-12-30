@@ -1,13 +1,8 @@
 <?php
 
-/*include_once MANAGER_DIR ."AnnuncioManager.php";
-include_once MANAGER_DIR ."MacroCategoriaManager.php";
-include_once MANAGER_DIR ."MicroCategoriaManager.php";*/
-
-/*$utente = unserialize($_SESSION["user"]); //da rivedere
-$permission = $utente->getRuolo();
-
-if ($permission == Utente::AMMINISTRATORE) {}*/
+include_once MANAGER_DIR . "AnnuncioManager.php";
+include_once MANAGER_DIR . "MacroCategoriaManager.php";
+include_once MANAGER_DIR . "MicroCategoriaManager.php";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

@@ -462,7 +462,7 @@
                 micro:$("#selectMicro").val()
             }
         }
-        console.log(dataSelected);
+
 
         $.ajax({
             type: "POST",
@@ -481,16 +481,18 @@
     function updateTable(arrayMicroElements) {
         $("#tabellaRisultati tbody tr").remove();
 
-        $.each(arrayMicroElements,function(i,el){
+        $.each(arrayMicroElements, function (i, el) {
             $("#tabellaRisultati").find("tbody")
                 .append($("<tr>")
-                .append($("<th></th>")
-                    .attr("scope", "row")
-                    .text(i+1))
-                .append($("<td>").text(el)
+                    .append($("<th></th>")
+                        .attr("scope", "row")
+                        .text(i + 1))
+                    .append($("<td>").text("nome utente"))
+                    .append($("<td>").text("feedbackPositivi"))
+                    .append($("<td>").text("macro categoria"))
+                    .append($("<td>").text("micro categoria"))
                 )
-            );
-        })
+        });
 
     }
 
