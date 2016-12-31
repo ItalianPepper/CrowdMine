@@ -7,6 +7,7 @@
  */
 
 include_once MANAGER_DIR ."/AnnuncioManager.php";
+include_once CONTROL_DIR."ControlUtils.php";
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
 
@@ -15,5 +16,5 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     $oldStatus=null;
     $stato='attivo';
     $manager->updateStatus($idAnnuncio, $stato, $oldStatus);
-    header("Location: " . DOMINIO_SITO . "/annunciSegnalati");
+    header("Location: " .getReferer(DOMINIO_SITO));
 }

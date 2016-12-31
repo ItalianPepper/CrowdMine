@@ -32,7 +32,7 @@ include_once VIEW_DIR . 'header.php';
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
     <?php
     for ($i = 0; $i < count($annunci); $i++) {
         $id = $annunci[$i]->getId();
@@ -206,7 +206,7 @@ include_once VIEW_DIR . 'header.php';
 <body>
 <div class="app app-default">
 
-    <?php include_once "asidePannelloModeratore.php"?>
+    <?php include_once "asidePannelloBackend.php"?>
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">
             <div class="bg"></div>
@@ -260,7 +260,9 @@ include_once VIEW_DIR . 'header.php';
                         <div class="media-action">
                             <button class="btn btn-link" data-toggle="modal" data-target="#myModal2" ><i class="fa fa-check"style="font-size: 200%;"></i> Attiva</button>
                             <button class="btn btn-link" data-toggle="modal" data-target="#myModal3"><i class="fa fa-close" style="font-size: 200%;"></i> Disattiva</button>
-                            <button class="btn btn-link" data-toggle="modal" data-target="#myModal4"><i class="fa fa-check-circle" style="font-size: 200%;"></i> Invia all'amministratore</button>
+                            <?php if($user->getRuolo() == "moderatore" ){?>
+                                <button class="btn btn-link" data-toggle="modal" data-target="#myModal4"><i class="fa fa-check-circle" style="font-size: 200%;"></i> Invia all'amministratore</button>
+                            <?php }?>
 
                         </div>
                     </div>

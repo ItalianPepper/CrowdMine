@@ -361,12 +361,15 @@ try {
                 include_once CONTROL_DIR . "annunciConflitto.php";
                 break;
             case 'annunciReclamati';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "annunciReclamati.php";
                 break;
             case 'annunciModificati';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "annunciModificati.php";
                 break;
             case 'annunciRevisione';
+                $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "annunciRevisione.php";
                 break;
             case 'annuncio';

@@ -13,7 +13,6 @@ include_once VIEW_DIR . 'header.php';
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title></title>
 
@@ -32,7 +31,7 @@ include_once VIEW_DIR . 'header.php';
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
     <?php
     for ($i = 0; $i < count($annunci); $i++) {
         $id = $annunci[$i]->getId();
@@ -206,7 +205,7 @@ include_once VIEW_DIR . 'header.php';
 <body>
 <div class="app app-default">
 
-    <?php include_once "asidePannelloModeratore.php"?>
+    <?php include_once "asidePannelloBackend.php"?>
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">
             <div class="bg"></div>
@@ -332,7 +331,7 @@ include_once VIEW_DIR . 'header.php';
                 return true;
             }
         </script>
-        <script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+
         <script>
             $(document).ready(function() {
                 var showChar = 500;
@@ -368,7 +367,7 @@ include_once VIEW_DIR . 'header.php';
                 });
             });
         </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
         <?php
 
         if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
