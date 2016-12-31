@@ -206,7 +206,7 @@ include_once VIEW_DIR . 'header.php';
 <body>
 <div class="app app-default">
 
-    <?php include_once "asidePannelloModeratore.php"?>
+    <?php include_once "asidePannelloBackend.php"?>
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">
             <div class="bg"></div>
