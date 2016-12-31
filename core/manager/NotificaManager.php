@@ -104,21 +104,25 @@ class NotificaManager extends Manager implements SplObserver
     }
 
     /**
+     * 
      * @param $idNotifica
      * @return Notifica
      */
-    public function getNotificaNotVisualized($idUtente)
+    public function getNotificaNotVisualized($idUtente, $ruolo)
     {
+        $parser = new NotificationParsing();
         $listNotifica = array();
-        $LOAD_NOTIFICHE = "SELECT n.* FROM notifica n, dispatcher d, WHERE d.id_utente = $idUtente AND n.letto=0 AND d.id_notifica = n.id";
-        $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
-        if ($resultNotifica) {
-            while ($obj = $resultNotifica->fetch_assoc()) {
-                $notifica = new Notifica($obj['id'], $obj['date'], $obj['tipo'], $obj['letto'], $obj['info']);
+        $LOAD_NOTIFICHE = "SELECT n.info FROM notifica n, dispatcher d, WHERE d.id_utente = '%s' AND n.letto=0 AND d.id_notifica = n.id";
+        $query = sprintf($LOAD_NOTIFICHE, $idUtente);
+
+        $result = Manager::getDB()->query($query);
+        if ($result) {
+            foreach($result->fetch_assoc() as $n) {
+                $notifica = new Notifica($n['id'], $n['date'], $n['tipo'], $n['letto'], $n['info']);
                 $listNotifica[] = $notifica;
             }
         }
-        return $listNotifica;
+        return $parser->formattingNotify($listNotifica, $ruolo);
     }
 
     /**

@@ -2,9 +2,8 @@
  * Created by darkv on 22/12/2016.
  */
 
-function poll(){
+$(function poll(){
     setTimeout(function(){
-        console.log("ciao");
         $.ajax({
             type: "POST",
             url: "pannelloNotifiche",
@@ -32,6 +31,13 @@ function poll(){
             }
         });
     }, 30000);
-};
+}).onLoad();
 
-poll();
+function generateNotificationsList(data, destination){
+    if(data.length > 0){
+        for(var i in data){
+            var notifica = [];
+
+        }
+    }
+}
