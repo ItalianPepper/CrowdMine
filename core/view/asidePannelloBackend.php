@@ -1,6 +1,17 @@
 <aside class="app-sidebar" id="sidebar">
     <div class="sidebar-header">
-        <a class="sidebar-brand" href="#"><span class="highlight"> Moderatore </span></a>
+        <a class="sidebar-brand" href="#"><span class="highlight">
+                <?php
+                    switch($user->getRuolo()) {
+                        case RuoloUtente::MODERATORE:
+                            echo "Moderatore";
+                        break;
+                        case RuoloUtente::AMMINISTRATORE:
+                            echo "Admin";
+                        break;
+                    }
+                ?>
+                </span></a>
         <button type="button" class="sidebar-toggle">
             <i class="fa fa-times"></i>
         </button>
@@ -16,10 +27,10 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="visualizzaUtentiSegnalati">Utenti</a></li>
-                        <li><a href="annunciSegnalati">Annunci</a></li>
+                        <li><a href="UtentiSegnalati">Utenti</a></li>
+                        <li><a href="visualizzaAnnunciSegnalati">Annunci</a></li>
                         <li><a href="visualizzaFeedbackSegnalati">Feedback</a></li>
-                        <li><a href="commentiSegnalati">Commenti</a></li>
+                        <li><a href="visualizzaCommentiSegnalati">Commenti</a></li>
                     </ul>
                 </div>
             </li>
@@ -32,8 +43,8 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="visualizzaIndexMacrocategorie">Macrocategorie</a></li>
-                        <li><a href="visualizzaIndexMicrocategorie">Microcategorie</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/IndexMacrocategorie">Macrocategorie</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/IndexMicrocategorie">Microcategorie</a></li>
                     </ul>
                 </div>
             </li>
@@ -46,10 +57,7 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="visualizzaUtentiBannati">Lista Utenti Bannati</a></li>
-                        <li><a href="annunciReclamati">Annunci reclamati</a></li>
-                        <li><a href="annunciRevisione">Annunci in revisione</a></li>
-                        <li><a href="annunciModificati">Annunci modificati</a></li>
+                        <li><a href="UtentiBannati">Lista Utenti Bannati</a></li>
                         <li><a href="visualizzaIndexStatistiche">Statistiche</a></li>
                     </ul>
                 </div>

@@ -22,7 +22,21 @@
             margin-bottom: 0px;
         }
 
+        .app-container .app-heading.no-flex{
+            display:inline-block;
+            width:100%;
+        }
+
+        body .app-container .app-heading .app-title{
+            min-height:80px;
+        }
+
     </style>
+
+
+    <?php $fullname = $visitedUser->getNome()." ".$visitedUser->getCognome();?>
+
+
 </head>
 <body>
 <div class="app app-default">
@@ -258,7 +272,7 @@
                             </a>
                             <div class="dropdown-menu">
                                 <div class="profile-info">
-                                    <h4 class="username">Scott White</h4>
+                                    <h4 class="username"><?php echo $fullname; ?></h4>
                                 </div>
                                 <ul class="action">
                                     <li>
@@ -292,13 +306,96 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body app-heading">
-                        <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-                        <div class="app-title">
-                            <div class="title"><span class="highlight">Scott White</span></div>
-                            <div class="description">Frontend Developer</div>
+                    <div class="card-body app-heading no-flex">
+                        <div class="pull-left" style="display: flex;">
+                            <img class="profile-img pull-left" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                            <div class="app-title pull-left">
+                                <div class="title"><span class="highlight"><?php echo $fullname;?></span></div>
+                                <div class="description"><?php echo $visitedUser->getDescrizione();?></div>
+                            </div>
+                        </div>
+                        <div class="profile-buttons-container pull-right">
+                            <div class="profile-buttons">
+                            <?php
+                            if(isset($user)) {
+                                if ($user->getRuolo() == RuoloUtente::AMMINISTRATORE) {
+                                    if (($visitedUser->getRuolo() == RuoloUtente::UTENTE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                        ?>
+
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/eleggiModeratore','Sei sicuro di voler rendere <strong><?php echo $fullname ?></strong> un moderatore?' )"
+                                                    class="btn btn-success btn btn-default btn-xs"
+                                                    data-toggle="modal" data-target="#ConfirmModal">
+                                                Eleggi a Moderatore
+                                            </button>
+                                        </div>
+                                        <?php
+                                    } elseif (($visitedUser->getRuolo() == RuoloUtente::MODERATORE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
+                                        ?>
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/destituisciModeratore','Sei sicuro di voler destituire <strong><?php echo $fullname ?></strong> dal ruolo di moderatore?' )"
+                                                    class="btn btn-danger btn btn-default btn-xs"
+                                                    data-toggle="modal" data-target="#ConfirmModal">
+                                                Destituisci Moderatore
+                                            </button>
+                                        </div>
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+
+                                <?php
+                                if (($user->getRuolo() == RuoloUtente::MODERATORE) || ($user->getRuolo() == RuoloUtente::AMMINISTRATORE)) {
+                                    if ($visitedUser->getStato() != StatoUtente::BANNATO && $visitedUser->getStato() != StatoUtente::RICORSO) {
+                                        ?>
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/banUtente','Sei sicuro di voler bannare <strong><?php echo $fullname ?></strong>?' )"
+                                                    class="btn btn-danger btn btn-default btn-xs"
+                                                     data-toggle="modal" data-target="#ConfirmModal">
+                                                     Ban Utente
+                                            </button>
+                                        </div>
+                                        <?php
+                                    } elseif ($visitedUser->getStato() == StatoUtente::BANNATO || $visitedUser->getStato() == StatoUtente::RICORSO) {
+
+                                        ?>
+                                        <div class="profile-action">
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/riattivaUtente','Riattivare <strong><?php echo $fullname ?></strong>?' )"
+                                                    class="btn btn-success btn btn-default btn-xs"
+                                                    data-toggle="modal" data-target="#ConfirmModal">
+                                                Riattiva Utente
+                                            </button>
+                                        </div>
+
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+
+
+                                <?php
+
+                                if ($visitedUser->getStato() == StatoUtente::ATTIVO) {
+                                    ?>
+                                    <div class="profile-action">
+                                        <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/segnalaUtente','Sei sicuro di voler segnalare <strong><?php echo $fullname ?></strong>?' )"
+                                                class="btn btn-warning btn btn-default btn-xs"
+                                                data-toggle="modal" data-target="#ConfirmModal">
+                                            Segnala Utente
+                                        </button>
+                                    </div>
+
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -314,7 +411,8 @@
                                 <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Annunci</a>
                             </li>
                             <li role="tab3">
-                                <a href="#tab3" id="feedback-tab-3" aria-controls="tab3" role="tab" data-toggle="tab" id="feedback-tab">Feedback</a>
+                                <a href="#tab3" id="feedback-tab-3" aria-controls="tab3" role="tab" data-toggle="tab"
+                                   id="feedback-tab">Feedback</a>
                             </li>
                             <li role="tab4">
                                 <a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">Statistiche</a>
@@ -339,7 +437,7 @@
                                                         Nome
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 simple-row">
-                                                        Scott
+                                                        <?php echo $visitedUser->getNome()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -347,15 +445,7 @@
                                                         Cognome
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        White
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        Professione
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        Web Designer
+                                                        <?php echo $visitedUser->getCognome()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -363,7 +453,7 @@
                                                         Data di nascita
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        22/04/1989
+                                                        <?php echo $visitedUser->getDataNascita()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -371,33 +461,18 @@
                                                         Localit&agrave;
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        Fisciano
+                                                        <?php echo $visitedUser->getCitta()?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        CAP
+                                                        Email
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        84048
+                                                        <?php echo $visitedUser->getEmail()?>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        Partita Iva
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        12345678912
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-5 overlined-row">
-                                                        Sito Web
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-xs-7 overlined-row">
-                                                        www.fakesite.com
-                                                    </div>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -417,12 +492,19 @@
                                             <div id="profile-collapse5" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-                                                                <span class="label label-primary">Informatica</span>
-                                                                <span class="label label-success">Graphic Design</span>
+                                                        <?php
+                                                        if(count($macroListUtente)>0) { ?>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
+                                                                    <?php
+                                                                    foreach ($macroListUtente as $macro) {
+                                                                        randomColorLabel($macro->getNome() . $macro->getId(), $macro->getNome());
+                                                                        echo " ";
+                                                                    } ?>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                            <?php
+                                                        }?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -439,20 +521,41 @@
                                             <div id="profile-collapse6" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-                                                                <span class="label label-default">Informatica</span>
-                                                                <span class="label label-info">Php</span>
-                                                                <span class="label label-warning">Javascript</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12 overlined-row">
-                                                                <span class="label label-default">Graphic Design</span>
-                                                                <span
-                                                                    class="label label-danger">Adobe Illustrator</span>
-                                                            </div>
-                                                        </div>
+                                                        <?php
+                                                            $rowType = "simple-row";
+
+                                                            for($i=0;$i<count($macroListUtente);$i++) {
+                                                                $macro = $macroListUtente[$i];
+                                                                $found = false;
+
+                                                                foreach ($microListUtente as $micro) {
+
+                                                                    $m = $micro->getMicroCategoria();
+
+                                                                    if($m->getIdMacrocategoria()==$macro->getId()) {
+
+                                                                        if($found == false){
+                                                                            $found = true;
+
+                                                                            echo '<div class="row">
+                                                                                    <div class="col-lg-12 col-md-12 col-xs-12 '.$rowType.'">';
+                                                                            echo '    <span class="label label-default">'.$macro->getNome().'</span> ';
+
+
+                                                                            if($rowType== "simple-row") $rowType = "overlined-row";
+
+                                                                        }
+                                                                        randomColorLabel($m->getNome() . $m->getId(), $m->getNome());
+                                                                        echo " ";
+                                                                    }
+
+                                                                    if($found){
+                                                                        echo '  </div></div>';
+                                                                    }
+                                                                }
+                                                            }
+                                                        ?>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -505,44 +608,44 @@
                                                                     <div class="rating">
                                                                         <input type="radio" id="star5" name="rating"
                                                                                value="5"/><label
-                                                                            class="full" for="star5"
-                                                                            title="Awesome - 5 stars"></label>
+                                                                                class="full" for="star5"
+                                                                                title="Awesome - 5 stars"></label>
                                                                         <input type="radio" id="star4half" name="rating"
                                                                                value="4.5"/><label
-                                                                            class="half" for="star4half"
-                                                                            title="Pretty good - 4.5 stars"></label>
+                                                                                class="half" for="star4half"
+                                                                                title="Pretty good - 4.5 stars"></label>
                                                                         <input type="radio" id="star4" name="rating"
                                                                                value="4"/><label
-                                                                            class="full" for="star4"
-                                                                            title="Pretty good - 4 stars"></label>
+                                                                                class="full" for="star4"
+                                                                                title="Pretty good - 4 stars"></label>
                                                                         <input type="radio" id="star3half" name="rating"
                                                                                value="3.5"/><label
-                                                                            class="half" for="star3half"
-                                                                            title="Meh - 3.5 stars"></label>
+                                                                                class="half" for="star3half"
+                                                                                title="Meh - 3.5 stars"></label>
                                                                         <input type="radio" id="star3" name="rating"
                                                                                value="3"/><label
-                                                                            class="full" for="star3"
-                                                                            title="Meh - 3 stars"></label>
+                                                                                class="full" for="star3"
+                                                                                title="Meh - 3 stars"></label>
                                                                         <input type="radio" id="star2half" name="rating"
                                                                                value="2.5"/><label
-                                                                            class="half" for="star2half"
-                                                                            title="Kinda bad - 2.5 stars"></label>
+                                                                                class="half" for="star2half"
+                                                                                title="Kinda bad - 2.5 stars"></label>
                                                                         <input type="radio" id="star2" name="rating"
                                                                                value="2"/><label
-                                                                            class="full" for="star2"
-                                                                            title="Kinda bad - 2 stars"></label>
+                                                                                class="full" for="star2"
+                                                                                title="Kinda bad - 2 stars"></label>
                                                                         <input type="radio" id="star1half" name="rating"
                                                                                value="1.5"/><label
-                                                                            class="half" for="star1half"
-                                                                            title="Meh - 1.5 stars"></label>
+                                                                                class="half" for="star1half"
+                                                                                title="Meh - 1.5 stars"></label>
                                                                         <input type="radio" id="star1" name="rating"
                                                                                value="1"/><label
-                                                                            class="full" for="star1"
-                                                                            title="Sucks big time - 1 star"></label>
+                                                                                class="full" for="star1"
+                                                                                title="Sucks big time - 1 star"></label>
                                                                         <input type="radio" id="starhalf" name="rating"
                                                                                value="0.5"/><label
-                                                                            class="half" for="starhalf"
-                                                                            title="Sucks big time - 0.5 stars"></label>
+                                                                                class="half" for="starhalf"
+                                                                                title="Sucks big time - 0.5 stars"></label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -593,44 +696,44 @@
                                                             <div class="rating">
                                                                 <input type="radio" id="star5" name="rating0"
                                                                        value="5"/><label
-                                                                    class="full" for="star5"
-                                                                    title="Awesome - 5 stars"></label>
+                                                                        class="full" for="star5"
+                                                                        title="Awesome - 5 stars"></label>
                                                                 <input type="radio" id="star4half" name="rating0"
                                                                        value="4.5"/><label
-                                                                    class="half" for="star4half"
-                                                                    title="Pretty good - 4.5 stars"></label>
+                                                                        class="half" for="star4half"
+                                                                        title="Pretty good - 4.5 stars"></label>
                                                                 <input type="radio" id="star4" name="rating0"
                                                                        value="4"/><label
-                                                                    class="full" for="star4"
-                                                                    title="Pretty good - 4 stars"></label>
+                                                                        class="full" for="star4"
+                                                                        title="Pretty good - 4 stars"></label>
                                                                 <input type="radio" id="star3half" name="rating0"
                                                                        value="3.5" checked/><label
-                                                                    class="half" for="star3half"
-                                                                    title="Meh - 3.5 stars"></label>
+                                                                        class="half" for="star3half"
+                                                                        title="Meh - 3.5 stars"></label>
                                                                 <input type="radio" id="star3" name="rating0"
                                                                        value="3"/><label
-                                                                    class="full" for="star3"
-                                                                    title="Meh - 3 stars"></label>
+                                                                        class="full" for="star3"
+                                                                        title="Meh - 3 stars"></label>
                                                                 <input type="radio" id="star2half" name="rating0"
                                                                        value="2.5"/><label
-                                                                    class="half" for="star2half"
-                                                                    title="Kinda bad - 2.5 stars"></label>
+                                                                        class="half" for="star2half"
+                                                                        title="Kinda bad - 2.5 stars"></label>
                                                                 <input type="radio" id="star2" name="rating0"
                                                                        value="2"/><label
-                                                                    class="full" for="star2"
-                                                                    title="Kinda bad - 2 stars"></label>
+                                                                        class="full" for="star2"
+                                                                        title="Kinda bad - 2 stars"></label>
                                                                 <input type="radio" id="star1half" name="rating0"
                                                                        value="1.5"/><label
-                                                                    class="half" for="star1half"
-                                                                    title="Meh - 1.5 stars"></label>
+                                                                        class="half" for="star1half"
+                                                                        title="Meh - 1.5 stars"></label>
                                                                 <input type="radio" id="star1" name="rating0"
                                                                        value="1"/><label
-                                                                    class="full" for="star1"
-                                                                    title="Sucks big time - 1 star"></label>
+                                                                        class="full" for="star1"
+                                                                        title="Sucks big time - 1 star"></label>
                                                                 <input type="radio" id="starhalf" name="rating0"
                                                                        value="0.5"/><label
-                                                                    class="half" for="starhalf"
-                                                                    title="Sucks big time - 0.5 stars"></label>
+                                                                        class="half" for="starhalf"
+                                                                        title="Sucks big time - 0.5 stars"></label>
                                                             </div>
                                                         </div>
                                                         <h5 style="margin-top: 0px"><b>Feedback Title</b></h5>
@@ -649,7 +752,7 @@
                                                         </div>
                                                         <div class="media-action">
                                                             <button class="btn btn-link"><i
-                                                                    class="fa fa-exclamation-circle"></i>
+                                                                        class="fa fa-exclamation-circle"></i>
                                                                 Segnala
                                                             </button>
                                                         </div>
@@ -665,7 +768,7 @@
                                                         <div class="media-left">
                                                             <a href="#">
                                                                 <img
-                                                                    src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                                                        src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
                                                             </a>
                                                         </div>
                                                         <div class="section">
@@ -679,53 +782,53 @@
                                                                             <input type="radio" id="star5"
                                                                                    name="rating1"
                                                                                    value="5"/><label
-                                                                                class="full" for="star5"
-                                                                                title="Awesome - 5 stars"></label>
+                                                                                    class="full" for="star5"
+                                                                                    title="Awesome - 5 stars"></label>
                                                                             <input type="radio" id="star4half"
                                                                                    name="rating1"
                                                                                    value="4.5"/><label
-                                                                                class="half" for="star4half"
-                                                                                title="Pretty good - 4.5 stars"></label>
+                                                                                    class="half" for="star4half"
+                                                                                    title="Pretty good - 4.5 stars"></label>
                                                                             <input type="radio" id="star4"
                                                                                    name="rating1"
                                                                                    value="4"/><label
-                                                                                class="full" for="star4"
-                                                                                title="Pretty good - 4 stars"></label>
+                                                                                    class="full" for="star4"
+                                                                                    title="Pretty good - 4 stars"></label>
                                                                             <input type="radio" id="star3half"
                                                                                    name="rating1"
                                                                                    value="3.5" checked/><label
-                                                                                class="half" for="star3half"
-                                                                                title="Meh - 3.5 stars"></label>
+                                                                                    class="half" for="star3half"
+                                                                                    title="Meh - 3.5 stars"></label>
                                                                             <input type="radio" id="star3"
                                                                                    name="rating1"
                                                                                    value="3"/><label
-                                                                                class="full" for="star3"
-                                                                                title="Meh - 3 stars"></label>
+                                                                                    class="full" for="star3"
+                                                                                    title="Meh - 3 stars"></label>
                                                                             <input type="radio" id="star2half"
                                                                                    name="rating1"
                                                                                    value="2.5"/><label
-                                                                                class="half" for="star2half"
-                                                                                title="Kinda bad - 2.5 stars"></label>
+                                                                                    class="half" for="star2half"
+                                                                                    title="Kinda bad - 2.5 stars"></label>
                                                                             <input type="radio" id="star2"
                                                                                    name="rating1"
                                                                                    value="2"/><label
-                                                                                class="full" for="star2"
-                                                                                title="Kinda bad - 2 stars"></label>
+                                                                                    class="full" for="star2"
+                                                                                    title="Kinda bad - 2 stars"></label>
                                                                             <input type="radio" id="star1half"
                                                                                    name="rating1"
                                                                                    value="1.5"/><label
-                                                                                class="half" for="star1half"
-                                                                                title="Meh - 1.5 stars"></label>
+                                                                                    class="half" for="star1half"
+                                                                                    title="Meh - 1.5 stars"></label>
                                                                             <input type="radio" id="star1"
                                                                                    name="rating1"
                                                                                    value="1"/><label
-                                                                                class="full" for="star1"
-                                                                                title="Sucks big time - 1 star"></label>
+                                                                                    class="full" for="star1"
+                                                                                    title="Sucks big time - 1 star"></label>
                                                                             <input type="radio" id="starhalf"
                                                                                    name="rating1"
                                                                                    value="0.5"/><label
-                                                                                class="half" for="starhalf"
-                                                                                title="Sucks big time - 0.5 stars"></label>
+                                                                                    class="half" for="starhalf"
+                                                                                    title="Sucks big time - 0.5 stars"></label>
                                                                         </div>
                                                                     </div>
                                                                     <h5 style="margin-top: 0px"><b>Feedback Title</b>
@@ -749,7 +852,7 @@
                                                                     </div>
                                                                     <div class="media-action">
                                                                         <button class="btn btn-link"><i
-                                                                                class="fa fa-exclamation-circle"></i>
+                                                                                    class="fa fa-exclamation-circle"></i>
                                                                             Segnala
                                                                         </button>
                                                                     </div>
@@ -766,7 +869,7 @@
                                                                     <div class="media-left">
                                                                         <a href="#">
                                                                             <img
-                                                                                src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                                                                    src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
                                                                         </a>
                                                                     </div>
                                                                     <div class="section">
@@ -781,59 +884,64 @@
                                                                                         <input type="radio" id="star5"
                                                                                                name="rating2"
                                                                                                value="5"/><label
-                                                                                            class="full" for="star5"
-                                                                                            title="Awesome - 5 stars"></label>
+                                                                                                class="full" for="star5"
+                                                                                                title="Awesome - 5 stars"></label>
                                                                                         <input type="radio"
                                                                                                id="star4half"
                                                                                                name="rating2"
                                                                                                value="4.5"/><label
-                                                                                            class="half" for="star4half"
-                                                                                            title="Pretty good - 4.5 stars"></label>
+                                                                                                class="half"
+                                                                                                for="star4half"
+                                                                                                title="Pretty good - 4.5 stars"></label>
                                                                                         <input type="radio" id="star4"
                                                                                                name="rating2"
                                                                                                value="4"/><label
-                                                                                            class="full" for="star4"
-                                                                                            title="Pretty good - 4 stars"></label>
+                                                                                                class="full" for="star4"
+                                                                                                title="Pretty good - 4 stars"></label>
                                                                                         <input type="radio"
                                                                                                id="star3half"
                                                                                                name="rating2"
                                                                                                value="3.5"
                                                                                                checked/><label
-                                                                                            class="half" for="star3half"
-                                                                                            title="Meh - 3.5 stars"></label>
+                                                                                                class="half"
+                                                                                                for="star3half"
+                                                                                                title="Meh - 3.5 stars"></label>
                                                                                         <input type="radio" id="star3"
                                                                                                name="rating2"
                                                                                                value="3"/><label
-                                                                                            class="full" for="star3"
-                                                                                            title="Meh - 3 stars"></label>
+                                                                                                class="full" for="star3"
+                                                                                                title="Meh - 3 stars"></label>
                                                                                         <input type="radio"
                                                                                                id="star2half"
                                                                                                name="rating2"
                                                                                                value="2.5"/><label
-                                                                                            class="half" for="star2half"
-                                                                                            title="Kinda bad - 2.5 stars"></label>
+                                                                                                class="half"
+                                                                                                for="star2half"
+                                                                                                title="Kinda bad - 2.5 stars"></label>
                                                                                         <input type="radio" id="star2"
                                                                                                name="rating2"
                                                                                                value="2"/><label
-                                                                                            class="full" for="star2"
-                                                                                            title="Kinda bad - 2 stars"></label>
+                                                                                                class="full" for="star2"
+                                                                                                title="Kinda bad - 2 stars"></label>
                                                                                         <input type="radio"
                                                                                                id="star1half"
                                                                                                name="rating2"
                                                                                                value="1.5"/><label
-                                                                                            class="half" for="star1half"
-                                                                                            title="Meh - 1.5 stars"></label>
+                                                                                                class="half"
+                                                                                                for="star1half"
+                                                                                                title="Meh - 1.5 stars"></label>
                                                                                         <input type="radio" id="star1"
                                                                                                name="rating2"
                                                                                                value="1"/><label
-                                                                                            class="full" for="star1"
-                                                                                            title="Sucks big time - 1 star"></label>
+                                                                                                class="full" for="star1"
+                                                                                                title="Sucks big time - 1 star"></label>
                                                                                         <input type="radio"
                                                                                                id="starhalf"
                                                                                                name="rating2"
                                                                                                value="0.5"/><label
-                                                                                            class="half" for="starhalf"
-                                                                                            title="Sucks big time - 0.5 stars"></label>
+                                                                                                class="half"
+                                                                                                for="starhalf"
+                                                                                                title="Sucks big time - 0.5 stars"></label>
                                                                                     </div>
                                                                                 </div>
                                                                                 <h5 style="margin-top: 0px"><b>Feedback
@@ -857,7 +965,7 @@
                                                                                 </div>
                                                                                 <div class="media-action">
                                                                                     <button class="btn btn-link"><i
-                                                                                            class="fa fa-exclamation-circle"></i>
+                                                                                                class="fa fa-exclamation-circle"></i>
                                                                                         Segnala
                                                                                     </button>
                                                                                 </div>
@@ -948,6 +1056,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="" method="POST" class="form form-horizontal" id="tel-input">
+
+                                        <input type="hidden" name="idUser" value="<?php echo $visitedUser->getId(); ?>">
+                                        <input type="hidden" name="referer" value="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$visitedUser->getId(); ?>">
+
+                                        <div class="modal-header">
+                                            <strong>Conferma operazione</strong>
+                                        </div>
+                                        <div class="modal-body"></div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Conferma</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -956,6 +1085,14 @@
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+
+                <script>
+                    function setModalForm(action,text){
+                        $("#ConfirmModal form").attr("action",action);
+                        $(".modal-body").html("<p>"+text+"</p>")
+                    }
+                </script>
+
                 <?php
 
                 if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {

@@ -1821,6 +1821,34 @@ body {
         body .app-container .app-heading .app-title .description {
           margin-top: 5px;
           color: #8d9293; }
+        body .app-container .profile-action{
+          float: left;
+          margin-left: 5px;
+          margin-top: 8px;
+        }
+
+        body .app-container .profile-action button{
+          width:100%;
+        }
+
+        body .app-container .profile-buttons{
+          margin-left: auto;
+          margin-right: auto;
+          display: table;
+        }
+
+        body .app-container .profile-buttons-container{
+          margin-top: 8px;
+          width:100%;
+        }
+
+
+        @media (min-width: 980px) {
+          body .app-container .profile-buttons-container{
+            width:auto;
+            margin-top: 0px;
+          }
+        }
     body .app-container.app-login {
       min-height: 100vh !important; }
       body .app-container.app-login > div:first-child, body .app-container.app-login > ui-view > div:first-child, body .app-container.app-login > ui-view > ui-view > div:first-child, body .app-container.app-login > ui-view > ui-view > ui-view > div:first-child {
@@ -1891,7 +1919,7 @@ a:hover {
   .row .corner-dropdown{
 	position: absolute;
 	top: 0px;
-	right: 6px;
+	right: 8px;
 	font-size: 24px; }
   .row .corner-dropdown .btn{
 	padding: 0px 6px;
@@ -1904,7 +1932,7 @@ a:hover {
 	padding: 15px;
 	word-wrap: break-word;
 	border-top: none; }
-  .overlined-row .checkbox{
+  .overlined-row .checkbox, .simple-row .checkbox{
 	margin: 0 !important;
 	float: right; }
 

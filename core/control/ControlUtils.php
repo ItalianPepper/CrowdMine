@@ -44,3 +44,27 @@
     {
         return preg_match("/^[A-Za-z_. ]*$/", $string);
     }
+
+
+    /**
+     * get previous page reference
+     *
+     * @param $defaultURL
+     * @param null $postField
+     * @return string
+     */
+    function getReferer($defaultURL, $postField=null){
+
+        $referer = isset($defaultURL)?$defaultURL:DOMINIO_SITO;
+
+        if (isset($_SERVER['HTTP_REFERER']) AND trim($_SERVER['HTTP_REFERER']) != '') {
+            $referer = htmlspecialchars($_SERVER['HTTP_REFERER']);
+        } else {
+            if (isset($_POST[$postField]))
+                $referer = htmlspecialchars($_POST[$postField]);
+        }
+
+        return $referer;
+    }
+
+?>
