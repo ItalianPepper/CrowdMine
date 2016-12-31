@@ -11,6 +11,7 @@ include_once MODEL_DIR . 'Feedback.php';
 include_once MODEL_DIR . 'MicroCategoria.php';
 include_once MODEL_DIR . 'FeedbackListObject.php';
 include_once MODEL_DIR . 'Candidatura.php';
+include_once MODEL_DIR . 'StatisticheProfiloUtenteListObject.php';
 include_once MANAGER_DIR.'Manager.php';
 
 /**
@@ -168,4 +169,166 @@ class FeedbackManager extends Manager
         }
         return $us;
     }
+
+    /**This function return for each Micro Categoria, that an user has used in his ads, the number of positive feedback.
+     *
+     * @param $idUtente
+     *
+     * @return $result
+     *
+     */
+    public function getCountPositive($idUtente){
+        $GET_COUNT_POSITIVE = " SELECT microcategoria.nome, COUNT(feedback.id) as Positivi
+                                FROM feedback, annuncio, riferito, microcategoria
+                                WHERE  feedback.id_valutato = $idUtente AND
+                                        feedback.valutazione > 2.5 AND
+                                        feedback.id_annuncio = annuncio.id AND
+                                        riferito.id_annuncio = annuncio.id AND
+                                        riferito.id_microcategoria = microcategoria.id
+                                GROUP BY microcategoria.nome ";
+        $result = self::getDB()->query($GET_COUNT_POSITIVE);
+
+        return $result;
+    }
+
+    /**This function return for each Micro Categoria, that an user has used in his ads, the number of negative feedback.
+     *
+     * @param $idUtente
+     *
+     * @return $result
+     *
+     */
+    public function getCountNegative($idUtente){
+        $GET_COUNT_NEGATIVE = " SELECT microcategoria.nome, COUNT(feedback.id) as Negativi
+                                FROM feedback, annuncio, riferito, microcategoria
+                                WHERE  feedback.id_valutato = $idUtente AND
+                                        feedback.valutazione <= 2.5 AND
+                                        feedback.id_annuncio = annuncio.id AND
+                                        riferito.id_annuncio = annuncio.id AND
+                                        riferito.id_microcategoria = microcategoria.id
+                                GROUP BY microcategoria.nome ";
+        $result = self::getDB()->query($GET_COUNT_NEGATIVE);
+
+        return $result;
+
+    }
+
+    /**This function return for each Micro Categoria, that an user has used in his ads, the number of negative feedback
+     * and the number of positive feedback.
+     *
+     * @param $idUtente
+     *
+     * @return $resultTable
+     *
+     */
+    public function getFeedbackMicroCategoriaStats($idUtente){
+
+        $resultTable = array();
+
+        $resultNegative = $this->getCountNegative($idUtente);
+
+        while ($obj = $resultNegative->fetch_assoc()){
+            $tmp = new StatisticheProfiloUtenteListObject($obj["nome"],0,$obj["Negativi"]);
+            $resultTable[] = $tmp;
+        }
+
+        $resultPositive = $this->getCountPositive($idUtente);
+
+        while ($obj = $resultPositive->fetch_assoc()){
+
+            foreach ($resultTable as $resT){
+
+                if($resT->getMicroCategoria() == $obj["nome"]){
+
+                    $resT->setFeedbackPositivi($obj["Positivi"]);
+
+                }else{
+                    $tmp = new StatisticheProfiloUtenteListObject($obj["nome"],$obj["Positivi"],0);
+
+                    $resultTable[] = $tmp;
+                }
+            }
+        }
+
+        foreach($resultNegative as $tmp){
+            $resultTable[] = $tmp->jsonSerialize();
+        }
+
+        return $resultTable;
+
+    }
+
+    /**This function return the average of the all positive feedback used in the ads by an user.
+     *
+     * @param $idUtente
+     *
+     * @return $result
+     *
+     */
+    public function getAveragePositiveFeedback($idUtente){
+
+        $GET_AVERAGE_FEEDBACK_POSITIVE =" SELECT AVG(feedback.id) as AveragePositive
+                                FROM feedback, annuncio, riferito, microcategoria
+                                WHERE  feedback.id_valutato = $idUtente AND
+                                        feedback.valutazione > 2.5 AND
+                                        feedback.id_annuncio = annuncio.id AND
+                                        riferito.id_annuncio = annuncio.id AND
+                                        riferito.id_microcategoria = microcategoria.id";
+
+
+        $result = self::getDB()->query($GET_AVERAGE_FEEDBACK_POSITIVE);
+
+        return $result;
+    }
+
+    /**This function return the average of the all negative feedback used in the ads by an user.
+     *
+     * @param $idUtente
+     *
+     * @return $result
+     *
+     */
+    public function getAverageNegativeFeedback($idUtente){
+
+        $GET_AVERAGE_FEEDBACK_NEGATIVE =" SELECT AVG(feedback.id) as AverageNegative
+                                FROM feedback, annuncio, riferito, microcategoria
+                                WHERE  feedback.id_valutato = $idUtente AND
+                                        feedback.valutazione <= 2.5 AND
+                                        feedback.id_annuncio = annuncio.id AND
+                                        riferito.id_annuncio = annuncio.id AND
+                                        riferito.id_microcategoria = microcategoria.id";
+
+        $result = self::getDB()->query($GET_AVERAGE_FEEDBACK_NEGATIVE);
+
+        return $result;
+    }
+
+    /**This function return the average of the all negative feedback and the average of the all positive feedback used
+     * in the ads by an user.
+     *
+     * @param $idUtente
+     *
+     * @return $result
+     *
+     */
+    public function getAveragesOfFeedbacks($idUtente){
+
+        $resPositive = $this->getAveragePositiveFeedback($idUtente);
+        $resNegative = $this->getAverageNegativeFeedback($idUtente);
+
+        $result = array();
+
+        while($obj = $resNegative->fetch_assoc()){
+            $result["negative"]= $obj["AverageNegative"] ;
+        }
+
+        while($obj = $resPositive->fetch_assoc()){
+            $result["positive"]= $obj["AveragePositive"] ;
+        }
+
+        return $result;
+
+    }
+
+
 }

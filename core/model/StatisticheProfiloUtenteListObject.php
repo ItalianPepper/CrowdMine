@@ -6,9 +6,8 @@
  * Date: 28/12/16
  * Time: 21:23
  */
-class StatisticheProfiloUtenteListObject
+class StatisticheProfiloUtenteListObject implements JsonSerializable
 {
-    private $id;
     private $microCategoria;
     private $feedbackPositivi;
     private $feedbackNegativi;
@@ -21,28 +20,11 @@ class StatisticheProfiloUtenteListObject
      * @param $feedbackPositivi
      * @param $feedbackNegativi
      */
-    public function __construct($id, $microCategoria, $feedbackPositivi, $feedbackNegativi)
+    public function __construct($microCategoria, $feedbackPositivi, $feedbackNegativi)
     {
-        $this->id = $id;
         $this->microCategoria = $microCategoria;
         $this->feedbackPositivi = $feedbackPositivi;
         $this->feedbackNegativi = $feedbackNegativi;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -93,4 +75,19 @@ class StatisticheProfiloUtenteListObject
         $this->feedbackNegativi = $feedbackNegativi;
     }
 
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize()
+    {
+        return [
+            "microcategoria" => $this->getMicroCategoria(),
+            "feedbackpositivi" => $this->getFeedbackPositivi(),
+            "feedbacknegativi" => $this->getFeedbackNegativi(),
+        ];
+    }
 }
