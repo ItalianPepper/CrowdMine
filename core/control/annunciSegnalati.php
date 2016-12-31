@@ -9,32 +9,16 @@
 include_once MANAGER_DIR ."/AnnuncioManager.php";
 include_once MANAGER_DIR . "UtenteManager.php";
 
-
+$filter = array();
 $manager = new AnnuncioManager();
+$utenteManager = new UtenteManager();
+
+array_push($filter, new SearchByStatus(SEGNALATO));
 $lista = $manager->getReportedAnnunci();
+$listaUtenti = $utenteManager->getUserAssociatedWithAnnuncio($filter);
 
-/**
- * creo annunci come prova da inserire in una lista fittizia
-
-
-$idUtenteAnnuncio=2;
-$data=date("d/m/Y");
-$titolo='prova';
-$titolo2='prova2';
-$luogo='Roma';
-$microcat='provola';
-$remuneration=3;
-$tipo=2;
-$desc='ciaociao';
-$annuncio1= new Annuncio(1,$idUtenteAnnuncio, $data, $titolo, $luogo, $microcat, $remuneration, $tipo, $desc);
-$annuncio2= new Annuncio(1,$idUtenteAnnuncio, $data, $titolo, $luogo, $microcat, $remuneration, $tipo, $desc);
-
-$listaProva= array();
-$listaProva[] = $annuncio1;
-$listaProva[] = $annuncio2;
- */
 $_SESSION["annunciSegnalati"] = serialize($lista);
-
+$_SESSION["listaUtentiAssociati"] = serialize($listaUtenti);
 include_once VIEW_DIR ."visualizzaAnnunciSegnalati.php";
 
 ?>

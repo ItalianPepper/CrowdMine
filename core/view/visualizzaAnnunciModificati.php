@@ -3,9 +3,12 @@ include_once MODEL_DIR . "/Annuncio.php";
 include_once MODEL_DIR . "/Candidatura.php";
 include_once MODEL_DIR . "/Commento.php";
 $idUtente="1";
-if (isset($_SESSION["annunciModificati"])){
+if (isset($_SESSION["annunciModificati"])&& isset($_SESSION["listaUtentiAssociati"])){
     $annunci = unserialize($_SESSION["annunciModificati"]);
+    $listaUtentiAssociati =unserialize($_SESSION["listaUtentiAssociati"]);
+    unset($_SESSION["listaUtentiAssociati"]);
     unset($_SESSION["annunciModificati"]);
+
 } else {
     header("Location: " . DOMINIO_SITO . "/annunciModificati");
 }
@@ -13,7 +16,7 @@ include_once VIEW_DIR . 'header.php';
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+
 <head>
     <title></title>
 
@@ -227,14 +230,17 @@ include_once VIEW_DIR . 'header.php';
 
                     <div class="row col-md-12 col-sm-12 col-xs-12 card-header" style="margin-left: 0%">
                         <div class="col-md-3 col-sm-3 media-left">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                            <a href="<?php echo DOMINIO_SITO;?>/ProfiloUtente/<?php echo $annunci[$i]->getIdUtente();?>">
+                                <img src="<?php echo STYLE_DIR; ?>img\<?php echo
+                                $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getImmagineProfilo();
+                                ?>"/>
                             </a>
                         </div>
                         <div class="col-md-7 annuncioTitle" style="width: 100%;">
 
                             <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
-                                <h1><?php echo "Nome del proprietario" ?></h1>
+                                <h1><?php echo $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getNome() . " " .
+                                        $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getCognome() ?></h1>
                             </div>
 
                             <div class="offerta col-md-12 col-sm-12">
@@ -355,7 +361,7 @@ include_once VIEW_DIR . 'header.php';
                 return true;
             }
         </script>
-        <script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+
         <script>
             $(document).ready(function() {
                 var showChar = 500;
@@ -391,7 +397,7 @@ include_once VIEW_DIR . 'header.php';
                 });
             });
         </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        
         <?php
 
         if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
