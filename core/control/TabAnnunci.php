@@ -2,7 +2,7 @@
 
 include_once MANAGER_DIR . "AnnuncioManager.php";
 include_once MANAGER_DIR . "MacroCategoriaManager.php";
-include_once MANAGER_DIR . "MicroCategoriaManager.php";
+include_once MANAGER_DIR . "MicrocategoriaManager.php";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

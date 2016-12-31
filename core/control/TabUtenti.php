@@ -1,5 +1,7 @@
 <?php
 include_once MANAGER_DIR ."UtenteManager.php";
+include_once MANAGER_DIR . "MacroCategoriaManager.php";
+include_once MANAGER_DIR . "MicrocategoriaManager.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
