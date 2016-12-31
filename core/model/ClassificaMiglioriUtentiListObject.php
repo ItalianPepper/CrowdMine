@@ -6,7 +6,7 @@
  * Date: 28/12/16
  * Time: 21:16
  */
-class ClassificaMiglioriUtentiUtils
+class ClassificaMiglioriUtentiListObject
 {
 
     private $nome;

@@ -508,7 +508,8 @@ class AnnuncioManager
     }
 
 
-    //metodi 
+    //metodi utili per gestione statistiche
+
     public function getNumberAnnunciByMicrocategoriaBetweenDates($microcategoria, $fromData, $toData){
         $lista = array();
         $FIND_ANNUNCI = "

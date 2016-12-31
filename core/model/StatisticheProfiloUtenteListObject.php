@@ -6,7 +6,7 @@
  * Date: 28/12/16
  * Time: 21:23
  */
-class StatisticheProfiloUtenteUtils
+class StatisticheProfiloUtenteListObject
 {
     private $id;
     private $microCategoria;
