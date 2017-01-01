@@ -128,7 +128,13 @@ class Notifica implements JsonSerializable{
      * @since 5.4.0
      */
     function jsonSerialize(){
-        return "{id: $this->getId(), data: $this->getData(), tipo: $this->getTipo(), letto: $this->getLetto(), info: $this->getLetto()}";
+        return [
+            "id" => $this->getId(),
+            "data" => $this->getData(),
+            "tipo" => $this->getTipo(),
+            "letto" => $this->getLetto(),
+            "info" => $this->getLetto()
+        ];
     }
 
 }
