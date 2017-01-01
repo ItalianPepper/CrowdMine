@@ -19,10 +19,9 @@
     
     ## MANAGER ##
     $manager_msg = new MessaggioManager();
-    $manager_utente = new UtenteManagerStub();
-    
+     
     ## RECUPERO IL  DELLA CONVERSAZIONE ###
-    $invio_candidatura = $manager_msg->setInviaCollaborazione($id_candidatura);  //[STUB getUtentebyID]
+    $invio_candidatura = $manager_msg->setAccettaCollaborazione($id_candidatura);  //[STUB getUtentebyID]
     if($invio_candidatura){
         include_once CONTROL_DIR . "stampaCandidature.php";
     }

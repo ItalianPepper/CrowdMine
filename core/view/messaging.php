@@ -175,16 +175,17 @@ $_SESSION['destinatario'] = $id_get;
 
     function inviaCollaborazione(event)
     {
-
+        alert("Ciao");
         var httpRequest = new XMLHttpRequest();
         httpRequest.onreadystatechange = function ()
         {
             if ((httpRequest.readyState === XMLHttpRequest.DONE) && (httpRequest.status === 200))
             {
-                document.getElementById('candidature').innerHTML = httpRequest.responseText;
+                document.getElementById('ciao').innerHTML = httpRequest.responseText;
             }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);  
         };
-
+        
+        alert("Ciao");
         //var modulo = new FormData(document.getElementById('myForm'));
         var id = event.target.id;
         var params = "id=" + id; //id candidatura
@@ -192,6 +193,7 @@ $_SESSION['destinatario'] = $id_get;
         httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/inviaCollaborazione"; ?>" , true);
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(params);
+ 
     }
 
 
@@ -216,7 +218,31 @@ $_SESSION['destinatario'] = $id_get;
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(params);
     }
+    
+    
+    
+    function accettaCollaborazione(event)
+    {
 
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = function ()
+        {
+            if ((httpRequest.readyState === XMLHttpRequest.DONE) && (httpRequest.status === 200))
+            {
+                document.getElementById('ciao').innerHTML = httpRequest.responseText;
+            }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);  
+        };
+
+        alert("ciao");
+        //var modulo = new FormData(document.getElementById('myForm'));
+        var id = event.target.id;
+        var params = "id=" + id; //id candidatura
+        httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/accettaCollaborazione?id="; ?>" + id, true);
+        httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        httpRequest.send(params);
+    }
+   
+    
     function rifiutaCollaborazione(event)
     {
 
@@ -225,7 +251,7 @@ $_SESSION['destinatario'] = $id_get;
         {
             if ((httpRequest.readyState === XMLHttpRequest.DONE) && (httpRequest.status === 200))
             {
-                document.getElementById('info').innerHTML = httpRequest.responseText;
+                document.getElementById('ciao').innerHTML = httpRequest.responseText;
             }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);  
         };
 
@@ -233,7 +259,7 @@ $_SESSION['destinatario'] = $id_get;
         //var modulo = new FormData(document.getElementById('myForm'));
         var id = event.target.id;
         var params = "id=" + id; //id candidatura
-        httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/accettaCollaborazione?id="; ?>" + id, true);
+        httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/rifiutaCollaborazione?id="; ?>" + id, true);
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(params);
     }
@@ -292,10 +318,3 @@ $_SESSION['destinatario'] = $id_get;
     </div>
 </div>
 
-<script>
-document.getElementById("demo").onclick = function() {myFunction()};
-
-function myFunction() {
-    document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
-}
-</script>

@@ -178,6 +178,14 @@ try {
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "rifiutaCandidato.php";
                 break;
+            case 'accettaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "accettaCollaborazione.php";
+                break;
+            case 'rifiutaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "rifiutaCollaborazione.php";
+                break;
             
             
             case 'notificheUtente':

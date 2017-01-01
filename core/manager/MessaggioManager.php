@@ -352,15 +352,16 @@ class MessaggioManager extends Manager
         $result = Manager::getDB()->query($CANDIDATURA);
         while ($obj = $result->fetch_assoc()) {
             if($obj['richiesta_inviata']=='non_valutata' && $obj['richiesta_accettata']=='non_valutato')
-                return 'Candidatura Inviata';
+                return 'Candidatura ancora da valutare. ';
             if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='non_valutato')
-                return 'Inviata Collaborazione';
+                return 'Inviata richiesta collaborazione';
             if($obj['richiesta_inviata']=='non_inviata' && $obj['richiesta_accettata']=='non_valutato')
-                return 'Candidato rifiutato';
+                return 'Candidatura rifiutata';
             if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='accettato')
                 return 'Collaborazione accettata';
             if($obj['richiesta_inviata']=='non_inviata' && $obj['richiesta_accettata']=='rifiutato')
                 return 'Collaborazione rifiutata';
+            else return 'Error #734';
         }
     }
 
