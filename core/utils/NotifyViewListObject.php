@@ -102,9 +102,11 @@ class NotifyViewListObject implements JsonSerializable
      */
     function jsonSerialize()
     {
-        return "{idNotify:"+$this->getIdNotify() +","+
-                "href:"+ $this->getHref() +","+
-                "text:"+ $this->getText() +","+
-                "read:"+ $this->getRead() +"}";
+        return [
+            "idNotify" => $this->getIdNotify(),
+            "href" => $this->getHref(),
+            "text" => $this->getText(),
+            "read" => $this->getRead()
+        ];
     }
 }
