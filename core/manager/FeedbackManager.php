@@ -12,18 +12,24 @@ include_once MODEL_DIR . 'MicroCategoria.php';
 include_once MODEL_DIR . 'FeedbackListObject.php';
 include_once MODEL_DIR . 'Candidatura.php';
 include_once MANAGER_DIR.'Manager.php';
+include_once MANAGER_DIR.'UtenteManager.php';
+include_once MANAGER_DIR.'AnnuncioManager.php';
 
 /**
  * Class FeedbackManager
  * This Class provides the business logic for the Feedback Management and methods for database access.
  */
-class FeedbackManager extends Manager
+class FeedbackManager extends Manager implements SplSubject
 {
+
+    private $_observers;
+    private $wrapperNotifica;
     /**
      * FeedbackManager constructor.
      */
     public function __construct()
     {
+        $this->_observers = new SplObjectStorage();
     }
 
     public function insertFeedback($id=null,$idUtente,$idAnnuncio,$idValutato,$valutazione,$corpo,$data,$stato,$titolo){
@@ -37,6 +43,10 @@ class FeedbackManager extends Manager
             header("Location: ". DOMINIO_SITO ); //add tosat notification
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
+
+        $insertID = Manager::getDB()->insert_id;
+        $annuncioManager = new AnnuncioManager();
+        $this->inviaNotificaDiInserimento($insertID, $annuncioManager->getAnnuncio($idAnnuncio));
     }
 
     public function createFeedback($id=null,$idUtente,$idAnnuncio,$idValutato,$valutazione,$corpo,$data,$stato,$titolo){
@@ -101,8 +111,13 @@ class FeedbackManager extends Manager
     public function setStatus($id,$stato){
         $UPDATE_STATUS="UPDATE feedback SET stato='$stato' WHERE feedback.id=$id";
         $resSet = self::getDB()->query($UPDATE_STATUS);
-        if($resSet)
+        if($resSet) {
+            if($stato == SEGNALATO){
+                $annuncioManager = new AnnuncioManager();
+                $this->inviaNotificaDiSegnalazione($id,$annuncioManager->getAnnuncio($this->getFeedbackById($id)->getIdAnnuncio()));
+            }
             return true;
+        }
         else
             return false;
     }
@@ -128,7 +143,6 @@ class FeedbackManager extends Manager
           WHERE annuncio.id_utente = $idUtente AND riferito.id_microcategoria = $mc AND annuncio.id = riferito.id_annuncio)";
         return $this->feedbackToArray(self::getDB()->query($GET_FEEDBACK_BY_USER_MICRO));
     }
-
 
     public function sortListaFeedback($idUtente,$param){
         $GET_FEEDBACK_BY_USER_PARAM = "SELECT feedback.id,feedback.titolo,feedback.corpo,feedback.valutazione,utente.nome,utente.cognome,utente.immagine_profilo 
@@ -190,4 +204,54 @@ class FeedbackManager extends Manager
         }
         return $us;
     }
+
+    /**
+     * @param $id
+     * @param Annuncio $annuncio
+     */
+    private function inviaNotificaDiInserimento($id, $annuncio){
+        $tipo="inserimento";
+        $name= $annuncio->getTitolo();
+        $utenteManager = new UtenteManager();
+        $dest= $utenteManager->findUtenteById($annuncio->getIdUtente());
+        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+        $this->notify();
+    }
+
+    private function inviaNotificaDiSegnalazione($id, $annuncio){
+        $tipo="segnalazione";
+        $name= $annuncio->getTitolo();
+        $utenteManager = new UtenteManager();
+        $dest= $utenteManager->findUtenteById($this->getFeedbackById($id)->getIdValutato());
+        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+        $this->notify();
+    }
+
+    public function setWrapperNotifica($idOggetto, $tipo, $nome, $listaDestinatari = null){
+        $this->wrapperNotifica = array(
+            "id_oggetto" => $idOggetto,
+            "tipo_oggetto" => $tipo,
+            "nome" => $nome,
+            "lista_mittenti" => $listaDestinatari
+        );
+    }
+
+    public function getWrapperNotifica(){
+        return $this->wrapperNotifica;
+    }
+
+    public function attach(SplObserver $observer){
+        $this->_observers->attach($observer);
+    }
+
+    public function detach(SplObserver $observer){
+        $this->_observers->detach($observer);
+    }
+
+    public function notify(){
+        foreach($this->_observers as $observer){
+            $observer->update($this);
+        }
+    }
+
 }
