@@ -1,9 +1,9 @@
 <?php
 include_once MODEL_DIR . "Utente.php";
 include_once MODEL_DIR . "Messaggio.php";
-include_once MANAGER_DIR . "MessaggioManagerStub.php";
 include_once MANAGER_DIR . "MessaggioManager.php";
 include_once MANAGER_DIR . "UtenteManager.php";
+
 //include_once("control_Messaggi.php");
 ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
 // session_start();
@@ -39,10 +39,8 @@ $lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id
         $lista_candidature = $manager_msg->isCandidato($utente_connesso->getId(), $id_utente_destinatario);
         if ($lista_candidature != null) {
             ?>        
-        
-        <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal" style="margin-left: 20px">Open Modal</button>
-        
-        <?php
+                 <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal" style="margin-left: 20px">Gestione candidature</button>
+            <?php
         }
         ?>
 

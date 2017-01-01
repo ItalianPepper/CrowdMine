@@ -4,7 +4,6 @@
 include_once MODEL_DIR . "Utente.php";
 include_once MODEL_DIR . "Messaggio.php";
 include_once MODEL_DIR . "Candidatura.php";
-
 include_once MANAGER_DIR . "MessaggioManager.php";
 include_once MANAGER_DIR . "UtenteManager.php";
 
@@ -16,24 +15,24 @@ function getCand($arg_1)
     //if($arg_1 == "Candidato rifiutato") return 3;
     switch ($arg_1) {
         
-        case "Candidatura Inviata":
-            return 1;
+        case 0:
+            return "Candidatura inviata";
             break;
         
-        case "Inviata Collaborazione":
-            return 2;
+        case 1:
+            return "Inviata Collaborazione";
             break;
         
-        case "Candidato rifiutato":
-            return 3;
+        case 2:
+            return "Candidatura rifiutata";
             break;
         
-        case "Collaborazione accettata":
-            return 4;
+        case 3:
+            return "Collaborazione accettata";
             break;
         
-        case "Collaborazione rifiutata":
-            return 5;
+        case 4:
+            return "Collaborazione rifiutata";
             break;
         
         default:
@@ -43,6 +42,39 @@ function getCand($arg_1)
     return 0;
 }
 
+
+function getColor($arg_1)
+{   
+    
+    //if($arg_1 == "Candidato rifiutato") return 3;
+    switch ($arg_1) {
+        
+        case 0:
+            return "#000000"; //NERO per la candidatura inviata
+            break;
+        
+        case 1:
+            return "#d6c811"; //ARANCIONE per l'invio della collaborazione
+            break;
+        
+        case 2:
+            return "#f32323"; //ROSSO per candidatura rifiutata
+            break;
+        
+        case 3:
+            return "#49ce42"; //VERDE collaborazione accettata
+            break;
+        
+        case 4:
+            return "#ff3d3d"; //ROSSO collaborazione rifiutata
+            break;
+        
+        default:
+            break;
+    }
+    
+    return 0;
+}
 
 ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
 // session_start();
@@ -78,7 +110,7 @@ if ($lista_candidature != null) {
     foreach ($lista_candidature as $indice => $value) {
         $idcandidatura = $lista_candidature[$indice]->getId();
         $id_annuncio = $lista_candidature[$indice]->getIdAnnuncio();
-        $stato = getCand($manager_msg->getStatoCandidatura($idcandidatura));
+        $stato = $manager_msg->getStatoCandidatura($idcandidatura);
         ?>
         <div class="media social-post">
             <div class="media-left">
@@ -86,10 +118,10 @@ if ($lista_candidature != null) {
             </div>
             <div class="media-body">
                 <div class="media-heading">
-                    <h4 class="title"> <?php echo $utente->getNome() . "    "; ?>  si e' candidato all'annuncio <b><?php echo $id_annuncio; ?></h4>
-                    <h5 class="timeing"><?php echo "Stato: ".$manager_msg->getStatoCandidatura($idcandidatura); ?></h5>
+                    <h4 class="title"> <?php echo $utente->getNome() . "    "; ?>  si e' candidato al tuo annuncio <b><?php echo $id_annuncio; ?></h4>
+                    <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato: ".getCand($stato); ?> </h5>
                 </div>       
-                <div class="media-content"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>
+                <div class="media-content" style="font-size: small;  font-weight: 100"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>
 
                 <div class="media-action">
                     <button class="btn btn-link" id="<?php echo $idcandidatura; ?>" onclick="inviaCollaborazione(event)" ><i class="fa fa-thumbs-o-up" id="<?php echo $idcandidatura; ?>" onclick="rifiutaCandidato(event)"></i>Invia Collaborazione</button>
@@ -118,6 +150,7 @@ if ($lista_candidature != null) {
     foreach ($lista_candidature as $indice => $value) {
         $idcandidatura = $lista_candidature[$indice]->getId();
         $id_annuncio = $lista_candidature[$indice]->getIdAnnuncio();
+        $stato = $manager_msg->getStatoCandidatura($idcandidatura);
         ?>
         <div class="media social-post">
             <div class="media-left">
@@ -126,9 +159,9 @@ if ($lista_candidature != null) {
             <div class="media-body">
                 <div class="media-heading">
                     <h4 class="title">Ti sei candidato all'annuncio di <?php echo $utente->getNome() . "    "; ?> <b><?php echo $id_annuncio; ?></h4>
-                    <h5 class="timeing"><?php echo "Stato: ".$manager_msg->getStatoCandidatura($idcandidatura); ?></h5>
+                    <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato: ".getCand($stato); ?></h5>
                 </div>       
-                <div class="media-content"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>
+                <div class="media-content" style="font-size: small;  font-weight: 100"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>
 
                 <div class="media-action">
                     <!-- #CANDIDATURE DI CUI TI HANNO INVIATO LA COLLABORAZIONE -->
@@ -145,6 +178,5 @@ if ($lista_candidature != null) {
     } //fine della prima candidatura
 
 } //FINE DI TUTTE LE CANDIDATURE
-
 
 ?>      

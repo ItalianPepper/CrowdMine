@@ -1,6 +1,7 @@
 <?php
 
 include_once MODEL_DIR . "Messaggio.php";
+include_once MODEL_DIR . "Candidatura.php";
 include_once MANAGER_DIR . "Manager.php"; 
 /**
  * Created by PhpStorm.
@@ -26,8 +27,8 @@ class MessaggioManager extends Manager
      * @param Double $idDestinatario
      * @param Messaggio $messaggio
      */
-    public function sendMessaggio($id, $corpo, $letto, $data, $idMittente, $idDestinatario){
-        $INSERT_MESSAGGIO = "INSERT INTO `Messaggio` (`id`, `corpo`, `data`, `letto`, `id_utente_mittente`, `id_utente_destinatario`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
+    public function sendMessaggio($id, $corpo, $data, $letto, $idMittente, $idDestinatario){
+        $INSERT_MESSAGGIO = "INSERT INTO `Messaggio` (`id`, `corpo`, `data`, `letto`, `id_utente_mittente`, `id_utente_destinatario`, `stato`) VALUES (NULL, '$corpo', '$data', '0', '$idMittente', '$idDestinatario', '');";
         $query = sprintf($INSERT_MESSAGGIO, $id, $corpo, $letto, $data, $idMittente, $idDestinatario);
         if (!Manager::getDB()->query($query)) {
             if (Manager::getDB()->errno == 1062) {
@@ -161,14 +162,35 @@ class MessaggioManager extends Manager
                 throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
         }
     }
+    
+     /**
+     * #1_ CANDIDATURA INVIATA
+     * @param $idMittente
+     * @param $idDestinatario
+     */
+    public function createCandidatura($id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata){
+        $richiesta_inviata = 'non_valutata';
+        $richiesta_accettata = 'non_valutato';
+        $INSERT_COLLABORAZIONE = "INSERT INTO `candidatura` (`id`, `id_utente`, `id_annuncio`, `corpo`, `data_risposta`, `data_inviata`, `richiesta_inviata`, `richiesta_accettata`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+        $query = sprintf($INSERT_COLLABORAZIONE, $id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata, $richiesta_inviata, $richiesta_accettata);
+        if (!Manager::getDB()->query($query)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
 
+    
     /**
+     * #2_ INVIA LA COLLABORAZIONE
      * @param $id_candidatura
      * @return bool
      * @throws ApplicationException
      */
     public function setInviaCollaborazione($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata' WHERE `id` = $id_candidatura ;";
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata',  richiesta_accettata='non_valutato' WHERE `id` = $id_candidatura ;";
         if (!Manager::getDB()->query($SET_CANDIDATURA)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
@@ -178,14 +200,50 @@ class MessaggioManager extends Manager
         return true;
     }
 
-
+    
     /**
+     * #3_ RIFIUTA LA CANDIDATURA, RIFIUTA QUINDI IL CANDIDATO
+     * @param $id_candidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function setRifiutaCandidato($id_candidatura){
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET  richiesta_inviata = 'non_inviata', richiesta_accettata='non_valutato' WHERE `id` = $id_candidatura ;";
+        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+    
+    
+    /**
+     * #4_ ACCETTA LA COLLABORAZIONE. 
+     * @param $id_candidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function setAccettaCollaborazione($id_candidatura){
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata', richiesta_accettata = 'accettato' WHERE `id` = $id_candidatura ;";
+        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+    
+    /**
+     * #5_ RIFIUTA LA COLLABORAZIONE. 
      * @param $id_candidatura
      * @return bool
      * @throws ApplicationException
      */
     public function setRifiutaCollaborazione($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'rifiutato' WHERE `id` = $id_candidatura ;";
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata', richiesta_accettata = 'rifiutato' WHERE `id` = $id_candidatura ;";
         if (!Manager::getDB()->query($SET_CANDIDATURA)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
@@ -195,13 +253,93 @@ class MessaggioManager extends Manager
         return true;
     }
 
+    public function getCandidatura($idCandidatura){
+        $CANDIDATURA="SELECT * FROM `Candidatura` WHERE `id` = $idCandidatura;";
+        $result = Manager::getDB()->query($CANDIDATURA);
+        if($result){
+            $obj = $result->fetch_assoc();
+            $candidatura = new Candidatura($obj['id'], $obj['id_utente'], $obj['id_annuncio'], $obj['corpo'], $obj['data_risposta'], $obj['data_inviata'], $obj['richiesta_inviata'], $obj['richiesta_accettata']);
+        }
+        return $candidatura;
+    }
 
+
+    /**
+     * @param $idCandidatura
+     * @return bool
+     * @throws ApplicationException
+     */
+    public function deleteCandidatura($idCandidatura){
+        $ELIMINA_CANDIDATURA = "DELETE FROM `Candidatura` WHERE `id` = $idCandidatura;";
+        if (!Manager::getDB()->query($ELIMINA_CANDIDATURA)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+        return true;
+    }
+
+    /**
+     * @param $idCandidatura
+     * @return string
+     */
+    public function getStatoCandidatura($idCandidatura){
+        $CANDIDATURA = "SELECT richiesta_inviata, richiesta_accettata FROM `Candidatura` WHERE `id` = $idCandidatura;";
+        $result = Manager::getDB()->query($CANDIDATURA);
+        while ($obj = $result->fetch_assoc()) {
+            if($obj['richiesta_inviata']=='non_valutata' && $obj['richiesta_accettata']=='non_valutato')
+                return '0'; //candidatura da valutare
+            if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='non_valutato')
+                return '1';
+            if($obj['richiesta_inviata']=='non_inviata' && $obj['richiesta_accettata']=='non_valutato')
+                return '2';
+            if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='accettato')
+                return '3';
+            if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='rifiutato')
+                return '4';
+            else return 'Error #734';
+        }
+    }
+
+    /**
+     * @param $id_utente
+     * @param $id_destinatario
+     * @return array
+     */
+    public function isCandidato ($id_utente, $id_destinatario){
+        $LOAD_CANDIDATURE = "SELECT c.* FROM candidatura c, annuncio a WHERE c.id_utente = $id_destinatario AND a.id = c.id_annuncio AND a.id_utente = $id_utente";
+        $result = Manager::getDB()->query($LOAD_CANDIDATURE);
+        $candidature = array();
+        if ($result) {
+            while ($obj = $result->fetch_assoc()) {
+                $candidatura = new Candidatura($obj['id'], $obj['id_utente'], $obj['id_annuncio'], $obj['corpo'], $obj['data_risposta'], $obj['data_inviata'], $obj['richiesta_inviata'], $obj['richiesta_accettata']);
+                $candidature[] = $candidatura;
+            }
+        }
+        return $candidature;
+    }
+
+
+    /**
+     * @param $idAnnuncio
+     */
+    public function agreeCollaborazione($idAnnuncio){
+        $COLLABORAZIONE = "UPDATE `candidatura` SET richiesta_accettata = `accettato` WHERE `id_annuncio` = $idAnnuncio;";
+        if (!Manager::getDB()->query($COLLABORAZIONE)) {
+            if (Manager::getDB()->errno == 1062) {
+                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
+            } else
+                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
+        }
+    }
+
+    
     /**
      * @param $id_candidatura
      * @return bool
      * @throws ApplicationException
      */
-
     public function isInviaCollaborazione($id_candidatura){
         $SET_CANDIDATURA = "SELECT COUNT(DISTINCT id) FROM candidatura  WHERE id = $id_candidatura AND richiesta_inviata = 'inviata';";
         $result = Manager::getDB()->query($SET_CANDIDATURA);
@@ -245,25 +383,7 @@ class MessaggioManager extends Manager
                 return false;
         }
     }
-
-
-    /**
-     * @param $id_candidatura
-     * @return bool
-     * @throws ApplicationException
-     */
-    public function setRifiutaCandidato($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET  richiesta_inviata = 'non_inviata' WHERE `id` = $id_candidatura ;";
-        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
-            if (Manager::getDB()->errno == 1062) {
-                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
-            } else
-                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-        }
-        return true;
-    }
-
-
+    
     /**
      * @param $id_candidatura
      * @return bool
@@ -279,123 +399,5 @@ class MessaggioManager extends Manager
                 return false;
         }
     }
-
-    /**
-     * @param $id_candidatura
-     * @return bool
-     * @throws ApplicationException
-     */
-    public function setAccettaCollaborazione($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_accettata = 'accettato' WHERE `id` = $id_candidatura ;";
-        if (!Manager::getDB()->query($SET_CANDIDATURA)) {
-            if (Manager::getDB()->errno == 1062) {
-                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
-            } else
-                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @param $idMittente
-     * @param $idDestinatario
-     */
-    public function createCandidatura($id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata){
-        $richiesta_inviata = 'non_valutata';
-        $richiesta_accettata = 'non_valutato';
-        $INSERT_COLLABORAZIONE = "INSERT INTO `candidatura` (`id`, `id_utente`, `id_annuncio`, `corpo`, `data_risposta`, `data_inviata`, `richiesta_inviata`, , `richiesta_accettata`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
-        $query = sprintf($INSERT_COLLABORAZIONE, $id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata, $richiesta_inviata, $richiesta_accettata);
-        if (!Manager::getDB()->query($query)) {
-            if (Manager::getDB()->errno == 1062) {
-                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
-            } else
-                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-        }
-        return true;
-    }
-
-
-    public function getCandidatura($idCandidatura){
-        $CANDIDATURA="SELECT * FROM `Candidatura` WHERE `id` = $idCandidatura;";
-        $result = Manager::getDB()->query($CANDIDATURA);
-        if($result){
-            $obj = $result->fetch_assoc();
-            $candidatura = new Candidatura($obj['id'], $obj['id_utente'], $obj['id_annuncio'], $obj['corpo'], $obj['data_risposta'], $obj['data_inviata'], $obj['richiesta_inviata'], $obj['richiesta_accettata']);
-        }
-        return $candidatura;
-    }
-
-
-    /**
-     * @param $idCandidatura
-     * @return bool
-     * @throws ApplicationException
-     */
-    public function deleteCandidatura($idCandidatura){
-        $ELIMINA_CANDIDATURA = "DELETE FROM `Candidatura` WHERE `id` = $idCandidatura;";
-        if (!Manager::getDB()->query($ELIMINA_CANDIDATURA)) {
-            if (Manager::getDB()->errno == 1062) {
-                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
-            } else
-                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-        }
-        return true;
-    }
-
-    /**
-     * @param $idCandidatura
-     * @return string
-     */
-    public function getStatoCandidatura($idCandidatura){
-        $CANDIDATURA = "SELECT richiesta_inviata, richiesta_accettata FROM `Candidatura` WHERE `id` = $idCandidatura;";
-        $result = Manager::getDB()->query($CANDIDATURA);
-        while ($obj = $result->fetch_assoc()) {
-            if($obj['richiesta_inviata']=='non_valutata' && $obj['richiesta_accettata']=='non_valutato')
-                return 'Candidatura ancora da valutare. ';
-            if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='non_valutato')
-                return 'Inviata richiesta collaborazione';
-            if($obj['richiesta_inviata']=='non_inviata' && $obj['richiesta_accettata']=='non_valutato')
-                return 'Candidatura rifiutata';
-            if($obj['richiesta_inviata']=='inviata' && $obj['richiesta_accettata']=='accettato')
-                return 'Collaborazione accettata';
-            if($obj['richiesta_inviata']=='non_inviata' && $obj['richiesta_accettata']=='rifiutato')
-                return 'Collaborazione rifiutata';
-            else return 'Error #734';
-        }
-    }
-
-    /**
-     * @param $id_utente
-     * @param $id_destinatario
-     * @return array
-     */
-    public function isCandidato ($id_utente, $id_destinatario){
-        $LOAD_CANDIDATURE = "SELECT c.* FROM candidatura c, annuncio a WHERE c.id_utente = $id_destinatario AND a.id = c.id_annuncio AND a.id_utente = $id_utente";
-        $result = Manager::getDB()->query($LOAD_CANDIDATURE);
-        $candidature = array();
-        if ($result) {
-            while ($obj = $result->fetch_assoc()) {
-                $candidatura = new Candidatura($obj['id'], $obj['id_utente'], $obj['id_annuncio'], $obj['corpo'], $obj['data_risposta'], $obj['data_inviata'], $obj['richiesta_inviata'], $obj['richiesta_accettata']);
-                $candidature[] = $candidatura;
-            }
-        }
-        return $candidature;
-    }
-
-
-    /**
-     * @param $idAnnuncio
-     */
-    public function agreeCollaborazione($idAnnuncio){
-        $COLLABORAZIONE = "UPDATE `candidatura` SET richiesta_accettata = `accettato` WHERE `id_annuncio` = $idAnnuncio;";
-        if (!Manager::getDB()->query($COLLABORAZIONE)) {
-            if (Manager::getDB()->errno == 1062) {
-                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
-            } else
-                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-        }
-    }
-
 
 }

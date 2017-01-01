@@ -13,7 +13,8 @@
     // if ($utente == null)
     //     header("location:./index.php");
     
-    $id_destinatario = $_POST["id"];
+    //$id_destinatario = $_POST["id"];
+    $id_destinatario = $_SESSION['destinatario'];
     $testo_messaggio = $_POST["testo"];
     
     ## MANAGER ##
@@ -29,7 +30,7 @@
     //$risultato = $manager_msg->inviaMessaggio($utente_connesso->getId(), $id_destinatario);
     //$date = date("d/m/Y" - G:i);
     //echo ($id_destinatario);
-    $risultato = $manager_msg->sendMessaggio(null, $testo_messaggio, 0, null, $utente_connesso->getId(), $id_destinatario);
+    $risultato = $manager_msg->sendMessaggio(null, $testo_messaggio, 0, 0, $utente_connesso->getId(), $id_destinatario); //id, corpo, data, letto
     
     if($risultato){
         //echo '<meta http-equiv="refresh" content="0;URL=http://localhost/CrowdMine/messaging?id='.$id_destinatario.'">';

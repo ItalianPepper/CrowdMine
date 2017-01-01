@@ -3,9 +3,8 @@
     include_once MODEL_DIR . "Utente.php";
     include_once MODEL_DIR . "Messaggio.php";
     include_once MODEL_DIR . "Candidatura.php";
-   
     include_once MANAGER_DIR . "MessaggioManager.php";
-    include_once MANAGER_DIR . "UtenteManagerStub.php";
+    
     
     ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
     // session_start();
@@ -19,7 +18,6 @@
     
     ## MANAGER ##
     $manager_msg = new MessaggioManager();
-    $manager_utente = new UtenteManagerStub();
     
     ## RECUPERO IL  DELLA CONVERSAZIONE ###
     $invio_candidatura = $manager_msg->setRifiutaCollaborazione($id_candidatura);  //[STUB getUtentebyID]

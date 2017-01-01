@@ -3,7 +3,6 @@
 include_once VIEW_DIR . "header.php";
 include_once MODEL_DIR . "Utente.php";
 include_once MODEL_DIR . "Messaggio.php";
-include_once MANAGER_DIR . "MessaggioManagerStub.php";
 include_once MANAGER_DIR . "MessaggioManager.php";
 
 //$utente = $_SESSION['utente'];
@@ -100,7 +99,7 @@ $_SESSION['destinatario'] = $id_get;
     }
 
 
-    // ##2## Quando viene caricato il documento...
+    // ##2## Quando viene caricato il documento stampo la conversazione con l'id presente nel Get
     document.addEventListener("DOMContentLoaded", function (event) {
 
         <?php
@@ -175,7 +174,7 @@ $_SESSION['destinatario'] = $id_get;
 
     function inviaCollaborazione(event)
     {
-        alert("Ciao");
+
         var httpRequest = new XMLHttpRequest();
         httpRequest.onreadystatechange = function ()
         {
@@ -185,11 +184,10 @@ $_SESSION['destinatario'] = $id_get;
             }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);  
         };
         
-        alert("Ciao");
         //var modulo = new FormData(document.getElementById('myForm'));
         var id = event.target.id;
         var params = "id=" + id; //id candidatura
-        alert("Ciao");
+
         httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/inviaCollaborazione"; ?>" , true);
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(params);
@@ -213,7 +211,7 @@ $_SESSION['destinatario'] = $id_get;
         //var modulo = new FormData(document.getElementById('myForm'));
         var id = event.target.id;
         var params = "id=" + id; //id candidatura
-        alert("Rifiuta Candiato");
+   
         httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/rifiutaCandidato"; ?>" , true);
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(params);
@@ -233,7 +231,6 @@ $_SESSION['destinatario'] = $id_get;
             }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);  
         };
 
-        alert("ciao");
         //var modulo = new FormData(document.getElementById('myForm'));
         var id = event.target.id;
         var params = "id=" + id; //id candidatura
@@ -290,7 +287,7 @@ $_SESSION['destinatario'] = $id_get;
 
 
 
-<!-- Modal -->
+<!-- MODAL PER LA GESTIONE CANDIDATURE -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -311,7 +308,7 @@ $_SESSION['destinatario'] = $id_get;
                 </div> <!-- fine body modal -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
             </div>
         </div>
 
