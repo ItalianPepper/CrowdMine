@@ -160,6 +160,59 @@ class AnnuncioManager
         }
     }
 
+    /**
+     * return all microcategories involved inside a search
+     * @param $filters
+     * @return array
+     */
+    public function getMicrosInSearchedAnnunci($filters){
+
+        $MICROS_FROM_ANNUNCI = "SELECT microcategoria.* 
+                                        FROM riferito JOIN microcategoria ON
+	                                          riferito.id_microcategoria = microcategoria.id
+                                        WHERE riferito.id_annuncio IN (SELECT annuncio.id FROM annuncio ";
+        $query = sprintf($MICROS_FROM_ANNUNCI);
+        FilterUtils::applyFilters($filters, $query);
+        $query = ')';
+        $res = Manager::getDB()->query($query);
+        $micros = array();
+        if ($res) {
+            while ($obj = $res->fetch_assoc()) {
+                $micro = new Microcategoria($obj['id_macrocategoria'], $obj['nome'], $obj['id']);
+                $micros[$micro->getId()] = $micro;
+            }
+        }
+        return $micros;
+    }
+
+    /**
+     * return an array indexed by searched annunci ID's
+     * each cell contains a list of microcategory ID's
+     *
+     * @param $filters
+     * @return array
+     */
+    public function getSearchedAnnunciMicrosReference($filters){
+
+        $RIFERITO = "SELECT * 
+                        FROM riferito 
+                        WHERE riferito.id_annuncio IN (SELECT annuncio.id FROM annuncio ";
+        $query = sprintf($RIFERITO);
+        FilterUtils::applyFilters($filters, $query);
+        $query = ')';
+        $res = Manager::getDB()->query($query);
+        $aM = array();
+        if ($res) {
+            while ($obj = $res->fetch_assoc()) {
+                if(!isset($aM[$obj['id_annuncio']])){
+                    $aM[$obj['id_annuncio'] = array();
+                }
+                $aM[$obj['id_annuncio'][] = $obj['id_micro'];
+            }
+        }
+        return $aM;
+    }
+
 
     /**
      * Search an Annuncio with search filters
