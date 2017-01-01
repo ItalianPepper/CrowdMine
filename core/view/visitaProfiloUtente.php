@@ -913,27 +913,32 @@
 
 
     $("#tab4").ready(function () {
+
+        var url = document.URL;
+        var idUser = url.substring(url.indexOf("id="),url.length-1);
+
         $.ajax({
             url: "statisticheUtente",
             type: "POST",
             dataType: "json",
-            data: {option: "graphicsUser"},
+            data: {option: "graphicsUser", idUser:idUser},
             success: function (response) {
-                var arrayFeedback = $.map(response, function (el) {
-                    return el;
-                });
-                drawGraphicUser(arrayFeedback);
+                drawGraphicUser(response);
             }
         });
     });
 
 
     $("#tab4").ready(function(){
+
+        var url = document.URL;
+        var idUser = url.substring(url.indexOf("id="),url.length-1);
+
         $.ajax({
             url: "statisticheUtente",
             type: "POST",
             dataType: "json",
-            data: {option: "tableUser"},
+            data: {option:"tableUser", idUser:idUser},
             success: function (response) {
                 appendingResultToTable(response);
                 });
@@ -952,7 +957,7 @@
             datasets: [
                 {
                     label:"",
-                    data:arrayFeedback,
+                    data:[arrayFeedback["positivi"],arrayFeedback["negativi"]],
                     backgroundColor: ["#FF6384", "#4BC0C0"],
                     borderColor: ["#FF6384", "#4BC0C0"],
                     borderWidth: 1
@@ -988,11 +993,11 @@
                         .attr("scope", "row")
                         .text(i + 1))
                     .append($("<td>")
-                        .text("nomeMicro"))
+                        .text(el["microcategoria"]))
                     .append($("<td>")
-                        .text("feedbackPositivi"))
+                        .text(el["feedbackpositivi"]))
                     .append($("<td>")
-                        .text("feedbacknegativi"))
+                        .text(el["feedbacknegativi"]))
                 )
         }
     }

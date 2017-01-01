@@ -1,28 +1,31 @@
 <?php
 
+include_once MANAGER_DIR . "FeedbackManager.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST["option"])){
+
+    if(isset($_POST["option"]) && isset($_POST["idUser"])){
+
+        $idUser= $_POST["idUser"];
 
         if($_POST["option"]=="graphicsUser") {
 
-            $result = stubPercentFeedback();
+            $feedbackManager = new FeedbackManager();
+
+            $result = $feedbackManager->getAveragesOfFeedbacks($idUser);
+
             header("Content-Type:application/json");
             echo json_encode($result);
 
         }else if($_POST["option"] == "tableUser"){
 
+            $feedbackManager = new FeedbackManager();
 
-            $result = array();
+            $result = $feedbackManager->getFeedbackMicroCategoriaStats($idUser);
+
             header("Content-Type:application/json");
             echo json_encode($result);
 
         }
     }
 }
-
-function stubPercentFeedback(){
-    $result = array(30,20);
-    return $result;
-}
-

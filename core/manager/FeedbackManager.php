@@ -177,7 +177,7 @@ class FeedbackManager extends Manager
      * @return $result
      *
      */
-    public function getCountPositive($idUtente){
+    private function getCountPositive($idUtente){
         $GET_COUNT_POSITIVE = " SELECT microcategoria.nome, COUNT(feedback.id) as Positivi
                                 FROM feedback, annuncio, riferito, microcategoria
                                 WHERE  feedback.id_valutato = $idUtente AND
@@ -198,7 +198,7 @@ class FeedbackManager extends Manager
      * @return $result
      *
      */
-    public function getCountNegative($idUtente){
+    private function getCountNegative($idUtente){
         $GET_COUNT_NEGATIVE = " SELECT microcategoria.nome, COUNT(feedback.id) as Negativi
                                 FROM feedback, annuncio, riferito, microcategoria
                                 WHERE  feedback.id_valutato = $idUtente AND
@@ -265,7 +265,7 @@ class FeedbackManager extends Manager
      * @return $result
      *
      */
-    public function getAveragePositiveFeedback($idUtente){
+    private function getAveragePositiveFeedback($idUtente){
 
         $GET_AVERAGE_FEEDBACK_POSITIVE =" SELECT AVG(feedback.id) as AveragePositive
                                 FROM feedback, annuncio, riferito, microcategoria
@@ -288,7 +288,7 @@ class FeedbackManager extends Manager
      * @return $result
      *
      */
-    public function getAverageNegativeFeedback($idUtente){
+    private function getAverageNegativeFeedback($idUtente){
 
         $GET_AVERAGE_FEEDBACK_NEGATIVE =" SELECT AVG(feedback.id) as AverageNegative
                                 FROM feedback, annuncio, riferito, microcategoria
