@@ -13,8 +13,7 @@ class NotificaManager extends Manager implements SplObserver
     /**
      * NotificaManager constructor.
      */
-    public function __construct()
-    {
+    public function __construct(){
 
     }
 
@@ -28,10 +27,8 @@ class NotificaManager extends Manager implements SplObserver
      * @param $id
      * @return Notifica, object
      */
-    public function createNotifica($data, $tipo, $info, $letto,$id=null)
-    {
-        $notifica = new Notifica($data, $tipo, $info, $letto,$id);
-        return $notifica;
+    public function createNotifica($data, $tipo, $info, $letto, $id=null){
+        return new Notifica($data, $tipo, $info, $letto, $id);
     }
 
     /**
@@ -44,16 +41,10 @@ class NotificaManager extends Manager implements SplObserver
      * @return int $id
      * @throws ApplicationException
      */
-    public function insertNotifica($data, $tipo, $info, $letto)
-    {
-        $INSERT_NOTIFICA = "INSERT INTO Notifica ( 'date' , 'tipo', 'info' , 'letto' ) VALUES ('%s', '%s', '%s', '%s')";
+    public function insertNotifica($data, $tipo, $info, $letto){
+        $INSERT_NOTIFICA = "INSERT INTO Notifica ( 'date' , 'tipo', 'info' , 'letto' ) VALUES('%s', '%s', '%s', '%s')";
         $query = sprintf($INSERT_NOTIFICA, $data, $tipo, $info, $letto);
-        if (!Manager::getDB()->query($query)) {
-            if (Manager::getDB()->errno == 1062) {
-                throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
-            } else
-                throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-        }
+        self::getDB()->query($query);
         $id = mysqli_insert_id();
         return $id;
     }
@@ -66,80 +57,59 @@ class NotificaManager extends Manager implements SplObserver
      * @param $idNotifica
      * @throws ApplicationException
      */
-    public function sendToDispatcher($listaUtenti, $idNotifica)
-    {
+    public function sendToDispatcher($listaUtenti, $idNotifica){
         $size = count($listaUtenti);
-        for ($i = 0; $i < $size; $i++) {
+        for($i = 0; $i < $size; $i++) {
             $idDestinatario = $listaUtenti[$i];
             $INSERT_IN_DISPATCHER = "INSERT INTO Dispatcher_notifica ('id_utente', 'id_notifica') VALUES ('%s', '%s')";
             $query = sprintf($INSERT_IN_DISPATCHER, $idDestinatario, $idNotifica);
-            if (!Manager::getDB()->query($query)) {
-                if (Manager::getDB()->errno == 1062) {
-                    throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
-                } else
-                    throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
-            }
+            self::getDB()->query($query);
         }
     }
 
     /**
-     *Return a  Notifiche object with 'id' as $idNotifica
+     *Return a  Notifiche object with 'id' as $idUtente
      *
      * @param Double $idNotifica
      *
      * @return  A Notifica object
      */
-    public function getNotificaById($idUtente)
-    {
+    public function getNotificaByUtente($user){
+        $parser = new NotificationParsing();
         $listNotifica = array();
-        $LOAD_NOTIFICHE = "SELECT n.* FROM notifica n, dispatcher d, WHERE d.id_utente = $idUtente";
-        $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
-        if ($resultNotifica) {
-            while ($obj = $resultNotifica->fetch_assoc()) {
-                $notifica = new Notifica($obj['id'], $obj['date'], $obj['tipo'], $obj['letto'], $obj['info']);
+        $LOAD_NOTIFICHE = "SELECT n.info FROM notifica n, dispatcher d WHERE d.id_utente = '%s'";
+        $query = sprintf($LOAD_NOTIFICHE, $user->getId());
+        $result = self::getDB()->query($query);
+        if ($result) {
+            foreach($result->fetch_assoc() as $n) {
+                $notifica = new Notifica($n['id'], $n['date'], $n['tipo'], $n['letto'], $n['info']);
                 $listNotifica[] = $notifica;
             }
         }
-        return $listNotifica;
+        return $parser->formattingNotify($listNotifica, $user->getRuolo());
     }
 
     /**
+     * 
      * @param $idNotifica
      * @return Notifica
      */
-    public function getNotificaNotVisualized($idUtente)
-    {
+    public function getNotificaNotVisualized($user){
+        $parser = new NotificationParsing();
         $listNotifica = array();
-        $LOAD_NOTIFICHE = "SELECT n.* FROM notifica n, dispatcher d, WHERE d.id_utente = $idUtente AND n.letto=0 AND d.id_notifica = n.id";
-        $resultNotifica = Manager::getDB()->query($LOAD_NOTIFICHE);
-        if ($resultNotifica) {
-            while ($obj = $resultNotifica->fetch_assoc()) {
-                $notifica = new Notifica($obj['id'], $obj['date'], $obj['tipo'], $obj['letto'], $obj['info']);
+        $LOAD_NOTIFICHE = "SELECT n.info FROM notifica n, dispatcher d, WHERE d.id_utente = '%s' AND n.letto=0 AND d.id_notifica = n.id";
+        $query = sprintf($LOAD_NOTIFICHE, $user->getId());
+
+        $result = Manager::getDB()->query($query);
+        if ($result) {
+            foreach($result->fetch_assoc() as $n) {
+                $notifica = new Notifica($n['id'], $n['date'], $n['tipo'], $n['letto'], $n['info']);
                 $listNotifica[] = $notifica;
             }
         }
-        return $listNotifica;
+        return $parser->formattingNotify($listNotifica, $user->getRuolo());
     }
 
-    /**
-     * Return a list of notifications id where 'id_utente' in dispatcher is $idUtente
-     *
-     * @param $idUtente
-     * @return array
-     */
-    public function loadFromDispatcher($idUtente)
-    {
-        $LOAD_DISPATCHER = "SELECT * FROM Dispatcher_notifica WHERE id_utente= $idUtente;";
-        $result = Manager::getDB()->query($LOAD_DISPATCHER);
-        $listIdNotifica = array();
-        if ($result) {
-            while ($obj = $result->fetch_assoc()) {
-                $IdNotifica = $obj['id_notifica'];
-                $listIdNotifica[] = $IdNotifica;
-            }
-        }
-        return $listIdNotifica;
-    }
     /**
      * Receive update from subject
      * @link http://php.net/manual/en/splobserver.update.php

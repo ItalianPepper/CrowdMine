@@ -1,5 +1,6 @@
 <?php
-
+include_once UTILS_DIR . "NotifyViewListObject";
+include_once MODEL_DIR . "Notifica.php";
 class NotificationParsing
 {
     const RISOLUZIONE_POSITIVA = "Il tuo %s è stato valutato con esito postivo.";
@@ -33,93 +34,151 @@ class NotificationParsing
 
         if ($typeUser == RuoloUtente::UTENTE) {
             $result = array();
+
             for ($i = 0; $i < $size; $i++) {
 
+                $idNotify = $notifyObject[$i]->getId();
+
                 $type = $notifyObject[$i]->getTipo();
+                $read = $notifyObject[$i]->getLetto();
+
                 $infoNotify = json_decode($notifyObject[$i]->getInfo(), true);
 
                 if ($type == tipoNotifica::INSERIMENTO) {
 
                     $obj = $infoNotify[ElementiInfoNotifica::TIPO_OGGETTO];
-                    $id = $infoNotify[ElementiInfoNotifica::ID_OGGETTO];
+                    $idobj = $infoNotify[ElementiInfoNotifica::ID_OGGETTO];
 
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
+
+
                         $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
-                        $href = sprintf($href, $id);
-                        $result[$href] = NotificationParsing::INSERIMENTO_ANNUNCIO;
+                        $href = sprintf($href, $idobj);
+                        $text = NotificationParsing::INSERIMENTO_ANNUNCIO;
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
+
                         $href = $this->rounting(SoggettiNotifiche::COMMENTO);
-                        $href = sprintf($href, $id);
+                        $href = sprintf($href, $idobj);
+
                         $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
-                        $result[$href] = sprintf(NotificationParsing::INSERIMENTO_COMMENTO, $referName);
+                        $text = sprintf(NotificationParsing::INSERIMENTO_COMMENTO, $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
+
                         $href = $this->rounting(SoggettiNotifiche::FEEDBACK);
-                        $href = sprintf($href, $id);
+                        $href = sprintf($href, $idobj);
                         $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
-                        $result[$href] = sprintf(NotificationParsing::INSERIMENTO_FEEDBACK, $referName);
+                        $text = sprintf(NotificationParsing::INSERIMENTO_FEEDBACK, $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::CANDIDATURA) {
+
                         $href = $this->rounting(SoggettiNotifiche::CANDIDATURA);
-                        $href = sprintf($href, $id);
+                        $href = sprintf($href, $idobj);
                         $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
-                        $result[$href] = sprintf(NotificationParsing::INSERIMENTO_CANDIDATURA, $referName);
+                        $text = sprintf(NotificationParsing::INSERIMENTO_CANDIDATURA, $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
                     }
 
                 } else if ($type == tipoNotifica::RISOLUZIONE) {
 
                     $obj = $infoNotify[ElementiInfoNotifica::TIPO_OGGETTO];
-                    $id = $infoNotify[ElementiInfoNotifica::ID_OGGETTO];
+                    $idobj = $infoNotify[ElementiInfoNotifica::ID_OGGETTO];
                     $esit = $infoNotify[ElementiInfoNotifica::ESITO_OGGETTO];
 
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
+
                         $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
-                        $href = sprintf($href, $id);
+                        $href = sprintf($href, $idobj);
+                        $text = null;
+
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "annuncio");
-                        } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "annuncio");
+                            $text = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "annuncio");
+                        } else {
+                            $text = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "annuncio");
                         }
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
+
 
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
                         $href = $this->rounting(SoggettiNotifiche::COMMENTO);
-                        $href = sprintf($href, $id);
+                        $href = sprintf($href, $idobj);
+                        $text = null;
+
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "commento");
-                        } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "commento");
+                            $text = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "commento");
+                        } else {
+                            $text = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "commento");
                         }
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
 
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
                         $href = $this->rounting(SoggettiNotifiche::FEEDBACK);
-                        $href = sprintf($href, $id);
+                        $href = sprintf($href, $idobj);
+                        $text = null;
+
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "feedback");
-                        } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "feedback");
+                            $text = sprintf(NotificationParsing::RISOLUZIONE_POSITIVA, "feedback");
+                        } else {
+                            $text = sprintf(NotificationParsing::RISOLUZIONE_NEGATIVA, "feedback");
                         }
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
 
                     }
 
                 } else if ($type == tipoNotifica::DECISIONE) {
 
                     $obj = $infoNotify[ElementiInfoNotifica::TIPO_OGGETTO];
-                    $id = $infoNotify[ElementiInfoNotifica::ID_OGGETTO];
+                    $idobj = $infoNotify[ElementiInfoNotifica::ID_OGGETTO];
                     $esit = $infoNotify[ElementiInfoNotifica::ESITO_OGGETTO];
                     $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
 
                     if ($obj == SoggettiNotifiche::CANDIDATURA) {
+
                         $href = $this->rounting(SoggettiNotifiche::CANDIDATURA);
-                        $href = sprintf($href, $id);
+                        $href = sprintf($href, $idobj);
+                        $text = null;
+
                         if ($esit == true) {
-                            $result[$href] = sprintf(NotificationParsing::DECISIONE_CANDIDATURA_DOMANDA_ACCETTATA, $referName);
-                        } else if ($esit == false) {
-                            $result[$href] = sprintf(NotificationParsing::DECISIONE_CANDIDATURA_DOMANDA_RIFIUTATA, $referName);
+                            $text = sprintf(NotificationParsing::DECISIONE_CANDIDATURA_DOMANDA_ACCETTATA, $referName);
+                        } else {
+                            $text = sprintf(NotificationParsing::DECISIONE_CANDIDATURA_DOMANDA_RIFIUTATA, $referName);
                         }
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+
+                        array_push($result,$resObject);
                     }
                 }
 
             }
             return $result;
-
+/*le notifiche di moderatore ed amministratore sono in fase di sviluppo, quindi per il momento la loro implementazione
+non è completa*/
         } else if ($typeUser == RuoloUtente::MODERATORE) {
             $result = array();
             for ($i = 0; $i < $size; $i++) {

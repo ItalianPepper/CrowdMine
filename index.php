@@ -97,6 +97,9 @@ try {
             case 'footer':
                 include_once VIEW_DIR . "footer.php";
                 break;
+            case 'header':
+                include_once VIEW_DIR . "header.php";
+                break;
             
             case 'inserisciEsperienza':
                 StringUtils::checkPermission("Cliente");

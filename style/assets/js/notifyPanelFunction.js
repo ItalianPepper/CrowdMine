@@ -2,36 +2,33 @@
  * Created by darkv on 22/12/2016.
  */
 
-function poll(){
+$(function poll(){
     setTimeout(function(){
-        console.log("ciao");
         $.ajax({
             type: "POST",
             url: "pannelloNotifiche",
             dataType: "json",
             success: function(data){
-                var parsed = JSON.parse(data);
-                var lista = [];
-                for(var x in parsed){
-                    lista.push(x);
-                }
                 var listaNotifiche = document.getElementById('lista-notifiche');
-                $.each(lista, function(value, key){
-                listaNotifiche.append(
-                '<li>'+
-                '<a href="'+ value +'">'+
-                    '<div class="message">'+
-                    '<div class="content">'+
-                    '<div class="title">'+ key +'</div>'+
-                '</div>'+
-                '</div>'+
-                '</a>'+
-                '</li>')
-                });
+                generateNotificationsList(data, listaNotifiche);
                 poll();
             }
         });
     }, 30000);
-};
+}).onLoad();
 
-poll();
+function generateNotificationsList(data, destination){
+    if(data.length > 0){
+        $.each(data, function (key, value) {
+            var listaNotificheObject = [];
+            listaNotificheObject.href = key;
+            listaNotificheObject.corpo = value;
+
+            destination.children(':first').before(notificaToRowString(listaNotificheObject));
+        });
+    }
+}
+
+function notificaToRowString(listaNotificheObject){
+    return '<li><a href="'+listaNotificheObject.href+'">'+listaNotificheObject.corpo+'</a></li>';
+}

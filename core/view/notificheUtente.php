@@ -29,13 +29,13 @@
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
 
     <!--include header e footer-->
-    <!--<script>
+    <script>
         $(function(){
-            $("#header").load("header.php");
-            $("footer").load("footer.php");
+            $("#header").load("header");
+            $("#footer").load("footer");
         })
     </script>
-    -->
+
     <style>
         ul{
             margin: 1%;
@@ -45,9 +45,11 @@
             margin-left: 5%;
             margin-right: 5%;}
     </style>
+
+
 </head>
 <body>
-<!-- <div id="header"></div> -->
+<div id="header"></div>
 
 <div class="app app-default">
     <div class="row left5">
@@ -80,7 +82,7 @@
     </div>
 </div>
 
-<!-- <div id="footer"></div> -->
+<div id="footer"></div>
 
 </body>
 </html>
