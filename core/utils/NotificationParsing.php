@@ -1,5 +1,6 @@
 <?php
-include_once UTILS_DIR . "NotifyViewListObject";
+
+include_once MODEL_DIR . "NotifyViewListObject";
 include_once MODEL_DIR . "Notifica.php";
 class NotificationParsing
 {
@@ -23,26 +24,26 @@ class NotificationParsing
 
     /**This function return a list of notify-object formatted by the role of user.
      *
-     * @param $notifyObject
+     * @param $notifyObjects
      * @param $typeUser
      *
      * @return array
      */
-    public function formattingNotify($notifyObject, $typeUser)
+    public function formattingNotify($notifyObjects, $typeUser)
     {
-        $size = sizeof($notifyObject);
+        $size = sizeof($notifyObjects);
 
         if ($typeUser == RuoloUtente::UTENTE) {
             $result = array();
 
             for ($i = 0; $i < $size; $i++) {
 
-                $idNotify = $notifyObject[$i]->getId();
+                $idNotify = $notifyObjects[$i]->getId();
 
-                $type = $notifyObject[$i]->getTipo();
-                $read = $notifyObject[$i]->getLetto();
+                $type = $notifyObjects[$i]->getTipo();
+                $read = $notifyObjects[$i]->getLetto();
 
-                $infoNotify = json_decode($notifyObject[$i]->getInfo(), true);
+                $infoNotify = json_decode($notifyObjects[$i]->getInfo(), true);
 
                 if ($type == tipoNotifica::INSERIMENTO) {
 
@@ -174,16 +175,21 @@ class NotificationParsing
                         array_push($result,$resObject);
                     }
                 }
-
             }
             return $result;
-/*le notifiche di moderatore ed amministratore sono in fase di sviluppo, quindi per il momento la loro implementazione
-non è completa*/
+
         } else if ($typeUser == RuoloUtente::MODERATORE) {
+
             $result = array();
+
             for ($i = 0; $i < $size; $i++) {
-                $type = $notifyObject[$i]->getTipo();
-                $infoNotify = json_decode($notifyObject[$i]->getInfo(), true);
+
+                $idNotify = $notifyObjects[$i]->getId();
+
+                $type = $notifyObjects[$i]->getTipo();
+                $read = $notifyObjects[$i]->getLetto();
+
+                $infoNotify = json_decode($notifyObjects[$i]->getInfo(), true);
 
                 if ($type == tipoNotifica::SEGNALAZIONE) {
 
@@ -192,32 +198,53 @@ non è completa*/
                     $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
 
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
+
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_ANNUNCIO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_COMMENTO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_FEEDBACK);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::UTENTE) {
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_UTENTE);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
                     }
                 }
             }
             return $result;
 
         } else if ($typeUser == RuoloUtente::AMMINISTRATORE) {
+
             $result = array();
 
             for ($i = 0; $i < $size; $i++) {
-                $type = $notifyObject[$i]->getTipo();
-                $infoNotify = json_decode($notifyObject[$i]->getInfo(), true);
+
+                $idNotify = $notifyObjects[$i]->getId();
+
+                $type = $notifyObjects[$i]->getTipo();
+                $read = $notifyObjects[$i]->getLetto();
+
+                $infoNotify = json_decode($notifyObjects[$i]->getInfo(), true);
 
                 if ($type == tipoNotifica::SEGNALAZIONE) {
 
@@ -226,25 +253,49 @@ non è completa*/
                     $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
 
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
+
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_ANNUNCIO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
+
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_COMMENTO);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
+
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_FEEDBACK);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::UTENTE) {
+
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_UTENTE);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
+                        $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
+
                     } else if ($obj == SoggettiNotifiche::CONTROVERSIA_MOD) {
+
                         $href = $this->rounting(SoggettiNotifiche::CONTROVERSIA_MOD);
                         $href = sprintf($href, $id);
-                        $result[$href] = sprintf(NotificationParsing::ADM_CONTROVERSIA_TRA_MOD);
+                        $text = sprintf(NotificationParsing::ADM_CONTROVERSIA_TRA_MOD);
+
+                        $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
+                        array_push($result,$resObject);
                     }
                 }
             }
@@ -255,7 +306,7 @@ non è completa*/
     /**This function return a standard link to page
      *
      * @param $destination
-     * @return string
+     * @return string, standard link to a page
      */
     private function rounting($destination)
     {
