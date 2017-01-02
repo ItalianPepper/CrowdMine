@@ -844,24 +844,6 @@
 													</tr>
 													</thead>
 													<tbody>
-													<!--<tr>
-														<th scope="row">1</th>
-														<td>PHP</td>
-														<td>8</td>
-														<td>2</td>
-													</tr>
-													<tr>
-														<th scope="row">2</th>
-														<td>Cameriere</td>
-														<td>13</td>
-														<td>10</td>
-													</tr>
-													<tr>
-														<th scope="row">3</th>
-														<td>Dipendente</td>
-														<td>9</td>
-														<td>8</td>
-													</tr>-->
 													</tbody>
 												</table>
 											</div>
