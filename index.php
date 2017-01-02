@@ -165,6 +165,10 @@ try {
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "stampaConversazione.php";
                 break;
+            case 'stampaCandidature':
+               //StringUtils::checkPermission("all");
+               include_once CONTROL_DIR . "stampaCandidature.php";
+               break;
             case 'inviaMessaggio':
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "inviaMessaggio.php";
@@ -176,6 +180,14 @@ try {
             case 'rifiutaCandidato':
                 //StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "rifiutaCandidato.php";
+                break;
+            case 'accettaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "accettaCollaborazione.php";
+                break;
+            case 'rifiutaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "rifiutaCollaborazione.php";
                 break;
             
             

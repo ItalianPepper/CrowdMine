@@ -13,11 +13,12 @@
     // if ($utente == null)
     //     header("location:./index.php");
     
-    $id_destinatario = $_POST["id"];
+    //$id_destinatario = $_POST["id"];
+    $id_destinatario = $_SESSION['destinatario'];
     $testo_messaggio = $_POST["testo"];
     
     ## MANAGER ##
-    echo ($id_destinatario);
+    
     $manager_msg = new MessaggioManager();
     $manager_utente = new UtenteManager();
     
@@ -28,15 +29,28 @@
     //echo $utente_destinatario->getNome()."    ";
     //$risultato = $manager_msg->inviaMessaggio($utente_connesso->getId(), $id_destinatario);
     //$date = date("d/m/Y" - G:i);
-    echo ($id_destinatario);
-    $risultato = $manager_msg->sendMessaggio(null, $testo_messaggio, 0, null, $utente_connesso->getId(), $id_destinatario);
+    //echo ($id_destinatario);
+    $risultato = $manager_msg->sendMessaggio(null, $testo_messaggio, 0, 0, $utente_connesso->getId(), $id_destinatario); //id, corpo, data, letto
     
     if($risultato){
-        echo '<meta http-equiv="refresh" content="0;URL=http://localhost/CrowdMine/messaging?id='.$id_destinatario.'">';
-        echo '<div class="alert alert-success">'."\n";
-        echo '<strong>Invio con successo!</strong> Hai inviato un messaggio a '.$utente_destinatario->getNome() ;
-        echo '</div>';
-        
+        //echo '<meta http-equiv="refresh" content="0;URL=http://localhost/CrowdMine/messaging?id='.$id_destinatario.'">';
+        $lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id_destinatario);
+        foreach ($lista_messaggio as $indice => $value) {
+
+            if ($lista_messaggio[$indice]->getIdUtenteDestinatario() == $utente_connesso->getId()) {
+
+                echo '<li class="right">';
+            } else
+                echo '<li>';
+
+            echo '<div class="message">' . $lista_messaggio[$indice]->getCorpo() . '</div>';
+            echo '<div class="info">';
+            echo '<div class="datetime">11.45pm</div>';
+            //echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
+            echo '</div>';
+            echo '</li>';
+        }
+
        // header('Location: http://localhost/CrowdMine/messaging?id='.$id_utente_destinatario); 
         //header( "refresh:5;url={$_SERVER['PHP_SELF']}" ); 
     }  else if($risultato==false){
