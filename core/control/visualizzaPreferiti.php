@@ -6,7 +6,8 @@ include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 include_once FILTER_DIR . 'SearchByDateInterval.php';
 include_once MODEL_DIR . "/Commento.php";
 
-$idUtente = 4;
+$user = unserialize($_SESSION['user']);
+$idUtente = $user->getId();
 $managerAnnunci = new AnnuncioManager();
 $filters = array();
 $arrayCommenti = array();

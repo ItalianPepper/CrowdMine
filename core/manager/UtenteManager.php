@@ -2,9 +2,6 @@
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'MicrocategoriaManager.php';
-include_once MODEL_DIR . 'Annuncio.php';
-include_once FILTER_DIR . "SearchByStatus.php";
-include_once FILTER_DIR . "FilterUtils.php";
 
 /**
  * Created by PhpStorm.
@@ -619,36 +616,4 @@ class UtenteManager extends Manager implements SplSubject
             "lista_mittenti" => $listaDestinatari
         );
     }
-
-    public function getUserAssociatedWithAnnuncio($filters)
-    {
-        $query = "  SELECT utente.* FROM annuncio JOIN utente ON annuncio.id_utente = utente.id  ";
-        FilterUtils::applyFilters($filters, $query);
-        $res = Manager::getDB()->query($query);
-
-        $users = array();
-        if ($res) {
-            while ($obj = $res->fetch_assoc()) {
-                $user = new Utente($obj['id'],
-                    $obj['nome'],
-                    $obj['cognome'],
-                    $obj['descrizione'],
-                    $obj['telefono'],
-                    $obj['data_nascita'],
-                    $obj['citta'],
-                    $obj['email'],
-                    $obj['password'],
-                    $obj['ruolo'],
-                    $obj['stato'],
-                    $obj['immagine_profilo'],
-                    $obj['partita_iva']);
-
-                $users[$obj['id']] = $user;
-            }
-        }
-        return $users;
-
-
-    }
-
 }

@@ -266,12 +266,11 @@ include_once VIEW_DIR . 'header.php';
                                          <i class="fa fa-map-marker" aria-hidden="true"></i></span>
                                         <input type="text" name="luogo" class="form-control" placeholder="Luogo.." aria-describedby="basic-addon1" value="">
                                     </div>
+
                                     <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1">
                                          <i class="fa fa-user" aria-hidden="true"></i></span>
-                                        <div>
-                                            <select id="listaUtenti" name="utente"></select>
-                                        </div>
+                                        <input type="text" name="utente" class="form-control" placeholder="Utente.." aria-describedby="basic-addon1" value="">
                                     </div>
 
                                 </div>

@@ -3,8 +3,8 @@
 
 include_once MANAGER_DIR ."/AnnuncioManager.php";
 
-$idUtente = 4;
-
+$user = unserialize($_SESSION['user']);
+$idUtente = $user->getId();
 
 if (isset($_GET["id"])) {
     $idAnnuncio = $_GET["id"];
