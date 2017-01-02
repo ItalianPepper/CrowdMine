@@ -62,13 +62,20 @@
                                     echo "<li>Non ci sono notifiche</li>";
                                 }
                                 else{
-                                    foreach($listaNotifiche as $notifica){
-                                        $html = '<li class="list-group-item" id="$notifica[\'id\']">
-                                                    <a href="#$notifica[\'link\']">
-                                                        <p id="titolo">$notifica[\'titolo\']</p>
-                                                        <p id="corpo">$notifica[\'corpo\']</p>
-                                                    </a>
+                                    foreach($listaNotifiche as $notifica) {
+                                        if (!$notifica['letto'])
+                                            $html = '<li class="list-group-item" id="$notifica[\'idNotify\']" style="background-color: #3399FF">
+                                                        <a href="#$notifica[\'href\']">
+                                                            <p id="corpo">$notifica[\'text\']</p>
+                                                        </a>
                                                     </li>';
+                                        else{
+                                            $html = '<li class="list-group-item" id="$notifica[\'idNotify\']">
+                                                        <a href="#$notifica[\'href\']">
+                                                            <p id="corpo">$notifica[\'text\']</p>
+                                                        </a>
+                                                    </li>';
+                                        }
                                         echo html;
                                     }
                                 }

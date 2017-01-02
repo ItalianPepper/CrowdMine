@@ -32,6 +32,9 @@ function generateNotificationsList(data, destination){
 }
 
 function notificaToRowString(listaNotificheObject){
-    return '<li style="background-color: #3399FF" id="'+listaNotificheObject.idNotifica+'"><a href="'+listaNotificheObject.href+'">'+listaNotificheObject.corpo+'</a></li>';
+    return '<li class="list-group-item" style="background-color: #3399FF" id="'+listaNotificheObject.idNotifica+'"><a href="'+listaNotificheObject.href+'">'+listaNotificheObject.corpo+'</a></li>';
 }
 
+function readOnClick(){
+    
+}
