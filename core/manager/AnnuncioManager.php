@@ -9,6 +9,7 @@
 
 include_once MODEL_DIR . 'Annuncio.php';
 include_once MODEL_DIR . 'Candidatura.php';
+include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'Manager.php';
 
 include_once FILTER_DIR . "FilterUtils.php";
@@ -160,20 +161,163 @@ class AnnuncioManager
         }
     }
 
+    public function temporaryTableSearchAnnunci($filters){
+
+        $query = " CREATE OR REPLACE TEMPORARY TABLE searchedAnnunci AS (
+                    select * FROM annuncio ";
+
+        FilterUtils::applyFilters($filters, $query);
+
+        $res=Manager::getDB()->query($query.");");
+
+        if ($res==false) {
+            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        $query = "SELECT * FROM searchedAnnunci ";
+        $res=Manager::getDB()->query($query);
+
+        $annunci = array();
+        if ($res) {
+            while ($obj = $res->fetch_assoc()) {
+                $annuncio = new Annuncio($obj['id'], $obj['id_utente'], $obj['data'], $obj['titolo'], $obj['descrizione'], $obj['luogo'], $obj['stato'], $obj['retribuzione'], $obj['tipo']);
+                $annunci[] = $annuncio;
+            }
+        }
+        return $annunci;
+    }
+
+    public function getUsersInSearchedAnnunci($inCandidacies=false,$inComments=false)
+    {
+
+        $query = "CREATE OR REPLACE TEMPORARY TABLE A1 AS (SELECT * FROM searchedAnnunci);";
+        $res=Manager::getDB()->query($query);
+        if ($res==false) {
+            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+        $query = "CREATE OR REPLACE TEMPORARY TABLE A2 AS (SELECT * FROM searchedAnnunci);";
+        $res=Manager::getDB()->query($query);
+        if ($res==false) {
+            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        $query = "SELECT utente.*
+                    FROM searchedAnnunci JOIN utente
+                    ON searchedAnnunci.id_utente = utente.id ";
+
+        if($inCandidacies)
+            $query.="UNION
+                    SELECT utente.*
+                    FROM candidatura JOIN A1
+                        ON A1.id = candidatura.id_annuncio
+                    JOIN utente
+                        ON candidatura.id_utente = utente.id ";
+
+        if($inComments)
+            $query.="UNION
+                    SELECT utente.*
+                    FROM commento JOIN A2
+                        ON A2.id = commento.id_annuncio
+                    JOIN utente
+                        ON commento.id_utente = utente.id";
+
+        $res = Manager::getDB()->query($query);
+
+        $users = array();
+        if ($res==false) {
+            throw new ApplicationException(ErrorUtils::$VALORE_DUPLICATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }else{
+            while ($obj = $res->fetch_assoc()) {
+                $user = new Utente($obj['id'],
+                    $obj['nome'],
+                    $obj['cognome'],
+                    $obj['descrizione'],
+                    $obj['telefono'],
+                    $obj['data_nascita'],
+                    $obj['citta'],
+                    $obj['email'],
+                    $obj['password'],
+                    $obj['ruolo'],
+                    $obj['stato'],
+                    $obj['immagine_profilo'],
+                    $obj['partita_iva']);
+
+                $users[$obj['id']] = $user;
+            }
+        }
+        return $users;
+    }
+
+    /**
+     * Get all the candidacies for serched Annunci
+     *
+     * @param $idAnnuncio
+     * @return Candidatura[] A list of Candidatura elements.
+     */
+    public function getCandidatiInSearchedAnnunci()
+    {
+        $GET_CANDIDACIES = "SELECT candidatura.* 
+                              FROM searchedAnnunci JOIN candidatura
+                            ON searchedAnnunci.id = candidatura.id_annuncio";
+
+        $query = sprintf($GET_CANDIDACIES);
+
+        $res = Manager::getDB()->query($query);
+        $candidacies = array();
+        if ($res) {
+            while ($obj = $res->fetch_assoc()) {
+                $candidacy = new Candidatura($obj['id'], $obj['id_utente'], $obj['id_annuncio'], $obj['corpo'], $obj['data_risposta'], $obj['data_inviata'], $obj['richiesta_inviata'], $obj['richiesta_accettata']);
+
+                if(!isset($candidacies[$obj['id_annuncio']])){
+                    $candidacies[$obj['id_annuncio']] = array();
+                }
+                $candidacies[$obj['id_annuncio']][] = $candidacy;
+            }
+        }
+        return $candidacies;
+    }
+
+    /**
+     * Get all the comments for serched Annunci
+     *
+     * @param $idAnnuncio
+     * @return Commento[] A list of Commento elements.
+     */
+    public function getCommentsInSearchedAnnunci()
+    {
+        $GET_CANDIDACIES = "SELECT commento.* 
+                              FROM searchedAnnunci JOIN commento
+                            ON searchedAnnunci.id = commento.id_annuncio";
+
+        $query = sprintf($GET_CANDIDACIES);
+
+        $res = Manager::getDB()->query($query);
+        $commenti = array();
+        if ($res) {
+            while ($obj = $res->fetch_assoc()) {
+                $commento = new Commento($obj['id'], $obj['id_annuncio'], $obj['id_utente'], $obj['corpo'], $obj['data'], $obj['stato']);
+                if(!isset($commenti[$obj['id_annuncio']])){
+                    $commenti[$obj['id_annuncio']] = array();
+                }
+                $commenti[$obj['id_annuncio']][] = $commento;
+            }
+        }
+        return $commenti;
+    }
+
     /**
      * return all microcategories involved inside a search
      * @param $filters
      * @return array
      */
-    public function getMicrosInSearchedAnnunci($filters){
+    public function getMicrosInSearchedAnnunci(){
 
         $MICROS_FROM_ANNUNCI = "SELECT microcategoria.* 
                                         FROM riferito JOIN microcategoria ON
 	                                          riferito.id_microcategoria = microcategoria.id
-                                        WHERE riferito.id_annuncio IN (SELECT annuncio.id FROM annuncio ";
+                                        WHERE riferito.id_annuncio IN (SELECT searchedAnnunci.id FROM searchedAnnunci WHERE 1) ";
         $query = sprintf($MICROS_FROM_ANNUNCI);
-        FilterUtils::applyFilters($filters, $query);
-        $query = ')';
+
         $res = Manager::getDB()->query($query);
         $micros = array();
         if ($res) {
@@ -192,22 +336,21 @@ class AnnuncioManager
      * @param $filters
      * @return array
      */
-    public function getSearchedAnnunciMicrosReference($filters){
+    public function getSearchedAnnunciMicrosReference(){
 
         $RIFERITO = "SELECT * 
                         FROM riferito 
-                        WHERE riferito.id_annuncio IN (SELECT annuncio.id FROM annuncio ";
+                        WHERE riferito.id_annuncio IN (SELECT searchedAnnunci.id FROM searchedAnnunci WHERE 1) ";
         $query = sprintf($RIFERITO);
-        FilterUtils::applyFilters($filters, $query);
-        $query = ')';
+
         $res = Manager::getDB()->query($query);
         $aM = array();
         if ($res) {
             while ($obj = $res->fetch_assoc()) {
                 if(!isset($aM[$obj['id_annuncio']])){
-                    $aM[$obj['id_annuncio']]= array();
+                    $aM[$obj['id_annuncio']] = array();
                 }
-                $aM[$obj['id_annuncio']][]= $obj['id_micro'];
+                $aM[$obj['id_annuncio']][]= $obj['id_microcategoria'];
             }
         }
         return $aM;
