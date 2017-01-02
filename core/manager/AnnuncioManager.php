@@ -205,9 +205,9 @@ class AnnuncioManager
         if ($res) {
             while ($obj = $res->fetch_assoc()) {
                 if(!isset($aM[$obj['id_annuncio']])){
-                    $aM[$obj['id_annuncio'] = array();
+                    $aM[$obj['id_annuncio']]= array();
                 }
-                $aM[$obj['id_annuncio'][] = $obj['id_micro'];
+                $aM[$obj['id_annuncio']][]= $obj['id_micro'];
             }
         }
         return $aM;
