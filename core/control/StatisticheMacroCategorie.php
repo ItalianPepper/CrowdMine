@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $macroCategoriaManager = new MacroCategoriaManager();
 
-    $result = $macroCategoriaManager->findListMacrocategoria();
+    $result = $macroCategoriaManager->findListMacrocategoriaRiferito();
 
     header("Content-Type: application/json");
     echo json_encode($result);

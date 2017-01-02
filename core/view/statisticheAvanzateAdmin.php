@@ -21,7 +21,7 @@
 
 <body>
 <div class="app app-default">
-    <?php include_once VIEW_DIR . "asidePannelloModeratore.php"; ?>
+    <?php include_once VIEW_DIR . "asidePannelloBackend.php"; ?>
     <div class="app-container">
         <?php include_once VIEW_DIR . "header.php";?>
         <div class="row">
