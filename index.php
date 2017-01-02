@@ -106,7 +106,12 @@ try {
             case 'footer':
                 include_once VIEW_DIR . "footer.php";
                 break;
-            
+            case 'getMacrosForInsertAnnuncio':
+                include_once CONTROL_DIR . "getMacrosForInsertAnnuncio.php";
+                break;
+            case 'getMicrosByMacroForInsertAnnuncio':
+                include_once CONTROL_DIR . "getMicrosByMacroForInsertAnnuncio.php";
+                break;
             case 'inserisciEsperienza':
                 StringUtils::checkPermission("Cliente");
                 include_once VIEW_DIR . "inserisciEsperienza.php";
@@ -298,6 +303,7 @@ try {
                 include_once CONTROL_DIR. "rimuoviCandidatura.php";
                 break;
             case 'inserisciAnnuncio';
+                $user = StringUtils::checkPermission(RuoloUtente::UTENTE);
                 include_once CONTROL_DIR . "inserisciAnnuncio.php";
                 break;
             case 'inserisciAnnuncioControl';

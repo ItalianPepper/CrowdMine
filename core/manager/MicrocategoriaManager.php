@@ -182,6 +182,24 @@ class MicrocategoriaManager extends Manager
         return $listaMicro;
     }
 
+    public function getMicrosByMacroSerialized($macroid)
+    {
+        //join with macro, to avoid special micros
+        $GET_MICROS_BY_MACROID = "SELECT microcategoria.id,microcategoria.nome,microcategoria.id_macrocategoria 
+                              FROM microcategoria JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id
+                              WHERE microcategoria.id_macrocategoria = '%s' AND macrocategoria.nome!= microcategoria.nome
+                              GROUP BY microcategoria.id";
+
+        $query = sprintf($GET_MICROS_BY_MACROID,$macroid);
+        $result = self::getDB()->query($query);
+        $listaMicro = array();
+        while($m=$result->fetch_assoc()){
+            $micro = $this->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
+            array_push($listaMicro,$micro->jsonSerialize());
+        }
+        return $listaMicro;
+    }
     /**
      * @param $idMicro
      */
