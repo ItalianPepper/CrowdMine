@@ -1,16 +1,4 @@
 <?php
-include_once MODEL_DIR . "/Annuncio.php";
-include_once MODEL_DIR . "/Candidatura.php";
-include_once MODEL_DIR . "/Commento.php";
-$idUtente = "1";
-if (isset($_SESSION["annunciSegnalati"]) && isset($_SESSION["listaUtentiAssociati"])) {
-    $annunci = unserialize($_SESSION["annunciSegnalati"]);
-    $listaUtentiAssociati = unserialize($_SESSION["listaUtentiAssociati"]);
-    unset($_SESSION["annunciSegnalati"]);
-    unset($_SESSION["listaUtentiAssociati"]);
-} else {
-    header("Location: " . DOMINIO_SITO . "/annunciSegnalati");
-}
 include_once VIEW_DIR . 'header.php';
 ?>
 
@@ -34,44 +22,34 @@ include_once VIEW_DIR . 'header.php';
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
 
-
-    <?php
-    for ($i = 0; $i < count($annunci); $i++) {
-        $id = $annunci[$i]->getId();
-        echo "<script>";
-        echo "$(document).ready(function(){";
-        echo "$(\".btn.btn-link$id\").click(function(){";
-        echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").toggle(250);";
-        echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").hide(250);";
-        echo "});";
-        echo "});";
-        echo "</script>";
-    }
-    ?>
-
-    <?php
-    for ($i = 0; $i < count($annunci); $i++) {
-        $id = $annunci[$i]->getId();
-        echo "<script>";
-        echo "$(document).ready(function(){";
-        echo "$(\".btn.btn-warning$id\").click(function(){";
-        echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").toggle(250);";
-        echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").hide(250);";
-        echo "});";
-        echo "});";
-        echo "</script>";
-    }
-    ?>
-
-
     <script>
-        $(document).ready(function () {
+        $(document).ready(function(){
+
             $(".btn.btn-warning").click(function () {
                 $(".row.col-md-12.col-sm-12.card.candidature").toggle(250);
                 $(".row.col-md-12.col-sm-12.card.contenitore").hide(250);
 
             });
+
+            <?php
+                for ($i = 0; $i < count($annunci); $i++) {
+                    echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+                }
+            ?>
         });
+
+        function annuncioButtons(id){
+            $(".btn.btn-link"+id).click(function(){;
+            $(".row.col-md-12.col-sm-12.card.contenitore"+id).toggle(250);
+            $(".row.col-md-12.col-sm-12.card.candidature"+id).hide(250);
+            });
+
+            $(".btn.btn-warning"+id).click(function(){
+            $(".row.col-md-12.col-sm-12.card.candidature"+id).toggle(250);
+            $(".row.col-md-12.col-sm-12.card.contenitore"+id).hide(250);
+            });
+        }
+
     </script>
 
 </head>
@@ -94,6 +72,177 @@ include_once VIEW_DIR . 'header.php';
                 </div>
             </div>
         </div>
+        <?php
+            if(isset($annunciAdmin) && count($annunciAdmin)>0) {
+                ?>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-header">
+                                In Evidenza
+                            </div>
+
+                            <div class="card-body">
+                                <?php
+                                for ($i = 0; $i < count($annunciAdmin); $i++) {
+                                    $aId = $annunciAdmin[$i]->getId();
+
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+
+                                            <div class="media social-post">
+                                                <div class="media-left">
+                                                    <a href="<?php echo DOMINIO_SITO; ?>/ProfiloUtente/<?php echo $annunciAdmin[$i]->getIdUtente(); ?>">
+                                                        <img src="<?php echo STYLE_DIR; ?>img\<?php echo
+                                                        $listaUtentiAdmin[$annunciAdmin[$i]->getIdUtente()]->getImmagineProfilo();
+                                                        ?>"/>
+                                                    </a>
+                                                </div>
+                                                <div class="section">
+                                                    <div class="section-body">
+                                                        <div class="media-body">
+                                                            <div class="media-heading">
+                                                                <h4 class="title"><?php echo $listaUtentiAdmin[$annunci[$i]->getIdUtente()]->getNome() . " " .
+                                                                        $listaUtentiAdmin[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
+                                                            </div>
+                                                            <h4><b><?php echo $annunciAdmin[$i]->getTitolo(); ?></b></h4>
+
+                                                            <div class="media-content">
+                                                                <?php echo $annunciAdmin[$i]->getDescrizione(); ?>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-xs-12 simple-row"
+                                                                 style="padding-left: 0px">
+                                                                <?php
+                                                                if (isset($AnnunciMicroRefAdmin[$aId]))
+                                                                    for ($z = 0; $z < count($AnnunciMicroRefAdmin[$aId]); $z++) {
+                                                                        $micro = $listaMicroAdmin[$AnnunciMicroRefAdmin[$aId][$z]];
+                                                                        echo randomColorLabel($micro->getNome(), $micro->getNome()) . " ";
+                                                                    }
+                                                                ?>
+                                                            </div>
+
+                                                            <div class="media-action">
+                                                                <button class="btn btn-link" data-toggle="modal"
+                                                                        data-target="#myModal2-<?php echo $annunciAdmin[$i]->getId(); ?>"
+                                                                "><i class="fa fa-check"
+                                                                     style="font-size: 18px"></i>
+                                                                Conferma
+                                                                </button>
+                                                                <button class="btn btn-link" data-toggle="modal"
+                                                                        data-target="#myModal3-<?php echo $annunciAdmin[$i]->getId(); ?>"
+                                                                "><i class="fa fa-close"
+                                                                     style="font-size: 18px"></i>
+                                                                Elimina
+                                                                </button>
+                                                                <?php if ($user->getRuolo() == "moderatore") { ?>
+                                                                    <button class="btn btn-link"><i
+                                                                                class="fa fa-check-circle"
+                                                                                data-toggle="modal"
+                                                                                data-target="#myModal4-<?php echo $annunciAdmin[$i]->getId(); ?>"
+                                                                                style="font-size: 18px"></i>
+                                                                        invia all'amministratore
+                                                                    </button>
+                                                                <?php } ?>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="myModal2-<?php echo $annunci[$i]->getId(); ?>"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                    aria-hidden="true">×</span></button>
+                                                        <h4 class="modal-title">Attivare l'annuncio?</h4>
+                                                    </div>
+                                                    <form action="attivaAnnuncioControl" method="post">
+                                                        <div class="modal-footer">
+                                                            <input type="text" name="idAnnuncio" hidden
+                                                                   value="<?php echo $annunci[$i]->getId(); ?>">
+                                                            <button type="button" class="btn btn-sm btn-default"
+                                                                    data-dismiss="modal">
+                                                                Chiudi
+                                                            </button>
+                                                            <button type="submit" class="btn btn-sm btn-success">
+                                                                Attiva
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="myModal3-<?php echo $annunci[$i]->getId(); ?>"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                    aria-hidden="true">×</span></button>
+                                                        <h4 class="modal-title">Disattivare l'annuncio?</h4>
+                                                    </div>
+                                                    <form action="disattivaAnnuncioControl" method="post">
+                                                        <div class="modal-footer">
+                                                            <input type="text" name="idAnnuncio" hidden
+                                                                   value="<?php echo $annunci[$i]->getId(); ?>">
+                                                            <button type="button" class="btn btn-sm btn-default"
+                                                                    data-dismiss="modal">
+                                                                Chiudi
+                                                            </button>
+                                                            <button type="submit" class="btn btn-sm btn-success">
+                                                                Disattiva
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="myModal4-<?php echo $annunci[$i]->getId(); ?>"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                    aria-hidden="true">×</span></button>
+                                                        <h4 class="modal-title">Inviare all'amministratore?</h4>
+                                                    </div>
+                                                    <form action="inviaAnnuncioAdmin" method="post">
+                                                        <div class="modal-footer">
+                                                            <input type="text" name="idAnnuncio" hidden
+                                                                   value="<?php echo $annunci[$i]->getId(); ?>">
+                                                            <button type="button" class="btn btn-sm btn-default"
+                                                                    data-dismiss="modal">
+                                                                Chiudi
+                                                            </button>
+                                                            <button type="submit" class="btn btn-sm btn-success">Invia
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+        ?>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="card">
@@ -103,9 +252,8 @@ include_once VIEW_DIR . 'header.php';
 
                     <div class="card-body">
                         <?php
-                        for ($i = 0;
-                             $i < count($annunci);
-                             $i++) {
+                        for ($i = 0; $i < count($annunci); $i++) {
+                            $aId = $annunci[$i]->getId();
 
                             ?>
                             <div class="row">
@@ -115,7 +263,7 @@ include_once VIEW_DIR . 'header.php';
                                         <div class="media-left">
                                             <a href="<?php echo DOMINIO_SITO; ?>/ProfiloUtente/<?php echo $annunci[$i]->getIdUtente(); ?>">
                                                 <img src="<?php echo STYLE_DIR; ?>img\<?php echo
-                                                $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getImmagineProfilo();
+                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getImmagineProfilo();
                                                 ?>"/>
                                             </a>
                                         </div>
@@ -123,8 +271,8 @@ include_once VIEW_DIR . 'header.php';
                                             <div class="section-body">
                                                 <div class="media-body">
                                                     <div class="media-heading">
-                                                        <h4 class="title"><?php echo $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getNome() . " " .
-                                                                $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
+                                                        <h4 class="title"><?php echo $listaUtenti[$annunci[$i]->getIdUtente()]->getNome() . " " .
+                                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
                                                     </div>
                                                     <h4><b><?php echo $annunci[$i]->getTitolo(); ?></b></h4>
 
@@ -133,11 +281,13 @@ include_once VIEW_DIR . 'header.php';
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-xs-12 simple-row"
                                                          style="padding-left: 0px">
-                                                    <span class="label label-primary" style="background-color:#94119B"
-                                                          ;="">Informatica</span>
-                                                        <span class="label label-primary"
-                                                              style="background-color:#C95115"
-                                                              ;="">Prova4</span>
+                                                        <?php
+                                                        if(isset($AnnunciMicroRef[$aId]))
+                                                        for($z=0;$z<count($AnnunciMicroRef[$aId]); $z++){
+                                                            $micro = $listaMicro[$AnnunciMicroRef[$aId][$z]];
+                                                            echo randomColorLabel($micro->getNome(), $micro->getNome())." ";
+                                                        }
+                                                        ?>
                                                     </div>
 
                                                     <div class="media-action">
@@ -304,7 +454,6 @@ include_once VIEW_DIR . 'header.php';
                             });
                         });
                     </script>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
                     <?php
 
                     if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {

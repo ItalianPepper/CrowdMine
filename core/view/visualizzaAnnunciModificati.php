@@ -1,17 +1,4 @@
 <?php
-include_once MODEL_DIR . "/Annuncio.php";
-include_once MODEL_DIR . "/Candidatura.php";
-include_once MODEL_DIR . "/Commento.php";
-$idUtente = "1";
-if (isset($_SESSION["annunciModificati"]) && isset($_SESSION["listaUtentiAssociati"])) {
-    $annunci = unserialize($_SESSION["annunciModificati"]);
-    $listaUtentiAssociati = unserialize($_SESSION["listaUtentiAssociati"]);
-    unset($_SESSION["listaUtentiAssociati"]);
-    unset($_SESSION["annunciModificati"]);
-
-} else {
-    header("Location: " . DOMINIO_SITO . "/annunciModificati");
-}
 include_once VIEW_DIR . 'header.php';
 ?>
 
@@ -36,45 +23,35 @@ include_once VIEW_DIR . 'header.php';
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
 
 
-    <?php
-    for ($i = 0; $i < count($annunci); $i++) {
-        $id = $annunci[$i]->getId();
-        echo "<script>";
-        echo "$(document).ready(function(){";
-        echo "$(\".btn.btn-link$id\").click(function(){";
-        echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").toggle(250);";
-        echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").hide(250);";
-        echo "});";
-        echo "});";
-        echo "</script>";
-    }
-    ?>
-
-    <?php
-    for ($i = 0; $i < count($annunci); $i++) {
-        $id = $annunci[$i]->getId();
-        echo "<script>";
-        echo "$(document).ready(function(){";
-        echo "$(\".btn.btn-warning$id\").click(function(){";
-        echo "$(\".row.col-md-12.col-sm-12.card.candidature$id\").toggle(250);";
-        echo "$(\".row.col-md-12.col-sm-12.card.contenitore$id\").hide(250);";
-        echo "});";
-        echo "});";
-        echo "</script>";
-    }
-    ?>
-
-
     <script>
-        $(document).ready(function () {
+        $(document).ready(function(){
+
             $(".btn.btn-warning").click(function () {
                 $(".row.col-md-12.col-sm-12.card.candidature").toggle(250);
                 $(".row.col-md-12.col-sm-12.card.contenitore").hide(250);
 
             });
-        });
-    </script>
 
+            <?php
+            for ($i = 0; $i < count($annunci); $i++) {
+                echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+            }
+            ?>
+        });
+
+        function annuncioButtons(id){
+            $(".btn.btn-link"+id).click(function(){;
+                $(".row.col-md-12.col-sm-12.card.contenitore"+id).toggle(250);
+                $(".row.col-md-12.col-sm-12.card.candidature"+id).hide(250);
+            });
+
+            $(".btn.btn-warning"+id).click(function(){
+                $(".row.col-md-12.col-sm-12.card.candidature"+id).toggle(250);
+                $(".row.col-md-12.col-sm-12.card.contenitore"+id).hide(250);
+            });
+        }
+
+    </script>
 </head>
 
 <body>
@@ -104,9 +81,8 @@ include_once VIEW_DIR . 'header.php';
 
                     <div class="card-body">
                         <?php
-                        for ($i = 0;
-                             $i < count($annunci);
-                             $i++) {
+                        for ($i = 0; $i < count($annunci); $i++) {
+                            $aId = $annunci[$i]->getId();
 
                             ?>
                             <div class="row">
@@ -116,7 +92,7 @@ include_once VIEW_DIR . 'header.php';
                                         <div class="media-left">
                                             <a href="<?php echo DOMINIO_SITO; ?>/ProfiloUtente/<?php echo $annunci[$i]->getIdUtente(); ?>">
                                                 <img src="<?php echo STYLE_DIR; ?>img\<?php echo
-                                                $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getImmagineProfilo();
+                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getImmagineProfilo();
                                                 ?>"/>
                                             </a>
                                         </div>
@@ -124,8 +100,8 @@ include_once VIEW_DIR . 'header.php';
                                             <div class="section-body">
                                                 <div class="media-body">
                                                     <div class="media-heading">
-                                                        <h4 class="title"><?php echo $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getNome() . " " .
-                                                                $listaUtentiAssociati[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
+                                                        <h4 class="title"><?php echo $listaUtenti[$annunci[$i]->getIdUtente()]->getNome() . " " .
+                                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
                                                     </div>
                                                     <h4><b><?php echo $annunci[$i]->getTitolo(); ?></b></h4>
 
@@ -134,11 +110,13 @@ include_once VIEW_DIR . 'header.php';
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-xs-12 simple-row"
                                                          style="padding-left: 0px">
-                                                    <span class="label label-primary" style="background-color:#94119B"
-                                                          ;="">Informatica</span>
-                                                        <span class="label label-primary"
-                                                              style="background-color:#C95115"
-                                                              ;="">Prova4</span>
+                                                        <?php
+                                                        if(isset($AnnunciMicroRef[$aId]))
+                                                            for($z=0;$z<count($AnnunciMicroRef[$aId]); $z++){
+                                                                $micro = $listaMicro[$AnnunciMicroRef[$aId][$z]];
+                                                                echo randomColorLabel($micro->getNome(), $micro->getNome())." ";
+                                                            }
+                                                        ?>
                                                     </div>
 
                                                     <div class="media-action">
