@@ -26,11 +26,11 @@ include_once VIEW_DIR . 'header.php';
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-<style>
-    .form-control{
-        color:#817b7b;
-    }
-</style>
+    <style>
+        .form-control{
+            color:#817b7b;
+        }
+    </style>
     <script type="text/javascript">
 
         var microCountArray = 0;
@@ -74,52 +74,52 @@ include_once VIEW_DIR . 'header.php';
             )
         });
 
-            function caricaMicro() {
-                var idMacro = $("#macro").val();
-                $("#micro").prop("disabled", false);
-                $.ajax(
-                    {
-                        url: "getMicrosByMacroForInsertAnnuncio",
-                        type: "POST",
-                        data: {"macroId": idMacro},
-                        dataType: "JSON",
-                        async: true,
-                        success: function (data) {
-                            $("#insert-micro-button").prop("disabled", false);
-                            $("#micro").empty();
-                            $("#micro").append("<option value='' disabled selected>Seleziona la microcategoria</option>");
-                            if (data.length > 0) {
-                                for (var i in data) {
-                                    var micro = [];
-                                    micro.id = data[i].microId;
-                                    micro.nome = data[i].microName;
+        function caricaMicro() {
+            var idMacro = $("#macro").val();
+            $("#micro").prop("disabled", false);
+            $.ajax(
+                {
+                    url: "getMicrosByMacroForInsertAnnuncio",
+                    type: "POST",
+                    data: {"macroId": idMacro},
+                    dataType: "JSON",
+                    async: true,
+                    success: function (data) {
+                        $("#insert-micro-button").prop("disabled", false);
+                        $("#micro").empty();
+                        $("#micro").append("<option value='' disabled selected>Seleziona la microcategoria</option>");
+                        if (data.length > 0) {
+                            for (var i in data) {
+                                var micro = [];
+                                micro.id = data[i].microId;
+                                micro.nome = data[i].microName;
 
 
-                                    $("#micro").append("<option value='" + micro.id + "'>" + micro.nome + "</option>");
+                                $("#micro").append("<option value='" + micro.id + "'>" + micro.nome + "</option>");
 
-                                }
                             }
-                            else {
-                                $("#micro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
-                            }
-                        },
-                        error: function () {
-                            toastr[data["toastType"]](data["toastMessage"]);
                         }
-
+                        else {
+                            $("#micro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
+                        }
+                    },
+                    error: function () {
+                        toastr[data["toastType"]](data["toastMessage"]);
                     }
-                )
-            }
+
+                }
+            )
+        }
 
         function insertMicro() {
 
-             var nomeMacro = $("#macro").find('option:selected').text();
-             var nomeMicro = $("#micro").find('option:selected').text();
-             var idMicro = $("#micro").val();
-             var obj = new microListObject(nomeMacro,nomeMicro,idMicro);
-             microListObjectArray[microCountArray] = obj;
+            var nomeMacro = $("#macro").find('option:selected').text();
+            var nomeMicro = $("#micro").find('option:selected').text();
+            var idMicro = $("#micro").val();
+            var obj = new microListObject(nomeMacro,nomeMicro,idMicro);
+            microListObjectArray[microCountArray] = obj;
             var label = <?php randomColorLabel(obj.nomeMacro, $micro->getMicroCategoria()->getNome()) ?>;
-             microCountArray++;
+            microCountArray++;
             var html = '<div class="row" id='+obj.idMicro+'>'+
                 '                                    <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">'+label+
                 '                                    </div>'+
@@ -133,7 +133,7 @@ include_once VIEW_DIR . 'header.php';
 
         }
 
-        </script>
+    </script>
 </head>
 <body>
 
@@ -193,15 +193,15 @@ include_once VIEW_DIR . 'header.php';
 
                             </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                                     <textarea id="form_message" name="message" class="form-control"
                                                               placeholder="Inserisci descrizione" rows="4"
                                                               required="required"
                                                               data-error="Please,leave us a message."></textarea>
-                                        <div class="help-block with-errors"></div>
-                                    </div>
+                                    <div class="help-block with-errors"></div>
                                 </div>
+                            </div>
                             <div class="col-lg-12 col-md-12 col-xs-12" id="micro-destination">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
