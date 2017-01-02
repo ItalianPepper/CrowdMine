@@ -49,6 +49,21 @@ class NotificaManager extends Manager implements SplObserver
         return $id;
     }
 
+    public function updateNotifica($notifica){
+        $UPDATE_NOTIFICA = "UPDATE notifica SET letto = '%s' WHERE id = '%s'";
+        $query = sprintf($UPDATE_NOTIFICA, $notifica->getLetto(), $notifica->getId());
+        self::getDB()->query($query);
+    }
+
+    public function getNotificaById($idNotifica){
+        $FIND_BY__ID = "SELECT * FROM notifica WHERE id = '%s'";
+        $query = sprintf($FIND_BY__ID, $idNotifica);
+        $result = self::getDB()->query($query);
+        $notifica = null;
+        foreach($result as $r){
+            $notifica = new Notifica($r['data'], $r['tipo'], $r['info'], $r['letto'], $r['id']);
+        }return $notifica;
+    }
 
     /**
      *Send to Dispatcher the list of users to whom refers the notification with id as $idNotifica

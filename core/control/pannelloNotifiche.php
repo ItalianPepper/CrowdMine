@@ -25,6 +25,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
     }
 
+    if(isset($_POST['idnotifica'])){
+        $notifica = $notificaManager->getNotificaById($_POST['idnotifica']);
+        $notifica->setLetto(true);
+        $notificaManager->updateNotifica($notifica);
+    }
+
 }else{
 
     $_SESSION['toast-type'] = "error";
