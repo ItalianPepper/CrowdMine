@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['loggedin'] = true;
             $_SESSION['toast-type'] = "success";
             $_SESSION['toast-message'] = "Bentornato " . $user->getNome() . " :)";
-            header("Location: " . $_SERVER['HTTP_REFERER']);
+            header("Location: " . DOMINIO_SITO . "/visualizzaHome");
         }
     } else {
         $_SESSION['toast-type'] = "error";

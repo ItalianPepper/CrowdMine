@@ -384,6 +384,9 @@ try {
             case 'annuncioNew';
                 include_once VIEW_DIR . "annuncioNew.php";
                 break;
+            case 'headerStart';
+                include_once VIEW_DIR . "headerStart.php";
+                break;
             case 'annunciControl';
                 include_once CONTROL_DIR . "annunciControl.php";
                 break;
