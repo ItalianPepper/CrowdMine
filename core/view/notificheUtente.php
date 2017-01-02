@@ -49,9 +49,8 @@
 
 </head>
 <body>
-<div id="header"></div>
-
 <div class="app app-default">
+    <div id="header"></div>
     <div class="row left5">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -81,8 +80,6 @@
         </div>
     </div>
 </div>
-
 <div id="footer"></div>
-
 </body>
 </html>

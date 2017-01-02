@@ -15,20 +15,23 @@ $(function poll(){
             }
         });
     }, 30000);
-}).onLoad();
+}).ready();
 
 function generateNotificationsList(data, destination){
     if(data.length > 0){
-        $.each(data, function (key, value) {
+        for(var i in data){
             var listaNotificheObject = [];
-            listaNotificheObject.href = key;
-            listaNotificheObject.corpo = value;
+            listaNotificheObject.idNotifica = data[i].idNotify;
+            listaNotificheObject.href = data[i].href;
+            listaNotificheObject.corpo = data[i].text;
+            listaNotificheObject.letto = data[i].read;
 
             destination.children(':first').before(notificaToRowString(listaNotificheObject));
-        });
+        };
     }
 }
 
 function notificaToRowString(listaNotificheObject){
-    return '<li><a href="'+listaNotificheObject.href+'">'+listaNotificheObject.corpo+'</a></li>';
+    return '<li style="background-color: #3399FF" id="'+listaNotificheObject.idNotifica+'"><a href="'+listaNotificheObject.href+'">'+listaNotificheObject.corpo+'</a></li>';
 }
+
