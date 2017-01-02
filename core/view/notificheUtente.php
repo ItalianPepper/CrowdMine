@@ -56,7 +56,7 @@
             <div class="card">
                 <div class="card-header">Notifiche</div>
                     <div class="card">
-                        <ul class="list-group list-group-flush">
+                        <ul id="lista-notifiche-all" class="list-group list-group-flush">
                             <?php
                                 if($listaNotifiche == null){
                                     echo "<li>Non ci sono notifiche</li>";
