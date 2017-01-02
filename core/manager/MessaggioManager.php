@@ -114,6 +114,7 @@ class MessaggioManager extends Manager
     }
 
     /**
+     * Ritorna un array di MESSAGGIO; con tutti i messaggi non letti con quel destinatario
      * @param $idMittente
      * @param $idDestinatario
      * @return array
@@ -133,6 +134,7 @@ class MessaggioManager extends Manager
     }
 
     /**
+     * Ritorna un array di MESSAGGIO; con tutti i messaggi non letti con quel destinatario
      * @param $idMittente
      * @param $idDestinatario
      * @return array
@@ -148,6 +150,7 @@ class MessaggioManager extends Manager
 
 
     /**
+     * Setta tutti i flag LETTO/NONLETTO in LETTO
      * @param $idMittente
      * @param $idDestinatario
      * @return array

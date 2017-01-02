@@ -42,18 +42,18 @@ $_SESSION['destinatario'] = $id_get;
     }
     ?>" id="collapseMessaging">
         <div class="chat-group">
-            <div class="heading">Converstion</div>
+            <div class="heading">Conversazioni: </div>
             <ul class="group full-height">
-
-                <li class="section">unread</li>
 
                 <!-- LISTA DESTINATARI -->
                 <?php
                 foreach ($lista_destinatari as $indice => $elemento) {
                     $id = $lista_destinatari[$indice]->getId();
+                    $num_messaggi_non_letti = $manager_msg->messaggiNonLetti($id, $id_utente_connesso);
                     echo '<li class="message">' . "\n";
                     echo '<a data-toggle="collapse"  aria-expanded="false" aria-controls="collapseMessaging">' . "\n";
-                    echo '<span class="badge badge-warning pull-right">1</span>' . "\n";
+                    if(count($num_messaggi_non_letti)>0)
+                        echo '<span class="badge badge-warning pull-right">'.count($num_messaggi_non_letti).'</span>' . "\n";
                     echo '<div class="message">' . "\n";
                     echo '<img class="profile" src="https://placehold.it/100x100">' . "\n";
                     echo '<div class="content">' . "\n";
@@ -131,9 +131,9 @@ $_SESSION['destinatario'] = $id_get;
             params = "id=" + id;
         }
         <?php
-        if ($id_get > -1) { //Il GET CI STA
-            echo 'params = "id=' . $id_get . '"';
-        }
+            if ($id_get > -1) { //Il GET CI STA
+                echo 'params = "id=' . $id_get . '"';
+            }
         ?>;
         
         //alert("stampo la conversazione: " + params);

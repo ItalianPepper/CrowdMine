@@ -46,7 +46,7 @@
             echo '<div class="message">' . $lista_messaggio[$indice]->getCorpo() . '</div>';
             echo '<div class="info">';
             echo '<div class="datetime">11.45pm</div>';
-            echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
+            //echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
             echo '</div>';
             echo '</li>';
         }

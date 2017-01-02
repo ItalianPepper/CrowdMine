@@ -23,7 +23,10 @@ $id_utente_destinatario = $_POST["id"];
 $utente_destinatario = $manager_utente->findUtenteById($id_utente_destinatario);  //[STUB getUtentebyID]
 ## RECUPERA LA CONVERSAZIONE CON IL DESTINATARIO ##
 $lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id_utente_destinatario);
+
+$manager_msg->setMessaggiNonLetti($id_utente_destinatario, $utente_connesso->getId());    
 ?>    
+
 <!-- INTESTAZIONE DEL MESSAGGIO -->
 <div class="heading">
     <div class="title">
@@ -64,7 +67,7 @@ $lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id
                 echo '<div class="message">' . $lista_messaggio[$indice]->getCorpo() . '</div>';
                 echo '<div class="info">';
                 echo '<div class="datetime">11.45pm</div>';
-                echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
+                //echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
                 echo '</div>';
                 echo '</li>';
             }
@@ -74,8 +77,8 @@ $lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id
     </ul>        
     <div class="footer">
         <div class="message-box">
-            <textarea placeholder="type something..." id="area" class="form-control"></textarea>
-            <button class="btn btn-default" id="<?php echo $id_utente_destinatario; ?>" onclick="inviamessaggio(event)"><i class="fa fa-paper-plane" aria-hidden="true"></i><span>Send</span></button>
+            <textarea placeholder="Scrivi un messaggio..." id="area" class="form-control"></textarea>
+            <button class="btn btn-default" id="<?php echo $id_utente_destinatario; ?>" onclick="inviamessaggio(event)"><i class="fa fa-paper-plane" aria-hidden="true"></i><span>INVIA</span></button>
         </div>
         <div id="info">
 
