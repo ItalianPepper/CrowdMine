@@ -286,6 +286,9 @@ try {
             case 'inserisciAnnuncio';
                 include_once VIEW_DIR . "inserisciAnnuncio.php";
                 break;
+            case 'notificheUtente':
+                include_once VIEW_DIR . "notificheUtente.php";
+                break;
             case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
                 break;
@@ -304,6 +307,40 @@ try {
             case 'InserisciNuovaMicroControl';
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "InserisciNuovaMicroControl.php";
+                break;
+            case 'stampaConversazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "stampaConversazione.php";
+                break;
+            case 'stampaCandidature':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "stampaCandidature.php";
+                break;
+            case 'inviaMessaggio':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "inviaMessaggio.php";
+                break;
+            case 'inviaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "inviaCollaborazione.php";
+                break;
+            case 'rifiutaCandidato':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "rifiutaCandidato.php";
+                break;
+            case 'accettaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "accettaCollaborazione.php";
+                break;
+            case 'rifiutaCollaborazione':
+                //StringUtils::checkPermission("all");
+                include_once CONTROL_DIR . "rifiutaCollaborazione.php";
+                break;
+            case 'listaNotifiche':
+                include_once CONTROL_DIR . "listaNotifiche.php";
+                break;
+            case 'pannelloNotifiche':
+                include_once CONTROL_DIR . "pannelloNotifiche.php";
                 break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
