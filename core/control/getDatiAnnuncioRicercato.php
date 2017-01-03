@@ -1,16 +1,20 @@
 <?php
 
 include_once MANAGER_DIR . 'AnnuncioManager.php';
+include_once MANAGER_DIR . 'UtenteManager.php';
 include_once CONTROL_DIR . "ControlUtils.php";
 include_once FILTER_DIR . 'SearchByTitleFilter.php';
 include_once FILTER_DIR . 'SearchByUserIdFilter.php';
 include_once FILTER_DIR . 'SearchByLocationFilter.php';
 include_once FILTER_DIR . 'SearchByTypeFilter.php';
 include_once FILTER_DIR . 'SearchByDateInterval.php';
+include_once FILTER_DIR . 'SearchByMacroFilter.php';
+include_once FILTER_DIR . 'SearchByMicroFilter.php';
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 include_once MODEL_DIR . "/Commento.php";
 
     $managerAnnuncio = new AnnuncioManager();
+    $managerUtente = new UtenteManager();
     $filters = array();
     $commenti = array();
     $arrayCommenti = array();
@@ -33,25 +37,24 @@ include_once MODEL_DIR . "/Commento.php";
         $luogo = null;
     }
 
-    if(isset($_POST['tipologia'])) {
-        if (($_POST['tipologia']) != null) {
+    if(isset($_POST['tipologia']) && ($_POST['tipologia']) != null) {
             $tipologia = $_POST['tipologia'];
             $tipologiaObj = new SearchByTypeFilter($tipologia);
             array_push($filters, $tipologiaObj);
         } else {
             $tipologia = null;
-        }
     }
 
-
-    if (isset($_POST['utente'])) {
-        $idUtente = $_POST["utente"];
-        $utenteObj = new SearchByUserIdFilter($idUtente);
-        array_push($filters, $utenteObj);
+    if (isset($_POST['utente']) && ($_POST['utente']) != null) {
+        $utenteInput = $_POST["utente"];
+        $utente = $managerUtente->findUserOneInput($utenteInput);
+        for ($i = 0; $i < count($utente); $i++) {
+            $utenteObj = new SearchByUserIdFilter($utente[$i]->getId());
+            array_push($filters, $utenteObj);
+        }
     } else {
         $idUtente = null;
     }
-
 
     if (($_POST['data']) != null) {
         $dataPost = $_POST['data'];
@@ -61,11 +64,22 @@ include_once MODEL_DIR . "/Commento.php";
         $data = null;
     }
 
-    if (isset($_POST['macrocategorie'])) {
-        echo $_POST['macrocategorie'];
+    if (isset($_POST['macro'])) {
+        $macro = $_POST['macro'];
+        $macroObj = new SearchByMacroFilter($macro);
+        array_push($filters, $macro);
     } else {
-        echo "unset";
+        $macro = null;
     }
+
+    if (isset($_POST['micro'])) {
+    $micro = $_POST['micro'];
+    $microObj = new SearchByMicroFilter($micro);
+    array_push($filters, $micro);
+} else {
+    $micro = null;
+}
+
 
 
 if(count($filters)==0){
@@ -83,14 +97,13 @@ if(count($filters)==0){
                 for ($i = 0; $i < count($annunci); $i++) {
                     array_push($arrayCommenti, $managerAnnuncio->getCommentsbyId($annunci[$i]->getId()));
                 }
-                $_SESSION['listaCommenti'] = serialize($arrayCommenti);
-                $_SESSION['annunciRicercati'] = serialize($annunci);
-                $_SESSION['provenienza'] = serialize("ricerca");
-                //include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
+                $_SESSION['commenti'] = serialize($arrayCommenti);
+                $_SESSION['annunci'] = serialize($annunci);
+                include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
             } else {
                 $_SESSION['toast-type'] = "error";
                 $_SESSION['toast-message'] = "Nessun annuncio trovato";
-                //include_once VIEW_DIR . "ricercaAnnuncio.php";
+                include_once VIEW_DIR . "ricercaAnnuncio.php";
             }
 
         } catch (ApplicationException $e) {
