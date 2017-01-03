@@ -314,6 +314,7 @@ try {
                 include_once CONTROL_DIR . "getDatiAnnuncioRicercato.php";
                 break;
             case 'modificaAnnuncio';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "modificaAnnuncio.php";
                 break;
             case 'modificaAnnuncioControl';
