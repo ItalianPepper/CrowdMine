@@ -1,6 +1,5 @@
 <?php
 
-
 include_once MODEL_DIR . "Utente.php";
 include_once MODEL_DIR . "Messaggio.php";
 include_once MODEL_DIR . "Candidatura.php";
@@ -89,7 +88,6 @@ $manager_msg = new MessaggioManager();
 $manager_utente = new UtenteManager();
 $annuncio_manager = new AnnuncioManager();
 
-
 if (isset($_GET['idcand'])) {
     if ($_GET["idcand"] == "") {
         $id_get = -2;
@@ -104,8 +102,7 @@ if (isset($_GET['idcand'])) {
 $lista_candidature = $manager_msg->isCandidato($utente_connesso->getId(), $id_destinatario);
 $utente = $manager_utente->findUtenteById($id_destinatario);
 
-        
-        
+
 if ($lista_candidature != null) {
 
     //SE ESISTE UNA CANDIDATURA CREALA: 
@@ -113,6 +110,7 @@ if ($lista_candidature != null) {
         $idcandidatura = $lista_candidature[$indice]->getId();
         $id_annuncio = $lista_candidature[$indice]->getIdAnnuncio();
         $stato = $manager_msg->getStatoCandidatura($idcandidatura);
+        $data = $lista_candidature[$indice]->getDataInviata();
         ?>
         <div class="media social-post">
             <div class="media-left">
@@ -121,7 +119,7 @@ if ($lista_candidature != null) {
             <div class="media-body">
                 <div class="media-heading">
                     <h4 class="title"> <?php echo $utente->getNome() . "    "; ?>  si e' candidato al tuo annuncio <b><?php echo $id_annuncio; ?></h4>
-                    <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato candidatura: ".getCand($stato); ?> </h5>
+                    <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato candidatura: ".getCand($stato)." il ". $data?> </h5>
                 </div>       
                 <div class="media-content" style="font-size: small;  font-weight: 100"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>
 
@@ -154,6 +152,7 @@ if ($lista_candidature != null) {
         $idcandidatura = $lista_candidature[$indice]->getId();
         $id_annuncio = $lista_candidature[$indice]->getIdAnnuncio();
         $stato = $manager_msg->getStatoCandidatura($idcandidatura);
+        $data = $lista_candidature[$indice]->getDataInviata();
         ?>
         <div class="media social-post">
             <div class="media-left">
@@ -162,7 +161,7 @@ if ($lista_candidature != null) {
             <div class="media-body">
                 <div class="media-heading">
                     <h4 class="title">Ti sei candidato all'annuncio di <?php echo $utente->getNome() . "    "; ?> <b><?php echo $id_annuncio; ?></h4>
-                    <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato candidatura: ".getCand($stato); ?></h5>
+                    <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato candidatura: ".getCand($stato)." il ". $data?></h5>
                 </div>       
                 <div class="media-content" style="font-size: small;  font-weight: 100"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>
 

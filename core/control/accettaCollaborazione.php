@@ -14,13 +14,17 @@
     // if ($utente == null)
     //     header("location:./index.php");
     
-    $id_candidatura = $_POST["id"];
+
     
+    $id_candidatura = $_POST["id"];
+    $idDestinatario = $_SESSION['destinatario'];
     ## MANAGER ##
     $manager_msg = new MessaggioManager();
      
     ## RECUPERO IL  DELLA CONVERSAZIONE ###
     $invio_candidatura = $manager_msg->setAccettaCollaborazione($id_candidatura);  //[STUB getUtentebyID]
+    $manager_msg->sendMessaggio(null, "[COLLABORAZIONE ACCETTATA]", '', '', $utente_connesso->getId(), $idDestinatario);
+  
     if($invio_candidatura){
         include_once CONTROL_DIR . "stampaCandidature.php";
     }

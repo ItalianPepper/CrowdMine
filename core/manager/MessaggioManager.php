@@ -28,6 +28,7 @@ class MessaggioManager extends Manager
      * @param Messaggio $messaggio
      */
     public function sendMessaggio($id, $corpo, $data, $letto, $idMittente, $idDestinatario){
+        $data = date("Y/n/d H:i:s");
         $INSERT_MESSAGGIO = "INSERT INTO `Messaggio` (`id`, `corpo`, `data`, `letto`, `id_utente_mittente`, `id_utente_destinatario`, `stato`) VALUES (NULL, '$corpo', '$data', '0', '$idMittente', '$idDestinatario', '');";
         $query = sprintf($INSERT_MESSAGGIO, $id, $corpo, $letto, $data, $idMittente, $idDestinatario);
         if (!Manager::getDB()->query($query)) {
@@ -174,7 +175,8 @@ class MessaggioManager extends Manager
     public function createCandidatura($id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata){
         $richiesta_inviata = 'non_valutata';
         $richiesta_accettata = 'non_valutato';
-        $INSERT_COLLABORAZIONE = "INSERT INTO `candidatura` (`id`, `id_utente`, `id_annuncio`, `corpo`, `data_risposta`, `data_inviata`, `richiesta_inviata`, `richiesta_accettata`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
+        $data = date("Y/n/d H:i:s");
+        $INSERT_COLLABORAZIONE = "INSERT INTO `candidatura` (`id`, `id_utente`, `id_annuncio`, `corpo`, `data_risposta`, `data_inviata`, `richiesta_inviata`, `richiesta_accettata`) VALUES ('%s', '%s', '%s', '%s', '%s', '$data', '%s', '%s');";
         $query = sprintf($INSERT_COLLABORAZIONE, $id, $idMittente, $idAnnuncio, $corpo, $data_risposta, $data_inviata, $richiesta_inviata, $richiesta_accettata);
         if (!Manager::getDB()->query($query)) {
             if (Manager::getDB()->errno == 1062) {
@@ -193,7 +195,8 @@ class MessaggioManager extends Manager
      * @throws ApplicationException
      */
     public function setInviaCollaborazione($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata',  richiesta_accettata='non_valutato' WHERE `id` = $id_candidatura ;";
+        $data = date("Y/n/d H:i:s");
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata',  richiesta_accettata='non_valutato', `data_inviata` = '$data' WHERE `id` = $id_candidatura ;";
         if (!Manager::getDB()->query($SET_CANDIDATURA)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
@@ -211,7 +214,8 @@ class MessaggioManager extends Manager
      * @throws ApplicationException
      */
     public function setRifiutaCandidato($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET  richiesta_inviata = 'non_inviata', richiesta_accettata='non_valutato' WHERE `id` = $id_candidatura ;";
+        $data = date("Y/n/d H:i:s");
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET  richiesta_inviata = 'non_inviata', richiesta_accettata='non_valutato', `data_inviata` = '$data' WHERE `id` = $id_candidatura ;";
         if (!Manager::getDB()->query($SET_CANDIDATURA)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
@@ -229,7 +233,8 @@ class MessaggioManager extends Manager
      * @throws ApplicationException
      */
     public function setAccettaCollaborazione($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata', richiesta_accettata = 'accettato' WHERE `id` = $id_candidatura ;";
+        $data = date("Y/n/d H:i:s");
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata', richiesta_accettata = 'accettato', `data_risposta` = '$data' WHERE `id` = $id_candidatura ;";
         if (!Manager::getDB()->query($SET_CANDIDATURA)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
@@ -246,7 +251,8 @@ class MessaggioManager extends Manager
      * @throws ApplicationException
      */
     public function setRifiutaCollaborazione($id_candidatura){
-        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata', richiesta_accettata = 'rifiutato' WHERE `id` = $id_candidatura ;";
+        $data = date("Y/n/d H:i:s");
+        $SET_CANDIDATURA = "UPDATE `Candidatura` SET richiesta_inviata = 'inviata', richiesta_accettata = 'rifiutato', `data_risposta` = '$data' WHERE `id` = $id_candidatura ;";
         if (!Manager::getDB()->query($SET_CANDIDATURA)) {
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);

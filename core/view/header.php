@@ -14,7 +14,6 @@
         <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR ?>/assets/css/theme/yellow.css">
         
         <style>
-            
             .app-messaging .chat-group ul.group > li.message a .message .content .title:hover {
                 cursor: pointer;
                 font-size: 14px;

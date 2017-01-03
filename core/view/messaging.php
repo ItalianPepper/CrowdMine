@@ -5,35 +5,35 @@ include_once MODEL_DIR . "Utente.php";
 include_once MODEL_DIR . "Messaggio.php";
 include_once MANAGER_DIR . "MessaggioManager.php";
 
+#RECUPERO INFORMAZIONI DALL'UTENTE
 //$utente = $_SESSION['utente'];
 // if ($utente == null)
 //     header("location:./index.php");
-$id_utente_connesso = 2;
+$utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
+   
+
+$id_utente_connesso = $utente_connesso->getId();
 $manager_msg = new MessaggioManager();
-$lista_destinatari = $manager_msg->listaDestinatari(2); //array di utenti
-//
-//$lista_destinatari[0] = new Utente(1, 'Simone', 'Giak', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine");
-//$lista_destinatari[1] = new Utente(2, 'Giancarlo', 'Mannara', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine");
-//$lista_destinatari[2] = new Utente(3, 'Luca', 'PM', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine");
-//$lista_destinatari[3] = new Utente(4, 'Fabiano', 'Pecorelli', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine");
+$lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //array di utenti
 
-if (isset($_GET["idcand"])) {
-    if ($_GET["idcand"] == "") {
-        $id_get = -2;
+
+//RECUPERO L'ID DEL DESTINATARIO
+    if (isset($_GET["idcand"])) {
+        if ($_GET["idcand"] == "") {
+            $id_get = -2;
+        } else
+            $id_get = $_GET["idcand"];
     } else
-        $id_get = $_GET["idcand"];
-} else
-    $id_get = -3;
+        $id_get = -3;
+    $_SESSION['destinatario'] = $id_get;
 
-$_SESSION['destinatario'] = $id_get;
+
 ?>
 
 <!-- MESSAGGI --> 
 <!-- Trigger the modal with a button -->
 
 <div class="app-messaging-container">
-
-
 
     <div class="app-messaging <?php
     if (isset($_GET["idcand"])) {
@@ -75,14 +75,6 @@ $_SESSION['destinatario'] = $id_get;
     </div>
 </div> <!-- messaging container -->
 
-<div id="candidature">
-
-
-</div>
-
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/app.js"></script>
-
 
 </body>
 </html>
@@ -94,8 +86,9 @@ $_SESSION['destinatario'] = $id_get;
     function redirect(event) {
 
         var id = event.target.id;
-        window.location.href = 'http://localhost/CrowdMine/messaging?idcand=' + id;
+        window.location.href = '<?php echo DOMINIO_SITO; ?>/messaging?idcand=' + id;
         //alert("REDIRECT: " + window.location.href);
+    
     }
 
 
@@ -103,15 +96,16 @@ $_SESSION['destinatario'] = $id_get;
     document.addEventListener("DOMContentLoaded", function (event) {
 
         <?php
-        if ($id_get >= 0) { //Il GET CI STA
-            echo 'stampa(null)';
-        } else {
-            echo 'window.location.href = \'http.://localhost/CrowdMine/messaging\'';
-        }
+            if ($id_get >= 0) { //Il GET CI STA
+                echo 'stampa(null)';
+            } else {
+                echo "window.location.href = '".DOMINIO_SITO."/messaging'";
+            }
         ?>
+    
     });
 
-
+    //STAMPA LA CONVERSAZIONE A DESTRA DELLA VIEW
     function stampa(event)
     {
 
@@ -121,10 +115,9 @@ $_SESSION['destinatario'] = $id_get;
             if ((httpRequest.readyState === XMLHttpRequest.DONE) && (httpRequest.status === 200))
             {
                 document.getElementById('ris').innerHTML = httpRequest.responseText;
-            }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);  
+            }
         };
 
-        //var modulo = new FormData(document.getElementById('myForm'));
         var params;
         if (event != null) { //IL GET NON CI STA. 
             var id = event.target.id;
@@ -140,10 +133,9 @@ $_SESSION['destinatario'] = $id_get;
         httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/stampaConversazione"; ?>", true);
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(params);
-
-
     }
-
+    
+    //INVIA UN MESSAGGIO 
     function inviamessaggio(event)
     {
 
@@ -286,7 +278,6 @@ $_SESSION['destinatario'] = $id_get;
 
 
 
-
 <!-- MODAL PER LA GESTIONE CANDIDATURE -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -315,3 +306,6 @@ $_SESSION['destinatario'] = $id_get;
     </div>
 </div>
 
+
+<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/vendor.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/app.js"></script>

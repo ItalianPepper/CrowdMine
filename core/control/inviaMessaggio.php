@@ -8,11 +8,11 @@
     ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
     // session_start();
     // $utente = $_SESSION['utente'];
-    //$_SESSION['lista']= serialize($lista-utenti);
-    $utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
     // if ($utente == null)
     //     header("location:./index.php");
     
+    $utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
+   
     //$id_destinatario = $_POST["id"];
     $id_destinatario = $_SESSION['destinatario'];
     $testo_messaggio = $_POST["testo"];
@@ -45,13 +45,13 @@
 
             echo '<div class="message">' . $lista_messaggio[$indice]->getCorpo() . '</div>';
             echo '<div class="info">';
-            echo '<div class="datetime">11.45pm</div>';
+            echo '<div class="datetime">' . $lista_messaggio[$indice]->getData(). '</div>';
             //echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
             echo '</div>';
             echo '</li>';
         }
 
-       // header('Location: http://localhost/CrowdMine/messaging?id='.$id_utente_destinatario); 
+        // header('Location: http://localhost/CrowdMine/messaging?id='.$id_utente_destinatario); 
         //header( "refresh:5;url={$_SERVER['PHP_SELF']}" ); 
     }  else if($risultato==false){
         echo '<div class="alert alert-danger">'."\n";

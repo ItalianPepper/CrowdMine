@@ -1,30 +1,30 @@
 <?php
-include_once MODEL_DIR . "Utente.php";
-include_once MODEL_DIR . "Messaggio.php";
-include_once MANAGER_DIR . "MessaggioManager.php";
-include_once MANAGER_DIR . "UtenteManager.php";
+    include_once MODEL_DIR . "Utente.php";
+    include_once MODEL_DIR . "Messaggio.php";
+    include_once MANAGER_DIR . "MessaggioManager.php";
+    include_once MANAGER_DIR . "UtenteManager.php";
 
-//include_once("control_Messaggi.php");
-## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
-// session_start();
-// $utente = $_SESSION['utente'];
-//$_SESSION['lista']= serialize($lista-utenti);
-$utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine");
-// if ($utente == null)
-//     header("location:./index.php");
-## MANAGER ##
-$manager_msg = new MessaggioManager();
-$manager_msg_stub = new MessaggioManager();
+    //include_once("control_Messaggi.php");
+    ## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
+    // session_start();
+    // $utente = $_SESSION['utente'];
+    //$_SESSION['lista']= serialize($lista-utenti);
+    $utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine");
+    // if ($utente == null)
+    //     header("location:./index.php");
+    ## MANAGER ##
+    $manager_msg = new MessaggioManager();
+    $manager_msg_stub = new MessaggioManager();
 
-$manager_utente = new UtenteManager();
+    $manager_utente = new UtenteManager();
 
-## RECUPERO IL DESTINATARIO DELLA CONVERSAZIONE ###
-$id_utente_destinatario = $_POST["id"];
-$utente_destinatario = $manager_utente->findUtenteById($id_utente_destinatario);  //[STUB getUtentebyID]
-## RECUPERA LA CONVERSAZIONE CON IL DESTINATARIO ##
-$lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id_utente_destinatario);
+    ## RECUPERO IL DESTINATARIO DELLA CONVERSAZIONE ###
+    $id_utente_destinatario = $_POST["id"];
+    $utente_destinatario = $manager_utente->findUtenteById($id_utente_destinatario);  //[STUB getUtentebyID]
+    ## RECUPERA LA CONVERSAZIONE CON IL DESTINATARIO ##
+    $lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id_utente_destinatario);
 
-$manager_msg->setMessaggiNonLetti($id_utente_destinatario, $utente_connesso->getId());    
+    $manager_msg->setMessaggiNonLetti($id_utente_destinatario, $utente_connesso->getId());    
 ?>    
 
 <!-- INTESTAZIONE DEL MESSAGGIO -->
@@ -66,7 +66,7 @@ $manager_msg->setMessaggiNonLetti($id_utente_destinatario, $utente_connesso->get
 
                 echo '<div class="message">' . $lista_messaggio[$indice]->getCorpo() . '</div>';
                 echo '<div class="info">';
-                echo '<div class="datetime">11.45pm</div>';
+                echo '<div class="datetime">' . $lista_messaggio[$indice]->getData(). '</div>';
                 //echo '<div class="status"><i class="fa fa-check" aria-hidden="true"></i> Read</div>';
                 echo '</div>';
                 echo '</li>';
