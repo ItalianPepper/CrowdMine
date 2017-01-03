@@ -5,7 +5,7 @@
  * Date: 03/01/2017
  * Time: 17.48
  */
-require_once(__DIR__ .  '/../../model/Notifica.php');
+require_once(__DIR__ . '/../../model/Notifica.php');
 
 class NotificaTest extends PHPUnit_Framework_TestCase {
 
