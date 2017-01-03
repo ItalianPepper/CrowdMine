@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -23,7 +24,7 @@
 <body>
 <div class="app app-default">
 
-    <?php include "asidePannelloModeratore.php" ?>
+    <?php include "asidePannelloBackend.php" ?>
 
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">
@@ -192,175 +193,148 @@
                     <div class="card-body app-heading">
                         <div class="app-title">
                             <div class="title"><span
-                                    class="highlight">Macrocategorie</span></div>
+                                        class="highlight">Macrocategorie</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-		
-		<div class="row">
+
+        <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="card">
                     <div class="card-header">
                         Lista Macrocategorie
                     </div>
-					<div class="card-body">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-xs-12">
-								<div class="panel panel-default compact-panel">
-												
-												
-									<div class="panel-body">
-										<div class="col-lg-12 col-md-12 col-xs-12">
-											<div class="row" id="edit-macro">
-												<div class="col-lg-9 col-md-9 col-xs-12 simple-row">
-													<span class="label label-primary">Informatica</span>
-													<a href="#" data-toggle="tooltip" data-placement="top" title="usato 1230 volte">
-														<span class="label label-default"><i class="fa fa-user"></i> 1230</span>
-													</a>
-													<div class="container" style="margin-top:8px">
-														<h5>Autore: <a>Fabiano Pecorelli</a> &nbsp; Data: 23/10/2016</h5>
-													</div>
-												</div>
-												
-												<div class="dropdown corner-dropdown">
-													
-												  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-													<span class="caret"></span>
-												  </button>
-												  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu">
-													<li><a onclick="$('#edit-macro').toggleWith('#edit-macro-input')">Modifica</a></li>
-													<li><a href="#">Rimuovi</a></li>
-												  </ul>
-												</div>
-											</div>
-											<!-- FORM MODIFICA !-->
-											<div class="row">
-												<form class="form form-horizontal" id="edit-macro-input" style="display:none">
-													<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-													
-													</div>
-													<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-														<div class="input-group">
-															<span class="input-group-addon" id="basic-addon1">
-																<i class="fa fa-tag" aria-hidden="true"></i>
-															</span>
-															<input type="text" class="form-control" placeholder="Nuova Macrocategoria" aria-describedby="basic-addon1" value="Informatica">
-														</div>
-														<div class="form-footer">
-																<div class="form-group">
-																	<div class="col-lg-12 col-md-12 col-xs-12">
-																		<button type="submit" class="btn btn-primary pull-right">Save</button>
-																		<button type="button" class="btn btn-default pull-right" onclick="$('#edit-macro-input').toggleWith('#edit-macro')">Cancel</button>
-																	</div>
-																 </div>
-														</div>
-													</div>
-												</form>
-											</div>
-											<div class="row" id="edit-macro1">
-												<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-													<span class="label label-success">Graphic Design</span>
-													<a href="#" data-toggle="tooltip" data-placement="top" title="usato 2300 volte"
-														<span class="label label-default"><i class="fa fa-user"></i> 2300</span>
-													</a>
-													<div class="container" style="margin-top:8px">
-														<h5>Autore: <a>Fabiano Pecorelli</a> &nbsp; Data: 23/10/2016</h5>
-													</div>
-												</div>
-												
-												<div class="dropdown corner-dropdown">
-													
-												  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-													<span class="caret"></span>
-												  </button>
-												  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-													<li><a onclick="$('#edit-macro1').toggleWith('#edit-macro1-input')">Modifica</a></li>
-													<li><a href="#">Rimuovi</a></li>
-												  </ul>
-												</div>
-											</div>
-											<!-- FORM MODIFICA !-->
-											<div class="row">
-												<form class="form form-horizontal" id="edit-macro1-input" style="display:none">
-													<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-													
-													</div>
-													<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-														<div class="input-group">
-															<span class="input-group-addon" id="basic-addon1">
-																<i class="fa fa-tag" aria-hidden="true"></i>
-															</span>
-															<input type="text" class="form-control" placeholder="Nuova Macrocategoria" aria-describedby="basic-addon1" value="Graphic Design">
-														</div>
-														<div class="form-footer">
-																<div class="form-group">
-																	<div class="col-lg-12 col-md-12 col-xs-12">
-																		<button type="submit" class="btn btn-primary pull-right">Save</button>
-																		<button type="button" class="btn btn-default pull-right" onclick="$('#edit-macro1-input').toggleWith('#edit-macro1')">Cancel</button>
-																	</div>
-																 </div>
-														</div>
-													</div>
-												</form>
-											</div>
-											<div class="row" id="add-macro">
-												<div class="col-lg-9 col-md-9 col-xs-12 overlined-row">
-													<a onclick="$('#add-macro').toggleWith('#macro-input')" >
-													<i class="fa fa-plus"></i>
-														Aggiungi macrocategoria
-													</a>
-												</div>
-											</div>
-											<!-- FORM INSERIMENTO !-->
-											<div class="row">
-												<form class="form form-horizontal" id="macro-input" style="display:none">
-													<div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
-													
-													</div>
-													<div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
-														<div class="input-group">
-															<span class="input-group-addon" id="basic-addon1">
-																<i class="fa fa-tag" aria-hidden="true"></i>
-															</span>
-															<input type="text" class="form-control" placeholder="Nuova Categoria" aria-describedby="basic-addon1" value="">
-														</div>
-														<div class="form-footer">
-																<div class="form-group">
-																	<div class="col-lg-12 col-md-12 col-xs-12">
-																		<button type="submit" class="btn btn-primary pull-right">Save</button>
-																		<button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancel</button>
-																	</div>
-																 </div>
-														</div>
-													</div>
-												</form>
-											</div>
-										</div>
-									</div>	
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="panel panel-default compact-panel">
+                                    <div class="panel-body">
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                            <?php
 
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-	
-	<script>
-		/*evidenzio altro nella barra laterale*/
-		$("#categorie").toggleClass("active");
-		$('[data-toggle="tooltip"]').tooltip(); 
-		
-		/*toggle element and toggle self element*/
-		$.fn.toggleWith = function(id) {
-			$(id).toggle('fast');
-			$(this).toggle('fast');
-		};
-	</script>
+                                            $rowType = "simple-row";
+
+                                            for($i=0;$i<count($macros);$i++) {
+                                                    $macro = $macros[$i];
+                                                    if($i==1)   $rowType = "overlined-row";
+                                                ?>
+                                                <div class="row" id="edit-macro<?php echo $macro->getId()?>">
+                                                    <div class="col-lg-9 col-md-9 col-xs-12 <?php echo $rowType ?>">
+                                                        <?php randomColorLabel($macro->getNome().$macro->getId(),$macro->getNome()) ?>
+
+                                                    </div>
+
+                                                    <div class="dropdown corner-dropdown">
+
+                                                        <button class="btn btn-default dropdown-toggle"
+                                                                type="button" id="dropdownMenu"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="true">
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu pull-right"
+                                                            aria-labelledby="dropdownMenu">
+                                                            <li>
+                                                                <a onclick="$('#macro-<?php echo $macro->getId()?>').submit()">Rimuovi</a>
+                                                            </li>
+                                                            <form  id="macro-<?php echo $macro->getId()?>" action="cancellaMacroControl" method="post">
+                                                                <input type="hidden" value="<?php echo $macro->getId()?>" name="id-macro">
+                                                                <input type="hidden" value="<?php echo $macro->getNome()?>" name="nome-macro">
+                                                            </form>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+
+                                            <div class="row" id="add-macro">
+                                                <div class="col-lg-9 col-md-9 col-xs-12 <?php echo $rowType ?>">
+                                                    <a onclick="$('#add-macro').toggleWith('#macro-input')" >
+                                                        <i class="fa fa-plus"></i>
+                                                        Aggiungi macrocategoria
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!-- FORM INSERIMENTO !-->
+                                            <div class="row">
+                                                <form class="form form-horizontal" id="macro-input" style="display:none" action="InserisciNuovaMacroControl" method="post">
+                                                    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs <?php echo $rowType ?>">
+
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-6 col-xs-12 <?php echo $rowType ?>">
+                                                        <div class="input-group">
+															<span class="input-group-addon" id="basic-addon1">
+																<i class="fa fa-tag" aria-hidden="true"></i>
+															</span>
+                                                            <input type="text" class="form-control" placeholder="Nuova Categoria" aria-describedby="basic-addon1" value="" name="nuova-macro-nome">
+                                                        </div>
+                                                        <div class="form-footer">
+                                                            <div class="form-group">
+                                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                                    <button type="button" class="btn btn-default pull-right" onclick="$('#macro-input').toggleWith('#add-macro')">Cancel</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        <div class="pull-left" style="padding:20px 0px">
+                                        <span style="margin-top: 8px;display: block;">
+                                            <?php
+                                            echo $macroPageInfo;
+                                            ?>
+                                        </span>
+                                        </div>
+                                        <div class="pull-right" style="padding:20px 0px">
+                                            <ul class="pagination">
+                                                <?php showPaginationButtons($page,$numPages); ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+
+        <script>
+            /*evidenzio altro nella barra laterale*/
+            $("#categorie").toggleClass("active");
+            $('[data-toggle="tooltip"]').tooltip();
+
+            /*toggle element and toggle self element*/
+            $.fn.toggleWith = function(id) {
+                $(id).toggle('fast');
+                $(this).toggle('fast');
+            };
+        </script>
+
+        <?php
+        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+            ?>
+            <script>
+                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+            </script>
+            <?php
+            unset($_SESSION['toast-type']);
+            unset($_SESSION['toast-message']);
+        }
+        ?>
 
 </body>
 </html>

@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -14,16 +15,19 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
     <style>
-        .navbar-collapse.in
-        {
+        .navbar-collapse.in {
             overflow-y: hidden;
+        }
+
+        .media-action form {
+            display: inline-block;
         }
     </style>
 </head>
 <body>
 <div class="app app-default">
 
-    <?php include "asidePannelloModeratore.php" ?>
+    <?php include "asidePannelloBackend.php" ?>
 
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">
@@ -192,102 +196,212 @@
                     <div class="card-body app-heading">
                         <div class="app-title">
                             <div class="title"><span
-                                    class="highlight">Utenti Segnalati</span></div>
+                                        class="highlight">Utenti Segnalati</span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <?php if ($user->getRuolo() == RuoloUtente::AMMINISTRATORE){?>
+            <div class="row" >
+                <div class="col-lg-12 col-md-12 col-xs-12" >
+                    <div class="card" >
+                        <div class="card-header" >
+                            In evidenza
+                        </div >
+                        <div class="card-body" >
+                            <div class="row" >
+                                <div class="col-lg-12 col-md-12 col-xs-12" >
+                                    <div class="media social-post" >
+                                        <div class="section" >
+                                            <?php
+                                            for ($i = 0; $i < count($usersAdmin); $i++) {
+                                                $utente = $usersAdmin[$i];
+                                                ?>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12 <?php echo ($i == 0) ? '' : 'overlined-row' ?>">
+                                                        <div class="media social-post">
+                                                            <div class="media-left">
+                                                                <a href="<?php echo DOMINIO_SITO . '/ProfiloUtente/' . $utente->getId() ?>">
+                                                                    <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                                                </a>
+                                                            </div>
+                                                            <div class="section">
+                                                                <div class="section-body">
+                                                                    <div class="media-body">
+                                                                        <div class="pull-left">
+                                                                            <div class="media-heading">
+                                                                                <h4 class="title"><?php echo $utente->getNome() . " " . $utente->getCognome() ?></h4>
+                                                                                <div class="description"><?php echo $utente->getDescrizione() ?></div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-lg-12 col-md-12 col-xs-12 pull-left"
+                                                                             style="padding:0px">
+                                                                            <div class="media-action">
+                                                                                <button class="btn btn-link" type="button"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#myModal"
+                                                                                        onclick="setModalForm(<?php echo "'" . DOMINIO_SITO . "/banUtente','" . $utente->getId() . "'"; ?>,'Sicuro di voler bannare l\'utente?')">
+                                                                                    <i class="fa fa-check"></i> Conferma ban
+                                                                                </button>
+                                                                                <form action="SegnalazioneUtenteControl"
+                                                                                      method="post">
+                                                                                    <button class="btn btn-link"
+                                                                                            name="idUtenteElimina"
+                                                                                            type="submit"
+                                                                                            value="<?php echo $utente->getId() ?>">
+                                                                                        <i class="fa fa-close"></i> Elimina
+                                                                                    </button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php }?>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="card">
                     <div class="card-header">
                         Lista Utenti Segnalati
                     </div>
-					<div class="card-body">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-xs-12">
-								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
-									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="pull-left">
-														<div class="media-heading">
-															<h4 class="title">Scott White</h4>
-															<h5 class="timeing"> Segnalato dal 12/10/2012</h5>
-														</div>
-												</div>
-												<div class="pull-right" style="margin-top: 1px">
-													<a href="#" data-toggle="tooltip" data-placement="left" title="10 Segnalazioni">
-														<span class="label label-warning"><i class="fa fa-exclamation-triangle"></i> 10 </span>
-													</a>
-												</div>
-												
-												<div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
-													<div class="media-action">
-														<button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-														<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-														<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="overlined-row">
-								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
-									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="pull-left">
-													<div class="media-heading">
-														<h4 class="title">Paolo de Filippo</h4>
-														<h5 class="timeing"> Segnalato dal 12/10/2012</h5>
-													</div>
-												</div>
-												<div class="pull-right" style="margin-top: 1px">
-													<a href="#" data-toggle="tooltip" data-placement="left" title="120 Segnalazioni">
-														<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> 120 </span>
-													</a>
-												</div>
-												<div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
-													<div class="media-action">
-														<button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-														<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-														<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </div>
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                            <div class="media social-post">
+                                <div class="section">
+                                    <?php
+                                    for ($i = 0; $i < count($usersReported); $i++) {
+                                        $utente = $usersReported[$i];
+                                        ?>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-xs-12 <?php echo ($i == 0) ? '' : 'overlined-row' ?>">
+                                                <div class="media social-post">
+                                                    <div class="media-left">
+                                                        <a href="<?php echo DOMINIO_SITO . '/ProfiloUtente/' . $utente->getId() ?>">
+                                                            <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="section">
+                                                        <div class="section-body">
+                                                            <div class="media-body">
+                                                                <div class="pull-left">
+                                                                    <div class="media-heading">
+                                                                        <h4 class="title"><?php echo $utente->getNome() . " " . $utente->getCognome() ?></h4>
+                                                                        <div class="description"><?php echo $utente->getDescrizione() ?></div>
+                                                                    </div>
+                                                                </div>
 
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-	<script>
-		/*evidenzio segnalazioni nella barra laterale*/
-		$("#segnalazioni").toggleClass("active");
-		$('[data-toggle="tooltip"]').tooltip(); 
-	</script>
+                                                                <div class="col-lg-12 col-md-12 col-xs-12 pull-left" style="padding:0px">
+                                                                    <div class="media-action">
+                                                                        <button class="btn btn-link" type="button"
+                                                                                data-toggle="modal" data-target="#myModal"
+                                                                                onclick="setModalForm(<?php echo "'" . DOMINIO_SITO . "/banUtente','" . $utente->getId() . "'"; ?>,'Sicuro di voler bannare l\'utente?')">
+                                                                            <i class="fa fa-check"></i> Conferma ban
+                                                                        </button>
+                                                                        <form action="SegnalazioneUtenteControl" method="post">
+                                                                            <button class="btn btn-link"
+                                                                                    name="idUtenteElimina" type="submit"
+                                                                                    value="<?php echo $utente->getId() ?>">
+                                                                                <i class="fa fa-close"></i> Elimina
+                                                                            </button>
+                                                                        </form>
+                                                                        <form action="SegnalazioneUtenteControl"
+                                                                              method="post">
+                                                                            <button class="btn btn-link"
+                                                                                    name="idUtenteAdmin" type="submit"
+                                                                                    value="<?php echo $utente->getId() ?>">
+                                                                                <i class="fa fa-check-circle"></i> invia
+                                                                                all'amministratore
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                     }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Conferma Ban</h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <form action="" method="post">
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                                <input type="hidden" id="idUser" name="idUser">
+                                <input type="hidden" name="referer"
+                                       value="<?php echo DOMINIO_SITO . '/UtentiSegnalati'; ?>">
+                                <button type="submit" class="btn btn-sm btn-danger">Ban Utente</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+
+        <script>
+            /*evidenzio segnalazioni nella barra laterale*/
+            $("#segnalazioni").toggleClass("active");
+            $('[data-toggle="tooltip"]').tooltip();
+
+            function setModalForm(action, userid, text) {
+                $("#myModal form").attr("action", action);
+                $("#idUser").attr("value", userid);
+                $(".modal-body").html("<p>" + text + "</p>")
+            }
+
+        </script>
+
+        <?php
+        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
+            ?>
+            <script>
+                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+            </script>
+            <?php
+            unset($_SESSION['toast-type']);
+            unset($_SESSION['toast-message']);
+        }
+        ?>
+    </div>
+</div>
 </body>
 </html>

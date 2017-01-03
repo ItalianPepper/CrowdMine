@@ -14,11 +14,11 @@ class MicroCategoria
 
     /**
      * MicroCategoria constructor.
-     * @param $id
-     * @param $nome
      * @param $idMacrocategoria
+     * @param $nome
+     * @param $id
      */
-    public function __construct($id = null, $idMacrocategoria, $nome)
+    public function __construct($idMacrocategoria, $nome, $id = null)
     {
         $this->id = $id;
         $this->nome = $nome;
@@ -57,4 +57,11 @@ class MicroCategoria
         $this->nome = $nome;
     }
 
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 }
