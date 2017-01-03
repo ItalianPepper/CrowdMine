@@ -17,74 +17,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-
-        $(document).ready(function(){
-            <?php
-                for ($i = 0; $i < count($annunci); $i++) {
-                    echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
-                }
-            ?>
-        });
-
-        function annuncioButtons(id){
-            $(".btn.btn-link"+id).click(function(){;
-                $(".row.col-md-12.col-sm-12.card.contenitore"+id).toggle(250);
-                $(".row.col-md-12.col-sm-12.card.candidature"+id).hide(250);
-            });
-
-            $(".btn.btn-warning"+id).click(function(){
-                $(".row.col-md-12.col-sm-12.card.candidature"+id).toggle(250);
-                $(".row.col-md-12.col-sm-12.card.contenitore"+id).hide(250);
-            });
-        }
-
-        function caricaMicro(){
-            var stringa = "micro";
-            var index = $("#macro").val();
-            $.post("asyncMicroListByMacro",
-                {nome:stringa,idMacro:index},
-                function (data){
-                    var sel = $("#micro").html(data);
-                });
-        }
-        function ricercaUtente(stringa){
-            $.post("asyncRicercaUtente",
-                {nome: stringa},
-                function (data) {
-                    var valore = $('.select2-search__field').val();
-                    $("#user-search").html(data);
-                    if($("#user-search").select2) {
-                        $("#user-search").select2("destroy");
-                        $("#user-search").select2();
-                        $("#user-search").select2("open");
-
-                        search_select();
-                        $('.select2-search__field').val(valore);
-                    }
-                });
-        }
-
-        $(document).on('focus', '.select2', function() {
-            search_select();
-        });
-
-        function search_select() {
-            $('.select2-search__field').on("keydown", function (e) {
-                setTimeout(function(){
-
-                    var stringa = $('.select2-search__field').val();
-                    ricercaUtente(stringa);
-                },10); //very important, let pass some time to get the true value
-            })
-        }
-
-        ricercaUtente("");
-
-    </script>
-
 </head>
 
 <body>
@@ -1650,7 +1582,8 @@
                                                         </h4>
                                                         <h5 class="timeing"><?php
                                                             echo $listaCommenti[$aId][$z]->getData();
-                                                            ?></h5>
+                                                            ?>
+                                                        </h5>
                                                     </div>
                                                     <div class="col-md-5 col-sm-5 options"
                                                          style="float: right; margin-top: -8%; margin-right: -23%">
@@ -1695,7 +1628,7 @@
                                                             <form method="POST" action="paginaAlfredo">
                                                                 <input name="idAnnuncio" style="display: none" value="<?php echo $aId; ?>">
                                                                 <input name="idUtenteCandidato" style="display: none" value="<?php echo $listaCandidature[$aId][$z]->getIdUtente(); ?>">
-                                                                <input name="idUtenteProprietario" style="display: none" value="<?php echo $idUtente; ?>">
+                                                                <input name="idUtenteProprietario" style="display: none" value="<?php echo $user->getId(); ?>">
                                                                 <button type="submit" style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
                                                                     <i class="fa fa-mail-reply-all"></i>
                                                                 </button>
@@ -1777,6 +1710,73 @@
         $(id).toggle('fast');
         $(this).toggle('fast');
     };
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        <?php
+        for ($i = 0; $i < count($annunci); $i++) {
+            echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+        }
+        ?>
+    });
+
+    function annuncioButtons(id){
+        $(".btn.btn-link"+id).click(function(){;
+            $(".row.col-md-12.col-sm-12.card.contenitore"+id).toggle(250);
+            $(".row.col-md-12.col-sm-12.card.candidature"+id).hide(250);
+        });
+
+        $(".btn.btn-warning"+id).click(function(){
+            $(".row.col-md-12.col-sm-12.card.candidature"+id).toggle(250);
+            $(".row.col-md-12.col-sm-12.card.contenitore"+id).hide(250);
+        });
+    }
+
+    function caricaMicro(){
+        var stringa = "micro";
+        var index = $("#macro").val();
+        $.post("asyncMicroListByMacro",
+            {nome:stringa,idMacro:index},
+            function (data){
+                var sel = $("#micro").html(data);
+            });
+    }
+    function ricercaUtente(stringa){
+        $.post("asyncRicercaUtente",
+            {nome: stringa},
+            function (data) {
+                var valore = $('.select2-search__field').val();
+                $("#user-search").html(data);
+                if($("#user-search").select2) {
+                    $("#user-search").select2("destroy");
+                    $("#user-search").select2();
+                    $("#user-search").select2("open");
+
+                    search_select();
+                    $('.select2-search__field').val(valore);
+                }
+            });
+    }
+
+    $(document).on('focus', '.select2', function() {
+        search_select();
+    });
+
+    function search_select() {
+        $('.select2-search__field').on("keydown", function (e) {
+            setTimeout(function(){
+
+                var stringa = $('.select2-search__field').val();
+                ricercaUtente(stringa);
+            },10); //very important, let pass some time to get the true value
+        })
+    }
+
+    ricercaUtente("");
+
 </script>
 
 <?php
