@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: giorgio
@@ -11,20 +10,18 @@ class MicroCategoria
     private $id;
     private $idMacrocategoria;
     private $nome;
-
     /**
      * MicroCategoria constructor.
-     * @param $id
-     * @param $nome
      * @param $idMacrocategoria
+     * @param $nome
+     * @param $id
      */
-    public function __construct($id = null, $idMacrocategoria, $nome)
+    public function __construct($id, $nome, $idMacrocategoria = null)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->idMacrocategoria = $idMacrocategoria;
     }
-
     /**
      * @return mixed
      */
@@ -32,7 +29,6 @@ class MicroCategoria
     {
         return $this->id;
     }
-
     /**
      * @return mixed
      */
@@ -40,7 +36,6 @@ class MicroCategoria
     {
         return $this->nome;
     }
-
     /**
      * @return mixed
      */
@@ -48,7 +43,6 @@ class MicroCategoria
     {
         return $this->idMacrocategoria;
     }
-
     /**
      * @param mixed $nome
      */
@@ -56,5 +50,11 @@ class MicroCategoria
     {
         $this->nome = $nome;
     }
-
+    /**
+     * @param mixed $id
+     */
+    public function setIdMacrocategoria($id)
+    {
+        $this->idMacrocategoria = $id;
+    }
 }
