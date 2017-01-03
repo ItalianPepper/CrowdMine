@@ -191,20 +191,20 @@ include_once VIEW_DIR . 'header.php';
 
 
                                 <div class="form-group">
-                                    <input id="form_name" type="text" name="name" class="form-control"
+                                    <input id="form_name" type="text" name="titolo-annuncio" class="form-control"
                                            placeholder="Titolo" required="required"
                                     >
 
                                 </div>
 
                                 <div class="form-group">
-                                    <input id="form_lastname" type="number" name="surname" class="form-control"
+                                    <input id="form_lastname" type="number" name="retribuzione-euro" class="form-control"
                                            placeholder="Inserisci retribuzione in euro" required="required"
                                            data-error="Lastname is required.">
                                 </div>
 
                                 <div class="form-group">
-                                    <input id="form_name" type="text" name="name" class="form-control"
+                                    <input id="form_name" type="text" name="luogo-annuncio" class="form-control"
                                            placeholder="Luogo" required="required"
                                     >
 
@@ -234,7 +234,7 @@ include_once VIEW_DIR . 'header.php';
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                                    <textarea id="form_message" name="message" class="form-control"
+                                                    <textarea id="form_message" name="descrizione" class="form-control"
                                                               placeholder="Inserisci descrizione" rows="4"
                                                               required="required"
                                                               data-error="Please,leave us a message."></textarea>
@@ -242,19 +242,20 @@ include_once VIEW_DIR . 'header.php';
                                 </div>
                                 <div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="radio2" id="radio5" value="option1">
+                                        <input type="radio" name="radio2" id="radio5" value="Domanda">
                                         <label for="radio5">
                                             Domanda
                                         </label>
                                     </div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="radio2" id="radio6" value="option2" checked="">
+                                        <input type="radio" name="radio2" id="radio6" value="Offerta" checked="">
                                         <label for="radio6">
                                             Offerta
                                         </label>
                                     </div>
                                 </div>
-                                <input type="hidden" name="listaDiMicro" value="" id="listaMicroJson">
+                                <input type="hidden" name="lista-Micro" value="" id="listaMicroJson">
+                                <button type="submit" class="btn btn-primary btn-md">Inserisci Annuncio</button>
                             </div>
 
                             <div class="col-lg-12 col-md-12 col-xs-12" id="micro-destination">

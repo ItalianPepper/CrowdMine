@@ -307,6 +307,7 @@ try {
                 include_once CONTROL_DIR . "inserisciAnnuncio.php";
                 break;
             case 'inserisciAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "getDatiAnnuncio.php";
                 break;
             case 'ricercaAnnuncioControl';
