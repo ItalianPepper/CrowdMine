@@ -1554,9 +1554,9 @@
 
                                         <div class="media-comment" style="">
                                             <button class="btn btn-link<?php echo $annunci[$i]->getId();?>">
-                                                <i class="fa fa-comments-o"></i> <?php echo count($listaCommenti[$aId])?> commenti
+                                                <i class="fa fa-comments-o"></i> <?php echo isset($listaCommenti[$aId])?count($listaCommenti[$aId]):0?> commenti
                                             </button>
-                                            <button type="button" class="btn btn-warning<?php echo $annunci[$i]->getId();?>"><?php echo count($listaCandidature[$aId])?> candidature</button>
+                                            <button type="button" class="btn btn-warning<?php echo $annunci[$i]->getId();?>"><?php echo isset($listaCandidature[$aId])?count($listaCandidature[$aId]):0?> candidature</button>
                                         </div>
 
 
@@ -1721,6 +1721,17 @@
             echo "annuncioButtons(" . $annunci[$i]->getId().");";
         }
         ?>
+
+        /*redirect to hash*/
+        hashes=location.hash.split("#");
+        if(hashes[1]) {
+            $('.nav-tabs a[href="#' + hashes[1] + '"]').tab('show');
+        }
+        if(hashes[2]){
+            $('html, body').animate({
+                scrollTop: $("#"+hashes[2]+"").offset().top
+            }, 2000);
+        }
     });
 
     function annuncioButtons(id){

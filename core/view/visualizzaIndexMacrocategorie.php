@@ -296,7 +296,7 @@
                                         </div>
                                         <div class="pull-right" style="padding:20px 0px">
                                             <ul class="pagination">
-                                                <?php showPaginationButtons($page,$numPages); ?>
+                                                <?php showPaginationButtons(DOMINIO_SITO."/IndexMacrocategorie/",$page,$numPages); ?>
                                             </ul>
                                         </div>
                                     </div>
