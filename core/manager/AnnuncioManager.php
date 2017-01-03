@@ -10,6 +10,7 @@
 include_once MODEL_DIR . 'Annuncio.php';
 include_once MODEL_DIR . 'Candidatura.php';
 include_once MODEL_DIR . 'Utente.php';
+include_once MODEL_DIR . 'MicroCategoria.php';
 include_once MANAGER_DIR . 'Manager.php';
 
 include_once FILTER_DIR . "FilterUtils.php";
@@ -322,7 +323,7 @@ class AnnuncioManager
         $micros = array();
         if ($res) {
             while ($obj = $res->fetch_assoc()) {
-                $micro = new Microcategoria($obj['id_macrocategoria'], $obj['nome'], $obj['id']);
+                $micro = new MicroCategoria($obj['id_macrocategoria'], $obj['nome'], $obj['id']);
                 $micros[$micro->getId()] = $micro;
             }
         }

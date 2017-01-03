@@ -328,6 +328,7 @@ try {
                 include_once CONTROL_DIR . "ricercaAnnuncio.php";
                 break;
             case 'annunciPreferiti';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "visualizzaPreferiti.php";
                 break;
             case 'rimuoviPreferitiControl';

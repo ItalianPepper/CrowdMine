@@ -1,30 +1,5 @@
 
-<?php
-
-$annunci = null;
-$commenti = null;
-
-if(isset($_SESSION['user'])) {
-    $user = unserialize($_SESSION['user']);
-}
-
-if (isset($_SESSION['annunci'])) {
-    $annunci = unserialize($_SESSION['annunci']);
-    unset($_SESSION['annunci']);
-    if (isset($_SESSION['commenti'])) {
-        $commenti = unserialize($_SESSION['commenti']);
-        unset($_SESSION['commenti']);
-        echo "its'ok";
-    }
-} else {
-    echo "no";
-}
-
-include_once VIEW_DIR . 'headerStart.php';
-?>
-
-
-
+<?php include_once VIEW_DIR . 'header.php';?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
@@ -217,15 +192,10 @@ include_once VIEW_DIR . 'headerStart.php';
     </script>
 
     <div class="col-md-12 col-sm-12 col-xs-12 app-container">
-
-
-
-
         <?php
         for ($i = 0; $i < count($annunci); $i++) {
-
+        $aId = $annunci[$i]->getId();
         ?>
-
         <div class="col-md-10 col-sm-10" style="margin-top: 5%">
 
             <div class="card">
@@ -241,18 +211,22 @@ include_once VIEW_DIR . 'headerStart.php';
                         </div>
 
                         <div style="float: left; margin-left: 5%;">
-                            <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">JetBrains</h1>
+                            <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">
+                                <?php
+                                $u = $listaUtenti[$annunci[$i]->getIdUtente()];
+                                echo $u->getNome() . " " . $u->getCognome() ?>
+                            </h1>
                             <h1><?php echo $annunci[$i]->getTitolo();?></h1>
 
                         </div>
 
                     </div>
 
-                    <a href="segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
+                    <a href="<?php echo DOMINIO_SITO; ?>/segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
                         <i class="fa fa-legal" aria-hidden="true" style="font-size: 200%"></i>
                     </a>
 
-                    <a href="aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
+                    <a href="<?php echo DOMINIO_SITO; ?>/aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
                         <i class="fa fa-star" aria-hidden="true" style="font-size: 200%"></i>
                     </a>
 
@@ -265,122 +239,107 @@ include_once VIEW_DIR . 'headerStart.php';
                     <br>
 
                     <div style="margin-top: 3%">
-                        <span class="label label-primary">Informatica</span>
-                        <span class="label label-primary">Informatica</span>
+                        <?php
+                        if(isset($AnnunciMicroRef[$aId]))
+                            for($z=0;$z<count($AnnunciMicroRef[$aId]); $z++){
+                                $micro = $listaMicro[$AnnunciMicroRef[$aId][$z]];
+                                echo randomColorLabel($micro->getNome(), $micro->getNome());
+                            }
+                        ?>
                     </div>
                 </div>
 
                 <div class="media-comment" style="">
                     <button class="btn btn-link <?php echo $annunci[$i]->getId();?>">
-                        <i class="fa fa-comments-o"></i><?php echo count($commenti[$i]) ?>Comments
+                        <i class="fa fa-comments-o"></i><?php echo isset($listaCommenti[$aId])?count($listaCommenti[$aId]):0 ?>Comments
                     </button>
                     <button class="btn btn-default <?php echo $annunci[$i]->getId();?>">info</button>
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $annunci[$i]->getId();?>">Candidati</button>
                 </div>
 
-                <div class="modal fade" id="myModal<?php echo $annunci[$i]->getId();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Candidati</h4>
-                            </div>
-                            <form action="aggiungiCandidaturaControl" method="post">
-                                <div class="modal-body">
-                                    Inserisci Descrizione
-                                    <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.. <?php echo $annunci[$i]->getId();?>"></textarea>
-                                    <input type="text" value="<?php echo $annunci[$i]->getId();?>" name="idAnnuncio" hidden>
+
+                <div class="row col-md-12 col-sm-12 card contenitore <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
+                    <?php
+                    if(isset($listaCommenti[$aId]))
+                        for($z=0;$z<count($listaCommenti[$aId]); $z++){
+
+                            ?>
+                            <div class="comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                                <div class="media-heading">
+                                    <h4 class="title">
+                                        <?php
+                                        $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
+                                        echo $u->getNome()." ".$u->getCognome()
+                                        ?>
+                                    </h4>
+                                    <h5 class="timeing"><?php
+                                        echo $listaCommenti[$aId][$z]->getData();
+                                        ?>
+                                    </h5>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                    <button type="submit" class="btn btn-sm btn-success">Candidati</button>
-                            </form>
-                        </div>
+                                <div class="col-md-5 col-sm-5 options"
+                                     style="float: right; margin-top: -8%; margin-right: -23%">
+                                    <a href="<?php echo DOMINIO_SITO;?>/segnalaCommento?id=<?php echo $listaCommenti[$aId][$z]->getId(); ?>">
+                                        <button
+                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="media-content">
+                                    <?php
+                                    echo $listaCommenti[$aId][$z]->getCorpo();
+                                    ?>
+                                </div>
+
+                            </div>
+                            </div>
+
+
+                            <?php
+
+                        }
+
+                    ?>
+
+                    <div class="col-md-12 form-commento">
+                        <form action="<?php echo DOMINIO_SITO;?>/commentaAnnuncioControl" method="post">
+                            <div class="col-md-10 input-comment">
+                                <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
+                                       name="commento">
+                                <input type="hidden" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
+                            </div>
+                            <div class="col-md-2 btn-comment">
+                                <button type="submit" class="btn btn-info">Commenta</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
 
-
-
-
-            <div class="row col-md-12 col-sm-12 card contenitore <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
-                <?php
-                for ($j = 0; $j < count($commenti[$i]); $j++) {
-                    if ($annunci[$i]->getId() == $commenti[$i][$j]->getIdAnnuncio()) {
-                        ?>
-
-                        <div class="comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
-                            <div class="media-heading">
-                                <h4 class="title">Scott White</h4>
-                                <h5 class="timeing"><?php
-                                    echo $commenti[$i][$j]->getData();
-                                    ?></h5>
-                            </div>
-                            <div class="col-md-5 col-sm-5 options"
-                                 style="float: right; margin-top: -8%; margin-right: -23%">
-                                <a href="segnalaCommento?id=<?php echo $commenti[$i][$j]->getId(); ?>">
-                                    <button
-                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                </a>
-                            </div>
-                            <div class="media-content">
-                                <?php
-                                echo $commenti[$i][$j]->getCorpo();
-                                ?>
-                            </div>
-
-                        </div>
-
-
-                        <?php
-                    }
-                }
-
-                ?>
-
-                <div class="col-md-12 form-commento">
-                    <form action="commentaAnnuncioControl" method="post">
-                        <div class="col-md-10 input-comment">
-                            <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
-                                   name="commento">
-                            <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
-                        </div>
-                        <div class="col-md-2 btn-comment">
-                            <button type="submit" class="btn btn-info">Commenta</button>
-                        </div>
-                    </form>
+                <div class="row col-md-12 col-sm-12 card info <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
+                    <h5>
+                        <i class="fa fa-location-arrow"></i>
+                        <?php echo $annunci[$i]->getLuogo();?></h5>
+                    <h5>
+                        <i class="fa fa-money"></i>
+                        <?php echo $annunci[$i]->getRetribuzione();?></h5>
+                    <h5>
+                        <i class="fa fa-clock-o"></i>
+                        <?php echo $annunci[$i]->getData();?></h5>
+                    <h5>
+                        <i class="fa fa-briefcase"></i>
+                        <?php echo $annunci[$i]->getTipologia();?></h5>
                 </div>
 
             </div>
+            <?php
+        }
 
-            <div class="row col-md-12 col-sm-12 card info <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
-                <h5>
-                    <i class="fa fa-location-arrow"></i>
-                    <?php echo $annunci[$i]->getLuogo();?></h5>
-                <h5>
-                    <i class="fa fa-money"></i>
-                    <?php echo $annunci[$i]->getRetribuzione();?></h5>
-                <h5>
-                    <i class="fa fa-clock-o"></i>
-                    <?php echo $annunci[$i]->getData();?></h5>
-                <h5>
-                    <i class="fa fa-briefcase"></i>
-                    <?php echo $annunci[$i]->getTipologia();?></h5>
-            </div>
-
-
+        ?>
         </div>
 
-    </div>
-
-
-
-    <?php
-    }
-
-    ?>
+</div>
+</div>
 
 
 
@@ -417,8 +376,15 @@ include_once VIEW_DIR . 'headerStart.php';
             return true;
         }
     </script>
-    <script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+
     <script>
+        $(document).ready(function(){
+            <?php
+            for ($i = 0; $i < count($annunci); $i++) {
+                echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+            }
+            ?>
+        });
         $(document).ready(function() {
             var showChar = 100;
             var ellipsestext = "...";
