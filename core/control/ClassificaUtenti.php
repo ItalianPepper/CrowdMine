@@ -15,21 +15,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         if ($_POST["option"] == "selectMacro") {
-            //$macroCategoriaManager = new AnnuncioManager();
+            $macroCategoriaManager = new MacroCategoriaManager();
 
-            // $result = $macroCategoriaManager->getListMacroCategorie();
+            $result = $macroCategoriaManager->findAll();
 
-            $result = stubMacroCategorie();
+            //$result = stubMacroCategorie();
 
             header("Content-Type: application/json");
             echo json_encode($result);
 
         } else if ($_POST["option"] == "selectMicro") {
-            //$macroCategoriaManager = new AnnuncioManager();
+            $microCategoriaManager = new MicrocategoriaManager();
 
-            // $result = $macroCategoriaManager->getListMacroCategorie();
+            $result = $microCategoriaManager->findAll();
 
-            $result = stubMicroCategorie();
+            //$result = stubMicroCategorie();
 
             header("Content-Type: application/json");
             echo json_encode($result);
@@ -37,13 +37,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }else if(isset($_POST["macro"])&&isset($_POST["micro"])){
 
-        $result = stubUtentiMicroCategorie();
+        $microCategoriaManager = new MicrocategoriaManager();
+
+        $result = $microCategoriaManager->findAll();
+
         header("Content-Type: application/json");
         echo json_encode($result);
 
     }else if(isset($_POST["macro"])){
 
-        $result = stubUtentiMacroCategorie();
+        $macroCategoriaManager = new MacroCategoriaManager();
+
+        $result = $macroCategoriaManager->findAll();
+
         header("Content-Type: application/json");
         echo json_encode($result);
     }
