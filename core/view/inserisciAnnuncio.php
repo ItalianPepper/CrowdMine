@@ -27,15 +27,15 @@ include_once VIEW_DIR . 'header.php';
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
     <style>
-        .form-control{
-            color:#817b7b;
+        .form-control {
+            color: #817b7b;
         }
     </style>
     <script type="text/javascript">
 
         var microCountArray = 0;
-        var microListObjectArray =[];
-        var microListObject = function (nomeMacro,nomeMicro,idMicro) {
+        var microListObjectArray = [];
+        var microListObject = function (nomeMacro, nomeMicro, idMicro) {
             this.nomeMacro = nomeMacro;
             this.nomeMicro = nomeMicro;
             this.idMicro = idMicro;
@@ -46,11 +46,11 @@ include_once VIEW_DIR . 'header.php';
 
             $.ajax(
                 {
-                    url:"getMacrosForInsertAnnuncio",
+                    url: "getMacrosForInsertAnnuncio",
                     type: "POST",
                     dataType: "JSON",
                     async: true,
-                    success:function (data) {
+                    success: function (data) {
 
                         $("#macro").empty();
                         $("#macro").append("<option value='' disabled selected>Seleziona la MacroCategoria</option>");
@@ -61,19 +61,22 @@ include_once VIEW_DIR . 'header.php';
                                 macro.nome = data[i].macroName;
 
 
-                                $("#macro").append("<option value='"+macro.id+"'>"+macro.nome+"</option>");
+                                $("#macro").append("<option value='" + macro.id + "'>" + macro.nome + "</option>");
 
                             }
                         }
-                        else
-                        {
+                        else {
                             $("#macro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
                         }
                     }
                 }
             )
         });
-
+        function checkIfIsSelectedMicro() {
+            if ($("#micro").find('option:selected').text() !== "Seleziona la microcategoria") {
+                $("#insert-micro-button").prop("disabled", false);
+            }
+        }
         function caricaMicro() {
             var idMacro = $("#macro").val();
             $("#micro").prop("disabled", false);
@@ -85,7 +88,7 @@ include_once VIEW_DIR . 'header.php';
                     dataType: "JSON",
                     async: true,
                     success: function (data) {
-                        $("#insert-micro-button").prop("disabled", false);
+
                         $("#micro").empty();
                         $("#micro").append("<option value='' disabled selected>Seleziona la microcategoria</option>");
                         if (data.length > 0) {
@@ -98,9 +101,14 @@ include_once VIEW_DIR . 'header.php';
                                 $("#micro").append("<option value='" + micro.id + "'>" + micro.nome + "</option>");
 
                             }
+
+                            if ($("#micro").find('option:selected').text() == "Seleziona la microcategoria") {
+                                $("#insert-micro-button").prop("disabled", true);
+                            }
                         }
                         else {
                             $("#micro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
+                            $("#insert-micro-button").prop("disabled", true);
                         }
                     },
                     error: function () {
@@ -110,28 +118,55 @@ include_once VIEW_DIR . 'header.php';
                 }
             )
         }
+        function deleteMicro(idMicro) {
+
+            for (var i = 0; i < microListObjectArray.length; i++) {
+                if (microListObjectArray[i].idMicro == idMicro) {
+                    microListObjectArray.splice(i, 1);
+                    $("#" + idMicro + "-micro").fadeOut();
+                    microCountArray--;
+                }
+            }
+            $("#listaMicroJson").val(JSON.stringify(microListObjectArray));
+            console.log(microListObjectArray);
+        }
 
         function insertMicro() {
 
             var nomeMacro = $("#macro").find('option:selected').text();
             var nomeMicro = $("#micro").find('option:selected').text();
             var idMicro = $("#micro").val();
-            var obj = new microListObject(nomeMacro,nomeMicro,idMicro);
-            microListObjectArray[microCountArray] = obj;
-            var label = <?php randomColorLabel(obj.nomeMacro, $micro->getMicroCategoria()->getNome()) ?>;
-            microCountArray++;
-            var html = '<div class="row" id='+obj.idMicro+'>'+
-                '                                    <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">'+label+
-                '                                    </div>'+
-                '                                    <div class="dropdown corner-dropdown">'+
-                '                                        <button class="btn btn-link"><i class="fa fa-close" onclick="'+deletemicro(obj.idMicro)+'"></i> Elimina</button>'+
-                '                                    </div>'+
-                '                                </div>';
+            var obj = new microListObject(nomeMacro, nomeMicro, idMicro);
+            var duplicate = false;
+            for (var i = 0; i < microListObjectArray.length; i++) {
+                if (microListObjectArray[i].idMicro == idMicro) {
+                    toastr.error("Microcategoria gia inserita");
+                    duplicate = true;
+                    break;
+                }
+            }
+            if (!duplicate) {
+                microListObjectArray[microCountArray] = obj;
+                var label = randomColorLabel(obj.nomeMacro, obj.nomeMicro);
+                console.log(label);
 
+                microCountArray++;
+                var html = "<div class='row' id='" + obj.idMicro + "-micro'>" +
+                    "                                    <div class='col-lg-6 col-md-9 col-xs-12 overlined-row'>'" + label +
+                    "                                   <div class='dropdown corner-dropdown'>" +
+                    "                                       <i class='fa fa-close' onclick='deleteMicro(" + obj.idMicro + ")'></i>" +
+                    "                                 </div>" +
+                    "                                </div>" +
+                    "                                  </div>";
 
+                $("#micro-destination").append(html);
+            }
+
+            $("#listaMicroJson").val(JSON.stringify(microListObjectArray));
 
 
         }
+
 
     </script>
 </head>
@@ -176,20 +211,24 @@ include_once VIEW_DIR . 'header.php';
                                 </div>
                                 <div class="form-group" style="margin-bottom: 15px">
                                     <div class="selectContainer">
-                                        <select  class="form-control" id="macro" onchange="caricaMicro()">
+                                        <select class="form-control" id="macro" onchange="caricaMicro()">
                                             <option value="" disabled selected>Seleziona Una Macrocategoria</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group" style="margin-bottom: 15px" >
+                                <div class="form-group" style="margin-bottom: 15px">
                                     <div class="selectContainer">
-                                        <select  class="form-control" id="micro" disabled="" title="Seleziona prima la macro">
+                                        <select class="form-control" id="micro" disabled=""
+                                                onchange="checkIfIsSelectedMicro()"
+                                                title="Seleziona prima la macro">
                                             <option value="" disabled selected>Seleziona Una Microcategoria</option>
                                         </select>
                                     </div>
                                 </div>
 
-                                <button id="insert-micro-button" onclick="insertMicro()" type="button" class="btn btn-success" disabled>Inserisci Microcategoria</button>
+                                <button id="insert-micro-button" onclick="insertMicro()" type="button" style="margin-bottom: 10px"
+                                        class="btn btn-success" disabled>Inserisci Microcategoria
+                                </button>
 
                             </div>
 
@@ -201,16 +240,25 @@ include_once VIEW_DIR . 'header.php';
                                                               data-error="Please,leave us a message."></textarea>
                                     <div class="help-block with-errors"></div>
                                 </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-xs-12" id="micro-destination">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-9 col-xs-12 overlined-row">
-                                        ciao
+                                <div>
+                                    <div class="radio radio-inline">
+                                        <input type="radio" name="radio2" id="radio5" value="option1">
+                                        <label for="radio5">
+                                            Domanda
+                                        </label>
                                     </div>
-                                    <div class="dropdown corner-dropdown">
-                                        <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
+                                    <div class="radio radio-inline">
+                                        <input type="radio" name="radio2" id="radio6" value="option2" checked="">
+                                        <label for="radio6">
+                                            Offerta
+                                        </label>
                                     </div>
                                 </div>
+                                <input type="hidden" name="listaDiMicro" value="" id="listaMicroJson">
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-xs-12" id="micro-destination">
+
                             </div>
                         </form>
                     </div>
@@ -221,12 +269,12 @@ include_once VIEW_DIR . 'header.php';
 </div>
 
 
-
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\styleUtils.js"></script>
 <?php
 
 if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
