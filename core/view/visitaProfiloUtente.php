@@ -31,7 +31,7 @@
             min-height:80px;
         }
 
-        .card.card-tab .tab-content .tab-pane.tab-pane-cards{
+        .card.card-tab .tab-content .tab-pane.active.tab-pane-cards{
             display: inline-block;
         }
 
@@ -654,11 +654,11 @@
 
                                         </div>
 
-                                        <a href="<?php echo DOMINIO_SITO;?>/segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
+                                        <a href="<?php echo DOMINIO_SITO; ?>/segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
                                             <i class="fa fa-legal" aria-hidden="true" style="font-size: 200%"></i>
                                         </a>
 
-                                        <a href="<?php echo DOMINIO_SITO;?>/aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
+                                        <a href="<?php echo DOMINIO_SITO; ?>/aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
                                             <i class="fa fa-star" aria-hidden="true" style="font-size: 200%"></i>
                                         </a>
 
@@ -683,7 +683,7 @@
 
                                     <div class="media-comment" style="">
                                         <button class="btn btn-link <?php echo $annunci[$i]->getId();?>">
-                                            <i class="fa fa-comments-o"></i><?php echo count($listaCommenti[$aId]) ?>Comments
+                                            <i class="fa fa-comments-o"></i><?php echo isset($listaCommenti[$aId])?count($listaCommenti[$aId]):0 ?>Comments
                                         </button>
                                         <button class="btn btn-default <?php echo $annunci[$i]->getId();?>">info</button>
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $annunci[$i]->getId();?>">Candidati</button>
@@ -739,7 +739,6 @@
                                                     <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
                                                            name="commento">
                                                     <input type="hidden" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
-
                                                 </div>
                                                 <div class="col-md-2 btn-comment">
                                                     <button type="submit" class="btn btn-info">Commenta</button>
@@ -1344,6 +1343,18 @@
                             $(".row.col-md-12.col-sm-12.card.info."+id).toggle(250);
                         });
                     }
+
+                    /*redirect to hash*/
+                    hashes=location.hash.split("#");
+                    if(hashes[1]) {
+                        $('.nav-tabs a[href="#' + hashes[1] + '"]').tab('show');
+                    }
+                    if(hashes[2]){
+                        $('html, body').animate({
+                            scrollTop: $("#"+hashes[2]+"").offset().top
+                        }, 2000);
+                    }
+
                 </script>
 
                 <?php

@@ -6,7 +6,7 @@
  * @param int $numPages complete pagination size
  * @param int $maxButtons = '6' maximum number of buttons allowed, including ellipsis buttons (max number must be >3)
  */
-function showPaginationButtons($currentPage, $numPages, $maxButtons=6)
+function showPaginationButtons($baseUrl,$currentPage, $numPages, $maxButtons=6)
 {
 
     //maxButtons max number of buttons - [...] included
@@ -24,7 +24,7 @@ function showPaginationButtons($currentPage, $numPages, $maxButtons=6)
                 <span aria-hidden='true'>&laquo;</span>
               </a></li>";
     } else {
-        echo "<li><a href='" . ($currentPage - 1) . "' aria-label='Previous'>
+        echo "<li><a href='".$baseUrl. ($currentPage - 1) . "' aria-label='Previous'>
                 <span aria-hidden='true'>&laquo;</span>
              </a></li>";
     }
@@ -64,13 +64,13 @@ function showPaginationButtons($currentPage, $numPages, $maxButtons=6)
 
     /*Numbered buttons*/
     for ($i = $is; $i < $currentPage; $i++) {
-        echo "<li><a href='" . $i . "'>" . $i . "</a></li>";
+        echo "<li><a href='".$baseUrl. $i . "'>" . $i . "</a></li>";
     }
 
     echo "<li class='active'><a>" . $currentPage . "</a></li>";
 
     for ($i = $currentPage + 1; $i <= $ie; $i++) {
-        echo "<li><a href='" . $i . "'>" . $i . "</a></li>";
+        echo "<li><a href='".$baseUrl. $i . "'>" . $i . "</a></li>";
     }
 
     if ($nextEllipsis == true)
@@ -83,7 +83,7 @@ function showPaginationButtons($currentPage, $numPages, $maxButtons=6)
                 <span aria-hidden='true'>&raquo;</span>
               </a></li>";
     } else {
-        echo "<li><a href='" . ($currentPage + 1) . "' aria-label='Next'>
+        echo "<li><a href='".$baseUrl . ($currentPage + 1) . "' aria-label='Next'>
                <span aria-hidden='true'>&raquo;</span>
               </a></li>";
     }

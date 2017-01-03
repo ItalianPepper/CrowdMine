@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     $manager = new AnnuncioManager();
     $idAnnuncio = $_POST['idAnnuncio'];
     $commento = $_POST['commento'];
-    $idUtente = 4;
+    $idUtente = $user->getId();
     $dataPubblicazione = new DateTime();
     $data = $dataPubblicazione->format("Y-m-d H:i:s");
     $stato = 'attivato';
