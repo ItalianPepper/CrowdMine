@@ -1,11 +1,9 @@
 <?php
-
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 class StatoUtente{
     const REVISIONE = "revisione";
     const ATTIVO = "attivo";
@@ -16,18 +14,16 @@ class StatoUtente{
     const AMMINISTRATORE = "amministratore";
     const REVISIONE_MODIFICA = "revisione_modifica";
 }
-
 class RuoloUtente{
     const UTENTE = "utente";
     const MODERATORE = "moderatore";
     const AMMINISTRATORE = "amministratore";
 }
-
 class Utente {
-
     private $id;
     private $nome;
     private $cognome;
+    private $descrizione;
     private $telefono;
     private $dataNascita;
     private $citta;
@@ -36,12 +32,13 @@ class Utente {
     private $stato;
     private $ruolo;
     private $immagineProfilo;
-
+    private $partitaIva;
     /**
      * Utente constructor.
      * @param $id
      * @param $nome
      * @param $cognome
+     * @param $descrizione
      * @param $telefono
      * @param $dataNascita
      * @param $citta
@@ -51,11 +48,12 @@ class Utente {
      * @param $ruolo
      * @param $immagineProfilo
      */
-    public function __construct($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo)
+    public function __construct($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo,$descrizione=null, $immagineProfilo=null, $partitaIva=null)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->cognome = $cognome;
+        $this->descrizione = $descrizione;
         $this->telefono = $telefono;
         $this->dataNascita = $dataNascita;
         $this->citta = $citta;
@@ -64,8 +62,8 @@ class Utente {
         $this->stato = $stato;
         $this->ruolo = $ruolo;
         $this->immagineProfilo = $immagineProfilo;
+        $this->partitaIva = $partitaIva;
     }
-
     /**
      * @return mixed
      */
@@ -73,7 +71,6 @@ class Utente {
     {
         return $this->id;
     }
-
     /**
      * @return mixed
      */
@@ -81,7 +78,6 @@ class Utente {
     {
         return $this->nome;
     }
-
     /**
      * @return mixed
      */
@@ -89,7 +85,13 @@ class Utente {
     {
         return $this->cognome;
     }
-
+    /**
+     * @return mixed
+     */
+    public function getDescrizione()
+    {
+        return $this->descrizione;
+    }
     /**
      * @return mixed
      */
@@ -97,7 +99,6 @@ class Utente {
     {
         return $this->telefono;
     }
-
     /**
      * @return mixed
      */
@@ -105,7 +106,6 @@ class Utente {
     {
         return $this->dataNascita;
     }
-
     /**
      * @return mixed
      */
@@ -113,7 +113,6 @@ class Utente {
     {
         return $this->citta;
     }
-
     /**
      * @return mixed
      */
@@ -121,7 +120,6 @@ class Utente {
     {
         return $this->email;
     }
-
     /**
      * @return mixed
      */
@@ -129,7 +127,6 @@ class Utente {
     {
         return $this->password;
     }
-
     /**
      * @return mixed
      */
@@ -137,7 +134,6 @@ class Utente {
     {
         return $this->stato;
     }
-
     /**
      * @return mixed
      */
@@ -145,7 +141,6 @@ class Utente {
     {
         return $this->ruolo;
     }
-
     /**
      * @return mixed
      */
@@ -153,7 +148,6 @@ class Utente {
     {
         return $this->immagineProfilo;
     }
-
     /**
      * @param mixed $nome
      */
@@ -161,7 +155,20 @@ class Utente {
     {
         $this->nome = $nome;
     }
-
+    /**
+     * @return null
+     */
+    public function getPartitaIva()
+    {
+        return $this->partitaIva;
+    }
+    /**
+     * @param null $partitaIva
+     */
+    public function setPartitaIva($partitaIva)
+    {
+        $this->partitaIva = $partitaIva;
+    }
     /**
      * @param mixed $cognome
      */
@@ -169,7 +176,13 @@ class Utente {
     {
         $this->cognome = $cognome;
     }
-
+    /**
+     * @param mixed $descrizione
+     */
+    public function setDescrizione($descrizione)
+    {
+        $this->descrizione = $descrizione;
+    }
     /**
      * @param mixed $telefono
      */
@@ -177,7 +190,6 @@ class Utente {
     {
         $this->telefono = $telefono;
     }
-
     /**
      * @param mixed $dataNascita
      */
@@ -185,7 +197,6 @@ class Utente {
     {
         $this->dataNascita = $dataNascita;
     }
-
     /**
      * @param mixed $citta
      */
@@ -193,7 +204,6 @@ class Utente {
     {
         $this->citta = $citta;
     }
-
     /**
      * @param mixed $email
      */
@@ -201,7 +211,6 @@ class Utente {
     {
         $this->email = $email;
     }
-
     /**
      * @param mixed $password
      */
@@ -209,7 +218,6 @@ class Utente {
     {
         $this->password = $password;
     }
-
     /**
      * @param mixed $stato
      */
@@ -217,7 +225,6 @@ class Utente {
     {
         $this->stato = $stato;
     }
-
     /**
      * @param mixed $ruolo
      */
@@ -225,7 +232,6 @@ class Utente {
     {
         $this->ruolo = $ruolo;
     }
-
     /**
      * @param mixed $immagineProfilo
      */
@@ -233,5 +239,4 @@ class Utente {
     {
         $this->immagineProfilo = $immagineProfilo;
     }
-
 }
