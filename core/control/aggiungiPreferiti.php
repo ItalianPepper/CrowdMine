@@ -3,7 +3,6 @@
 
 include_once MANAGER_DIR ."/AnnuncioManager.php";
 
-$user = unserialize($_SESSION['user']);
 $idUtente = $user->getId();
 $dataPubblicazione = new DateTime();
 $data = $dataPubblicazione->format("Y-m-d H:i:s");

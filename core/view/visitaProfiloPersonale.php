@@ -1718,7 +1718,7 @@
     $(document).ready(function(){
         <?php
         for ($i = 0; $i < count($annunci); $i++) {
-            echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+            echo "annuncioButtons(" . $annunci[$i]->getId().");";
         }
         ?>
     });

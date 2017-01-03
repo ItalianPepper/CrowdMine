@@ -320,6 +320,7 @@ try {
                 include_once CONTROL_DIR . "getDatiAnnuncioModificato.php";
                 break;
             case 'aggiungiPreferitiControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "aggiungiPreferiti.php";
                 break;
             case 'ricercaAnnuncio';

@@ -654,11 +654,11 @@
 
                                         </div>
 
-                                        <a href="segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
+                                        <a href="<?php echo DOMINIO_SITO;?>/segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
                                             <i class="fa fa-legal" aria-hidden="true" style="font-size: 200%"></i>
                                         </a>
 
-                                        <a href="aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
+                                        <a href="<?php echo DOMINIO_SITO;?>/aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
                                             <i class="fa fa-star" aria-hidden="true" style="font-size: 200%"></i>
                                         </a>
 
@@ -711,7 +711,7 @@
                                                     </div>
                                                     <div class="col-md-5 col-sm-5 options"
                                                          style="float: right; margin-top: -8%; margin-right: -23%">
-                                                        <a href="segnalaCommento?id=<?php echo $listaCommenti[$aId][$z]->getId(); ?>">
+                                                        <a href="<?php echo DOMINIO_SITO;?>/segnalaCommento?id=<?php echo $listaCommenti[$aId][$z]->getId(); ?>">
                                                             <button
                                                                     style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
                                                                 <i class="fa fa-close"></i>
@@ -734,11 +734,12 @@
                                         ?>
 
                                         <div class="col-md-12 form-commento">
-                                            <form action="commentaAnnuncioControl" method="post">
+                                            <form action="<?php echo DOMINIO_SITO;?>/commentaAnnuncioControl" method="post">
                                                 <div class="col-md-10 input-comment">
                                                     <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
                                                            name="commento">
-                                                    <input type="text" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
+                                                    <input type="hidden" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
+
                                                 </div>
                                                 <div class="col-md-2 btn-comment">
                                                     <button type="submit" class="btn btn-info">Commenta</button>
@@ -1267,7 +1268,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title">Candidati</h4>
                                         </div>
-                                        <form action="aggiungiCandidaturaControl" method="post">
+                                        <form action="<?php echo DOMINIO_SITO;?>/aggiungiCandidaturaControl" method="post">
                                             <div class="modal-body">
                                                 Inserisci Descrizione
                                                 <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.. <?php echo $annunci[$i]->getId();?>"></textarea>
