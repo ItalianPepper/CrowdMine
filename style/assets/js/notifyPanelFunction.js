@@ -35,6 +35,47 @@ function notificaToRowString(listaNotificheObject){
     return '<li class="list-group-item" style="background-color: #3399FF" id="'+listaNotificheObject.idNotifica+'"><a href="'+listaNotificheObject.href+'">'+listaNotificheObject.corpo+'</a></li>';
 }
 
-function readOnClick(){
-    
-}
+
+$("#lista-notifiche").click(function(event){
+
+    var target = $(event.target);
+
+    if(target.is("li")) {
+
+        var idNotifica = target.id;
+
+        $.ajax({
+            type: "POST",
+            url: "pannelloNotifiche",
+            dataType: "json",
+            data: {idnotifica:idNotifica},
+            success: function () {
+                $("#lista-notifiche").find("#"+idNotifca).remove();
+            }
+        })
+    }
+});
+
+
+$("#lista-notifiche-all").click(function(event){
+
+    var target = $(event.target);
+
+    if(target.is("li")) {
+
+        var idNotifica = target.id;
+
+        $.ajax({
+            type: "POST",
+            url: "pannelloNotifiche",
+            dataType: "json",
+            data: {idnotifica:idNotifica},
+            success: function () {
+                $("#lista-notifiche").find("#"+idNotifca).css("background-color","");
+            }
+        })
+    }
+
+
+});
+
