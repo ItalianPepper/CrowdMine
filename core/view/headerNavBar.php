@@ -19,10 +19,10 @@
             <ul class="nav navbar-nav navbar-left col-md-8 col-lg-9" style="padding: 0;">
 
                 <li>
-                    <a href="#" class="hidden-lg hidden-md hidden-xs" style="margin-left: -40px;">
+                    <a href="<?php echo DOMINIO_SITO; ?>" class="hidden-lg hidden-md hidden-xs" style="margin-left: -40px;">
                         <img style="height: 70px; max-width: 100%; " src="<?php echo STYLE_DIR ?>/img/Favicon_3.png" />
                     </a>
-                    <a href="#" class="hidden-sm">
+                    <a href="<?php echo DOMINIO_SITO; ?>" class="hidden-sm">
                         <img class="img-responsive" style=" max-width: 100%" src="<?php echo STYLE_DIR ?>/img/Logo_Crowdmine_3.png" />
                     </a>
                 </li>
@@ -41,16 +41,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown notification">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
-                        <div class="title">New Orders</div>
+                        <div class="icon"><i class="fa fa-folder-open-o" aria-hidden="true"></i></div>
+                        <div class="title">I miei annunci</div>
                         <div class="count">0</div>
                     </a>
                     <div class="dropdown-menu">
                         <ul>
-                            <li class="dropdown-header">Ordering</li>
-                            <li class="dropdown-empty">No New Ordered</li>
+                            <li class="dropdown-header">I miei annunci</li>
+                            <li class="dropdown-empty">Nessun annuncio</li>
                             <li class="dropdown-footer">
-                                <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                <a href="#">Visualizza Tutti <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -58,12 +58,12 @@
                 <li class="dropdown notification warning">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <div class="icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
-                        <div class="title">Unread Messages</div>
+                        <div class="title">Messaggi</div>
                         <div class="count">99</div>
                     </a>
                     <div class="dropdown-menu">
                         <ul>
-                            <li class="dropdown-header">Message</li>
+                            <li class="dropdown-header">Messaggi</li>
                             <li>
                                 <a href="#">
                                     <span class="badge badge-warning pull-right">10</span>
@@ -101,7 +101,7 @@
                                 </a>
                             </li>
                             <li class="dropdown-footer">
-                                <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                <a href="#">Visualizza Tutti <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -109,12 +109,12 @@
                 <li class="dropdown notification danger">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
-                        <div class="title">System Notifications</div>
+                        <div class="title">Notifiche</div>
                         <div class="count">10</div>
                     </a>
                     <div class="dropdown-menu">
                         <ul>
-                            <li class="dropdown-header">Notification</li>
+                            <li class="dropdown-header">Notifiche</li>
                             <li>
                                 <a href="#">
                                     <span class="badge badge-danger pull-right">8</span>
@@ -139,7 +139,7 @@
                                 </a>
                             </li>
                             <li class="dropdown-footer">
-                                <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                <a href="#">Visualizza Tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                             </li>
                         </ul>
                     </div>

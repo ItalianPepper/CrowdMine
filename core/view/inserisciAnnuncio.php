@@ -1,31 +1,81 @@
-<?php
-/**
- *
- * @author Vincenzo Russo
- * @version 1.0
- * @since 30/05/16
- */
-include_once VIEW_DIR . 'header.php';
-
-?>
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <title></title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php include_once VIEW_DIR."headerStart.php";?>
+    <style>
+        div.section .profile {
+            margin-bottom: 0px;
+        }
 
-    <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
+        .app-container .app-heading.no-flex{
+            display:inline-block;
+            width:100%;
+        }
 
-    <!-- Theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
+        body .app-container .app-heading .app-title{
+            min-height:80px;
+        }
+
+        .card.card-tab .tab-content .tab-pane.active.tab-pane-cards{
+            display: inline-block;
+        }
+
+        .tab-pane.tab-pane-cards .card-header {
+            padding: 30px;
+            border-bottom: 1px solid #dfe6e8;
+            background-color: #fff;
+        }
+
+    </style>
+
+
+    <style>
+        h1 {
+            font-size: 1rem;
+
+        }
+
+        @media (min-width: 1px) {
+            h1 {
+                font-size: medium;
+            }
+
+        }
+
+        @media (min-width: 750px) {
+            h1 {
+                font-size: medium;
+            }
+
+        }
+
+        @media (min-width: 970px) {
+            h1 {
+                font-size: x-large;
+            }
+
+        }
+
+        @media (min-width: 1200px) {
+            h1 {
+                font-size: xx-large;
+            }
+
+        }
+
+        a.morelink {
+            text-decoration:none;
+            outline: none;
+        }
+        .morecontent span {
+            display: none;
+
+        }
+
+
+    </style>
+
     <style>
         .form-control {
             color: #817b7b;
@@ -173,10 +223,12 @@ include_once VIEW_DIR . 'header.php';
 <body>
 
 <div class="app app-default">
-    <?php include_once "asidePannelloBackend.php" ?>
 
+    <?php include_once VIEW_DIR."headerSideBar.php";?>
+    <div class="app-container">
 
-    <div class="col-md-12 col-sm-12 app-container">
+        <?php include_once VIEW_DIR."headerNavBar.php";?>
+        <div class="app-head"></div>
 
         <div class="row">
 
@@ -276,6 +328,18 @@ include_once VIEW_DIR . 'header.php';
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\styleUtils.js"></script>
+
+<script>
+<?php
+
+if(isset($sideBarIconName)) {
+    /*evidenzio l'icona nella barra laterale*/
+    echo '$("#' . $sideBarIconName . '").toggleClass("active");';
+}
+?>
+
+$('[data-toggle="tooltip"]').tooltip();
+</script>
 <?php
 
 if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {

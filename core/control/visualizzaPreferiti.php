@@ -25,6 +25,7 @@ $listaCandidature = $base->getListaCandidature();
 $listaMicro = $base->getListaMicro();
 $AnnunciMicroRef = $base->getAnnunciMicroRef();
 
+$sideBarIconName = "annunciPreferiti";
 
 include_once VIEW_DIR . "home.php";
 

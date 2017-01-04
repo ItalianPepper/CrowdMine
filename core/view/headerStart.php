@@ -50,3 +50,5 @@
         }
 
     </style>
+
+ <?php $fullname = (isset($fullname))?$fullname:"Crowdmine";?>

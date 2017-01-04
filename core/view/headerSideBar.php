@@ -1,4 +1,4 @@
-<aside class="app-sidebar" id="sidebar">
+<aside class="app-sidebar" style="min-height: 900px;"id="sidebar">
     <div class="sidebar-header">
         <a class="sidebar-brand" href="#">
             <span class="highlight"><?php echo $fullname; ?></span>
@@ -10,7 +10,7 @@
     <div class="sidebar-menu">
         <ul class="sidebar-nav">
 
-            <li class="">
+            <li id="inserisciAnnuncio">
                 <a href="inserisciAnnuncio">
                     <div class="icon">
                         <i class="fa fa-plus" aria-hidden="true"></i>
@@ -28,7 +28,7 @@
                 </a>
             </li>
 
-            <li class="">
+            <li id="annunciPreferiti">
                 <a href="annunciPreferiti">
                     <div class="icon">
                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -37,7 +37,7 @@
                 </a>
             </li>
 
-            <li class="">
+            <li id="ricercaAnnuncio" class="">
                 <a href="ricercaAnnuncio">
                     <div class="icon">
                         <i class="fa fa-search" aria-hidden="true"></i>

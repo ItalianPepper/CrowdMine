@@ -319,6 +319,16 @@
                         }, 2000);
                     }
 
+                    <?php
+
+                        if(isset($sideBarIconName)) {
+                            /*evidenzio l'icona nella barra laterale*/
+                            echo '$("#' . $sideBarIconName . '").toggleClass("active");';
+                        }
+                    ?>
+
+                    $('[data-toggle="tooltip"]').tooltip();
+
                 </script>
 
                 <?php
