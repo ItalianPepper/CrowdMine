@@ -111,7 +111,7 @@ class FeedbackManager extends Manager implements SplSubject
     public function setStatus($id,$stato){
         $UPDATE_STATUS="UPDATE feedback SET stato='$stato' WHERE feedback.id=$id";
         $resSet = self::getDB()->query($UPDATE_STATUS);
-        if($resSet) {
+       /* if($resSet) {
             if($stato == SEGNALATO){
                 $annuncioManager = new AnnuncioManager();
                 $this->inviaNotificaDiSegnalazione($id,$annuncioManager->getAnnuncio($this->getFeedbackById($id)->getIdAnnuncio()));
@@ -119,7 +119,7 @@ class FeedbackManager extends Manager implements SplSubject
             return true;
         }
         else
-            return false;
+            return false;*/
     }
 
 

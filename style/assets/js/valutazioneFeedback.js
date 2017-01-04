@@ -76,7 +76,7 @@ function segnalaFeedback(feedbackID) {
                 toastr[data["toastType"]](data["toastMessage"]);
 
             },
-            error: function () {
+            error: function (data) {
                 toastr[data["toastType"]](data["toastMessage"]);
             }
 

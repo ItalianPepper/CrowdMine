@@ -16,7 +16,7 @@ $(document).ready(function () {
             success: function (data) {
                 var destination = $("#feedback-list-destination");
                 destination.empty();
-                generateFeedbackList(data, "user", destination)
+                generateFeedbackList(data, "user", destination);
             },
             error: function (data) {
                 toastr[data["toastType"]](data["toastMessage"]);
@@ -31,6 +31,7 @@ function generateFeedbackList(data, role, destination) {
     if (data.length > 0) {
         for (var i in data) {
             var feedbackListObj = [];
+
             feedbackListObj.feedbackID = data[i].feedbackID;
             feedbackListObj.feedbackTitle = data[i].feedbackTitle;
             feedbackListObj.feedbackDesc = data[i].feedbackDesc;
@@ -41,6 +42,7 @@ function generateFeedbackList(data, role, destination) {
             feedbackListObj.idUtente = data[i].idUtente;
 
             destination.append(feedbackRowToString(feedbackListObj, role));
+            console.log(feedbackListObj.feedbackID +" "+feedbackListObj.feedbackRating);
             setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
         }
     }
@@ -172,10 +174,18 @@ function feedbackRowToString(feedbackListObj, role) {
 function setRatingStar(feedbackID, feedbackRatingValue) {
     "use strict";
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i <= 5; i++) {
         if (feedbackRatingValue == i)
+        {
             $("#star" + i + "-" + feedbackID).attr("checked", "checked");
+            console.log( $("#star" + i + "-" + feedbackID));
+        }
+
         if (feedbackRatingValue == i + 0.5)
+        {
             $("#star" + i + "half-" + feedbackID).attr("checked", "checked");
+            console.log( $("#star" + i + "half-" + feedbackID));
+        }
+
     }
 }
