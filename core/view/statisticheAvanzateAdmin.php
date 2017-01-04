@@ -2,7 +2,6 @@
 <html>
 <head>
     <?php include_once VIEW_DIR."headerStart.php";?>
-
 </head>
 
 <body>
@@ -10,6 +9,7 @@
     <?php include_once VIEW_DIR . "asidePannelloBackend.php"; ?>
     <div class="app-container">
         <?php include_once VIEW_DIR . "headerNavBar.php";?>
+        <div class="app-head"></div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card card-tab">
@@ -200,10 +200,8 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-<?php include_once VIEW_DIR . "footer.php" ?>
 </body>
 
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>

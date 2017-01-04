@@ -90,6 +90,7 @@ try {
                 include_once VIEW_DIR . "annuncioModeratore.php";
                 break;
             case 'statisticheAvanzateAdmin':
+                $user = StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once VIEW_DIR ."statisticheAvanzateAdmin.php";
                 break;
             case '404':
