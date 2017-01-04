@@ -85,12 +85,24 @@ class MacroCategoriaManager extends Manager
         return $macro;
     }
 
+    private function macroToArraySerialize($resSet)
+    {
+        $macro = array();
+        if ($resSet) {
+            while ($obj = $resSet->fetch_assoc()) {
+                $macroCategoria = new MacroCategoria($obj['id'], $obj['nome']);
+                $macro[] = $macroCategoria->jsonSerialize();
+            }
+        }
+        return $macro;
+    }
+
     public function getMacroByName($nome){
         $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE nome='$nome'";
         $rs = Manager::getDB()->query($GET_MACRO_BY_NAME);
         if($rs){
             $obj = mysqli_fetch_assoc($rs);
-            $macro = new MacroCategoria(null,$obj['nome']);
+            $macro = new MacroCategoria($obj["id"],$obj['nome']);
         }
         return $macro;
     }
@@ -136,6 +148,17 @@ class MacroCategoriaManager extends Manager
         $rs = Manager::getDB()->query($query);
         return $this->macroToArray($rs);
     }
+    /**
+     * get all macros inside the sistem and serialize them
+     * @param $macroCategoria
+     */
+    public function getAllMacrosSerialized()
+    {
+        $GET_MACRO_BY_NAME = "SELECT * FROM macrocategoria WHERE 1";
+        $query = sprintf($GET_MACRO_BY_NAME);
+        $rs = Manager::getDB()->query($query);
+        return $this->macroToArraySerialize($rs);
+    }
 
     /**
      * get all macros for a certain userid
@@ -180,6 +203,36 @@ class MacroCategoriaManager extends Manager
         }else{
             $obj = $rs->fetch_assoc();
             return new MacroCategoria($obj['id'], $obj['nome']);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return MacroCategoria
+     */
+    public function getMacroById($id){
+        $GET_MACRO_BY_ID = "SELECT * FROM macrocategoria WHERE nome='$id'";
+        $rs = Manager::getDB()->query($GET_MACRO_BY_ID);
+        if($rs){
+            $obj = mysqli_fetch_assoc($rs);
+            $macro = new MacroCategoria($obj["id"],$obj['nome']);
+        }
+        return $macro;
+
+    }
+
+    public function getListaMacrocategorie(){
+        $GET_ALL_MACRO = "SELECT * FROM macrocategoria";
+        $rs = Manager::getDB()->query($GET_ALL_MACRO);
+        if($rs){
+            $toReturn = array();
+            while($row = $rs->fetch_assoc()){
+                $macro = new MacroCategoria($row["id"],$row["nome"]);
+                array_push($toReturn,$macro);
+            }
+            return $toReturn;
+        } else {
+            return false;
         }
     }
 

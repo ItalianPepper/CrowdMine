@@ -28,7 +28,7 @@
                 <div class="dropdown-menu">
                     <ul>
                         <li><a href="UtentiSegnalati">Utenti</a></li>
-                        <li><a href="visualizzaAnnunciSegnalati">Annunci</a></li>
+                        <li><a href="annunciSegnalati">Annunci</a></li>
                         <li><a href="visualizzaFeedbackSegnalati">Feedback</a></li>
                         <li><a href="visualizzaCommentiSegnalati">Commenti</a></li>
                     </ul>
@@ -58,6 +58,9 @@
                 <div class="dropdown-menu">
                     <ul>
                         <li><a href="UtentiBannati">Lista Utenti Bannati</a></li>
+                        <li><a href="annunciReclamati">Annunci reclamati</a></li>
+                        <li><a href="annunciRevisione">Annunci in revisione</a></li>
+                        <li><a href="annunciModificati">Annunci modificati</a></li>
                         <li><a href="visualizzaIndexStatistiche">Statistiche</a></li>
                     </ul>
                 </div>
