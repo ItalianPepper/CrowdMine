@@ -489,6 +489,139 @@
                                             <?php echo $annunci[$i]->getTipologia();?></h5>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="panel panel-default compact-panel">
+                                            <a id="feedback-collapse-panel" class="panel-default collapse-title"
+                                               data-toggle="collapse"
+                                               href="#feedback-collapse">
+                                                <div class="panel-heading">
+                                                    <h4 class="media-heading">
+                                                        Inserisci Feedback
+                                                    </h4>
+                                                    <p>Clicca qui per inserire un feedback</p>
+                                                </div>
+                                            </a>
+                                            <div id="feedback-collapse" class="panel-collapse collapse">
+                                                <form action="<?php echo DOMINIO_SITO;?>/inserisciFeedback" method="post">
+                                                    <div class="panel-body">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-xs-12 simple-row">
+                                                                    <div class="section">
+                                                                        <div class="section-title">
+                                                                            <?php
+                                                                            if(isset($user)) {
+                                                                            echo $user->getNome()." ".$user->getCognome();
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                echo "Devi aver effettuato il login altrimenti\n
+                                                                                il ssitema non ti permettera di inserire un feedback\n";
+                                                                            }?>
+                                                                        </div>
+                                                                        <div class="section-body __indent">
+                                                                            <img src="<?php echo DOMINIO_SITO?>/style/img/<?php
+                                                                            if(isset($user)) {
+                                                                                echo $user->getImmagineProfilo();
+                                                                            }
+                                                                            else
+                                                                            {
+
+                                                                            }
+
+                                                                            ?>" class="img-responsive">
+                                                                            <!--Put here use profile image-->
+                                                                        </div>
+
+                                                                        <div class="section-title">
+                                                                            Rating
+                                                                        </div>
+                                                                        <div class="section-body">
+                                                                            <div class="rating">
+                                                                                <input type="radio" id="star5" name="rating"
+                                                                                       value="5"/><label
+                                                                                    class="full" for="star5"
+                                                                                    title="Awesome - 5 stars"></label>
+                                                                                <input type="radio" id="star4half" name="rating"
+                                                                                       value="4.5"/><label
+                                                                                    class="half" for="star4half"
+                                                                                    title="Pretty good - 4.5 stars"></label>
+                                                                                <input type="radio" id="star4" name="rating"
+                                                                                       value="4"/><label
+                                                                                    class="full" for="star4"
+                                                                                    title="Pretty good - 4 stars"></label>
+                                                                                <input type="radio" id="star3half" name="rating"
+                                                                                       value="3.5"/><label
+                                                                                    class="half" for="star3half"
+                                                                                    title="Meh - 3.5 stars"></label>
+                                                                                <input type="radio" id="star3" name="rating"
+                                                                                       value="3"/><label
+                                                                                    class="full" for="star3"
+                                                                                    title="Meh - 3 stars"></label>
+                                                                                <input type="radio" id="star2half" name="rating"
+                                                                                       value="2.5"/><label
+                                                                                    class="half" for="star2half"
+                                                                                    title="Kinda bad - 2.5 stars"></label>
+                                                                                <input type="radio" id="star2" name="rating"
+                                                                                       value="2"/><label
+                                                                                    class="full" for="star2"
+                                                                                    title="Kinda bad - 2 stars"></label>
+                                                                                <input type="radio" id="star1half" name="rating"
+                                                                                       value="1.5"/><label
+                                                                                    class="half" for="star1half"
+                                                                                    title="Meh - 1.5 stars"></label>
+                                                                                <input type="radio" id="star1" name="rating"
+                                                                                       value="1"/><label
+                                                                                    class="full" for="star1"
+                                                                                    title="Sucks big time - 1 star"></label>
+                                                                                <input type="radio" id="starhalf" name="rating"
+                                                                                       value="0.5"/><label
+                                                                                    class="half" for="starhalf"
+                                                                                    title="Sucks big time - 0.5 stars"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-7 col-xs-12 simple-row">
+                                                                    <input name="feedback-name" type="text" class="form-control"
+                                                                           required id="feedback-title"
+                                                                           placeholder="Inserisci il titolo del feedback">
+                                                                    <!-- id annuncio -->
+                                                                    <input  type="hidden" name="annuncio-id" value="<?php echo $annunci[$i]->getId(); ?>" >
+                                                                    <!--id utente che ha scritto l'annuncio-->
+                                                                    <input  type="hidden" name="user-annuncio-id" value="<?php echo $visitedUser->getId();?>"
+                                                                           style="display: none">
+                                                                    <!--id utente che lasci il feedback-->
+                                                                    <input  type="hidden" name="user-submit-id" value="<?php
+                                                                    if(isset($user)) {
+                                                                       echo $user->getId();
+                                                                    }
+
+                                                                    ?>">
+
+
+                                                                    <textarea name="feedback-textArea" rows="3"
+                                                                              class="form-control" required
+                                                                              id="feedback-textarea"
+                                                                              placeholder="Descrizione"></textarea>
+                                                                    <button type="submit" class="btn btn-success"
+                                                                            id="button-add-feedback">Inserisci Feeedback
+                                                                    </button>
+
+                                                                    <div class="alert alert-danger  alert-dismissible"
+                                                                         role="alert"
+                                                                         id="feedback-erros" style="display: none">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -501,123 +634,11 @@
                         <!--Feedback-->
                         <div role="tabpanel" class="tab-pane" id="tab3">
                             <div class="row">
-                                <div class="panel panel-default compact-panel">
-                                    <a id="feedback-collapse-panel" class="panel-default collapse-title"
-                                       data-toggle="collapse"
-                                       href="#feedback-collapse">
-                                        <div class="panel-heading">
-                                            <h4 class="media-heading">
-                                                Inserisci Feedback
-                                            </h4>
-                                            <p>Clicca qui per inserire un feedback</p>
-                                        </div>
-                                    </a>
-                                    <div id="feedback-collapse" class="panel-collapse collapse">
-                                        <form action="inserisciFeedback" method="post">
-                                            <div class="panel-body">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    <div class="row">
-                                                        <div class="col-md-3 col-xs-12 simple-row">
-                                                            <div class="section">
-                                                                <div class="section-title">
-                                                                    Put here the session variable and user name logged
-                                                                </div>
-                                                                <div class="section-body __indent">
-                                                                    <img src="http://placehold.it/100x100"
-                                                                         class="img-responsive">
-                                                                    <!--Put here use profile image-->
-                                                                </div>
-
-                                                                <div class="section-title">
-                                                                    Rating
-                                                                </div>
-                                                                <div class="section-body">
-                                                                    <div class="rating">
-                                                                        <input type="radio" id="star5" name="rating"
-                                                                               value="5"/><label
-                                                                                class="full" for="star5"
-                                                                                title="Awesome - 5 stars"></label>
-                                                                        <input type="radio" id="star4half" name="rating"
-                                                                               value="4.5"/><label
-                                                                                class="half" for="star4half"
-                                                                                title="Pretty good - 4.5 stars"></label>
-                                                                        <input type="radio" id="star4" name="rating"
-                                                                               value="4"/><label
-                                                                                class="full" for="star4"
-                                                                                title="Pretty good - 4 stars"></label>
-                                                                        <input type="radio" id="star3half" name="rating"
-                                                                               value="3.5"/><label
-                                                                                class="half" for="star3half"
-                                                                                title="Meh - 3.5 stars"></label>
-                                                                        <input type="radio" id="star3" name="rating"
-                                                                               value="3"/><label
-                                                                                class="full" for="star3"
-                                                                                title="Meh - 3 stars"></label>
-                                                                        <input type="radio" id="star2half" name="rating"
-                                                                               value="2.5"/><label
-                                                                                class="half" for="star2half"
-                                                                                title="Kinda bad - 2.5 stars"></label>
-                                                                        <input type="radio" id="star2" name="rating"
-                                                                               value="2"/><label
-                                                                                class="full" for="star2"
-                                                                                title="Kinda bad - 2 stars"></label>
-                                                                        <input type="radio" id="star1half" name="rating"
-                                                                               value="1.5"/><label
-                                                                                class="half" for="star1half"
-                                                                                title="Meh - 1.5 stars"></label>
-                                                                        <input type="radio" id="star1" name="rating"
-                                                                               value="1"/><label
-                                                                                class="full" for="star1"
-                                                                                title="Sucks big time - 1 star"></label>
-                                                                        <input type="radio" id="starhalf" name="rating"
-                                                                               value="0.5"/><label
-                                                                                class="half" for="starhalf"
-                                                                                title="Sucks big time - 0.5 stars"></label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-7 col-xs-12 simple-row">
-                                                            <input name="feedback-name" type="text" class="form-control"
-                                                                   required id="feedback-title"
-                                                                   placeholder="Inserisci il titolo del feedback">
-                                                            <!-- id annuncio -->
-                                                            <input name="annuncio-id" value="1" style="display: none">
-                                                            <!--id utente che ha scritto l'annuncio-->
-                                                            <input name="user-annuncio-id" value="1"
-                                                                   style="display: none">
-                                                            <!--id utente che lasci il feedback-->
-                                                            <input name="user-submit-id" value="3"
-                                                                   style="display: none">
-
-
-                                                            <textarea name="feedback-textArea" rows="3"
-                                                                      class="form-control" required
-                                                                      id="feedback-textarea"
-                                                                      placeholder="Descrizione"></textarea>
-                                                            <button type="submit" class="btn btn-success"
-                                                                    id="button-add-feedback">Inserisci Feeedback
-                                                            </button>
-
-                                                            <div class="alert alert-danger  alert-dismissible"
-                                                                 role="alert"
-                                                                 id="feedback-erros" style="display: none">
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-8">
 
                                     <div class="btn-group open" style="margin-right: 20px">
                                         <button type="button" class="btn btn-success"
-                                                data-toggle="dropdown" aria-expanded="true">Inserisci Feedback
+                                                data-toggle="dropdown" aria-expanded="true" onclick='location.href="<?php echo DOMINIO_SITO;?>/ProfiloUtente/<?php echo $visitedUser->getId();?>/#tab2"'>Inserisci Feedback
                                         </button>
                                     </div>
                                     <div class="btn-group">
@@ -631,120 +652,10 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <input type="hidden" id="user-feedback-id" value="1" style="display: none">
                             </div>
-                            <!--<div class="row">
-                                <div class="panel panel-default compact-panel">
-                                    <a id="feedback-collapse-panel" class="panel-default collapse-title"
-                                       data-toggle="collapse"
-                                       href="#feedback-collapse">
-                                        <div class="panel-heading">
-                                            <h4 class="media-heading">
-                                                Inserisci Feedback
-                                            </h4>
-                                            <p>Clicca qui per inserire un feedback</p>
-                                        </div>
-                                    </a>
-                                    <div id="feedback-collapse" class="panel-collapse collapse">
-                                        <form action="inserisciFeedback" method="post">
-                                            <div class="panel-body">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    <div class="row">
-                                                        <div class="col-md-3 col-xs-12 simple-row">
-                                                            <div class="section">
-                                                                <div class="section-title">
-                                                                    Put here the session variable and user name logged
-                                                                </div>
-                                                                <div class="section-body __indent">
-                                                                    <img src="http://placehold.it/100x100"
-                                                                         class="img-responsive">
-                                                                    <!--Put here use profile image-->
-                            <!-- </div>
 
-                             <div class="section-title">
-                                 Rating
-                             </div>
-                             <div class="section-body">
-                                 <div class="rating">
-                                     <input type="radio" id="star5" name="rating"
-                                            value="5"/><label
-                                         class="full" for="star5"
-                                         title="Awesome - 5 stars"></label>
-                                     <input type="radio" id="star4half" name="rating"
-                                            value="4.5"/><label
-                                         class="half" for="star4half"
-                                         title="Pretty good - 4.5 stars"></label>
-                                     <input type="radio" id="star4" name="rating"
-                                            value="4"/><label
-                                         class="full" for="star4"
-                                         title="Pretty good - 4 stars"></label>
-                                     <input type="radio" id="star3half" name="rating"
-                                            value="3.5"/><label
-                                         class="half" for="star3half"
-                                         title="Meh - 3.5 stars"></label>
-                                     <input type="radio" id="star3" name="rating"
-                                            value="3"/><label
-                                         class="full" for="star3"
-                                         title="Meh - 3 stars"></label>
-                                     <input type="radio" id="star2half" name="rating"
-                                            value="2.5"/><label
-                                         class="half" for="star2half"
-                                         title="Kinda bad - 2.5 stars"></label>
-                                     <input type="radio" id="star2" name="rating"
-                                            value="2"/><label
-                                         class="full" for="star2"
-                                         title="Kinda bad - 2 stars"></label>
-                                     <input type="radio" id="star1half" name="rating"
-                                            value="1.5"/><label
-                                         class="half" for="star1half"
-                                         title="Meh - 1.5 stars"></label>
-                                     <input type="radio" id="star1" name="rating"
-                                            value="1"/><label
-                                         class="full" for="star1"
-                                         title="Sucks big time - 1 star"></label>
-                                     <input type="radio" id="starhalf" name="rating"
-                                            value="0.5"/><label
-                                         class="half" for="starhalf"
-                                         title="Sucks big time - 0.5 stars"></label>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                     <div class="col-md-7 col-xs-12 simple-row">
-                         <input name="feedback-name" type="text" class="form-control"
-                                required id="feedback-title"
-                                placeholder="Inserisci il titolo del feedback">
-                         <input name="annuncio-id" value="1" style="display: none">
-                         <!-- id annuncio -->
-                            <!--<input name="user-annuncio-id" value="1"
-                                   style="display: none">
-                            <!--id utente che lascia l'annuncio-->
-                            <!--<input name="user-submit-id" value="3" style="display: none">
-                            <!--id utente che lasci il feedback-->
-
-                            <!-- <textarea name="feedback-textArea" rows="3"
-                                       class="form-control" required
-                                       id="feedback-textarea"
-                                       placeholder="Descrizione"></textarea>
-                             <button type="submit" class="btn btn-success"
-                                     id="button-add-feedback">Inserisci Feeedback
-                             </button>
-
-                             <div class="alert alert-danger  alert-dismissible"
-                                  role="alert"
-                                  id="feedback-erros" style="display: none">
-
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </form>
-     </div>
- </div>
-</div> -->
                             <!-- id for retrive feedback id utente della pagina -->
-
+                            <input type="hidden" id="user-feedback-id" value="<?php echo $visitedUser->getId();?>">
                             <div class="row" style="margin-top: 3%" id="feedback-list-destination">
                                 <div class="card-body __loading">
                                     <div class="loader-container text-center">
@@ -761,6 +672,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <!--Statistiche-->
                         <div role="tabpanel" class="tab-pane" id="tab4">
@@ -935,7 +847,11 @@
                         }, 2000);
                     }
 
+
                 </script>
+                <script type="text/javascript"
+                        src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackSort.js"></script>
 
                 <?php
 

@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -14,8 +15,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
     <style>
-        .navbar-collapse.in
-        {
+        .navbar-collapse.in {
             overflow-y: hidden;
         }
     </style>
@@ -204,242 +204,24 @@
                     <div class="card-header">
                         Lista Feedback Segnalati
                     </div>
-					<div class="card-body">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-xs-12">
-								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
-									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="media-heading">
-													<h4 class="title">Scott White</h4>
-												</div>
-												<div class="rating-content" onclick="return false;">
-													<div class="rating">
-														<input type="radio" id="star5" name="rating0"
-															   value="5"/><label
-															class="full" for="star5"
-															title="Awesome - 5 stars"></label>
-														<input type="radio" id="star4half" name="rating0"
-															   value="4.5"/><label
-															class="half" for="star4half"
-															title="Pretty good - 4.5 stars"></label>
-														<input type="radio" id="star4" name="rating0"
-															   value="4"/><label
-															class="full" for="star4"
-															title="Pretty good - 4 stars"></label>
-														<input type="radio" id="star3half" name="rating0"
-															   value="3.5" /><label
-															class="half" for="star3half"
-															title="Meh - 3.5 stars"></label>
-														<input type="radio" id="star3" name="rating0"
-															   value="3"/><label
-															class="full" for="star3"
-															title="Meh - 3 stars"></label>
-														<input type="radio" id="star2half" name="rating0"
-															   value="2.5"/><label
-															class="half" for="star2half"
-															title="Kinda bad - 2.5 stars"></label>
-														<input type="radio" id="star2" name="rating0"
-															   value="2"/><label
-															class="full" for="star2"
-															title="Kinda bad - 2 stars"></label>
-														<input type="radio" id="star1half" name="rating0"
-															   value="1.5"/><label
-															class="half" for="star1half"
-															title="Meh - 1.5 stars"></label>
-														<input type="radio" id="star1" name="rating0"
-															   value="1"/><label
-															class="full" for="star1"
-															title="Sucks big time - 1 star"></label>
-														<input type="radio" id="starhalf" name="rating0"
-															   value="0.5" checked/><label
-															class="half" for="starhalf"
-															title="Sucks big time - 0.5 stars"></label>
-													</div>
-												</div>
-												<div class="media-content">
-													Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-													ligula
-													eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-													parturient
-													montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-													pellentesque
-													eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-												</div>
-												<div class="media-action">
-													<button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-													<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-													<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-xs-12">
-								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
-									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="media-heading">
-													<h4 class="title">Scott White</h4>
-												</div>
-												<div class="rating-content" onclick="return false;">
-													<div class="rating">
-														<input type="radio" id="star5" name="rating1"
-															   value="5"/><label
-															class="full" for="star5"
-															title="Awesome - 5 stars"></label>
-														<input type="radio" id="star4half" name="rating1"
-															   value="4.5"/><label
-															class="half" for="star4half"
-															title="Pretty good - 4.5 stars"></label>
-														<input type="radio" id="star4" name="rating1"
-															   value="4"/><label
-															class="full" for="star4"
-															title="Pretty good - 4 stars"></label>
-														<input type="radio" id="star3half" name="rating1"
-															   value="3.5" /><label
-															class="half" for="star3half"
-															title="Meh - 3.5 stars"></label>
-														<input type="radio" id="star3" name="rating1"
-															   value="3"/><label
-															class="full" for="star3"
-															title="Meh - 3 stars"></label>
-														<input type="radio" id="star2half" name="rating1"
-															   value="2.5"/><label
-															class="half" for="star2half"
-															title="Kinda bad - 2.5 stars"></label>
-														<input type="radio" id="star2" name="rating1"
-															   value="2"/><label
-															class="full" for="star2"
-															title="Kinda bad - 2 stars"></label>
-														<input type="radio" id="star1half" name="rating1"
-															   value="1.5"/><label
-															class="half" for="star1half"
-															title="Meh - 1.5 stars"></label>
-														<input type="radio" id="star1" name="rating1"
-															   value="1"/><label
-															class="full" for="star1"
-															title="Sucks big time - 1 star"></label>
-														<input type="radio" id="starhalf" name="rating1"
-															   value="0.5" checked/><label
-															class="half" for="starhalf"
-															title="Sucks big time - 0.5 stars"></label>
-													</div>
-												</div>
-												<div class="media-content">
-													Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-													ligula
-													eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-													parturient
-													montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-													pellentesque
-													eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-												</div>
-												<div class="media-action">
-													<button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-													<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-													<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-xs-12">
-								<div class="media social-post">
-									<div class="media-left">
-										<a href="#">
-											<img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-										</a>
-									</div>
-									<div class="section">
-										<div class="section-body">
-											<div class="media-body">
-												<div class="media-heading">
-													<h4 class="title">Scott White</h4>
-												</div>
-												<div class="rating-content" onclick="return false;">
-													<div class="rating">
-														<input type="radio" id="star5" name="rating2"
-															   value="5"/><label
-															class="full" for="star5"
-															title="Awesome - 5 stars"></label>
-														<input type="radio" id="star4half" name="rating2"
-															   value="4.5"/><label
-															class="half" for="star4half"
-															title="Pretty good - 4.5 stars"></label>
-														<input type="radio" id="star4" name="rating2"
-															   value="4"/><label
-															class="full" for="star4"
-															title="Pretty good - 4 stars"></label>
-														<input type="radio" id="star3half" name="rating2"
-															   value="3.5" /><label
-															class="half" for="star3half"
-															title="Meh - 3.5 stars"></label>
-														<input type="radio" id="star3" name="rating2"
-															   value="3"/><label
-															class="full" for="star3"
-															title="Meh - 3 stars"></label>
-														<input type="radio" id="star2half" name="rating2"
-															   value="2.5"/><label
-															class="half" for="star2half"
-															title="Kinda bad - 2.5 stars"></label>
-														<input type="radio" id="star2" name="rating2"
-															   value="2"/><label
-															class="full" for="star2"
-															title="Kinda bad - 2 stars"></label>
-														<input type="radio" id="star1half" name="rating2"
-															   value="1.5"/><label
-															class="half" for="star1half"
-															title="Meh - 1.5 stars"></label>
-														<input type="radio" id="star1" name="rating2"
-															   value="1"/><label
-															class="full" for="star1"
-															title="Sucks big time - 1 star"></label>
-														<input type="radio" id="starhalf" name="rating2"
-															   value="0.5" checked/><label
-															class="half" for="starhalf"
-															title="Sucks big time - 0.5 stars"></label>
-													</div>
-												</div>
-												<div class="media-content">
-													Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-													ligula
-													eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-													parturient
-													montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-													pellentesque
-													eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-												</div>
-												<div class="media-action">
-													<button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-													<button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-													<button class="btn btn-link"><i class="fa fa-check-circle"></i> invia all'amministratore</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+                    <div class="card-body">
+                        <div class="row" style="margin-top: 3%" id="feedback-list-reported">
+                            <div class="card-body __loading">
+                                <div class="loader-container text-center">
+                                    <div class="icon">
+                                        <div class="sk-wave">
+                                            <div class="sk-rect sk-rect1"></div>
+                                            <div class="sk-rect sk-rect2"></div>
+                                            <div class="sk-rect sk-rect3"></div>
+                                            <div class="sk-rect sk-rect4"></div>
+                                            <div class="sk-rect sk-rect5"></div>
+                                        </div>
+                                    </div>
+                                    <div class="title">Caricamento</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -447,11 +229,39 @@
 
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackBackEnd.js"></script>
+    <script type="text/javascript"
+            src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackSort.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+    <script>
+        $(document).ready(
+            function () {
+                <?php
+                if(isset($user)){
+                if($user->getRuolo() == Permissions::MODERATORE)
+                {
+                ?>
+                retriveModeratorFeedback();
+                <?php
+                }
+                else  if($user->getRuolo() == Permissions::AMMINISTRATORE)
+                {
+                ?>
+                retriveAdminFeedback();
+                <?php
+                }
+                }
+                ?>
+            }
+        )
+    </script>
 
-	<script>
-		/*evidenzio segnalazioni nella barra laterale*/
-		$("#segnalazioni").toggleClass("active");
-	</script>
+    <script>
+        /*evidenzio segnalazioni nella barra laterale*/
+        $("#segnalazioni").toggleClass("active");
+    </script>
 
 </body>
 </html>

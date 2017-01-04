@@ -4,7 +4,7 @@
 function deleteFeedback(id) {
    clearjQueryCache();
     $.ajax({
-        url: "feedbackValutation",
+        url: "/CrowdMine/feedbackValutation",
         type: "POST",
         data: {'id': id, 'stato': "eliminato"},
         dataType: 'json',
@@ -24,7 +24,7 @@ function deleteFeedback(id) {
 function confirmFeedback(id) {
    clearjQueryCache();
     $.ajax({
-        url: "feedbackValutation",
+        url: "/CrowdMine/feedbackValutation",
         type: "POST",
         data: {'id': id ,'stato':"attivato"},
         dataType: 'json',
@@ -45,7 +45,7 @@ function confirmFeedback(id) {
 function sendFeedbackToAdmin(id) {
     clearjQueryCache();
     $.ajax({
-        url: "feedbackValutation",
+        url: "/CrowdMine/feedbackValutation",
         type: "POST",
         data: {'id': id, 'stato': "amministratore"},
         dataType: 'json',
@@ -66,7 +66,7 @@ function sendFeedbackToAdmin(id) {
 function segnalaFeedback(feedbackID) {
         clearjQueryCache();
         $.ajax({
-            url: 'feedbackValutation',
+            url: '/CrowdMine/feedbackValutation',
             type: 'POST',
             data: {'id': feedbackID, 'stato': "segnalato"},
             dataType: 'json',

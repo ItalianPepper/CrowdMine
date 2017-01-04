@@ -5,10 +5,11 @@
 
 $(document).ready(function () {
     "use strict";
-    var id = 15; //$("#user-feedback-id").attr("value");
+    var id =$("#user-feedback-id").attr("value");
+    console.log(id);
     $("#feedback-tab-3").click(function () {
         $.ajax({
-            url: "feedbackListRetrive",
+            url: "/CrowdMine/feedbackListRetrive",
             type: "POST",
             data: {'id': id},
             dataType: 'json',
@@ -41,7 +42,7 @@ function generateFeedbackList(data, role, destination) {
             feedbackListObj.feedbackRating = data[i].feedbackRating;
             feedbackListObj.idUtente = data[i].idUtente;
 
-            destination.append(feedbackRowToString(feedbackListObj, role));
+            destination.append(feedbackRowToString(feedbackListObj, role,"/CrowdMine"));
             console.log(feedbackListObj.feedbackID +" "+feedbackListObj.feedbackRating);
             setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
         }
@@ -53,7 +54,7 @@ function generateFeedbackList(data, role, destination) {
     }
 }
 
-function feedbackRowToString(feedbackListObj, role) {
+function feedbackRowToString(feedbackListObj, role,dominio) {
     "use strict";
     var buttonGroup = "";
     console.log(role);
@@ -81,13 +82,17 @@ function feedbackRowToString(feedbackListObj, role) {
             '                                                                                </div>';
 
     }
+    else
+    {
+        buttonGroup = "";
+    }
     var html = '<div class="row" style="margin-top: 3%" id="' + feedbackListObj.feedbackID + '">' +
         '                                                        <div class="col-lg-12 col-md-12 col-xs-12">' +
         '                                                            <div class="section">' +
         '                                                                <div class="media social-post">' +
         '                                                                    <div class="media-left">' +
-        '                                                                        <a href="CrowdMine/ProfiloUtente/'+ feedbackListObj.idUtente +'">' +
-        '                                                                         <img src="style&sol;assets&sol;images&sol;' + feedbackListObj.userProfileImage + '"> ' +
+        '                                                                        <a href="'+dominio+'/ProfiloUtente/'+ feedbackListObj.idUtente +'">' +
+        '                                                                         <img src="'+dominio+'/style/img/' + feedbackListObj.userProfileImage + '"> ' +
         '                                                                        </a>' +
         '                                                                    </div>' +
         '                                                                    <div class="section">' +

@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
     $.ajax({
-            url: "reportedFedbackListRetrive",
+            url: "/CrowdMine/reportedFedbackListRetrive",
             type: "POST",
             dataType: 'json',
             async: true,

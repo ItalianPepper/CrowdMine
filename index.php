@@ -394,6 +394,9 @@ try {
             case 'visualizzaAnnunciConflitto';
                 include_once CONTROL_DIR . "annunciConflitto.php";
                 break;
+            case 'adminFedbackListRetrive';
+                include_once CONTROL_DIR . "adminFedbackListRetrive.php";
+                break;
             case 'annunciReclamati';
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "annunciReclamati.php";

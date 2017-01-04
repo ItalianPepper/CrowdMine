@@ -22,6 +22,7 @@ $utenteManager = new UtenteManager();
 $managerAnnuncio = new AnnuncioManager();
 $macroManager = new MacroCategoriaManager();
 $microManager = new MicroCategoriaManager();
+$utente = $user;
 
 if (isset($_URL) && isset($_URL[1])) {
 

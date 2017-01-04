@@ -9,7 +9,7 @@
            var id = $("#user-feedback-id").attr("value");
            console.log(optionValue,id);
            $.ajax({
-               url: "SortFeedback",
+               url: "/CrowdMine/SortFeedback",
                type: "POST",
                data: {'optionValue': optionValue,'id':id},
                dataType: 'json',

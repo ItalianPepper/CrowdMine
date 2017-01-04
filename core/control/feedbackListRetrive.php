@@ -17,8 +17,9 @@
       $userManager = new UtenteManager();
 
         if (isset($_POST["id"])) {
+            $feedbackID = $_POST["id"];
             $feedbackListObjArray = array();
-            $feedbackListObjArray = $feedbackManger->getListaFeedback(15);
+            $feedbackListObjArray = $feedbackManger->getListaFeedback($feedbackID );
 
             echo json_encode($feedbackListObjArray);
 
