@@ -5,7 +5,7 @@
 
 $(document).ready(function () {
     "use strict";
-    var id = $("#user-feedback-id").attr("value");
+    var id = 15; //$("#user-feedback-id").attr("value");
     $("#feedback-tab-3").click(function () {
         $.ajax({
             url: "feedbackListRetrive",
@@ -38,6 +38,7 @@ function generateFeedbackList(data, role, destination) {
             feedbackListObj.userLastName = data[i].userLastName;
             feedbackListObj.userProfileImage = data[i].userProfileImage;
             feedbackListObj.feedbackRating = data[i].feedbackRating;
+            feedbackListObj.idUtente = data[i].idUtente;
 
             destination.append(feedbackRowToString(feedbackListObj, role));
             setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
@@ -83,7 +84,7 @@ function feedbackRowToString(feedbackListObj, role) {
         '                                                            <div class="section">' +
         '                                                                <div class="media social-post">' +
         '                                                                    <div class="media-left">' +
-        '                                                                        <a href="#">' +
+        '                                                                        <a href="CrowdMine/ProfiloUtente/'+ feedbackListObj.idUtente +'">' +
         '                                                                         <img src="style&sol;assets&sol;images&sol;' + feedbackListObj.userProfileImage + '"> ' +
         '                                                                        </a>' +
         '                                                                    </div>' +

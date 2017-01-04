@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(isset($_POST["id"]) && isset($_POST["optionValue"]))
     {
-        $userValID = $_POST["id"];
+        $userValID =15; //$_POST["id"];
         $optionValue = $_POST["optionValue"];
         if (intval($userValID)!=0 &&(strcmp($optionValue,"data")==0 ||strcmp($optionValue,"nome")==0 ||
                 strcmp($optionValue,"valutazione")==0))

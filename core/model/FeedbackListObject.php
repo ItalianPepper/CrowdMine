@@ -8,6 +8,7 @@
  */
 class FeedbackListObject implements JsonSerializable
 {
+
     private $feedbackID;
     private $feedbackTitle;
     private $feedbackDesc;
@@ -15,7 +16,8 @@ class FeedbackListObject implements JsonSerializable
     private $userLastName;
     private $userProfileImage;
     private $feedbackRating;
-    private $userID;
+    private $idUtente;
+
 
     /**
      * FeedbackListObject constructor.
@@ -26,9 +28,10 @@ class FeedbackListObject implements JsonSerializable
      * @param $userLastName
      * @param $userProfileImage
      * @param $feedbackRating
+     * @param $userId
      */
     public function __construct($feedbackID, $feedbackTitle, $feedbackDesc, $userFirstName,
-                                $userLastName, $userProfileImage, $feedbackRating,$userID)
+                                $userLastName, $userProfileImage, $feedbackRating,$userId)
     {
         $this->feedbackID = $feedbackID;
         $this->feedbackTitle = $feedbackTitle;
@@ -37,7 +40,8 @@ class FeedbackListObject implements JsonSerializable
         $this->userLastName = $userLastName;
         $this->userProfileImage = $userProfileImage;
         $this->feedbackRating = $feedbackRating;
-        $this->$userID = $userID;
+        $this->idUtente = $userId;
+
 
     }
 
@@ -46,7 +50,7 @@ class FeedbackListObject implements JsonSerializable
      */
     public function getUserID()
     {
-        return $this->userID;
+        return $this->idUtente;
     }
 
     /**
@@ -54,7 +58,7 @@ class FeedbackListObject implements JsonSerializable
      */
     public function setUserID($userID)
     {
-        $this->userID = $userID;
+        $this->idUtente=$userID;
     }
 
 
@@ -190,7 +194,7 @@ class FeedbackListObject implements JsonSerializable
             'userLastName' => $this->getUserLastName(),
             'userProfileImage' => $this->getUserProfileImage(),
             'feedbackRating' => $this->getFeedbackRating(),
-            'userID' => $this->getUserID()
+            'idUtente' => $this->getUserID()
         ];
     }
 }
