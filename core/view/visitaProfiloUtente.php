@@ -677,34 +677,27 @@
                         <!--Statistiche-->
                         <div role="tabpanel" class="tab-pane" id="tab4">
                             <div class="row">
-                                <div class="col-md-3 col-sm-12">
+                                <div class="col-lg3 col-md-3 col-xs-12 col-sm-12">
                                     <div class="section">
                                         <div class="section-title">
                                             Your user name
                                         </div>
                                         <div class="section-body __indent">
-                                            <img src="http://placehold.it/100x100"
-                                                 class="img-responsive">
+                                            <img src="http://placehold.it/100x100" class="img-responsive">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                     <div class="section">
                                         <div class="section-title">Statistica Feedback Totale</div>
                                         <div class="section-body">
-                                            <div class="ct-chart-pie ct-perfect-fourth"></div>
-                                            <div class="col-sm-4">
-                                                <ul class="chart-label">
-                                                    <li class="ct-label ct-series-a">Feedback
-                                                        positivi
-                                                    </li>
-                                                    <li class="ct-label ct-series-b">Feedback
-                                                        negativi
-                                                    </li>
-                                                </ul>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div style="width:600px; height:600px;">
+                                                    <canvas id="statisticheUtente"></canvas>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <table class="table">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <table id="feedbackTable" class="table">
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -714,30 +707,6 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Larry</td>
-                                                        <td>the Bird</td>
-                                                        <td>@twitter</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">4</th>
-                                                        <td>Larry</td>
-                                                        <td>the Bird</td>
-                                                        <td>@twitter</td>
-                                                    </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -871,7 +840,96 @@
                 }
                 ?>
 
+                <script>
+                    $("#tab4").ready(function () {
 
+                        var url = document.URL;
+                        var idUser = url.substring(url.indexOf("id="),url.length-1);
+
+                        $.ajax({
+                            url: "statisticheUtente",
+                            type: "POST",
+                            dataType: "json",
+                            data: {option: "graphicsUser", idUser:idUser},
+                            success: function (response) {
+                                drawGraphicUser(response);
+                            }
+                        });
+                    });
+
+
+                    $("#tab4").ready(function () {
+
+                        var url = document.URL;
+                        var idUser = url.substring(url.indexOf("id="), url.length - 1);
+
+                        $.ajax({
+                            url: "statisticheUtente",
+                            type: "POST",
+                            dataType: "json",
+                            data: {option: "tableUser", idUser: idUser},
+                            success: function (response) {
+                                appendingResultToTable(response);
+                            }
+                        });
+                    });
+
+
+                    function drawGraphicUser(arrayFeedback) {
+
+                        var ctxUtente = document.getElementById("statisticheUtente").getContext("2d");
+
+                        var UtenteData = {
+                            labels:["Feedback Positivi","Feedback Negativi"],
+                            datasets: [
+                                {
+                                    label:"",
+                                    data:[arrayFeedback["positivi"],arrayFeedback["negativi"]],
+                                    backgroundColor: ["#FF6384", "#4BC0C0"],
+                                    borderColor: ["#FF6384", "#4BC0C0"],
+                                    borderWidth: 1
+                                }
+                            ]
+                        };
+
+                        var UtenteChart = new Chart.Doughnut(ctxUtente,{
+                            data: UtenteData,
+                            options: {
+                                pointHitRadius: 3,
+                                responsive: true,
+                                tooltipEvents: [],
+                                showTooltips: true,
+                                onAnimationComplete: function () {
+                                    this.showTooltip(this.segments, true);
+                                },
+                                tooltipTemplate: "<%= label %>  -  <%= value %>"
+                            }
+
+                        });
+                    }
+
+
+                    function appendingResultToTable(elements){
+
+                        $.each(elements, function(i,el){
+
+                            $("#feedbackTable").find("tbody")
+
+                                .append($("<tr>")
+                                    .append($("<th></th>")
+                                        .attr("scope", "row")
+                                        .text(i + 1))
+                                    .append($("<td>")
+                                        .text(el["microcategoria"]))
+                                    .append($("<td>")
+                                        .text(el["feedbackpositivi"]))
+                                    .append($("<td>")
+                                        .text(el["feedbacknegativi"]))
+                                )
+                        }
+                    }
+
+                </script>
 </body>
 
 </html>

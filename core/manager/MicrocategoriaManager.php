@@ -238,6 +238,7 @@ class MicrocategoriaManager extends Manager
             return false;
     }
 
+
     /**
      * Get the list of all Microcategoria into the dataBase
      *
@@ -260,14 +261,15 @@ class MicrocategoriaManager extends Manager
      *
      * @return array $lista
      */
-    public function findBestMicrocategoria($macrocategoria){
+    public function findBestMicrocategoriaCompetente($macrocategoria, $numPagina){
         $lista = array();
         $FIND_BEST_USER_BY_MICROCATEGORIA =
             "SELECT microcategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto
              FROM microcategoria, competente
              WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
+             LIMIT 10 OFFSET %d
              GROUP BY competente.id_microcategoria;";
-        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria);
+        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria, $numPagina*10-10+1);
         $result = self::getDB()->query($query);
         if(result != 0){
             foreach($result->fetch_assoc() as $l){
@@ -276,5 +278,45 @@ class MicrocategoriaManager extends Manager
         }return false;
     }
 
+    public function findBestMicrocategoriaRiferito($macrocategoria, $numPagina){
+        $lista = array();
+        $FIND_BEST_USER_BY_MICROCATEGORIA =
+            "SELECT microcategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto
+             FROM microcategoria, riferito
+             WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
+             LIMIT 10 OFFSET %d
+             GROUP BY riferito.id_microcategoria;";
+        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria, $numPagina*10-10+1);
+        $result = self::getDB()->query($query);
+        if(result != 0){
+            foreach($result->fetch_assoc() as $l){
+                array_push($lista, $l);
+            }return $lista;
+        }return false;
+    }
+
+    public function getMaxPageCompetente($macrocategoria){
+        $row = null;
+        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, competente WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
+        $query = sprintf($GET_NUMBER, $macrocategoria->getId());
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            $row = $result->fetch_row();
+        }return $row;
+    }
+
+    public function getMaxPageRiferito($macrocategoria){
+        $row = null;
+        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, riferito WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
+        $query = sprintf($GET_NUMBER, $macrocategoria->getId());
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            $row = $result->fetch_row();
+        }return $row;
+    }
 
 }
