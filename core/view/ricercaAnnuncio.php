@@ -83,13 +83,13 @@
                                 </div>
                                 <div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="tipologia" id="radio5" value="Domanda">
+                                        <input type="radio" name="tipologia" id="radio5" value="Domanda" checked>
                                         <label for="radio5">
                                             Domanda
                                         </label>
                                     </div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="tipologia" id="radio6" value="Offerta" checked="">
+                                        <input type="radio" name="tipologia" id="radio6" value="Offerta" >
                                         <label for="radio6">
                                             Offerta
                                         </label>

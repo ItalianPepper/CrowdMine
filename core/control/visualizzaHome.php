@@ -23,7 +23,6 @@ $listaCandidature = $base->getListaCandidature();
 $listaMicro = $base->getListaMicro();
 $AnnunciMicroRef = $base->getAnnunciMicroRef();
 
-
 include_once VIEW_DIR . "home.php";
 
 

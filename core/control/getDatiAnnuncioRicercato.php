@@ -3,6 +3,10 @@
 include_once MANAGER_DIR . 'AnnuncioManager.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 include_once CONTROL_DIR . "ControlUtils.php";
+include_once VIEW_DIR . "ViewUtils.php";
+
+include_once CONTROL_DIR . "annuncioBaseControl.php";
+
 include_once FILTER_DIR . 'SearchByTitleFilter.php';
 include_once FILTER_DIR . 'SearchByUserIdFilter.php';
 include_once FILTER_DIR . 'SearchByLocationFilter.php';
@@ -92,14 +96,18 @@ if(count($filters)==0){
             array_push($filters,new SearchByNotStatus(ELIMINATO));
             array_push($filters,new SearchByNotStatus(DISATTIVATO));
             array_push($filters,new SearchByNotStatus(REVISIONE));
-            $annunci = $managerAnnuncio->searchAnnuncio($filters);
+
+            $base = new annuncioBaseControl($managerAnnuncio,$filters,false,true,true);
+
+            $annunci = $base->getAnnunci();
+            $listaUtenti = $base->getListaUtenti();
+            $listaCommenti = $base->getListaCommenti();
+            $listaCandidature = $base->getListaCandidature();
+            $listaMicro = $base->getListaMicro();
+            $AnnunciMicroRef = $base->getAnnunciMicroRef();
+
             if (count($annunci) != 0) {
-                for ($i = 0; $i < count($annunci); $i++) {
-                    array_push($arrayCommenti, $managerAnnuncio->getCommentsbyId($annunci[$i]->getId()));
-                }
-                $_SESSION['commenti'] = serialize($arrayCommenti);
-                $_SESSION['annunci'] = serialize($annunci);
-                include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
+                include_once VIEW_DIR . "home.php";
             } else {
                 $_SESSION['toast-type'] = "error";
                 $_SESSION['toast-message'] = "Nessun annuncio trovato";

@@ -20,7 +20,7 @@
             </li>
 
             <li class="">
-                <a href="./messaging.html">
+                <a href="ProfiloPersonale#tab3">
                     <div class="icon">
                         <i class="fa fa-server" aria-hidden="true"></i>
                     </div>

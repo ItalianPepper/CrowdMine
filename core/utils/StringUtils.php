@@ -89,7 +89,7 @@ class StringUtils {
         }
 
         /*here user is not logged*/
-        if($level!=Permissions::NOT_LOGGED_ONLY && level!=Permissions::ALL)
+        if($level!=Permissions::NOT_LOGGED_ONLY && $level!=Permissions::ALL)
             header('Location: ' . $redirect);
 
     }
