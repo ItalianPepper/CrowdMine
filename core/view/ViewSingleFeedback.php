@@ -15,8 +15,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
     <style>
-        .navbar-collapse.in
-        {
+        .navbar-collapse.in {
             overflow-y: hidden;
         }
     </style>
@@ -24,7 +23,7 @@
 <body>
 <div class="app app-default">
 
-    <?php include "asidePannelloBackend.php" ?>
+    <?php include "asidePannelloModeratore.php" ?>
 
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">
@@ -187,55 +186,41 @@
                 </div>
             </div>
         </nav>
+
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">
-                <div class="card">
-                    <div class="card-body app-heading">
-                        <div class="app-title">
-                            <div class="title"><span
-                                    class="highlight">Feedback Segnalati</span></div>
+                <div class="card card-mini" id="single-feedback-view" style="padding: 20px">
+
+                    <div class="card-body __loading" style="padding-bottom: 50px">
+                        <div class="loader-container text-center">
+                            <div class="icon">
+                                <div class="sk-wave">
+                                    <div class="sk-rect sk-rect1"></div>
+                                    <div class="sk-rect sk-rect2"></div>
+                                    <div class="sk-rect sk-rect3"></div>
+                                    <div class="sk-rect sk-rect4"></div>
+                                    <div class="sk-rect sk-rect5"></div>
+                                </div>
+                            </div>
+                            <div>Caricamento</div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-xs-12" >
-                <div class="card card-mini">
-                    <div class="card-header">
-                        Lista Feedback Seganalti
-                    </div>
-                    <div class="card card-mini" id="feedback-list-reported" style="padding: 20px">
-
-                            <div class="card-body __loading" style="padding-bottom: 50px">
-                                <div class="loader-container text-center">
-                                    <div class="icon">
-                                        <div class="sk-wave">
-                                            <div class="sk-rect sk-rect1"></div>
-                                            <div class="sk-rect sk-rect2"></div>
-                                            <div class="sk-rect sk-rect3"></div>
-                                            <div class="sk-rect sk-rect4"></div>
-                                            <div class="sk-rect sk-rect5"></div>
-                                        </div>
-                                    </div>
-                                    <div>Caricamento</div>
-                                </div>
-                            </div>
-
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\fedbackReportedRetrive.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\fedbackReportedRetrive.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+        <script>
+            var destination = $("#single-feedback-view");
+            destination.empty();
+            generateFeedbackList(<?php echo $encodedFeedbackListObject ?>,"user",destination);
+        </script>
 
 
 </body>

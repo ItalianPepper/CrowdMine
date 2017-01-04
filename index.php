@@ -20,7 +20,7 @@ define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
 define('AJAX_DIR', CORE_DIR . DIRECTORY_SEPARATOR . "ajax" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
-define('ATTIVO',"attivo");
+define('ATTIVATO',"attivato");
 define('SEGNALATO',"segnalato");
 define('ELIMINATO',"eliminato");
 define('REVISIONE',"revisione");
@@ -182,6 +182,9 @@ try {
                 $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "SegnalaUtente.php";
                 break;
+            case 'reportedFedbackListRetrive':
+                include_once CONTROL_DIR . "reportedFedbackListRetrive.php";
+                break;
             case 'feedbackListRetrive':
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
             	break;
@@ -214,6 +217,15 @@ try {
                 break;
             case 'inserisciFeedback':
                 include_once CONTROL_DIR . "inserisciFeedbackControl.php";
+                break;
+            case 'feedbackSegnalation':
+                include_once CONTROL_DIR . "feedbackSegnalation.php";
+                break;
+            case 'feedbackValutation':
+                include_once CONTROL_DIR . "feedbackValutation.php";
+                break;
+            case 'SortFeedback':
+                include_once CONTROL_DIR . "SortFeedback.php";
                 break;
             case 'modificaPassword':
                 $user = StringUtils::checkPermission(RuoloUtente::UTENTE);
@@ -329,6 +341,12 @@ try {
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "inserisciAnnuncio.php";
                 break;
+            case 'VisualizzaSingoloFeedback';
+                include_once CONTROL_DIR . "VisualizzaSingoloFeedback.php";
+                break;
+            case 'ViewSingleFeedback';
+                include_once CONTROL_DIR . "ViewSingleFeedback.php";
+                break;
             case 'inserisciAnnuncioControl';
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "getDatiAnnuncio.php";
@@ -393,6 +411,9 @@ try {
                 break;
             case 'visualizzaAnnunciConflitto';
                 include_once CONTROL_DIR . "annunciConflitto.php";
+                break;
+            case 'adminFedbackListRetrive';
+                include_once CONTROL_DIR . "adminFedbackListRetrive.php";
                 break;
             case 'annunciReclamati';
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);

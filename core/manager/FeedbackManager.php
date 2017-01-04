@@ -11,20 +11,25 @@ include_once MODEL_DIR . 'Feedback.php';
 include_once MODEL_DIR . 'MicroCategoria.php';
 include_once MODEL_DIR . 'FeedbackListObject.php';
 include_once MODEL_DIR . 'Candidatura.php';
-include_once MODEL_DIR . 'StatisticheProfiloUtenteListObject.php';
 include_once MANAGER_DIR.'Manager.php';
+include_once MANAGER_DIR.'UtenteManager.php';
+include_once MANAGER_DIR.'AnnuncioManager.php';
 
 /**
  * Class FeedbackManager
  * This Class provides the business logic for the Feedback Management and methods for database access.
  */
-class FeedbackManager extends Manager
+class FeedbackManager extends Manager implements SplSubject
 {
+
+    private $_observers;
+    private $wrapperNotifica;
     /**
      * FeedbackManager constructor.
      */
     public function __construct()
     {
+        $this->_observers = new SplObjectStorage();
     }
 
     public function insertFeedback($id=null,$idUtente,$idAnnuncio,$idValutato,$valutazione,$corpo,$data,$stato,$titolo){
@@ -38,6 +43,10 @@ class FeedbackManager extends Manager
             header("Location: ". DOMINIO_SITO ); //add tosat notification
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
+
+        $insertID = Manager::getDB()->insert_id;
+        $annuncioManager = new AnnuncioManager();
+        $this->inviaNotificaDiInserimento($insertID, $annuncioManager->getAnnuncio($idAnnuncio));
     }
 
     public function createFeedback($id=null,$idUtente,$idAnnuncio,$idValutato,$valutazione,$corpo,$data,$stato,$titolo){
@@ -79,20 +88,46 @@ class FeedbackManager extends Manager
         return $f;
     }
 
+    public function getFeedbackByIdLO($idFeedback,$IdUtenteValutato){
+        $feebackListObject = null;
+        $GET_FEEDBACK_BY_ID = "SELECT feedback.id,feedback.titolo,feedback.corpo,
+            feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo 
+            FROM feedback, utente WHERE feedback.id_valutato=$IdUtenteValutato 
+            AND utente.id=feedback.id_utente 
+            AND feedback.id=$idFeedback
+            AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))";
+        $resSet = self::getDB()->query($GET_FEEDBACK_BY_ID);
+        return $this->feedbackLOToArray($resSet);
+     /*   if ($resSet) {
+            while ($obj = $resSet->fetch_assoc()) {
+                $feebackListObject = new FeedbackListObject($obj['id'],$obj['titolo'],$obj['corpo'],
+                    $obj['nome'],$obj['cognome'],
+                    $obj['immagine_profilo'],$obj['valutazione']);
+            }
+        }
+        return $feebackListObject;*/
+    }
+
     public function setStatus($id,$stato){
-        $UPDATE_STATUS="UPDATE feedback SET stato=$stato WHERE feedback.id=$id";
+        $UPDATE_STATUS="UPDATE feedback SET stato='$stato' WHERE feedback.id=$id";
         $resSet = self::getDB()->query($UPDATE_STATUS);
-        if($resSet)
+       /* if($resSet) {
+            if($stato == SEGNALATO){
+                $annuncioManager = new AnnuncioManager();
+                $this->inviaNotificaDiSegnalazione($id,$annuncioManager->getAnnuncio($this->getFeedbackById($id)->getIdAnnuncio()));
+            }
             return true;
+        }
         else
-            return false;
+            return false;*/
     }
 
 
     public function getListaFeedback($idUtente){
         $GET_FEEDBACK_BY_USER = "SELECT feedback.id,feedback.titolo,feedback.corpo,
-            feedback.valutazione,utente.nome,utente.cognome,utente.immagine_profilo 
-            FROM feedback, utente WHERE feedback.id_valutato=$idUtente AND utente.id=$idUtente";
+            feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo 
+            FROM feedback, utente WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente
+            AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER);
         return $this->feedbackLOToArray($resSet);
@@ -109,12 +144,11 @@ class FeedbackManager extends Manager
         return $this->feedbackToArray(self::getDB()->query($GET_FEEDBACK_BY_USER_MICRO));
     }
 
-
     public function sortListaFeedback($idUtente,$param){
-        $GET_FEEDBACK_BY_USER_PARAM = "SELECT feedback.id,feedback.titolo,feedback.corpo,feedback.valutazione,utente.nome,utente.cognome,utente.immagine_profilo 
+        $GET_FEEDBACK_BY_USER_PARAM = "SELECT feedback.id,feedback.titolo,feedback.corpo,feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo 
             FROM feedback, utente 
-            WHERE feedback.id_valutato=$idUtente AND utente.id=$idUtente
-            ORDER BY $param";
+            WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente  AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))
+            ORDER BY $param DESC";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER_PARAM);
         return $this->feedbackLOToArray($resSet);
@@ -125,16 +159,17 @@ class FeedbackManager extends Manager
         $stato = SEGNALATO;
         $GET_REPORTED_FEEDBACK = "SELECT feedback.*, utente.nome, utente.cognome, utente.immagine_profilo 
                                   FROM feedback,utente 
-                                  WHERE feedback.stato = $stato AND feedback.id_valutato = utente.id";
-        return $this->feedbackToLOArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
+                                  WHERE feedback.stato ='$stato' AND feedback.id_valutato = utente.id";
+        $resSet = self::getDB()->query($GET_REPORTED_FEEDBACK);
+        return $this->feedbackLOToArray($resSet);
     }
 
     public function getFeedbackAdmin(){
         $stato = AMMINISTRATORE;
-        $GET_REPORTED_FEEDBACK = "SELECT feedback.* utente.nome, utente.cognome, utente.immagine_profilo 
+        $GET_REPORTED_FEEDBACK = "SELECT feedback.*,utente.nome, utente.cognome, utente.immagine_profilo 
                                   FROM feedback,utente 
-                                  WHERE feedback.stato = $stato AND feedback.id_valutato = utente.id";
-        return $this->feedbackToLOArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
+                                  WHERE feedback.stato = '$stato' AND feedback.id_valutato = utente.id";
+        return $this->feedbackLOToArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
     }
 
     public function removeFeedback($idFeedback){
@@ -163,172 +198,67 @@ class FeedbackManager extends Manager
         $us = array();
         if ($resSet) {
             while ($obj = $resSet->fetch_assoc()) {
-                $u = new FeedbackListObject($obj['id'],$obj['titolo'],$obj['corpo'],$obj['nome'],$obj['cognome'],$obj['immagine_profilo'],$obj['valutazione']);
+                $u = new FeedbackListObject($obj['id'],
+                    $obj['titolo'],
+                    $obj['corpo'],
+                    $obj['nome'],
+                    $obj['cognome'],
+                    $obj['immagine_profilo'],
+                    $obj['valutazione'],
+                    $obj['id_utente']);
                 $us[] = $u->jsonSerialize();
             }
         }
         return $us;
     }
 
-    /**This function return for each Micro Categoria, that an user has used in his ads, the number of positive feedback.
-     *
-     * @param $idUtente
-     *
-     * @return $result
-     *
+    /**
+     * @param $id
+     * @param Annuncio $annuncio
      */
-    private function getCountPositive($idUtente){
-        $GET_COUNT_POSITIVE = " SELECT microcategoria.nome, COUNT(feedback.id) as Positivi
-                                FROM feedback, annuncio, riferito, microcategoria
-                                WHERE  feedback.id_valutato = $idUtente AND
-                                        feedback.valutazione > 2.5 AND
-                                        feedback.id_annuncio = annuncio.id AND
-                                        riferito.id_annuncio = annuncio.id AND
-                                        riferito.id_microcategoria = microcategoria.id
-                                GROUP BY microcategoria.nome ";
-        $result = self::getDB()->query($GET_COUNT_POSITIVE);
-
-        return $result;
+    private function inviaNotificaDiInserimento($id, $annuncio){
+        $tipo="inserimento";
+        $name= $annuncio->getTitolo();
+        $utenteManager = new UtenteManager();
+        $dest= $utenteManager->findUtenteById($annuncio->getIdUtente());
+        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+        $this->notify();
     }
 
-    /**This function return for each Micro Categoria, that an user has used in his ads, the number of negative feedback.
-     *
-     * @param $idUtente
-     *
-     * @return $result
-     *
-     */
-    private function getCountNegative($idUtente){
-        $GET_COUNT_NEGATIVE = " SELECT microcategoria.nome, COUNT(feedback.id) as Negativi
-                                FROM feedback, annuncio, riferito, microcategoria
-                                WHERE  feedback.id_valutato = $idUtente AND
-                                        feedback.valutazione <= 2.5 AND
-                                        feedback.id_annuncio = annuncio.id AND
-                                        riferito.id_annuncio = annuncio.id AND
-                                        riferito.id_microcategoria = microcategoria.id
-                                GROUP BY microcategoria.nome ";
-        $result = self::getDB()->query($GET_COUNT_NEGATIVE);
-
-        return $result;
-
+    private function inviaNotificaDiSegnalazione($id, $annuncio){
+        $tipo="segnalazione";
+        $name= $annuncio->getTitolo();
+        $utenteManager = new UtenteManager();
+        $dest= $utenteManager->findUtenteById($this->getFeedbackById($id)->getIdValutato());
+        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+        $this->notify();
     }
 
-    /**This function return for each Micro Categoria, that an user has used in his ads, the number of negative feedback
-     * and the number of positive feedback.
-     *
-     * @param $idUtente
-     *
-     * @return $resultTable
-     *
-     */
-    public function getFeedbackMicroCategoriaStats($idUtente){
+    public function setWrapperNotifica($idOggetto, $tipo, $nome, $listaDestinatari = null){
+        $this->wrapperNotifica = array(
+            "id_oggetto" => $idOggetto,
+            "tipo_oggetto" => $tipo,
+            "nome" => $nome,
+            "lista_mittenti" => $listaDestinatari
+        );
+    }
 
-        $resultTable = array();
+    public function getWrapperNotifica(){
+        return $this->wrapperNotifica;
+    }
 
-        $resultNegative = $this->getCountNegative($idUtente);
+    public function attach(SplObserver $observer){
+        $this->_observers->attach($observer);
+    }
 
-        while ($obj = $resultNegative->fetch_assoc()){
-            $tmp = new StatisticheProfiloUtenteListObject($obj["nome"],0,$obj["Negativi"]);
-            $resultTable[] = $tmp;
+    public function detach(SplObserver $observer){
+        $this->_observers->detach($observer);
+    }
+
+    public function notify(){
+        foreach($this->_observers as $observer){
+            $observer->update($this);
         }
-
-        $resultPositive = $this->getCountPositive($idUtente);
-
-        while ($obj = $resultPositive->fetch_assoc()){
-
-            foreach ($resultTable as $resT){
-
-                if($resT->getMicroCategoria() == $obj["nome"]){
-
-                    $resT->setFeedbackPositivi($obj["Positivi"]);
-
-                }else{
-                    $tmp = new StatisticheProfiloUtenteListObject($obj["nome"],$obj["Positivi"],0);
-
-                    $resultTable[] = $tmp;
-                }
-            }
-        }
-
-        foreach($resultNegative as $tmp){
-            $resultTable[] = $tmp->jsonSerialize();
-        }
-
-        return $resultTable;
-
     }
-
-    /**This function return the average of the all positive feedback used in the ads by an user.
-     *
-     * @param $idUtente
-     *
-     * @return $result
-     *
-     */
-    private function getAveragePositiveFeedback($idUtente){
-
-        $GET_AVERAGE_FEEDBACK_POSITIVE =" SELECT AVG(feedback.id) as AveragePositive
-                                FROM feedback, annuncio, riferito, microcategoria
-                                WHERE  feedback.id_valutato = $idUtente AND
-                                        feedback.valutazione > 2.5 AND
-                                        feedback.id_annuncio = annuncio.id AND
-                                        riferito.id_annuncio = annuncio.id AND
-                                        riferito.id_microcategoria = microcategoria.id";
-
-
-        $result = self::getDB()->query($GET_AVERAGE_FEEDBACK_POSITIVE);
-
-        return $result;
-    }
-
-    /**This function return the average of the all negative feedback used in the ads by an user.
-     *
-     * @param $idUtente
-     *
-     * @return $result
-     *
-     */
-    private function getAverageNegativeFeedback($idUtente){
-
-        $GET_AVERAGE_FEEDBACK_NEGATIVE =" SELECT AVG(feedback.id) as AverageNegative
-                                FROM feedback, annuncio, riferito, microcategoria
-                                WHERE  feedback.id_valutato = $idUtente AND
-                                        feedback.valutazione <= 2.5 AND
-                                        feedback.id_annuncio = annuncio.id AND
-                                        riferito.id_annuncio = annuncio.id AND
-                                        riferito.id_microcategoria = microcategoria.id";
-
-        $result = self::getDB()->query($GET_AVERAGE_FEEDBACK_NEGATIVE);
-
-        return $result;
-    }
-
-    /**This function return the average of the all negative feedback and the average of the all positive feedback used
-     * in the ads by an user.
-     *
-     * @param $idUtente
-     *
-     * @return $result
-     *
-     */
-    public function getAveragesOfFeedbacks($idUtente){
-
-        $resPositive = $this->getAveragePositiveFeedback($idUtente);
-        $resNegative = $this->getAverageNegativeFeedback($idUtente);
-
-        $result = array();
-
-        while($obj = $resNegative->fetch_assoc()){
-            $result["negative"]= $obj["AverageNegative"] ;
-        }
-
-        while($obj = $resPositive->fetch_assoc()){
-            $result["positive"]= $obj["AveragePositive"] ;
-        }
-
-        return $result;
-
-    }
-
 
 }
