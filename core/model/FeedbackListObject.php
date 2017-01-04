@@ -15,6 +15,7 @@ class FeedbackListObject implements JsonSerializable
     private $userLastName;
     private $userProfileImage;
     private $feedbackRating;
+    private $userID;
 
     /**
      * FeedbackListObject constructor.
@@ -26,7 +27,8 @@ class FeedbackListObject implements JsonSerializable
      * @param $userProfileImage
      * @param $feedbackRating
      */
-    public function __construct($feedbackID, $feedbackTitle, $feedbackDesc, $userFirstName, $userLastName, $userProfileImage, $feedbackRating)
+    public function __construct($feedbackID, $feedbackTitle, $feedbackDesc, $userFirstName,
+                                $userLastName, $userProfileImage, $feedbackRating,$userID)
     {
         $this->feedbackID = $feedbackID;
         $this->feedbackTitle = $feedbackTitle;
@@ -35,6 +37,24 @@ class FeedbackListObject implements JsonSerializable
         $this->userLastName = $userLastName;
         $this->userProfileImage = $userProfileImage;
         $this->feedbackRating = $feedbackRating;
+        $this->$userID = $userID;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserID()
+    {
+        return $this->userID;
+    }
+
+    /**
+     * @param mixed $userID
+     */
+    public function setUserID($userID)
+    {
+        $this->userID = $userID;
     }
 
 
@@ -169,7 +189,8 @@ class FeedbackListObject implements JsonSerializable
             'userFirstName' => $this->getUserFirstName(),
             'userLastName' => $this->getUserLastName(),
             'userProfileImage' => $this->getUserProfileImage(),
-            'feedbackRating' => $this->getFeedbackRating()
+            'feedbackRating' => $this->getFeedbackRating(),
+            'userID' => $this->getUserID()
         ];
     }
 }
