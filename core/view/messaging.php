@@ -6,16 +6,9 @@ include_once MODEL_DIR . "Messaggio.php";
 include_once MANAGER_DIR . "MessaggioManager.php";
 
 #RECUPERO INFORMAZIONI DALL'UTENTE
-//$utente = $_SESSION['utente'];
-// if ($utente == null)
-//     header("location:./index.php");
-$utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-   
-
-$id_utente_connesso = $utente_connesso->getId();
+$id_utente_connesso = $user->getId();
 $manager_msg = new MessaggioManager();
 $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //array di utenti
-
 
 //RECUPERO L'ID DEL DESTINATARIO
     if (isset($_GET["idcand"])) {
@@ -25,8 +18,9 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
             $id_get = $_GET["idcand"];
     } else
         $id_get = -3;
+    
     $_SESSION['destinatario'] = $id_get;
-
+    
 
 ?>
 
@@ -94,12 +88,13 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
 
     // ##2## Quando viene caricato il documento stampo la conversazione con l'id presente nel Get
     document.addEventListener("DOMContentLoaded", function (event) {
-
+       
         <?php
             if ($id_get >= 0) { //Il GET CI STA
                 echo 'stampa(null)';
+                
             } else {
-                echo "window.location.href = '".DOMINIO_SITO."/messaging'";
+                //echo "window.location.href = '".DOMINIO_SITO."/messaging'";
             }
         ?>
     
