@@ -86,12 +86,6 @@ try {
             case 'visualizzaStatisticheMacroCategorie':
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
                 break;
-            case 'classificaMiglioriUtenti':
-                include_once VIEW_DIR . "classificaMiglioriUtenti.php";
-                break;
-            case 'classificaMiglioriSocieta':
-                include_once VIEW_DIR . "classificaMiglioriSocieta.php";
-                break;
             case 'annuncioModeratore':
                 include_once VIEW_DIR . "annuncioModeratore.php";
                 break;
@@ -150,9 +144,6 @@ try {
                 StringUtils::checkPermission("all");
                 include_once CONTROL_DIR . "InserisciEsperienza.php";
                 break;
-            case 'classificaUtenti':
-                include_once CONTROL_DIR . "ClassificaUtenti.php";
-                break;
             case 'effettuaLogin':
                 StringUtils::checkPermission(Permissions::NOT_LOGGED_ONLY);
 		        include_once CONTROL_DIR . "LoginCM.php";
@@ -164,18 +155,23 @@ try {
                 include_once CONTROL_DIR . "SearchController.php";
                 break;
             case 'macroCategorieStat':
+                StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "StatisticheMacroCategorie.php";
                 break;
             case 'tabGenerale':
+                StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "TabGenerale.php";
                 break;
             case 'tabAnnunci':
+                StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "TabAnnunci.php";
                 break;
             case 'tabUtenti':
+                StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "TabUtenti.php";
                 break;
             case 'statisticheUtente':
+                StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "TabStatisticheUtente.php";
                 break;
             case 'cercaUtente':

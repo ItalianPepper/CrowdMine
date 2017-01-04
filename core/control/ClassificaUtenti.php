@@ -19,8 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $result = $macroCategoriaManager->findAll();
 
-            //$result = stubMacroCategorie();
-
             header("Content-Type: application/json");
             echo json_encode($result);
 
@@ -28,8 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $microCategoriaManager = new MicrocategoriaManager();
 
             $result = $microCategoriaManager->findAll();
-
-            //$result = stubMicroCategorie();
 
             header("Content-Type: application/json");
             echo json_encode($result);
@@ -53,31 +49,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Content-Type: application/json");
         echo json_encode($result);
     }
-
-}
-
-function arrayUtenti(){
-    $arrayUtentiFunc = array("lol");
-    return $arrayUtentiFunc;
-}
-
-function stubMacroCategorie()
-{
-    $arrayTest = array("Informatica", "Ristorazione", "Bancario");
-    return $arrayTest;
-}
-
-function stubMicroCategorie()
-{
-    $microsName = array("PHP", "C", "JAVA", "C++");
-    return $microsName;
-}
-
-function stubUtentiMicroCategorie(){
-
-}
-
-function stubUtentiMacroCategorie(){
-
 
 }
