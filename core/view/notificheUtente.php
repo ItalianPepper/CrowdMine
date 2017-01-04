@@ -10,6 +10,11 @@
 <html>
 <head>
     <?php include_once VIEW_DIR."headerStart.php";?>
+    <style>
+        .row {
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
 <div class="app app-default">
@@ -53,6 +58,5 @@
         </div>
     </div>
 </div>
-<div id="footer"><?php include_once VIEW_DIR."footer.php";?></div>
 </body>
 </html>
