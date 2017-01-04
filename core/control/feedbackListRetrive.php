@@ -11,25 +11,25 @@
     include_once MANAGER_DIR . "UtenteManager.php";
     include_once MODEL_DIR . "Utente.php";
     include_once EXCEPTION_DIR . "IllegalArgumentException.php";
-    include_once CONTROL_DIR."FeedbackListObject.php";
+    include_once MODEL_DIR."FeedbackListObject.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $feedbackManger = new FeedbackManager();
-        $userManager = new UtenteManager();
+      $userManager = new UtenteManager();
 
-        if (isset($_POST["username"])) {
-            $user = $userManager->getUtente($_POST["username"]);
-            $feedbackListObj = new FeedbackListObject(1,"ciao","ciao","ciao","ciao","ciao",5);
-            echo json_encode($feedbackListObj);
-          //  echo "ok";
+        if (isset($_POST["id"])) {
+            $feedbackID = $_POST["id"];
+            $feedbackListObjArray = array();
+            $feedbackListObjArray = $feedbackManger->getListaFeedback($feedbackID );
 
-        } else {
-            $_SESSION['toast-type'] = "error";
-            $_SESSION['toast-message'] = "Errore nel caricamento della lista dei feedback ci scusiamo per il disagio";
-            header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
-            throw new IllegalArgumentException("Errore nel caricamento della lista dei feedback ci scusiamo per il disagio");
-        }
+            echo json_encode($feedbackListObjArray);
 
-       //$feedbackList = $feedbackManger->getListaFeedback($user->getId());*/
 
+       } else {
+            $return =array(
+                'toastType' => "error",
+                'toastMessage' => "Errore nella lista feedback ci scusiamo per il disagio"
+            );
+            echo json_encode($return);
+       }
 
     }
