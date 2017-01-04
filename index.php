@@ -337,9 +337,11 @@ try {
                 include_once CONTROL_DIR . "rifiutaCollaborazione.php";
                 break;
             case 'listaNotifiche':
+                $user = StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "listaNotifiche.php";
                 break;
             case 'pannelloNotifiche':
+                $user = StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "pannelloNotifiche.php";
                 break;
             default:

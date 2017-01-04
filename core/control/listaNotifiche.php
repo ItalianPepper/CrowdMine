@@ -16,19 +16,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $utenteManager = new UtenteManager();
     $notificaManager = new NotificaManager();
 
-    if(isset($_POST['user'])){
-        $user = $utenteManager->findUtenteByName($_POST['user']);
-        $listaNotifiche = $notificaManager->loadFromDispatcher($user->getId());
+    $res = $utenteManager->findUtenteByName($user->getId());
+    $listaNotifiche = $notificaManager->loadFromDispatcher($res->getId());
 
-        echo json_encode($listaNotifiche);
-
-    }
+    header("Content/application: json");
+    echo json_encode($listaNotifiche);
 
 }else{
-
     $_SESSION['toast-type'] = "error";
     $_SESSION['toast-message'] = ErrorUtils::$LISTA_NOTIFICHE_VUOTA;
     header("location:" . DOMINIO_SITO . "/listaNotificheUtente");
     throw new IllegalArgumentException(ErrorUtils::$LISTA_NOTIFICHE_VUOTA);
-
 }

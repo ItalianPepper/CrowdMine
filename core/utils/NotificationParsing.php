@@ -59,7 +59,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
 
@@ -71,7 +71,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
 
@@ -82,7 +82,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::CANDIDATURA) {
 
@@ -93,7 +93,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
                     }
 
                 } else if ($type == tipoNotifica::RISOLUZIONE) {
@@ -116,7 +116,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
 
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
@@ -132,7 +132,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
                         $href = $this->rounting(SoggettiNotifiche::FEEDBACK);
@@ -147,7 +147,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     }
 
@@ -172,7 +172,7 @@ class NotificationParsing
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
 
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
                     }
                 }
             }
@@ -204,7 +204,7 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_COMMENTO);
@@ -212,14 +212,14 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_FEEDBACK);
                         $href = sprintf($href, $id);
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::UTENTE) {
                         $href = $this->rounting(SoggettiNotifiche::SEGNALAZIONE_UTENTE);
@@ -227,7 +227,7 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
                     }
                 }
             }
@@ -259,7 +259,7 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_ANNUNCIO, $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
 
@@ -268,7 +268,7 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "commento", $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::FEEDBACK) {
 
@@ -277,7 +277,7 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_FEEDBACK_E_COMMENTO, "feedback", $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::UTENTE) {
 
@@ -286,7 +286,7 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::MOD_SEGNALAZIONE_UTENTE, $referName);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
 
                     } else if ($obj == SoggettiNotifiche::CONTROVERSIA_MOD) {
 
@@ -295,7 +295,7 @@ class NotificationParsing
                         $text = sprintf(NotificationParsing::ADM_CONTROVERSIA_TRA_MOD);
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
-                        array_push($result,$resObject);
+                        array_push($result,$resObject->jsonSerialize());
                     }
                 }
             }

@@ -1,6 +1,6 @@
 <?php
     if(isset($_SESSION['loggedin']) && isset($_SESSION['lista'])){
-        $listaNotifiche = $_SESSION['lista'];
+        $listaNotifiche = json_decode($_SESSION['lista']);
     }else{
         $listaNotifiche = null;
     }
@@ -62,7 +62,8 @@
                                     echo "<li>Non ci sono notifiche</li>";
                                 }
                                 else{
-                                    foreach($listaNotifiche as $notifica) {
+                                    foreach($listaNotifiche as $n) {
+                                        $notifica = json_decode($n);
                                         if (!$notifica['letto'])
                                             $html = '<li class="list-group-item" id="$notifica[\'idNotify\']" style="background-color: #3399FF">
                                                         <a href="#$notifica[\'href\']">
