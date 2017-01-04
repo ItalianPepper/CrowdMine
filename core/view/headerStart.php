@@ -25,7 +25,7 @@
         }
 
         body .app-container.no-sidebar .app-head{
-            height:120px;
+            height:0px;
         }
 
         @media (min-width: 767px) {
@@ -51,6 +51,11 @@
             .app-head {
                 height: 90px;
             }
+
+            body .app-container.no-sidebar .app-head{
+                height:120px;
+            }
+
         }
 
     </style>

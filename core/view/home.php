@@ -95,6 +95,7 @@
                             <?php
                             for ($i = 0; $i < count($annunci); $i++) {
                                 $aId = $annunci[$i]->getId();
+                                $u = $listaUtenti[$annunci[$i]->getIdUtente()];
                                 ?>
 
                                 <div class="col-md-10 col-sm-10" style="margin-top: 5%">
@@ -106,7 +107,7 @@
                                             <div class="card-title" style="float: left">
 
                                                 <div class="media" style="width: 20%; float: left">
-                                                    <a href="#">
+                                                    <a href="<?php echo DOMINIO_SITO."\ProfiloUtente\\".$u->getId(); ?>">
                                                         <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
                                                     </a>
                                                 </div>
@@ -114,7 +115,7 @@
                                                 <div style="float: left; margin-left: 5%;">
                                                     <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">
                                                         <?php
-                                                        $u = $listaUtenti[$annunci[$i]->getIdUtente()];
+
                                                         echo $u->getNome() . " " . $u->getCognome() ?>
                                                     </h1>
                                                     <h1><?php echo $annunci[$i]->getTitolo();?></h1>
