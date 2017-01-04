@@ -25,7 +25,7 @@ $(document).ready(function () {
             var htmlLengthError = '<button type="button" class="close" data-dismiss="alert"' +
                 '                                                            aria-label="Close">' +
                 '                                                        <span aria-hidden="true"></button>' +
-                '                                                    <strong>Errore!</strong> Il testo deve essere minimo  massimo 300 caratteri!';
+                '                                                    <strong>Errore!</strong> Il testo deve essere massimo 300 caratteri!';
 
 
             $("#feedback-erros").html(htmlLengthError).fadeIn();
