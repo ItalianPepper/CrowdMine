@@ -52,3 +52,12 @@
     </style>
 
  <?php $fullname = (isset($fullname))?$fullname:"Crowdmine";?>
+
+ <script>
+  function inserciValore() {
+      var valueInputTextForm = $("#search").val();
+      $("#value-to-send").attr("value",valueInputTextForm);
+      $("#form-ricercaAnnunci").submit();
+
+  }
+ </script>

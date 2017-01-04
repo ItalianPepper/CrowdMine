@@ -244,6 +244,10 @@ try {
             case "ricercaUtente":
                 include_once CONTROL_DIR . "RicercaUtente.php";
                 break;
+            case "cercaAnnunciNavBar":
+                $user = StringUtils::checkPermission(Permissions::ALL);
+                include_once CONTROL_DIR . "cercaAnnunciNavBar.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";

@@ -27,20 +27,25 @@
                     </a>
                 </li>
                 <li class="navbar-search col-lg-9">
+
                     <input  class="search-form col-md-8" id="search" type="text" placeholder="Cerca annunci di lavoro..." > <!--style="height: 60%; padding-right: 0px; padding-left: 5px"-->
 
-                    <button class="btn-search"><i class="fa fa-search"></i></button>
+                    <button class="btn-search" id="search-button" onclick="inserciValore()"><i class="fa fa-search"></i></button>
+
                     <div class="col-md-2" style="padding-right: 0px; padding-left: 5px">
                         <!-- BARRA DI RICERCA->FORM->SCRITTA AVANZATE-->
                         <div class="col-md-4" style="padding-right: 10px; padding-left: 10px; padding-top: 7px">
-                            <a href="#" class="text-center ">Avanzata</a>
+                            <a href="<?php echo DOMINIO_SITO;?>/ricercaAnnuncio" class="text-center " >Avanzata</a>
                         </div>
                     </div>
+                    <form id="form-ricercaAnnunci" method="post" action="cercaAnnunciNavBar">
+                        <input type="hidden" value="" id="value-to-send" name="form-text">
+                    </form>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown notification">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3" class="dropdown-toggle" data-toggle="dropdown" onclick="location.href='<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3';">
                         <div class="icon"><i class="fa fa-folder-open-o" aria-hidden="true"></i></div>
                         <div class="title">I miei annunci</div>
                         <div class="count">0</div>
@@ -50,7 +55,7 @@
                             <li class="dropdown-header">I miei annunci</li>
                             <li class="dropdown-empty">Nessun annuncio</li>
                             <li class="dropdown-footer">
-                                <a href="#">Visualizza Tutti <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3">Visualizza Tutti <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -145,7 +150,7 @@
                     </div>
                 </li>
                 <li class="dropdown profile">
-                    <a href="/html/pages/profile.html" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale" class="dropdown-toggle" data-toggle="dropdown" onclick="location.href='<?php echo DOMINIO_SITO;?>/ProfiloPersonale';">
                         <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                         <div class="title">Profile</div>
                     </a>
@@ -155,12 +160,12 @@
                         </div>
                         <ul class="action">
                             <li>
-                                <a href="#">
+                                <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale">
                                     Profilo
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="<?php echo DOMINIO_SITO;?>/annunciPreferiti">
                                     I miei preferiti
                                 </a>
                             </li>
@@ -175,7 +180,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="<?php echo DOMINIO_SITO;?>/logout">
                                     Logout
                                 </a>
                             </li>
