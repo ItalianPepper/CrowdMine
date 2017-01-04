@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
-
-    <!-- Theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
+    <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>
         div.section .profile {
@@ -31,6 +17,63 @@
             min-height:80px;
         }
 
+        .card.card-tab .tab-content .tab-pane.active.tab-pane-cards{
+            display: inline-block;
+        }
+
+        .tab-pane.tab-pane-cards .card-header {
+            padding: 30px;
+            border-bottom: 1px solid #dfe6e8;
+            background-color: #fff;
+        }
+
+    </style>
+
+
+    <style>
+        h1 {
+            font-size: 1rem;
+
+        }
+
+        @media (min-width: 1px) {
+            h1 {
+                font-size: medium;
+            }
+
+        }
+
+        @media (min-width: 750px) {
+            h1 {
+                font-size: medium;
+            }
+
+        }
+
+        @media (min-width: 970px) {
+            h1 {
+                font-size: x-large;
+            }
+
+        }
+
+        @media (min-width: 1200px) {
+            h1 {
+                font-size: xx-large;
+            }
+
+        }
+
+        a.morelink {
+            text-decoration:none;
+            outline: none;
+        }
+        .morecontent span {
+            display: none;
+
+        }
+
+
     </style>
 
 
@@ -40,269 +83,10 @@
 </head>
 <body>
 <div class="app app-default">
-    <aside class="app-sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a class="sidebar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
-            <button type="button" class="sidebar-toggle">
-                <i class="fa fa-times"></i>
-            </button>
-        </div>
-        <div class="sidebar-menu">
-            <ul class="sidebar-nav">
-                <li class="">
-                    <a href="../index.html">
-                        <div class="icon">
-                            <i class="fa fa-tasks" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Dashboard</div>
-                    </a>
-                </li>
-                <li class="@@menu.messaging">
-                    <a href="../messaging.html">
-                        <div class="icon">
-                            <i class="fa fa-comments" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Messaging</div>
-                    </a>
-                </li>
-                <li class="dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-cube" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">UI Kits</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> UI Kits</li>
-                            <li><a href="../uikits/customize.html">Customize</a></li>
-                            <li><a href="../uikits/components.html">Components</a></li>
-                            <li><a href="../uikits/card.html">Card</a></li>
-                            <li><a href="../uikits/form.html">Form</a></li>
-                            <li><a href="../uikits/table.html">Table</a></li>
-                            <li><a href="../uikits/icons.html">Icons</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Advanced Components</li>
-                            <li><a href="../uikits/pricing-table.html">Pricing Table</a></li>
-                            <!-- <li><a href="../uikits/timeline.html">Timeline</a></li> -->
-                            <li><a href="../uikits/chart.html">Chart</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Pages</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Admin</li>
-                            <li><a href="../pages/form.html">Form</a></li>
-                            <li><a href="../pages/profile.html">Profile</a></li>
-                            <li><a href="../pages/search.html">Search</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Landing</li>
-                            <!-- <li><a href="../pages/landing.html">Landing</a></li> -->
-                            <li><a href="../pages/login.html">Login</a></li>
-                            <li><a href="../pages/register.html">Register</a></li>
-                            <!-- <li><a href="../pages/404.html">404</a></li> -->
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-footer">
-            <ul class="menu">
-                <li>
-                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li><a href="#"><span class="flag-icon flag-icon-th flag-icon-squared"></span></a></li>
-            </ul>
-        </div>
-    </aside>
+    <div class="app-container no-sidebar">
 
-    <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
-        <div class="dropdown-background">
-            <div class="bg"></div>
-        </div>
-        <div class="dropdown-container">
-            {{list}}
-        </div>
-    </script>
-    <div class="app-container">
-        <nav class="navbar navbar-default" id="navbar">
-            <div class="container-fluid">
-                <div class="navbar-collapse collapse in">
-                    <ul class="nav navbar-nav navbar-mobile">
-                        <li>
-                            <button type="button" class="sidebar-toggle">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                        </li>
-                        <li class="logo">
-                            <a class="navbar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
-                        </li>
-                        <li>
-                            <button type="button" class="navbar-toggle">
-                                <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-                            </button>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-left">
-                        <li class="navbar-title">Profile</li>
-                        <li class="navbar-search hidden-sm">
-                            <input id="search" type="text" placeholder="Search..">
-                            <button class="btn-search"><i class="fa fa-search"></i></button>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown notification">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
-                                <div class="title">New Orders</div>
-                                <div class="count">0</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <ul>
-                                    <li class="dropdown-header">Ordering</li>
-                                    <li class="dropdown-empty">No New Ordered</li>
-                                    <li class="dropdown-footer">
-                                        <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="dropdown notification warning">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
-                                <div class="title">Unread Messages</div>
-                                <div class="count">99</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <ul>
-                                    <li class="dropdown-header">Message</li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-warning pull-right">10</span>
-                                            <div class="message">
-                                                <img class="profile" src="https://placehold.it/100x100">
-                                                <div class="content">
-                                                    <div class="title">"Payment Confirmation.."</div>
-                                                    <div class="description">Alan Anderson</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-warning pull-right">5</span>
-                                            <div class="message">
-                                                <img class="profile" src="https://placehold.it/100x100">
-                                                <div class="content">
-                                                    <div class="title">"Hello World"</div>
-                                                    <div class="description">Marco Harmon</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-warning pull-right">2</span>
-                                            <div class="message">
-                                                <img class="profile" src="https://placehold.it/100x100">
-                                                <div class="content">
-                                                    <div class="title">"Order Confirmation.."</div>
-                                                    <div class="description">Brenda Lawson</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="dropdown-footer">
-                                        <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="dropdown notification danger">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
-                                <div class="title">System Notifications</div>
-                                <div class="count">10</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <ul>
-                                    <li class="dropdown-header">Notification</li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">8</span>
-                                            <div class="message">
-                                                <div class="content">
-                                                    <div class="title">New Order</div>
-                                                    <div class="description">$400 total</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">14</span>
-                                            Inbox
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">5</span>
-                                            Issues Report
-                                        </a>
-                                    </li>
-                                    <li class="dropdown-footer">
-                                        <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="dropdown profile">
-                            <a href="/html/pages/profile.html" class="dropdown-toggle" data-toggle="dropdown">
-                                <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-                                <div class="title">Profile</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="profile-info">
-                                    <h4 class="username"><?php echo $fullname; ?></h4>
-                                </div>
-                                <ul class="action">
-                                    <li>
-                                        <a href="#">
-                                            Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">5</span>
-                                            My Inbox
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Setting
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <?php include_once VIEW_DIR."headerNavBar.php";?>
+        <div class="app-head"></div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -565,12 +349,154 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="tab2">
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nullaip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                            fugiat nullaip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla
+                        <div role="tabpanel" class="tab-pane tab-pane-cards" id="tab2">
+                            <?php
+                            for ($i = 0; $i < count($annunci); $i++) {
+                                $aId = $annunci[$i]->getId();
+                            ?>
+
+                            <div class="col-md-10 col-sm-10" style="margin-top: 5%">
+
+                                <div class="card">
+
+                                    <div class="card-header ">
+
+                                        <div class="card-title" style="float: left">
+
+                                            <div class="media" style="width: 20%; float: left">
+                                                <a href="#">
+                                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                </a>
+                                            </div>
+
+                                            <div style="float: left; margin-left: 5%;">
+                                                <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">
+                                                        <?php
+                                                        $u = $listaUtenti[$annunci[$i]->getIdUtente()];
+                                                        echo $u->getNome() . " " . $u->getCognome() ?>
+                                                </h1>
+                                                <h1><?php echo $annunci[$i]->getTitolo();?></h1>
+
+                                            </div>
+
+                                        </div>
+
+                                        <a href="<?php echo DOMINIO_SITO; ?>/segnalaAnnuncioControl?id=<?php echo $annunci[$i]->getId();?>">
+                                            <i class="fa fa-legal" aria-hidden="true" style="font-size: 200%"></i>
+                                        </a>
+
+                                        <a href="<?php echo DOMINIO_SITO; ?>/aggiungiPreferitiControl?id=<?php echo $annunci[$i]->getId();?>">
+                                            <i class="fa fa-star" aria-hidden="true" style="font-size: 200%"></i>
+                                        </a>
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="comment more" style="word-wrap: break-word;">
+                                            <?php echo $annunci[$i]->getDescrizione();?>
+                                        </div>
+                                        <br>
+
+                                        <div style="margin-top: 3%">
+                                            <?php
+                                            if(isset($AnnunciMicroRef[$aId]))
+                                                for($z=0;$z<count($AnnunciMicroRef[$aId]); $z++){
+                                                    $micro = $listaMicro[$AnnunciMicroRef[$aId][$z]];
+                                                    echo randomColorLabel($micro->getNome(), $micro->getNome());
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="media-comment" style="">
+                                        <button class="btn btn-link <?php echo $annunci[$i]->getId();?>">
+                                            <i class="fa fa-comments-o"></i><?php echo isset($listaCommenti[$aId])?count($listaCommenti[$aId]):0 ?>Comments
+                                        </button>
+                                        <button class="btn btn-default <?php echo $annunci[$i]->getId();?>">info</button>
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal<?php echo $annunci[$i]->getId();?>">Candidati</button>
+                                    </div>
+
+
+                                    <div class="row col-md-12 col-sm-12 card contenitore <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
+                                        <?php
+                                        if(isset($listaCommenti[$aId]))
+                                            for($z=0;$z<count($listaCommenti[$aId]); $z++){
+
+                                                ?>
+                                                <div class="comment-body" style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                                                    <div class="media-heading">
+                                                        <h4 class="title">
+                                                            <?php
+                                                            $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
+                                                            echo $u->getNome()." ".$u->getCognome()
+                                                            ?>
+                                                        </h4>
+                                                        <h5 class="timeing"><?php
+                                                            echo $listaCommenti[$aId][$z]->getData();
+                                                            ?>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-5 options"
+                                                         style="float: right; margin-top: -8%; margin-right: -23%">
+                                                        <a href="<?php echo DOMINIO_SITO;?>/segnalaCommento?id=<?php echo $listaCommenti[$aId][$z]->getId(); ?>">
+                                                            <button
+                                                                    style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                                                <i class="fa fa-close"></i>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-content">
+                                                        <?php
+                                                        echo $listaCommenti[$aId][$z]->getCorpo();
+                                                        ?>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <?php
+
+                                        }
+
+                                        ?>
+
+                                        <div class="col-md-12 form-commento">
+                                            <form action="<?php echo DOMINIO_SITO;?>/commentaAnnuncioControl" method="post">
+                                                <div class="col-md-10 input-comment">
+                                                    <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
+                                                           name="commento">
+                                                    <input type="hidden" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
+                                                </div>
+                                                <div class="col-md-2 btn-comment">
+                                                    <button type="submit" class="btn btn-info">Commenta</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-md-12 col-sm-12 card info <?php echo $annunci[$i]->getId(); ?>" style="margin-left: 0; display: none">
+                                        <h5>
+                                            <i class="fa fa-location-arrow"></i>
+                                            <?php echo $annunci[$i]->getLuogo();?></h5>
+                                        <h5>
+                                            <i class="fa fa-money"></i>
+                                            <?php echo $annunci[$i]->getRetribuzione();?></h5>
+                                        <h5>
+                                            <i class="fa fa-clock-o"></i>
+                                            <?php echo $annunci[$i]->getData();?></h5>
+                                        <h5>
+                                            <i class="fa fa-briefcase"></i>
+                                            <?php echo $annunci[$i]->getTipologia();?></h5>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        <?php
+                        }
+
+                        ?>
                         </div>
                         <!--Feedback-->
                         <div role="tabpanel" class="tab-pane" id="tab3">
@@ -1057,6 +983,36 @@
                             </div>
                         </div>
 
+                        <?php
+                        for ($i = 0; $i < count($annunci); $i++) {
+                        $aId = $annunci[$i]->getId();
+                        ?>
+                            <div class="modal fade" id="myModal<?php echo $annunci[$i]->getId();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Candidati</h4>
+                                        </div>
+                                        <form action="<?php echo DOMINIO_SITO;?>/aggiungiCandidaturaControl" method="post">
+                                            <div class="modal-body">
+                                                Inserisci Descrizione
+                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.. <?php echo $annunci[$i]->getId();?>"></textarea>
+                                                <input type="text" value="<?php echo $annunci[$i]->getId();?>" name="idAnnuncio" hidden>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                                <button type="submit" class="btn btn-sm btn-success">Candidati</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php
+                        }
+                        ?>
+
                         <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -1091,6 +1047,41 @@
                         $("#ConfirmModal form").attr("action",action);
                         $(".modal-body").html("<p>"+text+"</p>")
                     }
+                </script>
+
+                <script type="text/javascript">
+
+                    $(document).ready(function(){
+                        <?php
+                        for ($i = 0; $i < count($annunci); $i++) {
+                            echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+                        }
+                        ?>
+                    });
+
+                    function annuncioButtons(id){
+                        $(".btn.btn-link."+id).click(function(){
+                            $(".row.col-md-12.col-sm-12.card.contenitore."+id).toggle(250);
+                            $(".row.col-md-12.col-sm-12.card.info."+id).hide(250);
+                        });
+
+                        $(".btn.btn-default."+id).click(function(){
+                            $(".row.col-md-12.col-sm-12.card.contenitore."+id).hide(250);
+                            $(".row.col-md-12.col-sm-12.card.info."+id).toggle(250);
+                        });
+                    }
+
+                    /*redirect to hash*/
+                    hashes=location.hash.split("#");
+                    if(hashes[1]) {
+                        $('.nav-tabs a[href="#' + hashes[1] + '"]').tab('show');
+                    }
+                    if(hashes[2]){
+                        $('html, body').animate({
+                            scrollTop: $("#"+hashes[2]+"").offset().top
+                        }, 2000);
+                    }
+
                 </script>
 
                 <?php

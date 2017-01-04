@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /**
  * Created by PhpStorm.
@@ -8,6 +8,7 @@
  */
 
 include_once "Filter.php";
+include_once "OrderFilter.php";
 
 class FilterUtils
 {
@@ -16,27 +17,44 @@ class FilterUtils
      * @param array $filters
      * @param string $query
      */
-    public static function applyFilters($filters, &$query = "")
+    public static function applyFilters($filters,&$query = "")
     {
 
+        $ordering = false;
         $size = count($filters);
-
         //start where clause
         $query .= " WHERE ";
 
-        if ($size > 0 && $filters[0] instanceof Filter){
+        if($size > 0){
+
+            //if there are no filters before orderFilters, set the base query as WHERE 1
+            if($filters[0] instanceof OrderFilter){
+                $query.= " 1 ";
+                $ordering = true;
+            }
+
+            //use of setFilter for the first statement
             $filters[0]->setFilter($query);
-        } else {
-            //search all by default
+
+        }else{
+            //no filters, apply base query
             $query.= " 1 ";
-            return;
         }
 
         for($i=1;$i<$size;$i++){
             $f = $filters[$i];
             if (is_object($f) && $f instanceof Filter) {
-                $f->addFilter($query);
+                //look for the first order filter
+                if($f instanceof OrderFilter && $ordering==false){
+                    //gotcha! now we can apply the first ORDER BY statement
+                    $ordering = true;
+                    $f->setFilter($query);
+                }else{
+                    //concatenation (AND "," ecc..)
+                    $f->addFilter($query);
+                }
             }
         }
     }
+
 }

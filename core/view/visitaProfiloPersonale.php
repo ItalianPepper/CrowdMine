@@ -1,334 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Profilo Personale</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
-
-    <!-- Theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-        function caricaMicro(){
-            var stringa = "micro";
-            var index = $("#macro").val();
-            $.post("asyncMicroListByMacro",
-                {nome:stringa,idMacro:index},
-                function (data){
-                    var sel = $("#micro").html(data);
-                });
-        }
-        function ricercaUtente(stringa){
-            $.post("asyncRicercaUtente",
-                {nome: stringa},
-                function (data) {
-                    var valore = $('.select2-search__field').val();
-                    $("#user-search").html(data);
-                    $("#user-search").select2("destroy");
-                    $("#user-search").select2();
-                    $("#user-search").select2("open");
-
-                    search_select();
-                    $('.select2-search__field').val(valore);
-                });
-        }
-
-        $(document).on('focus', '.select2', function() {
-            search_select();
-        });
-
-        function search_select() {
-            $('.select2-search__field').on("keydown", function (e) {
-                setTimeout(function(){
-
-                    var stringa = $('.select2-search__field').val();
-                    ricercaUtente(stringa);
-                },10); //very important, let pass some time to get the true value
-            })
-        }
-
-        ricercaUtente("");
-
-    </script>
+    <?php include_once VIEW_DIR."headerStart.php";?>
 
 </head>
 
 <body>
-<div class="app app-default">
-    <aside class="app-sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a class="sidebar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
-            <button type="button" class="sidebar-toggle">
-                <i class="fa fa-times"></i>
-            </button>
-        </div>
-        <div class="sidebar-menu">
-            <ul class="sidebar-nav">
-                <li class="">
-                    <a href="../index.html">
-                        <div class="icon">
-                            <i class="fa fa-tasks" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Dashboard</div>
-                    </a>
-                </li>
-                <li class="@@menu.messaging">
-                    <a href="../messaging.html">
-                        <div class="icon">
-                            <i class="fa fa-comments" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Messaging</div>
-                    </a>
-                </li>
-                <li class="dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-cube" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">UI Kits</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> UI Kits</li>
-                            <li><a href="../uikits/customize.html">Customize</a></li>
-                            <li><a href="../uikits/components.html">Components</a></li>
-                            <li><a href="../uikits/card.html">Card</a></li>
-                            <li><a href="../uikits/form.html">Form</a></li>
-                            <li><a href="../uikits/table.html">Table</a></li>
-                            <li><a href="../uikits/icons.html">Icons</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Advanced Components</li>
-                            <li><a href="../uikits/pricing-table.html">Pricing Table</a></li>
-                            <!-- <li><a href="../uikits/timeline.html">Timeline</a></li> -->
-                            <li><a href="../uikits/chart.html">Chart</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Pages</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Admin</li>
-                            <li><a href="../pages/form.html">Form</a></li>
-                            <li><a href="../pages/profile.html">Profile</a></li>
-                            <li><a href="../pages/search.html">Search</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Landing</li>
-                            <!-- <li><a href="../pages/landing.html">Landing</a></li> -->
-                            <li><a href="../pages/login.html">Login</a></li>
-                            <li><a href="../pages/register.html">Register</a></li>
-                            <!-- <li><a href="../pages/404.html">404</a></li> -->
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-footer">
-            <ul class="menu">
-                <li>
-                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li><a href="#"><span class="flag-icon flag-icon-th flag-icon-squared"></span></a></li>
-            </ul>
-        </div>
-    </aside>
 
-    <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
-        <div class="dropdown-background">
-            <div class="bg"></div>
-        </div>
-        <div class="dropdown-container">
-            {{list}}
-        </div>
-    </script>
-    <div class="app-container">
-        <nav class="navbar navbar-default" id="navbar">
-            <div class="container-fluid">
-                <div class="navbar-collapse collapse in">
-                    <ul class="nav navbar-nav navbar-mobile">
-                        <li>
-                            <button type="button" class="sidebar-toggle">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                        </li>
-                        <li class="logo">
-                            <a class="navbar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
-                        </li>
-                        <li>
-                            <button type="button" class="navbar-toggle">
-                                <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-                            </button>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-left">
-                        <li class="navbar-title">Profile</li>
-                        <li class="navbar-search hidden-sm">
-                            <input id="search" type="text" placeholder="Search..">
-                            <button class="btn-search"><i class="fa fa-search"></i></button>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown notification">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
-                                <div class="title">New Orders</div>
-                                <div class="count">0</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <ul>
-                                    <li class="dropdown-header">Ordering</li>
-                                    <li class="dropdown-empty">No New Ordered</li>
-                                    <li class="dropdown-footer">
-                                        <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="dropdown notification warning">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
-                                <div class="title">Unread Messages</div>
-                                <div class="count">99</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <ul>
-                                    <li class="dropdown-header">Message</li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-warning pull-right">10</span>
-                                            <div class="message">
-                                                <img class="profile" src="https://placehold.it/100x100">
-                                                <div class="content">
-                                                    <div class="title">"Payment Confirmation.."</div>
-                                                    <div class="description">Alan Anderson</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-warning pull-right">5</span>
-                                            <div class="message">
-                                                <img class="profile" src="https://placehold.it/100x100">
-                                                <div class="content">
-                                                    <div class="title">"Hello World"</div>
-                                                    <div class="description">Marco Harmon</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-warning pull-right">2</span>
-                                            <div class="message">
-                                                <img class="profile" src="https://placehold.it/100x100">
-                                                <div class="content">
-                                                    <div class="title">"Order Confirmation.."</div>
-                                                    <div class="description">Brenda Lawson</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="dropdown-footer">
-                                        <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="dropdown notification danger">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
-                                <div class="title">System Notifications</div>
-                                <div class="count">10</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <ul>
-                                    <li class="dropdown-header">Notification</li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">8</span>
-                                            <div class="message">
-                                                <div class="content">
-                                                    <div class="title">New Order</div>
-                                                    <div class="description">$400 total</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">14</span>
-                                            Inbox
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">5</span>
-                                            Issues Report
-                                        </a>
-                                    </li>
-                                    <li class="dropdown-footer">
-                                        <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="dropdown profile">
-                            <a href="/html/pages/profile.html" class="dropdown-toggle" data-toggle="dropdown">
-                                <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-                                <div class="title">Profile</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="profile-info">
-                                    <h4 class="username">Scott White</h4>
-                                </div>
-                                <ul class="action">
-                                    <li>
-                                        <a href="#">
-                                            Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="badge badge-danger pull-right">5</span>
-                                            My Inbox
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Setting
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<div class="app app-default">
+    <div class="app-container no-sidebar">
+
+        <?php include_once VIEW_DIR."headerNavBar.php";?>
+        <div class="app-head"></div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -1535,11 +1219,171 @@
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="tab3">
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nullaip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                            fugiat nullaip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla
+
+                            <?php
+                            for ($i = 0; $i < count($annunci); $i++) {
+
+                                $aId = $annunci[$i]->getId();
+                                ?>
+                                <div class="row" style="margin-right: 20%; height: auto; margin-top: 5%">
+
+                                    <div class="card">
+
+                                        <div class="row col-md-12 col-sm-12 col-xs-12 card-header" style="margin-left: 0%">
+                                            <div class="col-md-3 col-sm-3 media-left">
+                                                <a href="#">
+                                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-7 annuncioTitle" style="width: 100%;">
+
+                                                <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
+                                                    <h1><?php echo $user->getNome() . " " .
+                                                            $user->getCognome() ?></h1>
+                                                </div>
+
+                                                <div class="offerta col-md-12 col-sm-12">
+                                                    <h1><?php echo $annunci[$i]->getTitolo(); ?></h1>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 col-sm-2 preferites">
+                                                <ul class="card-action">
+                                                    <li class="dropdown">
+                                                        <a href="/" class="dropdown-toggle" data-toggle="dropdown">
+                                                            <i class="fa fa-cog" style="font-size: 200%;"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="cancellaAnnuncio?id=<?php echo $annunci[$i]->getId(); ?>" >Cancella annuncio</a></li>
+                                                            <li><a href="modificaAnnuncio?id=<?php echo $annunci[$i]->getId(); ?>" >Modifica annuncio</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="row col-md-12 col-sm-12 col-xs-12 card-body" style="margin-left: 0%">
+                                            <div class="media-body comment more">
+                                                <?php echo $annunci[$i]->getDescrizione(); ?>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row col-md-12 col-sm-12 col-xs-12 media-categories"
+                                             style="margin-left: 2%; margin-bottom: 2%; margin-top: -2%;">
+                                            <?php
+                                                if(isset($AnnunciMicroRef[$aId]))
+                                                for($z=0;$z<count($AnnunciMicroRef[$aId]); $z++){
+                                                    $micro = $listaMicro[$AnnunciMicroRef[$aId][$z]];
+                                                    echo randomColorLabel($micro->getNome(), $micro->getNome());
+                                                }
+                                            ?>
+                                            <span class="label label-info"><?php echo $annunci[$i]->getLuogo();?></span>
+                                            <span class="label label-primary"><?php echo $annunci[$i]->getRetribuzione();?>€</span>
+                                        </div>
+
+                                        <div class="media-comment" style="">
+                                            <button class="btn btn-link<?php echo $annunci[$i]->getId();?>">
+                                                <i class="fa fa-comments-o"></i> <?php echo isset($listaCommenti[$aId])?count($listaCommenti[$aId]):0?> commenti
+                                            </button>
+                                            <button type="button" class="btn btn-warning<?php echo $annunci[$i]->getId();?>"><?php echo isset($listaCandidature[$aId])?count($listaCandidature[$aId]):0?> candidature</button>
+                                        </div>
+
+
+                                        <div class="row col-md-12 col-sm-12 card contenitore<?php echo $annunci[$i]->getId();?>" style="margin-left: 0; display: none">
+                                            <?php
+                                            if(isset($listaCommenti[$aId]))
+                                            for($z=0;$z<count($listaCommenti[$aId]); $z++){
+
+                                                ?>
+                                                <div class="row col-md-12 col-sm-12 comment-body"
+                                                     style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                                                    <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
+                                                        <a href="#">
+                                                            <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-heading">
+                                                        <h4 class="title">
+                                                            <?php
+                                                                $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
+                                                                echo $u->getNome()." ".$u->getCognome()
+                                                            ?>
+                                                        </h4>
+                                                        <h5 class="timeing"><?php
+                                                            echo $listaCommenti[$aId][$z]->getData();
+                                                            ?>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-md-5 col-sm-5 options"
+                                                         style="float: right; margin-top: -8%; margin-right: -23%">
+                                                        <a href="segnalaCommento?id=<?php echo $listaCommenti[$aId][$z]->getId(); ?>">
+                                                            <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                                                <i class="fa fa-close"></i>
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-content">
+                                                        <?php
+                                                        echo $listaCommenti[$aId][$z]->getCorpo();
+                                                        ?>
+                                                    </div>
+
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+
+                                        <div class="row col-md-12 col-sm-12 card candidature<?php echo $aId;?>" style="margin-left: 0; display: none">
+
+                                            <?php
+                                            if(isset($listaCandidature[$aId]))
+                                            for($z=0;$z<count($listaCandidature[$aId]); $z++){
+                                                ?>
+                                                <div class="row col-md-12 col-sm-12 candidature-body" style="margin-left: 0">
+
+                                                    <div class="media-left col-md-12 col-sm-12 candidato-body"
+                                                         style="margin-left: 0; border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%;">
+                                                        <img class="col-md-2 col-sm-2" src="<?php echo STYLE_DIR; ?>img\logojet.jpg"
+                                                             style="margin-left: -5%">
+                                                        <h4 class="title" style="margin-top: 3%">
+                                                            <?php
+                                                                $u = $listaUtenti[$listaCandidature[$aId][$z]->getIdUtente()];
+                                                                echo $u->getNome()." ".$u->getCognome()
+                                                            ?>
+                                                        </h4>
+                                                        <div class="col-md-5 col-sm-5 options"
+                                                             style="float: right; margin-top: -8%; margin-right: -23%">
+                                                            <form method="POST" action="paginaAlfredo">
+                                                                <input name="idAnnuncio" style="display: none" value="<?php echo $aId; ?>">
+                                                                <input name="idUtenteCandidato" style="display: none" value="<?php echo $listaCandidature[$aId][$z]->getIdUtente(); ?>">
+                                                                <input name="idUtenteProprietario" style="display: none" value="<?php echo $user->getId(); ?>">
+                                                                <button type="submit" style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                                                    <i class="fa fa-mail-reply-all"></i>
+                                                                </button>
+                                                            </form
+                                                            <a href="rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId();?>">
+                                                                <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                                                    <i class="fa fa-close"></i>
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-content">
+                                                            <?php echo $listaCandidature[$aId][$z]->getCorpo(); ?>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            <?php } ?>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="tab4">
                             ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
@@ -1595,6 +1439,84 @@
         $(id).toggle('fast');
         $(this).toggle('fast');
     };
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        <?php
+        for ($i = 0; $i < count($annunci); $i++) {
+            echo "annuncioButtons(" . $annunci[$i]->getId().");";
+        }
+        ?>
+
+        /*redirect to hash*/
+        hashes=location.hash.split("#");
+        if(hashes[1]) {
+            $('.nav-tabs a[href="#' + hashes[1] + '"]').tab('show');
+        }
+        if(hashes[2]){
+            $('html, body').animate({
+                scrollTop: $("#"+hashes[2]+"").offset().top
+            }, 2000);
+        }
+    });
+
+    function annuncioButtons(id){
+        $(".btn.btn-link"+id).click(function(){;
+            $(".row.col-md-12.col-sm-12.card.contenitore"+id).toggle(250);
+            $(".row.col-md-12.col-sm-12.card.candidature"+id).hide(250);
+        });
+
+        $(".btn.btn-warning"+id).click(function(){
+            $(".row.col-md-12.col-sm-12.card.candidature"+id).toggle(250);
+            $(".row.col-md-12.col-sm-12.card.contenitore"+id).hide(250);
+        });
+    }
+
+    function caricaMicro(){
+        var stringa = "micro";
+        var index = $("#macro").val();
+        $.post("asyncMicroListByMacro",
+            {nome:stringa,idMacro:index},
+            function (data){
+                var sel = $("#micro").html(data);
+            });
+    }
+    function ricercaUtente(stringa){
+        $.post("asyncRicercaUtente",
+            {nome: stringa},
+            function (data) {
+                var valore = $('.select2-search__field').val();
+                $("#user-search").html(data);
+                if($("#user-search").select2 && $("#user-search").is(":visible")) {
+                    $("#user-search").select2("destroy");
+                    $("#user-search").select2();
+                    $("#user-search").select2("open");
+
+                    search_select();
+                    $('.select2-search__field').val(valore);
+                }
+            });
+    }
+
+    $(document).on('focus', '.select2', function() {
+        search_select();
+    });
+
+    function search_select() {
+        $('.select2-search__field').on("keydown", function (e) {
+            setTimeout(function(){
+
+                var stringa = $('.select2-search__field').val();
+                ricercaUtente(stringa);
+            },10); //very important, let pass some time to get the true value
+        })
+    }
+
+    ricercaUtente("");
+
 </script>
 
 <?php

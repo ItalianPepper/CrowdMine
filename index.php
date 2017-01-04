@@ -14,14 +14,20 @@ define('TEMPLATE_DIR', CORE_DIR . "template" . DIRECTORY_SEPARATOR); //ecc
 define('EXCEPTION_DIR', CORE_DIR . "exception" . DIRECTORY_SEPARATOR);
 define('MODEL_DIR', CORE_DIR . "model" . DIRECTORY_SEPARATOR);
 define('MANAGER_DIR', CORE_DIR . "manager" . DIRECTORY_SEPARATOR);
+define('FILTER_DIR', CORE_DIR. "filter". DIRECTORY_SEPARATOR);
 define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
+define('AJAX_DIR', CORE_DIR . DIRECTORY_SEPARATOR . "ajax" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
 define('ATTIVO',"attivo");
 define('SEGNALATO',"segnalato");
 define('ELIMINATO',"eliminato");
+define('REVISIONE',"revisione");
+define('DISATTIVATO',"disattivato");
 define('AMMINISTRATORE',"amministratore");
+define('REVISIONE_MODIFICA',"revisione_modifica");
+define('RICORSO',"ricorso");
 define('DEBUG', true);
 
 try {
@@ -63,7 +69,8 @@ try {
     if (!defined("TESTING")) {
         switch (isset($_URL[0]) ? $_URL[0] : '') {
             case '':
-                include_once VIEW_DIR . "home.php";
+                $user=StringUtils::checkPermission(Permissions::ALL);
+                include_once CONTROL_DIR . "visualizzaHome.php";
                 break;
             case 'template':
                 header("location: http://crowdmine.altervista.org/dist/html/");
@@ -100,7 +107,12 @@ try {
             case 'footer':
                 include_once VIEW_DIR . "footer.php";
                 break;
-            
+            case 'getMacrosForInsertAnnuncio':
+                include_once CONTROL_DIR . "getMacrosForInsertAnnuncio.php";
+                break;
+            case 'getMicrosByMacroForInsertAnnuncio':
+                include_once CONTROL_DIR . "getMicrosByMacroForInsertAnnuncio.php";
+                break;
             case 'inserisciEsperienza':
                 StringUtils::checkPermission("Cliente");
                 include_once VIEW_DIR . "inserisciEsperienza.php";
@@ -109,12 +121,7 @@ try {
 //                include_once "standard.html";
 //                break;
             case 'ricercaAnnuncio':
-                StringUtils::checkPermission("all");
                 include_once VIEW_DIR . "ricercaAnnuncio.php";
-                break;
-            case 'profilo':
-                StringUtils::checkPermission("all");
-                include_once VIEW_DIR . "profilo.php";
                 break;
             case 'banned':
                 $user=StringUtils::checkPermission(Permissions::BANNED_ONLY);
@@ -237,6 +244,10 @@ try {
             case "ricercaUtente":
                 include_once CONTROL_DIR . "RicercaUtente.php";
                 break;
+            case "cercaAnnunciNavBar":
+                $user = StringUtils::checkPermission(Permissions::ALL);
+                include_once CONTROL_DIR . "cercaAnnunciNavBar.php";
+                break;
             case 'paginaPrincipaleModeratore':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
@@ -277,20 +288,126 @@ try {
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "UtentiSegnalatiControl.php";
                 break;
+            case 'annunciSegnalati':
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
+                include_once CONTROL_DIR . "annunciSegnalati.php";
+                break;
+            case 'cancellaAnnuncio':
+                include_once CONTROL_DIR . "cancellaAnnuncio.php";
+                break;
             case 'annuncioUtenteLoggato';
                 include_once VIEW_DIR . "annuncioUtenteLoggato.php";
                 break;
             case 'annuncioProprietario';
                 include_once VIEW_DIR . "annuncioProprietario.php";
                 break;
+            case 'visualizzaAnnuncioProprietario';
+                include_once CONTROL_DIR . "visualizzaAnnunci.php";
+                break;
+            case 'rimuoviCandidatura';
+                include_once CONTROL_DIR. "rimuoviCandidatura.php";
+                break;
             case 'inserisciAnnuncio';
-                include_once VIEW_DIR . "inserisciAnnuncio.php";
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "inserisciAnnuncio.php";
+                break;
+            case 'inserisciAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "getDatiAnnuncio.php";
+                break;
+            case 'ricercaAnnuncioControl';
+                include_once CONTROL_DIR . "getDatiAnnuncioRicercato.php";
                 break;
             case 'notificheUtente':
                 include_once VIEW_DIR . "notificheUtente.php";
                 break;
             case 'modificaAnnuncio';
-                include_once VIEW_DIR . "modificaAnnuncio.php";
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "modificaAnnuncio.php";
+                break;
+            case 'modificaAnnuncioControl';
+                include_once CONTROL_DIR . "getDatiAnnuncioModificato.php";
+                break;
+            case 'aggiungiPreferitiControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "aggiungiPreferiti.php";
+                break;
+            case 'ricercaAnnuncio';
+                include_once CONTROL_DIR . "ricercaAnnuncio.php";
+                break;
+            case 'annunciPreferiti';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "visualizzaPreferiti.php";
+                break;
+            case 'rimuoviPreferitiControl';
+                include_once CONTROL_DIR . "rimuoviPreferiti.php";
+                break;
+            case 'aggiungiCandidaturaControl';
+                include_once CONTROL_DIR . "aggiungiCandidatura.php";
+                break;
+            case 'segnalaAnnuncioControl';
+                include_once CONTROL_DIR . "segnalaAnnuncio.php";
+                break;
+            case 'attivaAnnuncioControl';
+                include_once CONTROL_DIR . "attivaAnnuncio.php";
+                break;
+            case 'disattivaAnnuncioControl';
+                include_once CONTROL_DIR . "disattivaAnnuncio.php";
+                break;
+            case 'commentaAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "commentaAnnuncio.php";
+                break;
+            case 'annunciProprietari';
+                include_once CONTROL_DIR . "visualizzaAnnunci.php";
+                break;
+            case 'getHome';
+                include_once CONTROL_DIR . "visualizzaHome.php";
+                break;
+            case 'asynAnnunci';
+                include_once AJAX_DIR . "asynAnnunci.php";
+                break;
+            case 'visualizzaAnnunciRicercati';
+                include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
+                break;
+            case 'nothingFound';
+                include_once VIEW_DIR . "nothingFound.php";
+                break;
+            case 'inviaAnnuncioAdmin';
+                include_once CONTROL_DIR . "inviaAnnuncioAdmin.php";
+                break;
+            case 'visualizzaAnnunciConflitto';
+                include_once CONTROL_DIR . "annunciConflitto.php";
+                break;
+            case 'annunciReclamati';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
+                include_once CONTROL_DIR . "annunciReclamati.php";
+                break;
+            case 'annunciModificati';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
+                include_once CONTROL_DIR . "annunciModificati.php";
+                break;
+            case 'annunciRevisione';
+                $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                include_once CONTROL_DIR . "annunciRevisione.php";
+                break;
+            case 'annuncio';
+                include_once VIEW_DIR . "annuncioStileNuovo.php";
+                break;
+            case 'immprofilo';
+                include_once CORE_DIR . "/template/assets/images/profile.png";
+                break;
+            case 'segnalaCommento';
+                include_once CONTROL_DIR . "segnalaCommento.php";
+                break;
+            case 'annuncioNew';
+                include_once VIEW_DIR . "annuncioNew.php";
+                break;
+            case 'headerStart';
+                include_once VIEW_DIR . "headerStart.php";
+                break;
+            case 'annunciControl';
+                include_once CONTROL_DIR . "annunciControl.php";
                 break;
             case 'messaging';
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
