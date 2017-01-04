@@ -77,6 +77,7 @@
     </style>
 
     <?php
+        if(isset($user))
         $fullname = $user->getNome()." ".$user->getCognome();
     ?>
 

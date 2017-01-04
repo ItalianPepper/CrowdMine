@@ -1,26 +1,8 @@
-<?php
-include_once VIEW_DIR . 'header.php';
-?>
-
 <!DOCTYPE html>
 
 <head>
-    <title></title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\Annuncio\annuncioUtenteLoggato.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
-
-    <!-- Theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
+    <?php include_once VIEW_DIR."headerStart.php";?>
 
     <script>
         $(document).ready(function(){
@@ -57,8 +39,20 @@ include_once VIEW_DIR . 'header.php';
 <body>
 <div class="app app-default">
 
-    <?php include_once "asidePannelloBackend.php" ?>
+    <?php include "asidePannelloBackend.php" ?>
+
+    <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
+        <div class="dropdown-background">
+            <div class="bg"></div>
+        </div>
+        <div class="dropdown-container">
+            {{list}}
+        </div>
+    </script>
+
     <div class="app-container">
+        <?php include_once VIEW_DIR."headerNavBar.php";?>
+        <div class="app-head"></div>
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">

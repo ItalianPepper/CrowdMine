@@ -24,6 +24,10 @@
             margin-left: 0px;
         }
 
+        body .app-container.no-sidebar .app-head{
+            height:120px;
+        }
+
         @media (min-width: 767px) {
             .navbar {
                 position: absolute;
