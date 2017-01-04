@@ -9,49 +9,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CrowdMine</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\Annuncio\annuncioUtenteLoggato.css>
-
-    <!-- Theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
-
-    <!--include header e footer-->
-    <script>
-        $(function(){
-            $("#header").load("header");
-            $("#footer").load("footer");
-        })
-    </script>
-
-    <style>
-        ul{
-            margin: 1%;
-            list-style-type: none;
-        }
-        .left5 {
-            margin-left: 5%;
-            margin-right: 5%;}
-    </style>
-
-
+    <?php include_once VIEW_DIR."headerStart.php";?>
 </head>
 <body>
 <div class="app app-default">
-    <div id="header"></div>
-    <div class="row left5">
+    <div class="app-container no-sidebar">
+        <?php include_once VIEW_DIR."headerNavBar.php";?>
+        <div class="app-head"></div>
+    <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="card-header">Notifiche</div>
@@ -88,6 +53,6 @@
         </div>
     </div>
 </div>
-<div id="footer"></div>
+<div id="footer"><?php include_once VIEW_DIR."footer.php";?></div>
 </body>
 </html>
