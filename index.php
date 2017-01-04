@@ -69,6 +69,7 @@ try {
     if (!defined("TESTING")) {
         switch (isset($_URL[0]) ? $_URL[0] : '') {
             case '':
+                $user=StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "visualizzaHome.php";
                 break;
             case 'template':
