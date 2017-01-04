@@ -72,7 +72,7 @@ class MessaggioManager extends Manager
         $utenti = array();
         if ($result) {
             while ($obj = $result->fetch_assoc()) {
-                $utente = new Utente($obj['id'], $obj['nome'], $obj['cognome'], $obj['telefono'], $obj['dataNascita'],
+                $utente = new Utente($obj['id'], $obj['nome'], $obj['cognome'], $obj['descrizione'], $obj['telefono'], $obj['data_nascita'],
                     $obj['citta'], $obj['email'], $obj['password'], $obj['ruolo'], $obj['stato'], $obj['immagine_profilo'],
                     $obj['partita_iva']);
                 $utenti[] = $utente;

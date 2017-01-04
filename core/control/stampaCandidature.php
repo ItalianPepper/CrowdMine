@@ -76,13 +76,6 @@ function getColor($arg_1)
     return 0;
 }
 
-## RECUPERO INFORMAZIONI SULL'UTENTE CONNESSO ##
-// session_start();
-// $utente = $_SESSION['utente'];
-//$_SESSION['lista']= serialize($lista-utenti);
-$utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine");
-// if ($utente == null)
-//     header("location:./index.php");
 ## MANAGER ##
 $manager_msg = new MessaggioManager();
 $manager_utente = new UtenteManager();
@@ -99,7 +92,7 @@ if (isset($_GET['idcand'])) {
 
 ## CANDIDATURE ###
 //L'utente destinatario Simone si è candidato ad due annunci di Alfredo; Alfredo quindi può Inviare la Collaborazione o Rifiutare il candidato [tutto relativo a quell'annuncio]
-$lista_candidature = $manager_msg->isCandidato($utente_connesso->getId(), $id_destinatario);
+$lista_candidature = $manager_msg->isCandidato($user->getId(), $id_destinatario);
 $utente = $manager_utente->findUtenteById($id_destinatario);
 
 
@@ -143,7 +136,7 @@ if ($lista_candidature != null) {
 
 
 #CANDIDATURE DI CUI TI HANNO INVIATO LA COLLABORAZIONE
-$lista_candidature = $manager_msg->isCandidato($id_destinatario, $utente_connesso->getId());
+$lista_candidature = $manager_msg->isCandidato($id_destinatario, $user->getId());
 
 if ($lista_candidature != null) {
 

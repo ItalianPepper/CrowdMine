@@ -11,8 +11,7 @@
     // if ($utente == null)
     //     header("location:./index.php");
     
-    $utente_connesso = new Utente(2, 'Alfredo', 'Fiorillo', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-   
+    
     //$id_destinatario = $_POST["id"];
     $id_destinatario = $_SESSION['destinatario'];
     $testo_messaggio = $_POST["testo"];
@@ -27,17 +26,17 @@
     $utente_destinatario = $manager_utente->findUtenteById($id_utente_destinatario);  //[STUB getUtentebyID]
     //
     //echo $utente_destinatario->getNome()."    ";
-    //$risultato = $manager_msg->inviaMessaggio($utente_connesso->getId(), $id_destinatario);
+    //$risultato = $manager_msg->inviaMessaggio($user->getId(), $id_destinatario);
     //$date = date("d/m/Y" - G:i);
     //echo ($id_destinatario);
-    $risultato = $manager_msg->sendMessaggio(null, $testo_messaggio, 0, 0, $utente_connesso->getId(), $id_destinatario); //id, corpo, data, letto
+    $risultato = $manager_msg->sendMessaggio(null, $testo_messaggio, 0, 0, $user->getId(), $id_destinatario); //id, corpo, data, letto
     
     if($risultato){
         //echo '<meta http-equiv="refresh" content="0;URL=http://localhost/CrowdMine/messaging?id='.$id_destinatario.'">';
-        $lista_messaggio = $manager_msg->loadConversation($utente_connesso->getId(), $id_destinatario);
+        $lista_messaggio = $manager_msg->loadConversation($user->getId(), $id_destinatario);
         foreach ($lista_messaggio as $indice => $value) {
 
-            if ($lista_messaggio[$indice]->getIdUtenteDestinatario() == $utente_connesso->getId()) {
+            if ($lista_messaggio[$indice]->getIdUtenteDestinatario() == $user->getId()) {
 
                 echo '<li class="right">';
             } else

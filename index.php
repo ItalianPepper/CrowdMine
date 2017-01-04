@@ -292,6 +292,10 @@ try {
             case 'modificaAnnuncio';
                 include_once VIEW_DIR . "modificaAnnuncio.php";
                 break;
+            case 'messaging';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once VIEW_DIR . "messaging.php";
+                break;
             case 'cancellaMacroControl';
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "cancellaMacroControl.php";
@@ -309,31 +313,31 @@ try {
                 include_once CONTROL_DIR . "InserisciNuovaMicroControl.php";
                 break;
             case 'stampaConversazione':
-                //StringUtils::checkPermission("all");
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "stampaConversazione.php";
                 break;
             case 'stampaCandidature':
-                //StringUtils::checkPermission("all");
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "stampaCandidature.php";
                 break;
             case 'inviaMessaggio':
-                //StringUtils::checkPermission("all");
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "inviaMessaggio.php";
                 break;
             case 'inviaCollaborazione':
-                //StringUtils::checkPermission("all");
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "inviaCollaborazione.php";
                 break;
             case 'rifiutaCandidato':
-                //StringUtils::checkPermission("all");
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "rifiutaCandidato.php";
                 break;
             case 'accettaCollaborazione':
-                //StringUtils::checkPermission("all");
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "accettaCollaborazione.php";
                 break;
             case 'rifiutaCollaborazione':
-                //StringUtils::checkPermission("all");
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "rifiutaCollaborazione.php";
                 break;
             case 'listaNotifiche':
