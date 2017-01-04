@@ -61,7 +61,7 @@ include_once MANAGER_DIR . "MicrocategoriaManager.php";
             if ($_POST["option"] == "selectMacro") {
 
                 $macroCategoriaManager = new MacroCategoriaManager();
-                $listMacroOptions = $macroCategoriaManager->findAll();
+                $listMacroOptions = $macroCategoriaManager->getListaMacrocategorie();
 
 
                 header("Content-Type : application/json");
@@ -70,7 +70,7 @@ include_once MANAGER_DIR . "MicrocategoriaManager.php";
             } else if ($_POST["option"] == "selectMicro") {
 
                 $microCategoriaManager = new MicrocategoriaManager();
-                $listMicroOptions = $microCategoriaManager->findAll();
+                $listMicroOptions = $microCategoriaManager->getListMacrocategorie();
 
                 header("Content-Type : application/json");
                 echo json_encode($listMicroOptions);
