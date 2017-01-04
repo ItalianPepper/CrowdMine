@@ -33,6 +33,7 @@ class Utente {
     private $ruolo;
     private $immagineProfilo;
     private $partitaIva;
+
     /**
      * Utente constructor.
      * @param $id
@@ -92,6 +93,7 @@ class Utente {
     {
         return $this->descrizione;
     }
+
     /**
      * @return mixed
      */
@@ -162,6 +164,7 @@ class Utente {
     {
         return $this->partitaIva;
     }
+
     /**
      * @param null $partitaIva
      */
@@ -169,6 +172,7 @@ class Utente {
     {
         $this->partitaIva = $partitaIva;
     }
+
     /**
      * @param mixed $cognome
      */
@@ -183,6 +187,7 @@ class Utente {
     {
         $this->descrizione = $descrizione;
     }
+
     /**
      * @param mixed $telefono
      */
