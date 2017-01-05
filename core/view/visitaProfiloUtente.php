@@ -843,8 +843,7 @@
                 <script>
                     $("#tab4").ready(function () {
 
-                        var url = document.URL;
-                        var idUser = url.substring(url.indexOf("id="),url.length-1);
+                      var idUser = <?php echo $visitedUser->getId() ?> ;
 
                         $.ajax({
                             url: "statisticheUtente",
@@ -860,8 +859,7 @@
 
                     $("#tab4").ready(function () {
 
-                        var url = document.URL;
-                        var idUser = url.substring(url.indexOf("id="), url.length - 1);
+                        var idUser = <?php echo $visitedUser->getId() ?> ;
 
                         $.ajax({
                             url: "statisticheUtente",
