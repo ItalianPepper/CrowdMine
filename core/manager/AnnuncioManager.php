@@ -164,7 +164,14 @@ class AnnuncioManager
 
     public function temporaryTableSearchAnnunci($filters){
 
-        $query = " CREATE OR REPLACE TEMPORARY TABLE searchedAnnunci AS (
+        $query = " DROP TEMPORARY TABLE IF EXISTS searchedAnnunci;";
+
+        $res=Manager::getDB()->query($query);
+        if ($res==false) {
+            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
+        }
+
+        $query = " CREATE TEMPORARY TABLE searchedAnnunci AS (
                     select * FROM annuncio ";
 
         FilterUtils::applyFilters($filters, $query);
