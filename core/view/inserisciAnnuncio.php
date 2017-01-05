@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
 
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
@@ -202,13 +204,13 @@
 
                 microCountArray++;
                 var html = "<div class='row' id='" + obj.idMicro + "-micro'>" +
-                    "                                    <div class='col-lg-6 col-md-9 col-xs-12 overlined-row'>'" + label +
+                    "                                    <div class='col-lg-6 col-md-9 col-xs-12 overlined-row'>"+ label +
                     "                                   <div class='dropdown corner-dropdown'>" +
                     "                                       <i class='fa fa-close' onclick='deleteMicro(" + obj.idMicro + ")'></i>" +
                     "                                 </div>" +
                     "                                </div>" +
                     "                                  </div>";
-
+""
                 $("#micro-destination").append(html);
             }
 
@@ -322,8 +324,7 @@
 </div>
 
 
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>

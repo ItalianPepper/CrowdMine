@@ -849,7 +849,7 @@ class AnnuncioManager
     public function getNumberAnnunciPublishedInAMounth(){
         $lista = array();
         $fromData = date("Y-m-d");
-        $toData = data("Y-m-d", strtotime('+1 month'));
+        $toData = date("Y-m-d", strtotime('+1 month'));
         $FIND_ANNUNCI = "SELECT annuncio.data, COUNT(annuncio.data) 
                         FROM annuncio
                         BETWEEN '%s' AND '%s'
@@ -867,7 +867,7 @@ class AnnuncioManager
 
     public function getNumberAnnunciPubblishedToday(){
         $lista = array();
-        $data = data("Y-m-d");
+        $data = date("Y-m-d");
         $FIND_ANNUNCI = "SELECT COUNT(annuncio.data) FROM annuncio WHERE annuncio.data = '%s'";
         $query = sprintf($FIND_ANNUNCI, $data);
         $result = Manager::getDB()->query($query);

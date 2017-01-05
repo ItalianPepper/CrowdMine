@@ -264,7 +264,7 @@ class MacroCategoriaManager extends Manager
              GROUP BY competente.id_microcategoria
              ;";
         $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
-        if($result != 0){
+        if($result){
             foreach($result->fetch_assoc() as $l){
                 array_push($lista, $l);
             }return $lista;
