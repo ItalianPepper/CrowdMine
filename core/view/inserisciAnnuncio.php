@@ -312,7 +312,7 @@
 
             microCountArray++;
             var html = "<div class='row' id='" + obj.idMicro + "-micro'>" +
-                "                                    <div class='col-lg-6 col-md-9 col-xs-12 overlined-row'>'" + label +
+                "                                    <div class='col-lg-6 col-md-9 col-xs-12 overlined-row'>" + label +
                 "                                   <div class='dropdown corner-dropdown'>" +
                 "                                       <i class='fa fa-close' onclick='deleteMicro(" + obj.idMicro + ")'></i>" +
                 "                                 </div>" +
