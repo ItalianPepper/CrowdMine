@@ -17,10 +17,6 @@
 
     // $destinatari = new MessaggioManager();
     //$lista_destinatari = $ga->lista_destinatari(); //array di utenti
-    $lista_destinatari[0] = new Utente(1, 'Simone', 'Giak', "38093", "Sal", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-    $lista_destinatari[1] = new Utente(2, 'Giancarlo', 'Mannara', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-    $lista_destinatari[2] = new Utente(3, 'Luca', 'PM', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
-    $lista_destinatari[3] = new Utente(4, 'Fabiano', 'Pecorelli', "38093", "Rom", "aprile", "alfred.fiorillo@gmail.com", "password", "stato", "amministratore", "immagine" );
       
 ?>
 
