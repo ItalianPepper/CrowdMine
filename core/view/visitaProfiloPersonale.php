@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include_once VIEW_DIR."headerStart.php";?>
+    <?php
 
+    include_once VIEW_DIR."headerStart.php";
+    $fullname = $user->getNome()." ".$user->getCognome();
+    ?>
 </head>
 
 <body>
