@@ -1,203 +1,25 @@
-<?php
-/**
- *
- * @author Vincenzo Russo
- * @version 1.0
- * @since 30/05/16
- */
-include_once VIEW_DIR . 'header.php';
-
-?>
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <title></title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
-
-    <!-- Theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
+    <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         .form-control {
             color: #817b7b;
         }
     </style>
-    <script type="text/javascript">
 
-        var microCountArray = 0;
-        var microListObjectArray = [];
-        var microListObject = function (nomeMacro, nomeMicro, idMicro) {
-            this.nomeMacro = nomeMacro;
-            this.nomeMicro = nomeMicro;
-            this.idMicro = idMicro;
-        };
+    <?php
+    if(isset($user))
+        $fullname = $user->getNome()." ".$user->getCognome();
+    ?>
 
-
-        function checkIfIsSelectedMicro() {
-            if ($("#micro").find('option:selected').text() !== "Seleziona la microcategoria") {
-                $("#insert-micro-button").prop("disabled", false);
-            }
-        }
-        function caricaMicro() {
-            var idMacro = $("#macro").val();
-            $("#micro").prop("disabled", false);
-            $.ajax(
-                {
-                    url: "getMicrosByMacroForInsertAnnuncio",
-                    type: "POST",
-                    data: {"macroId": idMacro},
-                    dataType: "JSON",
-                    async: true,
-                    success: function (data) {
-
-                        $("#micro").empty();
-                        $("#micro").append("<option value='' disabled selected>Seleziona la microcategoria</option>");
-                        if (data.length > 0) {
-                            for (var i in data) {
-                                var micro = [];
-                                micro.id = data[i].microId;
-                                micro.nome = data[i].microName;
-
-
-                                $("#micro").append("<option value='" + micro.id + "'>" + micro.nome + "</option>");
-
-                            }
-
-                            if ($("#micro").find('option:selected').text() == "Seleziona la microcategoria") {
-                                $("#insert-micro-button").prop("disabled", true);
-                            }
-                        }
-                        else {
-                            $("#micro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
-                            $("#insert-micro-button").prop("disabled", true);
-                        }
-                    },
-                    error: function () {
-                        toastr[data["toastType"]](data["toastMessage"]);
-                    }
-
-                }
-            )
-        }
-        function deleteMicro(idMicro) {
-
-            for (var i = 0; i < microListObjectArray.length; i++) {
-                if (microListObjectArray[i].idMicro == idMicro) {
-                    microListObjectArray.splice(i, 1);
-                    $("#" + idMicro + "-micro").fadeOut();
-                    microCountArray--;
-                }
-            }
-            $("#listaMicroJson").val(JSON.stringify(microListObjectArray));
-            console.log(microListObjectArray);
-        }
-
-
-        function insertMicro() {
-            insertMicroValues(
-                $("#macro").find('option:selected').text(),
-                $("#micro").find('option:selected').text(),
-                $("#micro").val()
-            )
-        }
-
-        function insertMicroValues(nomeMacro,nomeMicro,idMicro) {
-
-            var obj = new microListObject(nomeMacro, nomeMicro, idMicro);
-            var duplicate = false;
-            for (var i = 0; i < microListObjectArray.length; i++) {
-                if (microListObjectArray[i].idMicro == idMicro) {
-                    toastr.error("Microcategoria gia inserita");
-                    duplicate = true;
-                    break;
-                }
-            }
-            if (!duplicate) {
-                microListObjectArray[microCountArray] = obj;
-                var label = randomColorLabel(obj.nomeMacro, obj.nomeMicro);
-                console.log(label);
-
-                microCountArray++;
-                var html = "<div class='row' id='" + obj.idMicro + "-micro'>" +
-                    "                                    <div class='col-lg-6 col-md-9 col-xs-12 overlined-row'>'" + label +
-                    "                                   <div class='dropdown corner-dropdown'>" +
-                    "                                       <i class='fa fa-close' onclick='deleteMicro(" + obj.idMicro + ")'></i>" +
-                    "                                 </div>" +
-                    "                                </div>" +
-                    "                                  </div>";
-
-                $("#micro-destination").append(html);
-            }
-
-            $("#listaMicroJson").val(JSON.stringify(microListObjectArray));
-
-
-        }
-
-        $(document).ready(function () {
-            /*inserting micros of existing annuncio*/
-            <?php
-            if(isset($AnnunciMicroRef[$idAnn]))
-                for($z=0;$z<count($AnnunciMicroRef[$idAnn]); $z++) {
-                    $micro = $listaMicro[$AnnunciMicroRef[$idAnn][$z]];
-
-                    for ($i = 0; $i < count($macroList); $i++) {
-                        if ($macroList[$i]->getId() == $micro->getIdMacrocategoria()) {
-                            echo "insertMicroValues('".$macroList[$i]->getNome()."','". $micro->getNome()."','". $micro->getId()."')";
-                            break;
-                        }
-                    }
-                }
-            ?>
-
-            $.ajax(
-                {
-                    url: "getMacrosForInsertAnnuncio",
-                    type: "POST",
-                    dataType: "JSON",
-                    async: true,
-                    success: function (data) {
-
-                        $("#macro").empty();
-                        $("#macro").append("<option value='' disabled selected>Seleziona la MacroCategoria</option>");
-                        if (data.length > 0) {
-                            for (var i in data) {
-                                var macro = [];
-                                macro.id = data[i].macroId;
-                                macro.nome = data[i].macroName;
-
-
-                                $("#macro").append("<option value='" + macro.id + "'>" + macro.nome + "</option>");
-
-                            }
-                        }
-                        else {
-                            $("#macro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
-                        }
-                    }
-                }
-            )
-        });
-
-
-    </script>
 </head>
 <body>
 
 <div class="app app-default">
-    <?php include_once "asidePannelloBackend.php" ?>
-
-
-    <div class="col-md-12 col-sm-12 app-container">
+    <div class="app-container no-sidebar">
+        <?php include_once VIEW_DIR."headerNavBar.php";?>
+        <div class="app-head"></div>
 
         <div class="row">
 
@@ -206,7 +28,7 @@ include_once VIEW_DIR . 'header.php';
                 <div class="card">
                     <div class="row" style="padding: 15px">
                         <div class="card-header" style="padding: 30px;">Inserisci un Annuncio</div>
-                        <form action="inserisciAnnuncioControl" method="post" style="padding: 30px">
+                        <form action="modificaAnnuncioControl" method="post" style="padding: 30px">
 
                             <div class="col-md-6">
 
@@ -285,6 +107,7 @@ include_once VIEW_DIR . 'header.php';
                                     </div>
                                 </div>
                                 <input type="hidden" name="lista-Micro" value="" id="listaMicroJson">
+                                <input type="hidden" name="annuncio" value="<?php echo ($annuncio->getId());?>">
                                 <button type="submit" class="btn btn-primary btn-md">Inserisci Annuncio</button>
                             </div>
 
@@ -306,6 +129,166 @@ include_once VIEW_DIR . 'header.php';
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\styleUtils.js"></script>
+
+<script type="text/javascript">
+
+    var microCountArray = 0;
+    var microListObjectArray = [];
+    var microListObject = function (nomeMacro, nomeMicro, idMicro) {
+        this.nomeMacro = nomeMacro;
+        this.nomeMicro = nomeMicro;
+        this.idMicro = idMicro;
+    };
+
+
+    function checkIfIsSelectedMicro() {
+        if ($("#micro").find('option:selected').text() !== "Seleziona la microcategoria") {
+            $("#insert-micro-button").prop("disabled", false);
+        }
+    }
+    function caricaMicro() {
+        var idMacro = $("#macro").val();
+        $("#micro").prop("disabled", false);
+        $.ajax(
+            {
+                url: "getMicrosByMacroForInsertAnnuncio",
+                type: "POST",
+                data: {"macroId": idMacro},
+                dataType: "JSON",
+                async: true,
+                success: function (data) {
+
+                    $("#micro").empty();
+                    $("#micro").append("<option value='' disabled selected>Seleziona la microcategoria</option>");
+                    if (data.length > 0) {
+                        for (var i in data) {
+                            var micro = [];
+                            micro.id = data[i].microId;
+                            micro.nome = data[i].microName;
+
+
+                            $("#micro").append("<option value='" + micro.id + "'>" + micro.nome + "</option>");
+
+                        }
+
+                        if ($("#micro").find('option:selected').text() == "Seleziona la microcategoria") {
+                            $("#insert-micro-button").prop("disabled", true);
+                        }
+                    }
+                    else {
+                        $("#micro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
+                        $("#insert-micro-button").prop("disabled", true);
+                    }
+                },
+                error: function () {
+                    toastr[data["toastType"]](data["toastMessage"]);
+                }
+
+            }
+        )
+    }
+    function deleteMicro(idMicro) {
+
+        for (var i = 0; i < microListObjectArray.length; i++) {
+            if (microListObjectArray[i].idMicro == idMicro) {
+                microListObjectArray.splice(i, 1);
+                $("#" + idMicro + "-micro").fadeOut();
+                microCountArray--;
+            }
+        }
+        $("#listaMicroJson").val(JSON.stringify(microListObjectArray));
+        console.log(microListObjectArray);
+    }
+
+
+    function insertMicro() {
+        insertMicroValues(
+            $("#macro").find('option:selected').text(),
+            $("#micro").find('option:selected').text(),
+            $("#micro").val()
+        )
+    }
+
+    function insertMicroValues(nomeMacro,nomeMicro,idMicro) {
+
+        var obj = new microListObject(nomeMacro, nomeMicro, idMicro);
+        var duplicate = false;
+        for (var i = 0; i < microListObjectArray.length; i++) {
+            if (microListObjectArray[i].idMicro == idMicro) {
+                toastr.error("Microcategoria gia inserita");
+                duplicate = true;
+                break;
+            }
+        }
+        if (!duplicate) {
+            microListObjectArray[microCountArray] = obj;
+            var label = randomColorLabel(obj.nomeMacro, obj.nomeMicro);
+            console.log(label);
+
+            microCountArray++;
+            var html = "<div class='row' id='" + obj.idMicro + "-micro'>" +
+                "                                    <div class='col-lg-6 col-md-9 col-xs-12 overlined-row'>" + label +
+                "                                   <div class='dropdown corner-dropdown'>" +
+                "                                       <i class='fa fa-close' onclick='deleteMicro(" + obj.idMicro + ")'></i>" +
+                "                                 </div>" +
+                "                                </div>" +
+                "                                  </div>";
+
+            $("#micro-destination").append(html);
+        }
+
+        $("#listaMicroJson").val(JSON.stringify(microListObjectArray));
+
+
+    }
+
+    $(document).ready(function () {
+        /*inserting micros of existing annuncio*/
+        <?php
+        if(isset($AnnunciMicroRef[$idAnn]))
+            for($z=0;$z<count($AnnunciMicroRef[$idAnn]); $z++) {
+                $micro = $listaMicro[$AnnunciMicroRef[$idAnn][$z]];
+
+                for ($i = 0; $i < count($macroList); $i++) {
+                    if ($macroList[$i]->getId() == $micro->getIdMacrocategoria()) {
+                        echo "insertMicroValues('".$macroList[$i]->getNome()."','". $micro->getNome()."','". $micro->getId()."')";
+                        break;
+                    }
+                }
+            }
+        ?>
+
+        $.ajax(
+            {
+                url: "getMacrosForInsertAnnuncio",
+                type: "POST",
+                dataType: "JSON",
+                async: true,
+                success: function (data) {
+
+                    $("#macro").empty();
+                    $("#macro").append("<option value='' disabled selected>Seleziona la MacroCategoria</option>");
+                    if (data.length > 0) {
+                        for (var i in data) {
+                            var macro = [];
+                            macro.id = data[i].macroId;
+                            macro.nome = data[i].macroName;
+
+
+                            $("#macro").append("<option value='" + macro.id + "'>" + macro.nome + "</option>");
+
+                        }
+                    }
+                    else {
+                        $("#macro").html("<option disabled selected>Nessuna Macrocategoria Disponibile</option>");
+                    }
+                }
+            }
+        )
+    });
+
+
+</script>
 <?php
 
 if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
