@@ -336,10 +336,10 @@
                                                                         randomColorLabel($m->getNome() . $m->getId(), $m->getNome());
                                                                         echo " ";
                                                                     }
+                                                                }
 
-                                                                    if($found){
-                                                                        echo '  </div></div>';
-                                                                    }
+                                                                if($found){
+                                                                    echo '  </div></div>';
                                                                 }
                                                             }
                                                         ?>
@@ -792,7 +792,7 @@
                     $(document).ready(function(){
                         <?php
                         for ($i = 0; $i < count($annunci); $i++) {
-                            echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+                            echo "annuncioButtons(" . $annunci[$i]->getId() . "); ";
                         }
                         ?>
                     });
@@ -930,7 +930,7 @@
                                     .append($("<td>")
                                         .text(el["feedbacknegativi"]))
                                 )
-                        }
+                        });
                     }
 
                 </script>
