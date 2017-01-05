@@ -248,7 +248,7 @@ class MacroCategoriaManager extends Manager
              WHERE microcategoria.id = competente.id_microcategoria AND macrocategoria.id IN (SELECT microcategoria.id_macrocategoria FROM macrocategoria) 
              GROUP BY macrocategoria.nome;";
         $result = self::getDB()->query($FIND_LIST_MACROCATEGORIA);
-        if(result != 0){
+        if($result != 0){
             foreach($result->fetch_assoc() as $l){
                 array_push($lista, $l);
             }return $lista;
@@ -264,7 +264,7 @@ class MacroCategoriaManager extends Manager
              GROUP BY competente.id_microcategoria
              ;";
         $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
-        if(result != 0){
+        if($result != 0){
             foreach($result->fetch_assoc() as $l){
                 array_push($lista, $l);
             }return $lista;

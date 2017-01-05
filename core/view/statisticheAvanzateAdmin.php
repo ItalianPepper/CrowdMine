@@ -262,7 +262,7 @@
 
     function appendMacroElements(arrayMacroElements) {
       $.each(arrayMacroElements, function (i,item){
-          $("#selectMacro").append($("<option>").text(item).attr("value",item));
+          $("#selectMacro").append($("<option>").text(item.macroName).attr("value",item.macroName));
       });
     }
 
