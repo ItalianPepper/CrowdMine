@@ -283,7 +283,7 @@
 
     function appendMicroElements(arrayMicroElements) {
         $.each(arrayMicroElements, function (i,item){
-            $("#selectMicro").append($("<option>").text(item).attr("value",item));
+            $("#selectMicro").append($("<option>").text(item.microName).attr("value",item.microName));
         });
     }
 
