@@ -17,7 +17,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body app-heading">
-                        <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                        <img class="profile-img" src=assets\images\profile.png">
                         <div class="app-title">
                             <div class="title"><span
                                         class="highlight"><?php echo $user->getNome() . " " . $user->getCognome() ?></span>

@@ -1,110 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CrowdMine</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
 
     <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
-
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\red.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\yellow.css">
-
-
+    <style>
+        .navbar-collapse.in {
+            overflow-y: hidden;
+        }
+    </style>
 </head>
 <body>
 <div class="app app-default">
-    <aside class="app-sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a class="sidebar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
-            <button type="button" class="sidebar-toggle">
-                <i class="fa fa-times"></i>
-            </button>
-        </div>
-        <div class="sidebar-menu">
-            <ul class="sidebar-nav">
-                <li class="">
-                    <a href="../index.html">
-                        <div class="icon">
-                            <i class="fa fa-tasks" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Dashboard</div>
-                    </a>
-                </li>
-                <li class="@@menu.messaging">
-                    <a href="../messaging.html">
-                        <div class="icon">
-                            <i class="fa fa-comments" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Messaging</div>
-                    </a>
-                </li>
-                <li class="dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-cube" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">UI Kits</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> UI Kits</li>
-                            <li><a href="../uikits/customize.html">Customize</a></li>
-                            <li><a href="../uikits/components.html">Components</a></li>
-                            <li><a href="../uikits/card.html">Card</a></li>
-                            <li><a href="../uikits/form.html">Form</a></li>
-                            <li><a href="../uikits/table.html">Table</a></li>
-                            <li><a href="../uikits/icons.html">Icons</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Advanced Components</li>
-                            <li><a href="../uikits/pricing-table.html">Pricing Table</a></li>
-                            <!-- <li><a href="../uikits/timeline.html">Timeline</a></li> -->
-                            <li><a href="../uikits/chart.html">Chart</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <div class="icon">
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                        </div>
-                        <div class="title">Pages</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Admin</li>
-                            <li><a href="../pages/form.html">Form</a></li>
-                            <li><a href="../pages/profile.html">Profile</a></li>
-                            <li><a href="../pages/search.html">Search</a></li>
-                            <li class="line"></li>
-                            <li class="section"><i class="fa fa-file-o" aria-hidden="true"></i> Landing</li>
-                            <!-- <li><a href="../pages/landing.html">Landing</a></li> -->
-                            <li><a href="../pages/login.html">Login</a></li>
-                            <li><a href="../pages/register.html">Register</a></li>
-                            <!-- <li><a href="../pages/404.html">404</a></li> -->
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-footer">
-            <ul class="menu">
-                <li>
-                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li><a href="#"><span class="flag-icon flag-icon-th flag-icon-squared"></span></a></li>
-            </ul>
-        </div>
-    </aside>
+
+    <?php include "asidePannelloModeratore.php" ?>
 
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">
@@ -125,7 +44,7 @@
                             </button>
                         </li>
                         <li class="logo">
-                            <a class="navbar-brand" href="#"><span class="highlight">Flat v3</span> Admin</a>
+                            <a class="navbar-brand" href="#"><span class="highlight">Moderatore</span> </a>
                         </li>
                         <li>
                             <button type="button" class="navbar-toggle">
@@ -134,29 +53,12 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="navbar-title">Dashboard</li>
                         <li class="navbar-search hidden-sm">
                             <input id="search" type="text" placeholder="Search..">
                             <button class="btn-search"><i class="fa fa-search"></i></button>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown notification">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <div class="icon"><i class="fa fa-shopping-basket" aria-hidden="true"></i></div>
-                                <div class="title">New Orders</div>
-                                <div class="count">0</div>
-                            </a>
-                            <div class="dropdown-menu">
-                                <ul>
-                                    <li class="dropdown-header">Ordering</li>
-                                    <li class="dropdown-empty">No New Ordered</li>
-                                    <li class="dropdown-footer">
-                                        <a href="#">View All <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
                         <li class="dropdown notification warning">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <div class="icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
@@ -247,7 +149,7 @@
                             </div>
                         </li>
                         <li class="dropdown profile">
-                            <a href="/html/pages/profile.html" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                                 <div class="title">Profile</div>
                             </a>
@@ -286,72 +188,40 @@
         </nav>
 
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="card-header">Opzioni</div>
-                    <div class="card-body">
-                        <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio5" value="option1">
-                            <label for="radio5">
-                                Generale
-                            </label>
-                        </div>
-                        <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio6" value="option2" checked>
-                            <label for="radio6">
-                                Macro Categoria
-                            </label>
-                        </div>
-                        <div>
-                            <label for="selectMicro">Seleziona Micro Categoria</label>
-                            <select style="width:100%" id="selectMicro" class="select2">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Mostra Risultati</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                <div class="card">
-                    <div class="card-header">Risultati</div>
-                    <div class="card-body no-padding">
-                        <table class="datatable table table-striped primary" cellspacing="0" width="100%">
-                            <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Feedback positivi</th>
-                                <th>Macro Categorie</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="card card-mini" id="single-feedback-view" style="padding: 20px">
 
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+                    <div class="card-body __loading" style="padding-bottom: 50px">
+                        <div class="loader-container text-center">
+                            <div class="icon">
+                                <div class="sk-wave">
+                                    <div class="sk-rect sk-rect1"></div>
+                                    <div class="sk-rect sk-rect2"></div>
+                                    <div class="sk-rect sk-rect3"></div>
+                                    <div class="sk-rect sk-rect4"></div>
+                                    <div class="sk-rect sk-rect5"></div>
+                                </div>
+                            </div>
+                            <div>Caricamento</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\fedbackReportedRetrive.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+        <script>
+            var destination = $("#single-feedback-view");
+            destination.empty();
+            generateFeedbackList(<?php echo $encodedFeedbackListObject ?>,"user",destination);
+        </script>
+
+
 </body>
+</html>

@@ -289,13 +289,12 @@
                 <div class="card-header">Statistiche Disponibili</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="section">
                                 <div class="section-title">Macro Categorie</div>
-                                <div class="section-body"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+                                <div class="section-body"><p>Vedi l'andamento delle Macro Categorie di annunci.</p></div>
                             </div>
-                            <a href="#" class="card card-banner card-green-light">
+                            <a href="visualizzaStatisticheMacroCategorie" class="card card-banner card-green-light">
                                 <div class="card-body">
                                     <i class="icon fa fa-bar-chart"></i>
                                     <div class="content">
@@ -305,13 +304,12 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="section">
                                 <div class="section-title">Classifica Migliori Utenti</div>
-                                <div class="section-body"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+                                <div class="section-body"><p>Scopri quali sono i migliori Utenti in CrowdMine!</p></div>
                             </div>
-                            <a href="#" class="card card-banner card-yellow-light">
+                            <a href="classificaMiglioriUtenti" class="card card-banner card-yellow-light">
                                 <div class="card-body">
                                     <i class="icon fa fa-user"></i>
                                     <div class="content">
@@ -321,26 +319,13 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                            <div class="section">
-                                <div class="section-title">Classifica Migliori Società</div>
-                                <div class="section-body"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
-                            </div>
-                            <a href="#" class="card card-banner card-blue-light">
-                                <div class="card-body">
-                                    <i class="icon fa fa-group"></i>
-                                    <div class="content">
-                                        <div class="title">Classifica Migliori Società</div>
-                                        <div class="value"><span class="sign"></span></div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+</body>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+</html>
