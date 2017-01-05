@@ -848,21 +848,23 @@ class AnnuncioManager
 
     public function getNumberAnnunciPublishedInAMounth(){
         $lista = array();
-        $fromData = date("Y-m-d");
-        $toData = date("Y-m-d", strtotime('+1 month'));
-        $FIND_ANNUNCI = "SELECT annuncio.data, COUNT(annuncio.data) 
-                        FROM annuncio
-                        BETWEEN '%s' AND '%s'
-                        GROUP BY annuncio.data";
+        $toData = date("Y-m-d");
+        $fromData = date("Y-m-d", strtotime('-1 month'));
+
+        $FIND_ANNUNCI = "SELECT annuncio.data as data, COUNT(annuncio.data) as conto
+                         FROM annuncio
+                         WHERE (annuncio.data BETWEEN '%s' AND '%s')
+                         GROUP BY CAST(annuncio.data as DATE)";
+
         $query = sprintf($FIND_ANNUNCI, date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
         $result = Manager::getDB()->query($query);
-        if(!$result){
-
-        }else{
-            foreach($result->fetch_assoc() as $r){
-                array_push($lista, $r);
+        if($result){
+            while($r = $result->fetch_assoc()){
+                array_push($lista, $r['conto']);
             }
-        }return $lista;
+            return $lista;
+        }
+        return false;
     }
 
     public function getNumberAnnunciPubblishedToday(){

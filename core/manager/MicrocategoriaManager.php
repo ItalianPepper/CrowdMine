@@ -29,7 +29,7 @@ class MicrocategoriaManager extends Manager
      * @return Microcategoria
      */
     public function createMicrocategoria($id, $nomeMicro, $idMacro){
-        return new Microcategoria($idMacro,$nomeMicro,$id);
+        return new Microcategoria($idMacro, $nomeMicro, $id);
     }
 
     /**
@@ -245,14 +245,18 @@ class MicrocategoriaManager extends Manager
      * @return array $listaMicro
      */
     public function findAll(){
-        $FIND_ALL = "SELECT * FROM 'microcategoria'";
+        $FIND_ALL = "SELECT * FROM microcategoria";
         $result = self::getDB()->query($FIND_ALL);
         $listaMicro = array();
-        while($m = $result->fetch_assoc()){
-            $micro = $this->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
-            array_push($listaMicro,$micro);
+        if($result){
+            while($r = $result->fetch_assoc()){
+                $micro = new Microcategoria($r["id_macrocategoria"], $r["nome"], $r["id"]);
+                array_push($listaMicro, $micro);
+            }
+            return $listaMicro;
+        }else{
+            return false;
         }
-        return $listaMicro;
     }
 
     /**
@@ -263,42 +267,64 @@ class MicrocategoriaManager extends Manager
      */
     public function findBestMicrocategoriaCompetente($macrocategoria, $numPagina){
         $lista = array();
+
+        $macroManager = new MacroCategoriaManager();
+        $macro = $macroManager->getMacroByName($macrocategoria);
+
         $FIND_BEST_USER_BY_MICROCATEGORIA =
-            "SELECT microcategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto
-             FROM microcategoria, competente
-             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
-             LIMIT 10 OFFSET %d
-             GROUP BY competente.id_microcategoria;";
-        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria, $numPagina*10-10+1);
+            "SELECT microcategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto 
+             FROM competente, microcategoria 
+             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = %s
+             GROUP BY microcategoria.id
+             ORDER BY conto DESC
+             LIMIT 10 OFFSET %s
+             ";
+
+        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macro->getId(), $numPagina*10-10);
+
         $result = self::getDB()->query($query);
-        if(result != 0){
-            foreach($result->fetch_assoc() as $l){
-                array_push($lista, $l);
+
+        if($result){
+            while($l = $result->fetch_assoc()){
+                array_push($lista, $l['nome']);
             }return $lista;
-        }return false;
+        }
+
+        return false;
     }
 
-    public function findBestMicrocategoriaRiferito($macrocategoria, $numPagina){
+    public function findBestMicrocategoriaRiferito($nomeMacro, $numPagina){
         $lista = array();
+
+        $macroManager = new MacroCategoriaManager();
+        $macro = $macroManager->getMacroByName($nomeMacro);
+
         $FIND_BEST_USER_BY_MICROCATEGORIA =
-            "SELECT microcategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto
-             FROM microcategoria, riferito
-             WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
-             LIMIT 10 OFFSET %d
-             GROUP BY riferito.id_microcategoria;";
-        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macrocategoria, $numPagina*10-10+1);
+            "SELECT microcategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto 
+             FROM riferito, microcategoria 
+             WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = %s
+             GROUP BY microcategoria.id
+             ORDER BY conto DESC
+             LIMIT 10 OFFSET %s
+             ";
+
+        $query = sprintf($FIND_BEST_USER_BY_MICROCATEGORIA, $macro->getId(), $numPagina*10-10);
         $result = self::getDB()->query($query);
-        if(result != 0){
-            foreach($result->fetch_assoc() as $l){
-                array_push($lista, $l);
+
+        if($result){
+            while($l = $result->fetch_assoc()){
+                array_push($lista, $l['nome']);
             }return $lista;
-        }return false;
+        }
+        return false;
     }
 
     public function getMaxPageCompetente($macrocategoria){
         $row = null;
+        $macroManager = new MacroCategoriaManager();
+        $macro = $macroManager->getMacroByName($macrocategoria);
         $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, competente WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
-        $query = sprintf($GET_NUMBER, $macrocategoria->getId());
+        $query = sprintf($GET_NUMBER, $macro->getId());
         $result = Manager::getDB()->query($query);
         if(!$result){
 
@@ -309,8 +335,10 @@ class MicrocategoriaManager extends Manager
 
     public function getMaxPageRiferito($macrocategoria){
         $row = null;
+        $macroManager = new MacroCategoriaManager();
+        $macro = $macroManager->getMacroByName($macrocategoria);
         $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, riferito WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
-        $query = sprintf($GET_NUMBER, $macrocategoria->getId());
+        $query = sprintf($GET_NUMBER, $macro->getId());
         $result = Manager::getDB()->query($query);
         if(!$result){
 
