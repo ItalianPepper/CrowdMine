@@ -26,7 +26,7 @@ class ErrorUtils {
     public static $DOMANDA_APERTA_NON_TROVATA = "Nessuna domanda aperta trovata";
     public static $DOMANDA_MULTIPLA_NON_TROVATA = "Nessuna domanda mutlipla trovata";
     public static $ALTERNATIVA_NON_TROVATA = "Nessuna alternativa trovata";
-
+    public static $LISTA_NOTIFICHE_VUOTA = "Non è stato possibile caricare la lista delle notifiche";
 
     /*
      * Account model exceptions

@@ -354,6 +354,9 @@ try {
             case 'ricercaAnnuncioControl';
                 include_once CONTROL_DIR . "getDatiAnnuncioRicercato.php";
                 break;
+            case 'notificheUtente':
+                include_once VIEW_DIR . "notificheUtente.php";
+                break;
             case 'modificaAnnuncio';
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "modificaAnnuncio.php";
@@ -445,6 +448,10 @@ try {
             case 'annunciControl';
                 include_once CONTROL_DIR . "annunciControl.php";
                 break;
+            case 'messaging';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once VIEW_DIR . "messaging.php";
+                break;
             case 'cancellaMacroControl';
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "cancellaMacroControl.php";
@@ -460,6 +467,42 @@ try {
             case 'InserisciNuovaMicroControl';
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "InserisciNuovaMicroControl.php";
+                break;
+            case 'stampaConversazione':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "stampaConversazione.php";
+                break;
+            case 'stampaCandidature':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "stampaCandidature.php";
+                break;
+            case 'inviaMessaggio':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "inviaMessaggio.php";
+                break;
+            case 'inviaCollaborazione':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "inviaCollaborazione.php";
+                break;
+            case 'rifiutaCandidato':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "rifiutaCandidato.php";
+                break;
+            case 'accettaCollaborazione':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "accettaCollaborazione.php";
+                break;
+            case 'rifiutaCollaborazione':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "rifiutaCollaborazione.php";
+                break;
+            case 'listaNotifiche':
+                $user = StringUtils::checkPermission(Permissions::ALL);
+                include_once CONTROL_DIR . "listaNotifiche.php";
+                break;
+            case 'pannelloNotifiche':
+                $user = StringUtils::checkPermission(Permissions::ALL);
+                include_once CONTROL_DIR . "pannelloNotifiche.php";
                 break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');

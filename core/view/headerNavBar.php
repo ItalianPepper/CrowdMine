@@ -120,31 +120,11 @@
                     <div class="dropdown-menu">
                         <ul>
                             <li class="dropdown-header">Notifiche</li>
-                            <li>
-                                <a href="#">
-                                    <span class="badge badge-danger pull-right">8</span>
-                                    <div class="message">
-                                        <div class="content">
-                                            <div class="title">New Order</div>
-                                            <div class="description">$400 total</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="badge badge-danger pull-right">14</span>
-                                    Inbox
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="badge badge-danger pull-right">5</span>
-                                    Issues Report
-                                </a>
-                            </li>
+                                <ul id="lista-notifiche">
+
+                                </ul>
                             <li class="dropdown-footer">
-                                <a href="#">Visualizza Tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                <a href="<?php echo DOMINIO_SITO;?>/notificheUtente">Visualizza Tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                             </li>
                         </ul>
                     </div>
