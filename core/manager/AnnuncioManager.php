@@ -802,4 +802,82 @@ class AnnuncioManager
         }
         return $annunci;
     }
+
+
+    //metodi utili per gestione statistiche
+
+    public function getNumberAnnunciByMicrocategoriaBetweenDates($microcategoria, $fromData, $toData){
+        $lista = array();
+        $FIND_ANNUNCI = "
+                        SELECT annuncio.data, COUNT(annuncio.data) 
+                        FROM annuncio, riferito 
+                        WHERE riferito.id_annuncio = annuncio.id AND annuncio.id_microcategoria = '%s'
+                        BETWEEN '%s' AND '%s'
+                        GROUP BY annuncio.data
+                        ";
+        $query = sprintf($FIND_ANNUNCI, $microcategoria->getId(), date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            foreach($result->fetch_assoc() as $r){
+                array_push($lista, $r);
+            }
+        }return $lista;
+    }
+
+    public function getNumberAnnunciByMacrocategoriaBetweenDates($macrocategoria, $fromData, $toData){
+        $lista = array();
+        $FIND_ANNUNCI = "
+                        SELECT annuncio.data, COUNT(annuncio.data) 
+                        FROM annuncio, riferito, microcategoria 
+                        WHERE riferito.id_annuncio = annuncio.id AND annuncio.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
+                        BETWEEN '%s' AND '%s'
+                        GROUP BY annuncio.data
+                        ";
+        $query = sprintf($FIND_ANNUNCI, $macrocategoria->getId(), date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            foreach($result->fetch_assoc() as $r){
+                array_push($lista, $r);
+            }
+        }return $lista;
+    }
+
+    public function getNumberAnnunciPublishedInAMounth(){
+        $lista = array();
+        $fromData = date("Y-m-d");
+        $toData = data("Y-m-d", strtotime('+1 month'));
+        $FIND_ANNUNCI = "SELECT annuncio.data, COUNT(annuncio.data) 
+                        FROM annuncio
+                        BETWEEN '%s' AND '%s'
+                        GROUP BY annuncio.data";
+        $query = sprintf($FIND_ANNUNCI, date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            foreach($result->fetch_assoc() as $r){
+                array_push($lista, $r);
+            }
+        }return $lista;
+    }
+
+    public function getNumberAnnunciPubblishedToday(){
+        $lista = array();
+        $data = data("Y-m-d");
+        $FIND_ANNUNCI = "SELECT COUNT(annuncio.data) FROM annuncio WHERE annuncio.data = '%s'";
+        $query = sprintf($FIND_ANNUNCI, $data);
+        $result = Manager::getDB()->query($query);
+        if(!$result){
+
+        }else{
+            foreach($result->fetch_assoc() as $r){
+                array_push($lista, $r);
+            }
+        }return $lista;
+    }
+
 }

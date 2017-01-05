@@ -14,6 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $feedbackName = null;
     $feedbackDescription = null;
     $feedbackRating = null;
+    $adsID = null;
+    $userValId=null;
+    $userSubID=null;
 
     /**
      * Checking if the POST variable are septate
@@ -46,6 +49,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
         throw new IllegalArgumentException("Campo rating non settato");
     }
+    if (isset($_POST['annuncio-id'])) {
+        $adsID = $_POST["annuncio-id"];
+
+    } else {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
+    }
+    if (isset($_POST['user-annuncio-id'])) {
+        $userValId = $_POST["user-annuncio-id"];
+
+    } else {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
+    }
+    if (isset($_POST['user-submit-id'])) {
+        $userSubID = $_POST["user-submit-id"];
+
+    } else {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
+    }
 
     if (empty($feedbackName) || !preg_match(Patterns::$NAME_GENERIC, $feedbackName)) {
         $_SESSION['toast-type'] = "error";
@@ -67,13 +97,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
         throw new IllegalArgumentException("Campo rating non corretto");
     }
+    if (empty($adsID) && intval($adsID)!=0) {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
+    }
+    if (empty($userValId) && intval($userValId)!=0) {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
+    }
+    if (empty($userSubID) && intval($userSubID)!=0) {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
+    }
 
-    //TODO method for check the collaboration between two user->Notifiche e Messaggi
+    //if($feedbackManager->checkCollaboration($userSubID,$adsID))
+    //{
+        $data =  date("Y-m-d H:i:s");
+        $feedbackManager->insertFeedback(null,$userSubID,$adsID,
+                                        $userValId,$feedbackRating,
+                                        $feedbackDescription,$data,
+                                        ATTIVATO,$feedbackName);
+        $_SESSION['toast-type'] = "success";
+        $_SESSION['toast-message'] = "Feedback inserito con successo";
+        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+    //}
 
-    $data =  date("Y-m-d H:i:s");
-    var_dump($data);
 
-
-    $feedbackManager->createFeedback($id, $idAnnuncio, $idUtente, $feedbackDescription, $data, $feedbackRating);
 
 }

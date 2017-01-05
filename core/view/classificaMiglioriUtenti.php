@@ -283,40 +283,35 @@
                 </div>
             </div>
         </nav>
-
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="card-header">Opzioni</div>
                     <div class="card-body">
                         <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio5" value="option1">
-                            <label for="radio5">
+                            <input type="radio" name="radio2" id="radioMacro" value="option1">
+                            <label for="radioMacro">
                                 Macro Categoria
                             </label>
                         </div>
                         <div class="radio radio">
-                            <input type="radio" name="radio2" id="radio6" value="option2" checked>
-                            <label for="radio6">
+                            <input type="radio" name="radio2" id="radioMicro" value="option2">
+                            <label for="radioMicro">
                                 Micro Categoria
                             </label>
                         </div>
                         <div>
                             <label for="selectMacro">Seleziona Macro Categoria</label>
                             <select style="width:100%" id="selectMacro" class="select2">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
                             </select>
                         </div>
                         <div>
                             <label for="selectMicro">Seleziona Micro Categoria</label>
                             <select style="width:100%" id="selectMicro" class="select2">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Mostra Risultati</button>
+                            <button id="mostraRisultati" type="submit" class="btn btn-primary">Mostra Risultati</button>
                         </div>
                     </div>
                 </div>
@@ -325,34 +320,17 @@
                 <div class="card">
                     <div class="card-header">Risultati</div>
                     <div class="card-body no-padding">
-                        <table class="datatable table table-striped primary" cellspacing="0" width="100%">
+                        <table id="tabellaRisultati" class="datatable table table-striped primary" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Feedback positivi</th>
-                                <th>Micro Categorie</th>
+                                <th>Micro Categoria</th>
                                 <th>Macro Categoria</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                            </tr>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -365,4 +343,159 @@
 </div>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+
+
+<script>
+    $("#radioMacro").click(function () {
+        $("#radioMacro").prop("checked",true);
+
+        $("#selectMicro").attr("disabled", true);
+    });
+
+    $("#radioMicro").click(function () {
+        $("#radioMicro").prop("checked",true);
+
+        $("#selectMicro").removeAttr("disabled");
+    });
+
+    $(document).ready(function () {
+        $("#radioMacro").prop("checked",true);
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMacro"},
+            success: function (response) {
+                var arrayMacroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMacroElements(arrayMacroElements)
+            }
+        })
+    });
+
+    $("#selectMacro").ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMacro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMacroElements(arrayMicroElements);
+            }
+        });
+    });
+
+    $("#selectMacro").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMacro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMacroElements(arrayMicroElements);
+            }
+        });
+    });
+
+    function appendMacroElements(arrayMacroElements) {
+        $("#selectMacro").empty();
+        $.each(arrayMacroElements, function (i, item) {
+            $("#selectMacro").append($("<option>").text(item).attr("value", item));
+        });
+    }
+
+
+    $("#selectMicro").ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMicro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMicroElements(arrayMicroElements);
+            }
+        });
+    });
+
+    $("#selectMicro").change(function () {
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: {option: "selectMicro"},
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                appendMicroElements(arrayMicroElements);
+            }
+        });
+    });
+
+    function appendMicroElements(arrayMicroElements) {
+        $("#selectMicro").empty();
+        $.each(arrayMicroElements, function (i, item) {
+            $("#selectMicro").append($("<option>").text(item).attr("value", item));
+        });
+    }
+
+    $("#mostraRisultati").click(function () {
+        var dataSelected;
+
+        if($("#radioMacro:checked").length>0){
+            dataSelected={
+                macro:$("#selectMacro").val()
+            }
+        }else if($("#radioMicro:checked").length>0){
+            dataSelected={
+                macro:$("#selectMacro").val(),
+                micro:$("#selectMicro").val()
+            }
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "classificaUtenti",
+            dataType: "json",
+            data: dataSelected,
+            success: function (response) {
+                var arrayMicroElements = $.map(response, function (el) {
+                    return el;
+                });
+                updateTable(arrayMicroElements);
+            }
+        });
+    });
+
+    function updateTable(arrayMicroElements) {
+        $("#tabellaRisultati tbody tr").remove();
+
+        $.each(arrayMicroElements, function (i, el) {
+            $("#tabellaRisultati").find("tbody")
+                .append($("<tr>")
+                    .append($("<th></th>")
+                        .attr("scope", "row")
+                        .text(i + 1))
+                    .append($("<td>").text("nome utente"))
+                    .append($("<td>").text("feedbackPositivi"))
+                    .append($("<td>").text("macro categoria"))
+                    .append($("<td>").text("micro categoria"))
+                )
+        });
+
+    }
+
+</script>
+
 </body>

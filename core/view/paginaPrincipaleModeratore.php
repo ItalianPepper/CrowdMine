@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\flat-admin.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\rating.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.css">
 
     <!-- Theme -->
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\theme\blue-sky.css">
@@ -198,141 +199,44 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12" >
                 <div class="card card-mini">
                     <div class="card-header">
                         Lista Feedback Seganalti
                     </div>
+                    <div class="card card-mini" id="feedback-list-reported" style="padding: 20px">
 
-                    <div class="media social-post" style="margin-left: 2%">
-                        <div class="media-left">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-                            </a>
-                        </div>
-                        <div class="section">
-                            <div class="section-body">
-                                <div class="media-body">
-                                    <div class="media-heading">
-                                        <h4 class="title">Scott White</h4>
+                            <div class="card-body __loading" style="padding-bottom: 50px">
+                                <div class="loader-container text-center">
+                                    <div class="icon">
+                                        <div class="sk-wave">
+                                            <div class="sk-rect sk-rect1"></div>
+                                            <div class="sk-rect sk-rect2"></div>
+                                            <div class="sk-rect sk-rect3"></div>
+                                            <div class="sk-rect sk-rect4"></div>
+                                            <div class="sk-rect sk-rect5"></div>
+                                        </div>
                                     </div>
-                                    <div class="media-content">
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                                        ligula
-                                        eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-                                        parturient
-                                        montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                                        pellentesque
-                                        eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-                                    </div>
-                                    <div class="media-action">
-                                        <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-                                        <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-                                    </div>
+                                    <div>Caricamento</div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="media social-post" style="margin-left: 2%">
-                        <div class="media-left">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-                            </a>
-                        </div>
-                        <div class="section">
-                            <div class="section-body">
-                                <div class="media-body">
-                                    <div class="media-heading">
-                                        <h4 class="title">Scott White</h4>
-                                    </div>
-                                    <div class="media-content">
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                                        ligula
-                                        eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-                                        parturient
-                                        montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                                        pellentesque
-                                        eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-                                    </div>
-                                    <div class="media-action">
-                                        <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-                                        <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="media social-post" style="margin-left: 2%">
-                        <div class="media-left">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-                            </a>
-                        </div>
-                        <div class="section">
-                            <div class="section-body">
-                                <div class="media-body">
-                                    <div class="media-heading">
-                                        <h4 class="title">Scott White</h4>
-                                    </div>
-                                    <div class="media-content">
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                                        ligula
-                                        eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-                                        parturient
-                                        montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                                        pellentesque
-                                        eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-                                    </div>
-                                    <div class="media-action">
-                                        <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-                                        <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="media social-post" style="margin-left: 2%">
-                        <div class="media-left">
-                            <a href="#">
-                                <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
-                            </a>
-                        </div>
-                        <div class="section">
-                            <div class="section-body">
-                                <div class="media-body">
-                                    <div class="media-heading">
-                                        <h4 class="title">Scott White</h4>
-                                    </div>
-                                    <div class="media-content">
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                                        ligula
-                                        eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-                                        parturient
-                                        montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                                        pellentesque
-                                        eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-                                    </div>
-                                    <div class="media-action">
-                                        <button class="btn btn-link"><i class="fa fa-check"></i> Conferma</button>
-                                        <button class="btn btn-link"><i class="fa fa-close"></i> Elimina</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
                 </div>
             </div>
         </div>
+
     </div>
 
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\fedbackReportedRetrive.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
+
 
 </body>
 </html>

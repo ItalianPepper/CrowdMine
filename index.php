@@ -20,7 +20,7 @@ define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
 define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
 define('AJAX_DIR', CORE_DIR . DIRECTORY_SEPARATOR . "ajax" . DIRECTORY_SEPARATOR);
 define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
-define('ATTIVO',"attivo");
+define('ATTIVATO',"attivato");
 define('SEGNALATO',"segnalato");
 define('ELIMINATO',"eliminato");
 define('REVISIONE',"revisione");
@@ -86,17 +86,15 @@ try {
             case 'visualizzaStatisticheMacroCategorie':
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
                 break;
-            case 'classificaMiglioriUtenti':
-                include_once VIEW_DIR . "classificaMiglioriUtenti.php";
-                break;
-            case 'classificaMiglioriSocieta':
-                include_once VIEW_DIR . "classificaMiglioriSocieta.php";
-                break;
             case 'annuncioModeratore':
                 include_once VIEW_DIR . "annuncioModeratore.php";
                 break;
             case 'statisticheAvanzateAdmin':
+                $user = StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once VIEW_DIR ."statisticheAvanzateAdmin.php";
+                break;
+            case '404':
+                include_once VIEW_DIR ."404.html";
                 break;
             case 'paginaStatistiche':
                 include_once VIEW_DIR . "paginaStatistiche.php";
@@ -157,12 +155,35 @@ try {
             case 'livesearch':
                 include_once CONTROL_DIR . "SearchController.php";
                 break;
+            case 'macroCategorieStat':
+                StringUtils::checkPermission(Permissions::ALL);
+                include_once CONTROL_DIR . "StatisticheMacroCategorie.php";
+                break;
+            case 'tabGenerale':
+                StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                include_once CONTROL_DIR . "TabGenerale.php";
+                break;
+            case 'tabAnnunci':
+                StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                include_once CONTROL_DIR . "TabAnnunci.php";
+                break;
+            case 'tabUtenti':
+                StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                include_once CONTROL_DIR . "TabUtenti.php";
+                break;
+            case 'statisticheUtente':
+                StringUtils::checkPermission(Permissions::ALL);
+                include_once CONTROL_DIR . "TabStatisticheUtente.php";
+                break;
             case 'cercaUtente':
                 include_once CONTROL_DIR . "UtenteFinder.php";
                 break;
             case 'segnalaUtente':
                 $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "SegnalaUtente.php";
+                break;
+            case 'reportedFedbackListRetrive':
+                include_once CONTROL_DIR . "reportedFedbackListRetrive.php";
                 break;
             case 'feedbackListRetrive':
             	include_once CONTROL_DIR . "feedbackListRetrive.php";
@@ -196,6 +217,15 @@ try {
                 break;
             case 'inserisciFeedback':
                 include_once CONTROL_DIR . "inserisciFeedbackControl.php";
+                break;
+            case 'feedbackSegnalation':
+                include_once CONTROL_DIR . "feedbackSegnalation.php";
+                break;
+            case 'feedbackValutation':
+                include_once CONTROL_DIR . "feedbackValutation.php";
+                break;
+            case 'SortFeedback':
+                include_once CONTROL_DIR . "SortFeedback.php";
                 break;
             case 'modificaPassword':
                 $user = StringUtils::checkPermission(RuoloUtente::UTENTE);
@@ -311,6 +341,12 @@ try {
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "inserisciAnnuncio.php";
                 break;
+            case 'VisualizzaSingoloFeedback';
+                include_once CONTROL_DIR . "VisualizzaSingoloFeedback.php";
+                break;
+            case 'ViewSingleFeedback';
+                include_once CONTROL_DIR . "ViewSingleFeedback.php";
+                break;
             case 'inserisciAnnuncioControl';
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "getDatiAnnuncio.php";
@@ -378,6 +414,9 @@ try {
                 break;
             case 'visualizzaAnnunciConflitto';
                 include_once CONTROL_DIR . "annunciConflitto.php";
+                break;
+            case 'adminFedbackListRetrive';
+                include_once CONTROL_DIR . "adminFedbackListRetrive.php";
                 break;
             case 'annunciReclamati';
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
