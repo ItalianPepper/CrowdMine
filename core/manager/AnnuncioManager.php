@@ -164,21 +164,20 @@ class AnnuncioManager
 
     public function temporaryTableSearchAnnunci($filters){
 
-        $query = " DROP TEMPORARY TABLE IF EXISTS searchedAnnunci;";
-
-        $res=Manager::getDB()->query($query);
-        if ($res==false) {
-            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
-        }
-
-        $query = " CREATE TEMPORARY TABLE searchedAnnunci AS (
+        $query = " DROP TEMPORARY TABLE IF EXISTS searchedAnnunci; CREATE TEMPORARY TABLE searchedAnnunci AS (
                     select * FROM annuncio ";
 
         FilterUtils::applyFilters($filters, $query);
 
-        $res=Manager::getDB()->query($query.");");
-
-        if ($res==false) {
+        $res=Manager::getDB()->multi_query($query.");");
+        if ($res) {
+            do {
+                /* store first result set */
+                if ($result = Manager::getDB()->store_result()) {
+                    $result->free();
+                }
+            } while (Manager::getDB()->more_results() && Manager::getDB()->next_result());
+        }else{
             throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
@@ -198,14 +197,18 @@ class AnnuncioManager
     public function getUsersInSearchedAnnunci($inCandidacies=false,$inComments=false)
     {
 
-        $query = "CREATE OR REPLACE TEMPORARY TABLE A1 AS (SELECT * FROM searchedAnnunci);";
-        $res=Manager::getDB()->query($query);
-        if ($res==false) {
-            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
-        }
-        $query = "CREATE OR REPLACE TEMPORARY TABLE A2 AS (SELECT * FROM searchedAnnunci);";
-        $res=Manager::getDB()->query($query);
-        if ($res==false) {
+        $query = "DROP TEMPORARY TABLE IF EXISTS A1; CREATE TEMPORARY TABLE A1 AS (SELECT * FROM searchedAnnunci); ";
+        $query .= "DROP TEMPORARY TABLE IF EXISTS A2; CREATE TEMPORARY TABLE A2 AS (SELECT * FROM searchedAnnunci); ";
+
+        $res=Manager::getDB()->multi_query($query);
+        if ($res) {
+            do {
+                /* store first result set */
+                if ($result = Manager::getDB()->store_result()) {
+                    $result->free();
+                }
+            } while (Manager::getDB()->more_results() && Manager::getDB()->next_result());
+        }else{
             throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
