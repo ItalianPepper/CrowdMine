@@ -806,16 +806,17 @@ class AnnuncioManager
 
     //metodi utili per gestione statistiche
 
-    public function getNumberAnnunciByMicrocategoriaBetweenDates($microcategoria, $fromData, $toData){
+    public function getNumberAnnunciByMicrocategoriaBetweenDates($microcategoria, $fromDate, $toDate){
         $lista = array();
-        $FIND_ANNUNCI = "
-                        SELECT annuncio.data, COUNT(annuncio.data) 
-                        FROM annuncio, riferito 
-                        WHERE riferito.id_annuncio = annuncio.id AND annuncio.id_microcategoria = '%s'
-                        BETWEEN '%s' AND '%s'
-                        GROUP BY annuncio.data
-                        ";
-        $query = sprintf($FIND_ANNUNCI, $microcategoria->getId(), date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
+        $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres , COUNT(annuncio.id) AS conto
+                          FROM annuncio, riferito 
+                          WHERE annuncio.id = riferito.id_annuncio AND riferito.id_microcategoria ='%s' 
+                                AND (annuncio.data BETWEEN '%s' AND '%s')
+                          GROUP BY dateres
+                          ORDER BY ASC";
+        $micro = new MicrocategoriaManager();
+        $microcategoriaObj = $micro->findMicrocategoriaByNome($microcategoria); //non da un oggetto, da errore sul getId()
+        $query = sprintf($FIND_ANNUNCI, $microcategoriaObj->getId(), date_format($fromDate, 'Y-m-d'), date_format($toDate, 'Y-m-d'));
         $result = Manager::getDB()->query($query);
         if(!$result){
 
@@ -826,21 +827,24 @@ class AnnuncioManager
         }return $lista;
     }
 
-    public function getNumberAnnunciByMacrocategoriaBetweenDates($macrocategoria, $fromData, $toData){
+    public function getNumberAnnunciByMacrocategoriaBetweenDates($macrocategoria, $fromDate, $toDate){
         $lista = array();
-        $FIND_ANNUNCI = "
-                        SELECT annuncio.data, COUNT(annuncio.data) 
-                        FROM annuncio, riferito, microcategoria 
-                        WHERE riferito.id_annuncio = annuncio.id AND annuncio.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
-                        BETWEEN '%s' AND '%s'
-                        GROUP BY annuncio.data
-                        ";
-        $query = sprintf($FIND_ANNUNCI, $macrocategoria->getId(), date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
+        $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres , COUNT(annuncio.id) AS conto
+                          FROM annuncio,riferito,macrocategoria,microcategoria
+                          WHERE annuncio.id = riferito.id_annuncio
+                          AND riferito.id_microcategoria = microcategoria.id 
+                          AND microcategoria.id_macrocategoria = '%s'
+                          AND (annuncio.data BETWEEN '%s' AND '%s')
+                          GROUP BY dateres
+                          ORDER BY dateres ASC";
+        $macro = new MacroCategoriaManager();
+        $macrocategoriaObj = $macro->getMacroByName($macrocategoria);
+        $query = sprintf($FIND_ANNUNCI,$macrocategoriaObj->getId(), date_format($fromDate,'Y-m-d'), date_format($toDate,'Y-m-d'));
         $result = Manager::getDB()->query($query);
-        if(!$result){
 
-        }else{
-            foreach($result->fetch_assoc() as $r){
+       if($result){
+
+            while($r = $result->fetch_assoc()){
                 array_push($lista, $r);
             }
         }return $lista;

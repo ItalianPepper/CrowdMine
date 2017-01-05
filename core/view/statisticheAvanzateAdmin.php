@@ -299,9 +299,7 @@
             dataType: "json",
             data: {macrocategoria:macro,fromdatemacro:from, todatemacro:to},
             success: function(response){
-                var dates = $.map(response, function(value,key){return key});
-                var values = $.map(response, function(value, key){return value});
-                drawMacroDateChart(dates,values);
+                drawMacroDateChart(response);
             }
         });
     });
@@ -508,9 +506,13 @@
             dataType: "json",
             data:{type:type,macro:nameMacro,maxPage:"dimensionPaging"},
             success:function (response) {
-                var dimensionPaging = response;
-                $("#pagination").attr("dimension-paging",dimensionPaging);
-                appendingPaging(page,type,nameMacro);
+                var dimensionPaging = response/10;
+
+                if(dimensionPaging > 1) {
+                    $("#pagination").attr("dimension-paging", dimensionPaging);
+                    appendingPaging(page, type, nameMacro);
+                }
+
             }
         });
     }
@@ -696,16 +698,25 @@
     }
 
 
-    function drawMacroDateChart(dates, values) {
+    function drawMacroDateChart(response) {
 
         var ctxMacro = document.getElementById("macroCategoriaGrafico").getContext("2d");
+        var labels = [];
+        var values =[];
+
+        for(var i in response){
+               var labelItem = response[i].datares;
+                var valueItem = response[i].conto;
+                labels.push(labelItem);
+                values.push(valueItem);
+        }
 
         var macroData = {
-            labels: dates,
+            labels:$("#selectMacro").val(),
             datasets: [
                 {
-                    label:$("#selectMacro").val(),
-                    data: values,
+                    label:labels,
+                    data:values,
                     backgroundColor: "rgba(255, 0, 0, 0.3)",
                     borderColor: "rgba(255, 0, 0, 0.3)",
                     borderWidth: 1

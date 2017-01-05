@@ -220,7 +220,7 @@ class MicrocategoriaManager extends Manager
         $FIND_MICRO_BY_ID = "SELECT * FROM microcategoria WHERE id='%s';";
         $query = sprintf($FIND_MICRO_BY_ID, $idMicro);
         $result = self::getDB()->query($query);
-        if($result->num_rows == 1){
+        if($result){
             $row = $result->fetch_assoc();
             return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
         }else
@@ -231,7 +231,7 @@ class MicrocategoriaManager extends Manager
         $GET_MICRO_BY_NOME = "SELECT * FROM 'microcategoria' WHERE nome  ='%s'";
         $query = sprintf($GET_MICRO_BY_NOME, $nome);
         $result = self::getDB()->query($query);
-        if($result->num_rows == 1){
+        if($result){
             $row = $result->fetch_assoc();
             return $this->createMicrocategoria($row['id'], $row['nome'], $row['id_macrocategoria']);
         }else
@@ -346,5 +346,4 @@ class MicrocategoriaManager extends Manager
             $row = $result->fetch_row();
         }return $row;
     }
-
 }
