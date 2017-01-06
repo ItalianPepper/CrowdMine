@@ -660,7 +660,7 @@
 
                             <!-- id for retrive feedback id utente della pagina -->
                             <input type="hidden" id="user-feedback-id" value="<?php echo $visitedUser->getId();?>">
-                            <div class="row" style="margin-top: 3%" id="feedback-list-destination">
+                            <div class="row" style="margin-top: 3%;padding: 15px" id="feedback-list-destination">
                                 <div class="card-body __loading">
                                     <div class="loader-container text-center">
                                         <div class="icon">

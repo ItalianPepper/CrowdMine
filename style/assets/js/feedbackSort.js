@@ -4,10 +4,8 @@
 
     $(document).ready(function () {
        $("#option-1,#option-2,#option-3").click(function () {
-            //take the id of valutated user
-               var optionValue = $(event.target).attr("name");
+           var optionValue = $(event.target).attr("name");
            var id = $("#user-feedback-id").attr("value");
-           console.log(optionValue,id);
            $.ajax({
                url: "/CrowdMine/SortFeedback",
                type: "POST",
@@ -21,7 +19,7 @@
                    generateFeedbackList(data,"user",destination)
                },
                error:function (data,textStatus, xhr) {
-                   console.log(xhr.status);
+
                    toastr.error("Errore inaspettato durante l'ordinamento");
                }
            });
