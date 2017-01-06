@@ -272,6 +272,23 @@ class MacroCategoriaManager extends Manager
         }return false;
     }
 
+    public function findBestMacrocategoriaRiferitoGraphics(){
+        $lista = array();
+        $FIND_BEST_USER_BY_MACROCATEGORIA =
+            "SELECT macrocategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto 
+             FROM macrocategoria, riferito, microcategoria 
+             WHERE riferito.id_microcategoria = microcategoria.id AND macrocategoria.id = microcategoria.id_macrocategoria 
+             GROUP BY macrocategoria.id 
+             ORDER BY conto DESC
+             ";
+        $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
+        if($result){
+            while($l = $result ->fetch_assoc()){
+                $lista[$l['nome']] = $l['conto'];
+            }return $lista;
+        }return false;
+    }
+
     public function findBestMacrocategoriaRiferito(){
         $lista = array();
         $FIND_BEST_USER_BY_MACROCATEGORIA =
@@ -283,8 +300,8 @@ class MacroCategoriaManager extends Manager
              ";
         $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
         if($result){
-            foreach($result->fetch_assoc() as $l){
-                array_push($lista, $l);
+            while($l = $result ->fetch_assoc()){
+                array_push($lista, $l['nome']);
             }return $lista;
         }return false;
     }

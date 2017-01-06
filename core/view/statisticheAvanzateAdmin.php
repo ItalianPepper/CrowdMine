@@ -299,7 +299,9 @@
             dataType: "json",
             data: {macrocategoria:macro,fromdatemacro:from, todatemacro:to},
             success: function(response){
-                drawMacroDateChart(response);
+                var dates = $.map(response, function(value,key){return key});
+                var values = $.map(response, function(value, key){return value});
+                drawMacroDateChart(dates,values);
             }
         });
     });
@@ -669,7 +671,7 @@
         var ctxGenerale = document.getElementById("graficoGeneraleAnnunci").getContext("2d");
 
         var generaleData = {
-            labels: dates,
+            labels:dates,
             datasets: [
                 {
                     label:"Generale",
@@ -686,7 +688,7 @@
             options: {
                 pointHitRadius: 3,
                 responsive: true,
-                tooltipEvents: [],
+                tooltipEvents:[],
                 showTooltips: true,
                 onAnimationComplete: function () {
                     this.showTooltip(this.segments, true);
@@ -698,31 +700,21 @@
     }
 
 
-    function drawMacroDateChart(response) {
+    function drawMacroDateChart(dates,values) {
 
         var ctxMacro = document.getElementById("macroCategoriaGrafico").getContext("2d");
-        var labels = [];
-        var values =[];
-
-        for(var i in response){
-               var labelItem = response[i].datares;
-                var valueItem = response[i].conto;
-                labels.push(labelItem);
-                values.push(valueItem);
-        }
 
         var macroData = {
-            labels:$("#selectMacro").val(),
+            labels:dates,
             datasets: [
                 {
-                    label:labels,
-                    data:values,
+                    label:$("#selectMacro").val(),
+                    data: values,
                     backgroundColor: "rgba(255, 0, 0, 0.3)",
                     borderColor: "rgba(255, 0, 0, 0.3)",
                     borderWidth: 1
                 }
             ]
-
         };
 
         var macroChart = new Chart.Line(ctxMacro, {
@@ -750,7 +742,7 @@
             datasets: [
                 {
                     label: $("#selectMicro").val(),
-                    data: values, //dati micro
+                    data: values,
                     backgroundColor: "rgba(0, 0, 255, 0.3)",
                     borderColor: "rgba(0, 0, 255, 0.3)",
                     borderWidth: 1

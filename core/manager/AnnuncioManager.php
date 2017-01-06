@@ -813,18 +813,19 @@ class AnnuncioManager
                           WHERE annuncio.id = riferito.id_annuncio AND riferito.id_microcategoria ='%s' 
                                 AND (annuncio.data BETWEEN '%s' AND '%s')
                           GROUP BY dateres
-                          ORDER BY ASC";
+                          ORDER BY dateres ASC";
         $micro = new MicrocategoriaManager();
-        $microcategoriaObj = $micro->findMicrocategoriaByNome($microcategoria); //non da un oggetto, da errore sul getId()
+        $microcategoriaObj = $micro->findMicrocategoriaByNome($microcategoria);
         $query = sprintf($FIND_ANNUNCI, $microcategoriaObj->getId(), date_format($fromDate, 'Y-m-d'), date_format($toDate, 'Y-m-d'));
         $result = Manager::getDB()->query($query);
-        if(!$result){
+        if($result){
 
-        }else{
-            foreach($result->fetch_assoc() as $r){
-                array_push($lista, $r);
+            while($r = $result->fetch_assoc()){
+                $lista[$r['dateres']] = $r['conto'];
             }
-        }return $lista;
+
+        }
+        return $lista;;
     }
 
     public function getNumberAnnunciByMacrocategoriaBetweenDates($macrocategoria, $fromDate, $toDate){
@@ -844,27 +845,32 @@ class AnnuncioManager
 
        if($result){
 
-            while($r = $result->fetch_assoc()){
-                array_push($lista, $r);
+            while($r = $result->fetch_assoc()) {
+
+                $lista[$r['dateres']] = $r['conto'];
+
             }
-        }return $lista;
+        }
+        return $lista;
     }
 
     public function getNumberAnnunciPublishedInAMounth(){
         $lista = array();
         $toData = date("Y-m-d");
-        $fromData = date("Y-m-d", strtotime('-1 month'));
+        $fromData = date('-1 month', strtotime($toData));
 
-        $FIND_ANNUNCI = "SELECT annuncio.data as data, COUNT(annuncio.data) as conto
+        $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres, COUNT(annuncio.id) AS conto
                          FROM annuncio
                          WHERE (annuncio.data BETWEEN '%s' AND '%s')
-                         GROUP BY CAST(annuncio.data as DATE)";
+                         GROUP BY dateres";
 
         $query = sprintf($FIND_ANNUNCI, date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
         $result = Manager::getDB()->query($query);
         if($result){
             while($r = $result->fetch_assoc()){
-                array_push($lista, $r['conto']);
+                $sqlDate = strtotime($r['dateres']);
+                $resultDate = date("Y-m-d",$sqlDate);
+                $lista[$resultDate] = $r['conto'];
             }
             return $lista;
         }
