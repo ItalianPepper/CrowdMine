@@ -180,6 +180,12 @@ function setRatingStar(feedbackID, feedbackRatingValue) {
     "use strict";
 
     for (var i = 0; i <= 5; i++) {
+
+        if(feedbackRatingValue == 0.5)
+        {
+            $("#starhalf-" + feedbackID).attr("checked", "checked");
+            console.log( $("#star" + i + "half-" + feedbackID));
+        }
         if (feedbackRatingValue == i)
         {
             $("#star" + i + "-" + feedbackID).attr("checked", "checked");
