@@ -843,10 +843,10 @@
                 <script>
                     $("#tab4").ready(function () {
 
-                      var idUser = <?php echo $visitedUser->getId() ?> ;
+                      var idUser = <?php echo $visitedUser->getId();?> ;
 
                         $.ajax({
-                            url: "statisticheUtente",
+                            url: "<?php echo DOMINIO_SITO;?>/statisticheUtente",
                             type: "POST",
                             dataType: "json",
                             data: {option: "graphicsUser", idUser:idUser},
@@ -859,10 +859,10 @@
 
                     $("#tab4").ready(function () {
 
-                        var idUser = <?php echo $visitedUser->getId() ?> ;
+                        var idUser = <?php echo $visitedUser->getId();?> ;
 
                         $.ajax({
-                            url: "statisticheUtente",
+                            url: "<?php echo DOMINIO_SITO;?>/statisticheUtente",
                             type: "POST",
                             dataType: "json",
                             data: {option: "tableUser", idUser: idUser},
@@ -882,9 +882,9 @@
                             datasets: [
                                 {
                                     label:"",
-                                    data:[arrayFeedback["positivi"],arrayFeedback["negativi"]],
-                                    backgroundColor: ["#FF6384", "#4BC0C0"],
-                                    borderColor: ["#FF6384", "#4BC0C0"],
+                                    data:[arrayFeedback.avgpositive,arrayFeedback.avgnegative],
+                                    backgroundColor: ["rgba(255,130,37,1)", "rgba(75,192,192,1)"],
+                                    borderColor: ["rgba(255,130,37,1)", "rgba(75,192,192,1)"],
                                     borderWidth: 1
                                 }
                             ]
@@ -918,13 +918,13 @@
                                         .attr("scope", "row")
                                         .text(i + 1))
                                     .append($("<td>")
-                                        .text(el["microcategoria"]))
+                                        .text(el.microcategoria))
                                     .append($("<td>")
-                                        .text(el["feedbackpositivi"]))
+                                        .text(el.feedbackpositivi))
                                     .append($("<td>")
-                                        .text(el["feedbacknegativi"]))
+                                        .text(el.feedbacknegativi))
                                 )
-                        }
+                        });
                     }
 
                 </script>
