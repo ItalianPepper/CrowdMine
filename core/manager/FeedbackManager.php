@@ -217,11 +217,13 @@ class FeedbackManager extends Manager implements SplSubject
      * @param Annuncio $annuncio
      */
     private function inviaNotificaDiInserimento($id, $annuncio){
+        $dest = array();
         $tipo="inserimento";
         $name= $annuncio->getTitolo();
         $utenteManager = new UtenteManager();
-        $dest= $utenteManager->findUtenteById($annuncio->getIdUtente());
-        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+        $user= $utenteManager->findUtenteById($annuncio->getIdUtente());
+        array_push($dest, $user);
+        $this->setWrapperNotifica($id, $tipo, $name, $dest);
         $this->notify();
     }
 
@@ -229,8 +231,8 @@ class FeedbackManager extends Manager implements SplSubject
         $tipo="segnalazione";
         $name= $annuncio->getTitolo();
         $utenteManager = new UtenteManager();
-        $dest= $utenteManager->findUtenteById($this->getFeedbackById($id)->getIdValutato());
-        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+        $dest= $utenteManager->findUserOneInput(RuoloUtente::MODERATORE);
+        $this->setWrapperNotifica($id, $tipo, $name, $dest);
         $this->notify();
     }
 
@@ -239,7 +241,7 @@ class FeedbackManager extends Manager implements SplSubject
             "id_oggetto" => $idOggetto,
             "tipo_oggetto" => $tipo,
             "nome" => $nome,
-            "lista_mittenti" => $listaDestinatari
+            "lista_destinatari" => $listaDestinatari
         );
     }
 
