@@ -918,11 +918,11 @@
                                         .attr("scope", "row")
                                         .text(i + 1))
                                     .append($("<td>")
-                                        .text(el.microcategoria))
+                                        .text(el[i].microcategoria))
                                     .append($("<td>")
-                                        .text(el.feedbackpositivi))
+                                        .text(el[i].feedbackpositivi))
                                     .append($("<td>")
-                                        .text(el.feedbacknegativi))
+                                        .text(el[i].feedbacknegativi))
                                 )
                         });
                     }
