@@ -497,7 +497,7 @@
                                         <div class="panel panel-default compact-panel">
                                             <a id="feedback-collapse-panel" class="panel-default collapse-title"
                                                data-toggle="collapse"
-                                               href="#feedback-collapse">
+                                               href="#feedback-collapse-<?php echo $annunci[$i]->getId();?>">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Inserisci Feedback
@@ -505,7 +505,7 @@
                                                     <p>Clicca qui per inserire un feedback</p>
                                                 </div>
                                             </a>
-                                            <div id="feedback-collapse" class="panel-collapse collapse">
+                                            <div id="feedback-collapse-<?php echo $annunci[$i]->getId();?>" class="panel-collapse collapse">
                                                 <form action="<?php echo DOMINIO_SITO;?>/inserisciFeedback" method="post">
                                                     <div class="panel-body">
                                                         <div class="col-lg-12 col-md-12 col-xs-12">
