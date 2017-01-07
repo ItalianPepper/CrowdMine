@@ -77,7 +77,11 @@
     </style>
 
 
-    <?php $fullname = $visitedUser->getNome()." ".$visitedUser->getCognome();?>
+    <?php
+
+        $fullname = $user->getNome()." ".$user->getCognome();
+        $visitedFullname = $visitedUser->getNome()." ".$visitedUser->getCognome();
+    ?>
 
 
 </head>
@@ -94,7 +98,7 @@
                         <div class="pull-left" style="display: flex;">
                             <img class="profile-img pull-left" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
                             <div class="app-title pull-left">
-                                <div class="title"><span class="highlight"><?php echo $fullname;?></span></div>
+                                <div class="title"><span class="highlight"><?php echo $visitedFullname;?></span></div>
                                 <div class="description"><?php echo $visitedUser->getDescrizione();?></div>
                             </div>
                         </div>
@@ -107,7 +111,7 @@
                                         ?>
 
                                         <div class="profile-action">
-                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/eleggiModeratore','Sei sicuro di voler rendere <strong><?php echo $fullname ?></strong> un moderatore?' )"
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/eleggiModeratore','Sei sicuro di voler rendere <strong><?php echo $visitedFullname ?></strong> un moderatore?' )"
                                                     class="btn btn-success btn btn-default btn-xs"
                                                     data-toggle="modal" data-target="#ConfirmModal">
                                                 Eleggi a Moderatore
@@ -117,7 +121,7 @@
                                     } elseif (($visitedUser->getRuolo() == RuoloUtente::MODERATORE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
                                         ?>
                                         <div class="profile-action">
-                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/destituisciModeratore','Sei sicuro di voler destituire <strong><?php echo $fullname ?></strong> dal ruolo di moderatore?' )"
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/destituisciModeratore','Sei sicuro di voler destituire <strong><?php echo $visitedFullname ?></strong> dal ruolo di moderatore?' )"
                                                     class="btn btn-danger btn btn-default btn-xs"
                                                     data-toggle="modal" data-target="#ConfirmModal">
                                                 Destituisci Moderatore
@@ -134,7 +138,7 @@
                                     if ($visitedUser->getStato() != StatoUtente::BANNATO && $visitedUser->getStato() != StatoUtente::RICORSO) {
                                         ?>
                                         <div class="profile-action">
-                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/banUtente','Sei sicuro di voler bannare <strong><?php echo $fullname ?></strong>?' )"
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/banUtente','Sei sicuro di voler bannare <strong><?php echo $visitedFullname ?></strong>?' )"
                                                     class="btn btn-danger btn btn-default btn-xs"
                                                      data-toggle="modal" data-target="#ConfirmModal">
                                                      Ban Utente
@@ -145,7 +149,7 @@
 
                                         ?>
                                         <div class="profile-action">
-                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/riattivaUtente','Riattivare <strong><?php echo $fullname ?></strong>?' )"
+                                            <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/riattivaUtente','Riattivare <strong><?php echo $visitedFullname ?></strong>?' )"
                                                     class="btn btn-success btn btn-default btn-xs"
                                                     data-toggle="modal" data-target="#ConfirmModal">
                                                 Riattiva Utente
@@ -164,7 +168,7 @@
                                 if ($visitedUser->getStato() == StatoUtente::ATTIVO) {
                                     ?>
                                     <div class="profile-action">
-                                        <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/segnalaUtente','Sei sicuro di voler segnalare <strong><?php echo $fullname ?></strong>?' )"
+                                        <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/segnalaUtente','Sei sicuro di voler segnalare <strong><?php echo $visitedFullname ?></strong>?' )"
                                                 class="btn btn-warning btn btn-default btn-xs"
                                                 data-toggle="modal" data-target="#ConfirmModal">
                                             Segnala Utente
@@ -332,10 +336,10 @@
                                                                         randomColorLabel($m->getNome() . $m->getId(), $m->getNome());
                                                                         echo " ";
                                                                     }
+                                                                }
 
-                                                                    if($found){
-                                                                        echo '  </div></div>';
-                                                                    }
+                                                                if($found){
+                                                                    echo '  </div></div>';
                                                                 }
                                                             }
                                                         ?>
@@ -656,7 +660,7 @@
 
                             <!-- id for retrive feedback id utente della pagina -->
                             <input type="hidden" id="user-feedback-id" value="<?php echo $visitedUser->getId();?>">
-                            <div class="row" style="margin-top: 3%" id="feedback-list-destination">
+                            <div class="row" style="margin-top: 3%;padding: 15px" id="feedback-list-destination">
                                 <div class="card-body __loading">
                                     <div class="loader-container text-center">
                                         <div class="icon">
@@ -788,7 +792,7 @@
                     $(document).ready(function(){
                         <?php
                         for ($i = 0; $i < count($annunci); $i++) {
-                            echo "annuncioButtons(" . $annunci[$i]->getId() . ")";
+                            echo "annuncioButtons(" . $annunci[$i]->getId() . "); ";
                         }
                         ?>
                     });

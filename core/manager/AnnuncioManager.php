@@ -118,12 +118,12 @@ class AnnuncioManager
 
         $UPDATE_ANNUNCIO = "UPDATE `Annuncio` SET `data` = '%s', `titolo` = '%s', `luogo` = '%s', `stato` = '%s', `retribuzione` = '%s', `tipo` = '%s', `descrizione` = '%s', `id_utente` = '%s' WHERE `id` = '%s' ";
 
-        $query = sprintf($UPDATE_ANNUNCIO, $date, $title, $location, StatoAnnuncio::REVISIONE, $remuneration, $type, $description, $userid, $id);
+        $query = sprintf($UPDATE_ANNUNCIO, $date, $title, $location, StatoAnnuncio::REVISIONE_MODIFICA, $remuneration, $type, $description, $userid, $id);
         if (!Manager::getDB()->query($query)) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
-        $Annuncio = new Annuncio($id, $userid, $date, $title, $description, $location, StatoAnnuncio::REVISIONE, $remuneration, $type);
+        $Annuncio = new Annuncio($id, $userid, $date, $title, $description, $location, StatoAnnuncio::REVISIONE_MODIFICA, $remuneration, $type);
 
         /*
         *   MICROCATEGORIES
