@@ -256,7 +256,7 @@
                                         <form action="<?php echo DOMINIO_SITO;?>/aggiungiCandidaturaControl" method="post">
                                             <div class="modal-body">
                                                 Inserisci Descrizione
-                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.. <?php echo $annunci[$i]->getId();?>"></textarea>
+                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
                                                 <input type="text" value="<?php echo $annunci[$i]->getId();?>" name="idAnnuncio" hidden>
                                             </div>
                                             <div class="modal-footer">

@@ -379,6 +379,7 @@ try {
                 include_once CONTROL_DIR . "rimuoviPreferiti.php";
                 break;
             case 'aggiungiCandidaturaControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "aggiungiCandidatura.php";
                 break;
             case 'segnalaAnnuncioControl';
