@@ -139,7 +139,7 @@ class NotificaManager extends Manager implements SplObserver
         $wrapperNotifica = $subject->getWrapperNotifica();
 
         $tipoNotifica = $wrapperNotifica["tipo_notifica"];
-        $destinatari = $wrapperNotifica["lista_utenti"];
+        $destinatari = $wrapperNotifica["lista_destinatari"];
 
         if ($tipoNotifica == tipoNotifica::INSERIMENTO) {
 

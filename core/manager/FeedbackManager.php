@@ -44,9 +44,9 @@ class FeedbackManager extends Manager implements SplSubject
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
-        $insertID = Manager::getDB()->insert_id;
         $annuncioManager = new AnnuncioManager();
-        $this->inviaNotificaDiInserimento($insertID, $annuncioManager->getAnnuncio($idAnnuncio));
+        $annuncio = $annuncioManager->getAnnuncio($idAnnuncio);
+        $this->inviaNotificaDiInserimento($idAnnuncio, "feedback", $annuncio->getTitolo(), array($annuncio->getIdUtente()));
     }
 
     public function createFeedback($id=null,$idUtente,$idAnnuncio,$idValutato,$valutazione,$corpo,$data,$stato,$titolo){
@@ -216,14 +216,9 @@ class FeedbackManager extends Manager implements SplSubject
      * @param $id
      * @param Annuncio $annuncio
      */
-    private function inviaNotificaDiInserimento($id, $annuncio){
-        $dest = array();
-        $tipo="inserimento";
-        $name= $annuncio->getTitolo();
-        $utenteManager = new UtenteManager();
-        $user= $utenteManager->findUtenteById($annuncio->getIdUtente());
-        array_push($dest, $user);
-        $this->setWrapperNotifica($id, $tipo, $name, $dest);
+    private function inviaNotificaDiInserimento($idOggetto, $tipoOggetto, $nome, $destinatari){
+        $tipoNotifica = "inserimento";
+        $this->setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $destinatari);
         $this->notify();
     }
 
@@ -236,10 +231,11 @@ class FeedbackManager extends Manager implements SplSubject
         $this->notify();
     }
 
-    public function setWrapperNotifica($idOggetto, $tipo, $nome, $listaDestinatari = null){
+    public function setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $listaDestinatari = null){
         $this->wrapperNotifica = array(
             "id_oggetto" => $idOggetto,
-            "tipo_oggetto" => $tipo,
+            "tipo_oggetto" => $tipoOggetto,
+            "tipo_notifica" => $tipoNotifica,
             "nome" => $nome,
             "lista_destinatari" => $listaDestinatari
         );

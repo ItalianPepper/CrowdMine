@@ -26,8 +26,11 @@ include_once FILTER_DIR . "SearchByStatus.php";
  * Class AnnuncioManager
  * This Class provides the business logic for the Annuncio Management and methods for database access.
  */
-class AnnuncioManager
+class AnnuncioManager implements SplSubject
 {
+
+    private $wrapperNotifica;
+    private $_observer;
 
     private static $GET_ALL_ANNUNCI = "SELECT * FROM `annuncio`";
 
@@ -593,6 +596,9 @@ class AnnuncioManager
         if (!Manager::getDB()->query($query)) {
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
+
+        $annuncio = $this->getAnnuncio($idAnnuncio);
+        $this->inviaNotificaDiInserimento($idAnnuncio, "commento", $annuncio->getTitolo(), array($annuncio->getIdUtente()));
     }
 
     /**
@@ -880,4 +886,49 @@ class AnnuncioManager
         }return $lista;
     }
 
+    private function inviaNotificaDiInserimento($idOggetto, $tipoOggetto, $nome, $destinatari){
+        $tipoNotifica = "inserimento";
+        $this->setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $destinatari);
+        $this->notify();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWrapperNotifica()
+    {
+        return $this->wrapperNotifica;
+    }
+
+    /**
+     * @param mixed $wrapperNotifica
+     */
+    public function setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $listaDestinatari = null){
+        $this->wrapperNotifica = array(
+            "id_oggetto" => $idOggetto,
+            "tipo_oggetto" => $tipoOggetto,
+            "tipo_notifica" => $tipoNotifica,
+            "nome" => $nome,
+            "lista_destinatari" => $listaDestinatari
+        );
+    }
+
+
+
+    public function attach(SplObserver $observer)
+    {
+        $this->_observers->attach($observer);
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        $this->_observers->detach($observer);
+    }
+
+    public function notify()
+    {
+        foreach ($this->_observers as $observer) {
+            $observer->update($this);
+        }
+    }
 }
