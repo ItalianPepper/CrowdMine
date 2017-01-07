@@ -56,7 +56,7 @@
             </li>
 
             <li class="">
-                <a href="">
+                <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale#tab2">
                     <div class="icon">
                         <i class="fa fa-cog" aria-hidden="true"></i>
                     </div>

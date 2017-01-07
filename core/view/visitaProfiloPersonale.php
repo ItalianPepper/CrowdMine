@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include_once VIEW_DIR."headerStart.php";?>
+    <?php
 
+    include_once VIEW_DIR."headerStart.php";
+    $fullname = $user->getNome()." ".$user->getCognome();
+    ?>
 </head>
 
 <body>
@@ -186,7 +189,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <form action="modificaPassword" method="post"
+                                                            <form action="<?php echo DOMINIO_SITO;?>/modificaPassword" method="post"
                                                                   class="form form-horizontal" id="tel-input">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
@@ -288,7 +291,7 @@
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form action="modificaDati" method="post"
+                                                            <form action="<?php echo DOMINIO_SITO;?>/modificaDati" method="post"
                                                                   class="form form-horizontal" id="edit-name-input"
                                                                   style="display:none">
                                                                 <input type="hidden" name="formName" value="name">
@@ -352,7 +355,7 @@
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form action="modificaDati" method="post"
+                                                            <form action="<?php echo DOMINIO_SITO;?>/modificaDati" method="post"
                                                                   class="form form-horizontal" id="edit-surname-input"
                                                                   style="display:none">
                                                                 <input type="hidden" name="formName" value="surname">
@@ -436,7 +439,7 @@
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form action="modificaDati" method="post"
+                                                            <form action="<?php echo DOMINIO_SITO;?>/modificaDati" method="post"
                                                                   class="form form-horizontal"
                                                                   id="edit-description-input" style="display:none">
                                                                 <input type="hidden" name="formName"
@@ -500,7 +503,7 @@
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form action="modificaDati" method="post"
+                                                            <form action="<?php echo DOMINIO_SITO;?>/modificaDati" method="post"
                                                                   class="form form-horizontal" id="edit-birthdate-input"
                                                                   style="display:none">
                                                                 <input type="hidden" name="formName" value="birthdate">
@@ -563,7 +566,7 @@
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form action="modificaDati" method="post"
+                                                            <form action="<?php echo DOMINIO_SITO;?>/modificaDati" method="post"
                                                                   class="form form-horizontal" id="edit-location-input"
                                                                   style="display:none">
                                                                 <input type="hidden" name="formName" value="location">
@@ -643,7 +646,7 @@
                                                         </div>
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
-                                                            <form action="modificaDati" method="post"
+                                                            <form action="<?php echo DOMINIO_SITO;?>/modificaDati" method="post"
                                                                   class="form form-horizontal"
                                                                   id="edit-partitaIva-input" style="display:none">
                                                                 <input type="hidden" name="formName" value="partitaIva">
@@ -737,7 +740,7 @@
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
                                                             <form class="form form-horizontal"
-                                                                  action="aggiungiMacroUtente" method="post"
+                                                                  action="<?php echo DOMINIO_SITO;?>/aggiungiMacroUtente" method="post"
                                                                   id="macro-input" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
@@ -834,7 +837,7 @@
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
                                                             <form class="form form-horizontal" id="micro-input"
-                                                                  style="display:none" action="aggiungiMicroUtente"
+                                                                  style="display:none" action="<?php echo DOMINIO_SITO;?>/aggiungiMicroUtente"
                                                                   method="post">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
@@ -894,7 +897,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <form class="form form-horizontal" id="micro-input1"
-                                                                  style="display:none" action="aggiungiMicroUtente"
+                                                                  style="display:none" action="<?php echo DOMINIO_SITO;?>/aggiungiMicroUtente"
                                                                   method="post">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
@@ -1026,7 +1029,7 @@
                                                         </div>
                                                         <!-- FORM INSERIMENTO !-->
                                                         <div class="row">
-                                                            <form class="form form-horizontal" id="userblock-input" action="bloccaUtente" method = "post" style="display:none">
+                                                            <form class="form form-horizontal" id="userblock-input" action="<?php echo DOMINIO_SITO;?>/bloccaUtente" method = "post" style="display:none">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
@@ -1362,7 +1365,7 @@
                                                                     <i class="fa fa-mail-reply-all"></i>
                                                                 </button>
                                                             </form
-                                                            <a href="rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId();?>">
+                                                            <a href="<?php echo DOMINIO_SITO;?>/rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId();?>">
                                                                 <button style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
                                                                     <i class="fa fa-close"></i>
                                                                 </button>
@@ -1398,7 +1401,7 @@
                          aria-labelledby="CancelAccountModalLabel">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="CancellaAccount" method="POST" class="form form-horizontal"
+                                <form action="<?php echo DOMINIO_SITO;?>/CancellaAccount" method="POST" class="form form-horizontal"
                                       id="tel-input">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1478,14 +1481,15 @@
     function caricaMicro(){
         var stringa = "micro";
         var index = $("#macro").val();
-        $.post("asyncMicroListByMacro",
+        $.post("<?php echo DOMINIO_SITO;?>/asyncMicroListByMacro",
             {nome:stringa,idMacro:index},
             function (data){
                 var sel = $("#micro").html(data);
             });
     }
+
     function ricercaUtente(stringa){
-        $.post("asyncRicercaUtente",
+        $.post("<?php echo DOMINIO_SITO;?>/asyncRicercaUtente",
             {nome: stringa},
             function (data) {
                 var valore = $('.select2-search__field').val();
@@ -1506,7 +1510,7 @@
     });
 
     function search_select() {
-        $('.select2-search__field').on("keydown", function (e) {
+        $('.select2-search__field').keydown(function (e) {
             setTimeout(function(){
 
                 var stringa = $('.select2-search__field').val();
@@ -1516,6 +1520,7 @@
     }
 
     ricercaUtente("");
+
 
 </script>
 
