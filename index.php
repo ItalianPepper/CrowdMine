@@ -119,6 +119,7 @@ try {
 //                include_once "standard.html";
 //                break;
             case 'ricercaAnnuncio':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "ricercaAnnuncio.php";
                 break;
             case 'banned':
@@ -379,6 +380,7 @@ try {
                 include_once CONTROL_DIR . "rimuoviPreferiti.php";
                 break;
             case 'aggiungiCandidaturaControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "aggiungiCandidatura.php";
                 break;
             case 'segnalaAnnuncioControl';

@@ -13,6 +13,8 @@
 
     ## RECUPERO IL DESTINATARIO DELLA CONVERSAZIONE ###
     $id_utente_destinatario = $_POST["id"];
+    $_SESSION['destinatario'] = $id_utente_destinatario;
+   
     $utente_destinatario = $manager_utente->findUtenteById($id_utente_destinatario);  //[STUB getUtentebyID]
     ## RECUPERA LA CONVERSAZIONE CON IL DESTINATARIO ##
     $lista_messaggio = $manager_msg->loadConversation($user->getId(), $id_utente_destinatario);
@@ -42,7 +44,7 @@
 
 
     </div>
-
+     
     <div class="action"></div>
     </div>
     <ul class="chat" id="messaggi_inviati">
@@ -78,4 +80,30 @@
         </div>
     </div>
 
-    
+    <!-- MODAL PER LA GESTIONE CANDIDATURE -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding: 10px">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">CANDIDATURE: </h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="card-body" id="ciao">
+
+                              <?php
+                                 include_once CONTROL_DIR . "stampaCandidature.php";
+                               ?>
+
+                        </div> <!-- fine body modal -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>   
