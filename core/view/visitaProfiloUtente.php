@@ -356,7 +356,8 @@
                             <?php
                             for ($i = 0; $i < count($annunci); $i++) {
                                 $aId = $annunci[$i]->getId();
-                            ?>
+                                $u = $listaUtenti[$annunci[$i]->getIdUtente()];
+                                ?>
 
                             <div class="col-md-10 col-sm-10" style="margin-top: 5%">
 
@@ -368,15 +369,14 @@
 
                                             <div class="media" style="width: 20%; float: left">
                                                 <a href="#">
-                                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                    <img src="<?php echo getUserImageBig($u,true); ?>" width="100%;"/>
                                                 </a>
                                             </div>
 
                                             <div style="float: left; margin-left: 5%;">
                                                 <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">
                                                         <?php
-                                                        $u = $listaUtenti[$annunci[$i]->getIdUtente()];
-                                                        echo $u->getNome() . " " . $u->getCognome() ?>
+                                                        echo getUserFullName($u,true);?>
                                                 </h1>
                                                 <h1><?php echo $annunci[$i]->getTitolo();?></h1>
 
@@ -431,7 +431,7 @@
                                                         <h4 class="title">
                                                             <?php
                                                             $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
-                                                            echo $u->getNome()." ".$u->getCognome()
+                                                            echo getUserFullName($u,true);
                                                             ?>
                                                         </h4>
                                                         <h5 class="timeing"><?php
@@ -513,25 +513,11 @@
                                                                     <div class="section">
                                                                         <div class="section-title">
                                                                             <?php
-                                                                            if(isset($user)) {
-                                                                            echo $user->getNome()." ".$user->getCognome();
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                echo "Devi aver effettuato il login altrimenti\n
-                                                                                il ssitema non ti permettera di inserire un feedback\n";
-                                                                            }?>
+                                                                                echo getUserFullName($u,true);
+                                                                            ?>
                                                                         </div>
                                                                         <div class="section-body __indent">
-                                                                            <img src="<?php echo DOMINIO_SITO?>/style/img/<?php
-                                                                            if(isset($user)) {
-                                                                                echo $user->getImmagineProfilo();
-                                                                            }
-                                                                            else
-                                                                            {
-
-                                                                            }
-
+                                                                            <img src="<?php echo getUserImageBig($u,true);
                                                                             ?>" class="img-responsive">
                                                                             <!--Put here use profile image-->
                                                                         </div>

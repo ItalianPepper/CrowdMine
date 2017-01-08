@@ -1235,14 +1235,13 @@
                                         <div class="row col-md-12 col-sm-12 col-xs-12 card-header" style="margin-left: 0%">
                                             <div class="col-md-3 col-sm-3 media-left">
                                                 <a href="#">
-                                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                    <img src="<?php echo getUserImageBig($user,true); ?>" width="100%;"/>
                                                 </a>
                                             </div>
                                             <div class="col-md-7 annuncioTitle" style="width: 100%;">
 
                                                 <div class="owner col-md-12 col-sm-12" style="border-bottom: 1px solid #eee;">
-                                                    <h1><?php echo $user->getNome() . " " .
-                                                            $user->getCognome() ?></h1>
+                                                    <h1><?php echo getUserFullName($user,true); ?></h1>
                                                 </div>
 
                                                 <div class="offerta col-md-12 col-sm-12">
@@ -1296,20 +1295,19 @@
                                             <?php
                                             if(isset($listaCommenti[$aId]))
                                             for($z=0;$z<count($listaCommenti[$aId]); $z++){
-
+                                                $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
                                                 ?>
                                                 <div class="row col-md-12 col-sm-12 comment-body"
                                                      style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
                                                     <div class="col-md-1 col-sm-1 media-left" style="margin-top: 1%">
                                                         <a href="#">
-                                                            <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                            <img src="<?php echo getUserImageBig($u,true); ?>" width="100%;"/>
                                                         </a>
                                                     </div>
                                                     <div class="media-heading">
                                                         <h4 class="title">
                                                             <?php
-                                                                $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
-                                                                echo $u->getNome()." ".$u->getCognome()
+                                                                echo getUserFullName($u,true);
                                                             ?>
                                                         </h4>
                                                         <h5 class="timeing"><?php
@@ -1342,17 +1340,17 @@
                                             <?php
                                             if(isset($listaCandidature[$aId]))
                                             for($z=0;$z<count($listaCandidature[$aId]); $z++){
+                                                    $u = $listaUtenti[$listaCandidature[$aId][$z]->getIdUtente()];
                                                 ?>
                                                 <div class="row col-md-12 col-sm-12 candidature-body" style="margin-left: 0">
 
                                                     <div class="media-left col-md-12 col-sm-12 candidato-body"
                                                          style="margin-left: 0; border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%;">
-                                                        <img class="col-md-2 col-sm-2" src="<?php echo STYLE_DIR; ?>img\logojet.jpg"
+                                                        <img class="col-md-2 col-sm-2" src="<?php echo getUserImageBig($u,true); ?>"
                                                              style="margin-left: -5%">
                                                         <h4 class="title" style="margin-top: 3%">
                                                             <?php
-                                                                $u = $listaUtenti[$listaCandidature[$aId][$z]->getIdUtente()];
-                                                                echo $u->getNome()." ".$u->getCognome()
+                                                                echo getUserFullName($u,true);
                                                             ?>
                                                         </h4>
                                                         <div class="col-md-5 col-sm-5 options"

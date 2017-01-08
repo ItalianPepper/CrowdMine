@@ -153,7 +153,7 @@ function getUserImage($user,$width,$height,$adminData=null){
     if(isset($user)){
 
         if($user->getRuolo() == RuoloUtente::AMMINISTRATORE && $adminData){
-            return STYLE_DIR . "img/Favicon_3.png";
+            return STYLE_DIR . "img/Favicon_1.png";
         }
 
         if(!empty($user->getImmagineProfilo())) {
