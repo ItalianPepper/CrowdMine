@@ -166,9 +166,10 @@ class FeedbackManager extends Manager implements SplSubject
 
     public function getFeedbackAdmin(){
         $stato = AMMINISTRATORE;
+        $segnalato = SEGNALATO;
         $GET_REPORTED_FEEDBACK = "SELECT feedback.*,utente.nome, utente.cognome, utente.immagine_profilo 
                                   FROM feedback,utente 
-                                  WHERE feedback.stato = '$stato' AND feedback.id_valutato = utente.id";
+                                  WHERE (feedback.stato = '$stato' OR feedback.stato = '$segnalato'  )AND feedback.id_valutato = utente.id";
         return $this->feedbackLOToArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
     }
 

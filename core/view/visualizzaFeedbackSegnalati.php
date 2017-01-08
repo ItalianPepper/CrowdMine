@@ -44,7 +44,7 @@
                         Lista Feedback Segnalati
                     </div>
                     <div class="card-body">
-                        <div class="row" style="margin-top: 3%" id="feedback-list-reported">
+                        <div class="row" style="padding: 15px" id="feedback-list-reported">
                             <div class="card-body __loading">
                                 <div class="loader-container text-center">
                                     <div class="icon">

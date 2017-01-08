@@ -155,7 +155,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale#tab2">
                                     Impostazioni
                                 </a>
                             </li>
