@@ -2,6 +2,7 @@
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'MicrocategoriaManager.php';
+include_once MANAGER_DIR  .  'Manager.php';
 
 /**
  * Created by PhpStorm.
@@ -38,9 +39,9 @@ class UtenteManager extends Manager implements SplSubject
      * @param $ruolo
      * @param $immagineProfilo
      */
-    public function createUser($id, $nome, $cognome, $descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo)
+    private function createUser($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $descrizione, $immagineProfilo, $partitaIva)
     {
-        return new Utente($id, $nome, $cognome, $descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo);
+        return new Utente($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $descrizione, $immagineProfilo, $partitaIva);
     }
 
 
@@ -51,7 +52,7 @@ class UtenteManager extends Manager implements SplSubject
     private function createUserFromRow($row)
     {
         if ($row == null) return null;
-        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['descrizione'], $row['immagine_profilo'], $row['partita_iva']);
+        return new Utente($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['descrizione'], $row['immagine_profilo'], $row['partita_iva']);
     }
 
     /**
@@ -318,8 +319,8 @@ class UtenteManager extends Manager implements SplSubject
         $users = array();
         $FIND_ALL = "SELECT * FROM utente;";
         $result = self::getDB()->query($FIND_ALL);
-        foreach ($result->fetch_assoc() as $u) {
-            $user = $this->createUserFromRow($u);
+        while ($row = $result->fetch_assoc()) {
+            $user = $this->createUserFromRow($row);
             array_push($users, $user);
         }
         return $users;
