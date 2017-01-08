@@ -26,6 +26,32 @@
         <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets/css/theme/red.css">
         <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets/css/theme/yellow.css">
 
+        <style>
+            .image-container{
+                width: 100%;
+                display: inline-block;
+            }
+
+            .image-box{
+                width: 120px;
+                height: 120px;
+                text-align: center;
+                margin: auto;
+                display: block;
+                padding: 10px;
+                position: relative;
+            }
+
+            .image-spin{
+                position: absolute;
+                width: 56%;
+                top: 20%;
+                left: 24%;
+                bottom: 0;
+                right: 0;
+            }
+        </style>
+
     </head>
     <body>
         <nav class="navbar navbar-default" id="navbar" style="border-left-width: 0px; border-right-width: 0px;">
@@ -69,7 +95,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="col-md-1"></div>
             <div class="card col-md-10">            
-                <form method="post" action="effettuaRegistrazione" id="modulo" name="modulo">
+                <form method="post" action="javascript:submitForm()" id="modulo" name="modulo">
                     <h1 class="text-black text-center">Iscriviti</h1>
                     <h4 class="text-black text-center">Il mondo del lavoro &egrave a portata di click!</h4>
                     <br>
@@ -77,7 +103,7 @@
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="nome" placeholder="Nome*">
+                                    <input type="text" class="form-control" name="nome" placeholder="Nome*" required>
                                     <div class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </div>
@@ -85,7 +111,7 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="cognome" placeholder="Cognome*">
+                                    <input type="text" class="form-control" name="cognome" placeholder="Cognome*" required>
                                     <div class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </div>
@@ -94,7 +120,7 @@
 
                             <div class="form-group has-feedback">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="telefono" placeholder="Telefono*">
+                                    <input type="text" class="form-control" name="telefono" placeholder="Telefono*" required>
                                     <div class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </div>
@@ -112,12 +138,16 @@
                         <div class="col-md-4 col-md-offset-1">                        
                             <div class="user-panel">
                                 <label class="pull-left" for="exampleInputFile">Immagine personale</label>
-                                <div class="pull-left image" style="margin-bottom: 2%; margin-right: 5%">
-                                    <img src="<?php echo STYLE_DIR; ?>img/user-standard.png" id="immagine"  class="img-circle" alt="User Image">
+                                <div class = "image-container">
+                                    <div class="image-box">
+                                        <img class="image-spin" src="<?php echo STYLE_DIR; ?>/img/spin.gif" id="spin" style="display: none">
+                                        <img src="<?php echo STYLE_DIR; ?>img/userStandard.png" id="previewImage"  class="img-circle" alt="User Image" style="width: 100%;">
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="file" name="immagine" onchange="cambiaImmagine(this)" id="exampleInputFile">
+                                    <input type="file" name="immagine" id="imageInput" id="exampleInputFile">
                                 </div>
+
                             </div>
                         </div>       
                     </div>
@@ -125,7 +155,7 @@
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <div class="input-group date">
-                                    <input type="date" class="form-control pull-right" name="datanascita" id="datepicker" placeholder="Data di nascita*">
+                                    <input type="date" class="form-control pull-right" name="datanascita" id="datepicker" placeholder="Data di nascita*" required>
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar" onclick="document.getElementById('datepicker').focus()"></i>
                                     </div>
@@ -133,7 +163,7 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <div class="input-group">
-                                    <select class="form-control select2" name="citta" id="listacitta" style="width: 100%;">
+                                    <select class="form-control select2" name="citta" id="listacitta" style="width: 100%;" required>
 
                                     </select>
                                     <div class="input-group-addon">
@@ -143,7 +173,7 @@
                             </div>
                             <div class="form-group has-feedback">
                                 <div class="input-group">
-                                    <input type="email" name="email" class="form-control" placeholder="name@exemple.com*">
+                                    <input type="email" name="email" class="form-control" placeholder="name@exemple.com*" required>
                                     <div class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
                                     </div>
@@ -188,7 +218,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-md-offset-4">
-                            <button type="submit"  name="submit" class="btn btn-primary btn-block btn-flat">Registrati</button>
+                            <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block btn-flat">Registrati</button>
                         </div>
                     </div>                    
                 </form>
@@ -199,49 +229,55 @@
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
         <script type="text/javascript" src="<?php echo STYLE_DIR; ?>/scripts/caricacitta.js"></script>
 
+        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>/assets/js/ImageUploader.js"></script>
+
         <!-- iCheck -->
         <script src="<?php echo STYLE_DIR; ?>plugins/datepicker/bootstrap-datepicker.js"></script>
         <script src="<?php echo STYLE_DIR; ?>plugins/toastr/toastr.js"></script>        
         <script>
-                                            function cambiaImmagine(input) {
-                                                if (input.files && input.files[0]) {
-                                                    var reader = new FileReader();
 
-                                                    reader.onload = function (e) {
-                                                        $('#immagine').attr('src', e.target.result);
-                                                    }
+            var uploader = new ImageUploader({
+                inputElement : $('#imageInput')[0],
+                uploadUrl : <?php echo '"'.DOMINIO_SITO.'/effettuaRegistrazione"';?>,
+                onProgress : null,
+                onStart : function() {
+                   $('#submit').attr('disabled','disabled');
+                },
+                onProcessingEnd : function() {
+                    $('#submit').removeAttr('disabled');
+                },
+                onComplete : function(event,xhr){
+                    window.location.href = <?php echo '"'.DOMINIO_SITO.'/auth";';?>
+                },
+                maxWidth: 150,
+                quality: 0.90,
+                debug : true
+            });
 
-                                                    reader.readAsDataURL(input.files[0]);
-                                                }
-                                            }
+            function submitForm(){
 
-                                            /*  $(function () {
-                                             $('input').iCheck({
-                                             checkboxClass: 'icheckbox_square-blue',
-                                             radioClass: 'iradio_square-blue',
-                                             increaseArea: '20%' // optional
-                                             });
-                                             //Date picker
-                                             $('#datepicker').datepicker({
-                                             autoclose: true
-                                             });
-                                             
-                                             //iCheck for checkbox and radio inputs
-                                             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                                             checkboxClass: 'icheckbox_minimal-blue',
-                                             radioClass: 'iradio_minimal-blue'
-                                             });
-                                             //Red color scheme for iCheck
-                                             $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-                                             checkboxClass: 'icheckbox_minimal-red',
-                                             radioClass: 'iradio_minimal-red'
-                                             });
-                                             //Flat red color scheme for iCheck
-                                             $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-                                             checkboxClass: 'icheckbox_flat-green',
-                                             radioClass: 'iradio_flat-green'
-                                             });
-                                             });*/
+                var fd = new FormData();
+
+                var fields = [  "nome","cognome",
+                                "telefono","datanascita",
+                                "email","password",
+                                "passwordretyped","partitaIva",
+                                "tipologia","accetto"];
+
+                fields.forEach(function(item){
+                    fd.append(item,$('input[name="'+item+'"]').val());
+                });
+
+                fd.append("descrizione",$('textarea[name="descrizione"]').html());
+
+                if($('select[name="citta"]').prop("selectedIndex")>0)
+                fd.append("citta",$('select[name="citta"]').val());
+
+                if($('imput[name="accetto"]').is(':checked'))
+                fd.append("accetto",$('select[name="accetto"]').html());
+
+                uploader.tryUpload(fd);
+            }
         </script>
         <script>
 
@@ -268,7 +304,7 @@
 
 
         <?php
-        if ($_SESSION['toast-type'] && $_SESSION['toast-message']) {
+        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
             ?>
             <script>
                 toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
