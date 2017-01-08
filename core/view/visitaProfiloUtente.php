@@ -78,9 +78,8 @@
 
 
     <?php
-
-        $fullname = $user->getNome()." ".$user->getCognome();
-        $visitedFullname = $visitedUser->getNome()." ".$visitedUser->getCognome();
+        $visitedFullname = getUserFullName($visitedUser);
+        $visitedProfileImg = getUserImageBig($visitedUser);
     ?>
 
 
@@ -96,7 +95,7 @@
                 <div class="card">
                     <div class="card-body app-heading no-flex">
                         <div class="pull-left" style="display: flex;">
-                            <img class="profile-img pull-left" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                            <img class="profile-img pull-left" src="<?php echo $visitedProfileImg; ?>">
                             <div class="app-title pull-left">
                                 <div class="title"><span class="highlight"><?php echo $visitedFullname;?></span></div>
                                 <div class="description"><?php echo $visitedUser->getDescrizione();?></div>

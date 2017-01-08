@@ -20,7 +20,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body app-heading">
-                        <img class="profile-img" src=assets\images\profile.png">
+                        <img class="profile-img" src="<?php echo $profileImg;?>">
                         <div class="app-title">
                             <div class="title"><span
                                         class="highlight"><?php echo $user->getNome() . " " . $user->getCognome() ?></span>
@@ -996,12 +996,12 @@
                                                                 <div class="media social-post profile-block">
                                                                     <div class="media-left">
                                                                         <a href="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$u->getId()?>">
-                                                                            <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                                                                            <img src="<?php echo getUserImageBig($u); ?>">
                                                                         </a>
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <div class="media-heading">
-                                                                            <h4 class="title"><?php echo $u->getNome()." ".$u->getCognome();?></h4>
+                                                                            <h4 class="title"><?php echo getUserFullName($u);?></h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>
