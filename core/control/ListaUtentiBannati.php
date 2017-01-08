@@ -9,6 +9,8 @@
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 
+include_once VIEW_DIR."ViewUtils.php";
+
 $manager = new UtenteManager();
 $utentiBannati = $manager->getAppealUtente();
 
