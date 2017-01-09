@@ -466,7 +466,7 @@
                                         <div class="col-md-12 form-commento">
                                             <form action="<?php echo DOMINIO_SITO;?>/commentaAnnuncioControl" method="post">
                                                 <div class="col-md-10 input-comment">
-                                                    <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
+                                                    <input type="text" class="form-control" placeholder="Scrivi un commento..."
                                                            name="commento">
                                                     <input type="hidden" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
                                                 </div>
@@ -496,7 +496,7 @@
                                         <div class="panel panel-default compact-panel">
                                             <a id="feedback-collapse-panel" class="panel-default collapse-title"
                                                data-toggle="collapse"
-                                               href="#feedback-collapse">
+                                               href="#feedback-collapse-<?php echo $annunci[$i]->getId();?>">
                                                 <div class="panel-heading">
                                                     <h4 class="media-heading">
                                                         Inserisci Feedback
@@ -504,7 +504,7 @@
                                                     <p>Clicca qui per inserire un feedback</p>
                                                 </div>
                                             </a>
-                                            <div id="feedback-collapse" class="panel-collapse collapse">
+                                            <div id="feedback-collapse-<?php echo $annunci[$i]->getId();?>" class="panel-collapse collapse">
                                                 <form action="<?php echo DOMINIO_SITO;?>/inserisciFeedback" method="post">
                                                     <div class="panel-body">
                                                         <div class="col-lg-12 col-md-12 col-xs-12">
@@ -719,7 +719,7 @@
                                         <form action="<?php echo DOMINIO_SITO;?>/aggiungiCandidaturaControl" method="post">
                                             <div class="modal-body">
                                                 Inserisci Descrizione
-                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.. <?php echo $annunci[$i]->getId();?>"></textarea>
+                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione..."></textarea>
                                                 <input type="text" value="<?php echo $annunci[$i]->getId();?>" name="idAnnuncio" hidden>
                                             </div>
                                             <div class="modal-footer">
@@ -832,11 +832,10 @@
                 <script>
                     $("#tab4").ready(function () {
 
-                        var url = document.URL;
-                        var idUser = url.substring(url.indexOf("id="),url.length-1);
+                      var idUser = <?php echo $visitedUser->getId();?> ;
 
                         $.ajax({
-                            url: "statisticheUtente",
+                            url: "<?php echo DOMINIO_SITO;?>/statisticheUtente",
                             type: "POST",
                             dataType: "json",
                             data: {option: "graphicsUser", idUser:idUser},
@@ -849,11 +848,10 @@
 
                     $("#tab4").ready(function () {
 
-                        var url = document.URL;
-                        var idUser = url.substring(url.indexOf("id="), url.length - 1);
+                        var idUser = <?php echo $visitedUser->getId();?> ;
 
                         $.ajax({
-                            url: "statisticheUtente",
+                            url: "<?php echo DOMINIO_SITO;?>/statisticheUtente",
                             type: "POST",
                             dataType: "json",
                             data: {option: "tableUser", idUser: idUser},
@@ -873,9 +871,9 @@
                             datasets: [
                                 {
                                     label:"",
-                                    data:[arrayFeedback["positivi"],arrayFeedback["negativi"]],
-                                    backgroundColor: ["#FF6384", "#4BC0C0"],
-                                    borderColor: ["#FF6384", "#4BC0C0"],
+                                    data:[arrayFeedback.avgpositive,arrayFeedback.avgnegative],
+                                    backgroundColor: ["rgba(255,130,37,1)", "rgba(75,192,192,1)"],
+                                    borderColor: ["rgba(255,130,37,1)", "rgba(75,192,192,1)"],
                                     borderWidth: 1
                                 }
                             ]
@@ -909,11 +907,11 @@
                                         .attr("scope", "row")
                                         .text(i + 1))
                                     .append($("<td>")
-                                        .text(el["microcategoria"]))
+                                        .text(el[i].microcategoria))
                                     .append($("<td>")
-                                        .text(el["feedbackpositivi"]))
+                                        .text(el[i].feedbackpositivi))
                                     .append($("<td>")
-                                        .text(el["feedbacknegativi"]))
+                                        .text(el[i].feedbacknegativi))
                                 )
                         });
                     }

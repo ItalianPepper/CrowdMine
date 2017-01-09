@@ -61,7 +61,7 @@
                         <li><a href="annunciReclamati">Annunci reclamati</a></li>
                         <li><a href="annunciRevisione">Annunci in revisione</a></li>
                         <li><a href="annunciModificati">Annunci modificati</a></li>
-                        <li><a href="visualizzaIndexStatistiche">Statistiche</a></li>
+                        <li><a href="statisticheAvanzateAdmin">Statistiche</a></li>
                     </ul>
                 </div>
             </li>
