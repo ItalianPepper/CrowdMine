@@ -52,7 +52,7 @@ class MessaggioManagerTest extends PHPUnit_Framework_TestCase{
     //test di sendMessaggio() e loadMessaggi()
     public function testSendMessaggio(){
         //sendMessaggio()
-        $this->messaggioManager->sendMessaggio(self::id, self::corpo, self::letto, self::idUtenteMittente, self::idUtenteDestinatario);
+        $this->messaggioManager->sendMessaggio(self::id, self::corpo, 0, self::letto, self::idUtenteMittente, self::idUtenteDestinatario);
         //loadMessaggi()
         $this->verificaParametriMessaggio($this->messaggioManager->loadMessaggi(self::idUtenteMittente), self::idUtenteMittente,
                                             self::idUtenteDestinatario, self::corpo, self::letto, 0);
@@ -68,7 +68,7 @@ class MessaggioManagerTest extends PHPUnit_Framework_TestCase{
     //loadConversation() e deleteConversation()
     public function testLoadConversation(){
         //loadConversation()
-        $this->messaggioManager->sendMessaggio(self::id, self::corpo, self::letto, self::idUtenteDestinatario, self::idUtenteMittente);
+        $this->messaggioManager->sendMessaggio(self::id, self::corpo, 0, self::letto, self::idUtenteDestinatario, self::idUtenteMittente);
         $this->verificaParametriMessaggio($this->messaggioManager->loadConversation(self::idUtenteMittente, self::idUtenteDestinatario),
                                             self::idUtenteMittente,  self::idUtenteDestinatario, self::corpo, self::letto, 0);
         $this->verificaParametriMessaggio($this->messaggioManager->loadConversation(self::idUtenteMittente, self::idUtenteDestinatario),
@@ -80,7 +80,7 @@ class MessaggioManagerTest extends PHPUnit_Framework_TestCase{
 
     //messaggiNonLetti()
     public function testMessaggiNonLetti(){
-        $this->messaggioManager->sendMessaggio(self::id, self::corpo, self::letto, self::idUtenteMittente, self::idUtenteDestinatario);
+        $this->messaggioManager->sendMessaggio(self::id, self::corpo, 0, self::letto, self::idUtenteMittente, self::idUtenteDestinatario);
         $this->verificaParametriMessaggio($this->messaggioManager->messaggiNonLetti(self::idUtenteMittente, self::idUtenteDestinatario),
                                             self::idUtenteMittente, self::idUtenteDestinatario, self::corpo, self::letto, 0);
     }
@@ -183,18 +183,7 @@ class MessaggioManagerTest extends PHPUnit_Framework_TestCase{
     }
 
 
-
-
-    const richiesta_accettata5 = 'accettato';
-    //agreeCollaborazione
-    public function testAgreeCollaborazione(){
-        $this->messaggioManager->agreeCollaborazione(1);
-        $idAnnuncio = $this->getAnnuncio();
-        $candidature[]=$this->messaggioManager->getCandidatura($this->getIdCandidatura());
-        $this->verificaParametriCandidatura($candidature, self::idUtenteMittente,
-            $idAnnuncio, self::corpo, self::dataRisposta, self::dataInviata,
-            self::richiestaInviata4, self::richiesta_accettata5, 0);
-    }
+    
 
 
     //isInviaCollaborazione()
