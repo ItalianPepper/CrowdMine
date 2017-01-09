@@ -1,7 +1,3 @@
-<?php
-include_once VIEW_DIR . 'header.php';
-?>
-
 <!DOCTYPE html>
 
 <head>

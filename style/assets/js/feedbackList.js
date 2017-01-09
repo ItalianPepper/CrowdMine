@@ -6,7 +6,6 @@
 $(document).ready(function () {
     "use strict";
     var id =$("#user-feedback-id").attr("value");
-    console.log(id);
     $("#feedback-tab-3").click(function () {
         $.ajax({
             url: "/CrowdMine/feedbackListRetrive",
@@ -43,7 +42,6 @@ function generateFeedbackList(data, role, destination) {
             feedbackListObj.idUtente = data[i].idUtente;
 
             destination.append(feedbackRowToString(feedbackListObj, role,"/CrowdMine"));
-            console.log(feedbackListObj.feedbackID +" "+feedbackListObj.feedbackRating);
             setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
         }
     }
@@ -57,7 +55,6 @@ function generateFeedbackList(data, role, destination) {
 function feedbackRowToString(feedbackListObj, role,dominio) {
     "use strict";
     var buttonGroup = "";
-    console.log(role);
     if (role == "user") {
 
 
@@ -180,16 +177,22 @@ function setRatingStar(feedbackID, feedbackRatingValue) {
     "use strict";
 
     for (var i = 0; i <= 5; i++) {
+
+        if(feedbackRatingValue == 0.5)
+        {
+            $("#starhalf-" + feedbackID).attr("checked", "checked");
+
+        }
         if (feedbackRatingValue == i)
         {
             $("#star" + i + "-" + feedbackID).attr("checked", "checked");
-            console.log( $("#star" + i + "-" + feedbackID));
+
         }
 
         if (feedbackRatingValue == i + 0.5)
         {
             $("#star" + i + "half-" + feedbackID).attr("checked", "checked");
-            console.log( $("#star" + i + "half-" + feedbackID));
+
         }
 
     }

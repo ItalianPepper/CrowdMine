@@ -6,21 +6,23 @@
 
 <body>
 <div class="app app-default">
-    <?php include_once VIEW_DIR . "headerNavBar.php" ?>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="card-header">Statistiche Macro Categorie</div>
-                <div class="card-body">
-                    <div>
-                        <canvas id="statisticheMacro"></canvas>
+    <div class="app-container no-sidebar">
+        <?php include_once VIEW_DIR . "headerNavBar.php" ?>
+        <div class="app-head"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="card-header">Statistiche Macro Categorie</div>
+                    <div class="card-body">
+                        <div>
+                            <canvas id="statisticheMacro"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php include_once VIEW_DIR . "footer.php" ?>
 </body>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
@@ -54,7 +56,7 @@
            var allElement = [];
             for (var key in result) {
                 var grafics = {
-                    label: [key],
+                    label: key,
                     data: [result[key]],
                     backgroundColor: colors[i],
                     borderColor: colors[i],
