@@ -443,9 +443,10 @@ class UtenteManager extends Manager implements SplSubject
      */
     public function addMicroCategoria($user, $microcategoria)
     {
-        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_microcategoria, id_utente) VALUES('%s', '%s');";
-        $query = sprintf($ADD_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
-        $result = self::getDB()->query($query);
+        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_utente, id_microcategoria) VALUES('%s', '%s');";
+        $query = sprintf($ADD_MICROCATEGORIA, $user->getId(), $microcategoria->getId());
+        $result = mysqli_query(self::getDB(), $query);
+        //$result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
@@ -458,7 +459,7 @@ class UtenteManager extends Manager implements SplSubject
     public function removeMicroCategoria($user, $microcategoria)
     {
         $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
-        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoria, $user);
+        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
@@ -561,11 +562,12 @@ class UtenteManager extends Manager implements SplSubject
         $GET_CATEGORY_BY_ID = "SELECT microcategoria.id, microcategoria.nome, microcategoria.id_macrocategoria FROM microcategoria, competente WHERE competente.id_utente = '%s' AND microcategoria.id = competente.id_microcategoria";
         $query = sprintf($GET_CATEGORY_BY_ID, $idUtente);
         $result = self::getDB()->query($query);
-        foreach ($result->fetch_assoc() as $m) {
-            $microManager = new MicrocategoriaManager();
+        $microManager = new MicrocategoriaManager();
+        while ($m = $result->fetch_assoc()) {
             $micro = $microManager->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
             array_push($list, $micro);
         }
+
         return $list;
     }
 
