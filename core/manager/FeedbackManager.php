@@ -46,9 +46,9 @@ class FeedbackManager extends Manager implements SplSubject
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
-        $insertID = Manager::getDB()->insert_id;
         $annuncioManager = new AnnuncioManager();
-        $this->inviaNotificaDiInserimento($insertID, $annuncioManager->getAnnuncio($idAnnuncio));
+        $annuncio = $annuncioManager->getAnnuncio($idAnnuncio);
+        $this->inviaNotificaDiInserimento($idAnnuncio, "feedback", $annuncio->getTitolo(), array($annuncio->getIdUtente()));
     }
 
     public function createFeedback($id = null, $idUtente, $idAnnuncio, $idValutato, $valutazione, $corpo, $data, $stato, $titolo)
@@ -431,54 +431,45 @@ class FeedbackManager extends Manager implements SplSubject
      * @param $id
      * @param Annuncio $annuncio
      */
-    private function inviaNotificaDiInserimento($id, $annuncio)
-    {
-        $tipo = "inserimento";
-        $name = $annuncio->getTitolo();
-        $utenteManager = new UtenteManager();
-        $dest = $utenteManager->findUtenteById($annuncio->getIdUtente());
-        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+    private function inviaNotificaDiInserimento($idOggetto, $tipoOggetto, $nome, $destinatari){
+        $tipoNotifica = "inserimento";
+        $this->setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $destinatari);
         $this->notify();
     }
 
-    private function inviaNotificaDiSegnalazione($id, $annuncio)
-    {
-        $tipo = "segnalazione";
-        $name = $annuncio->getTitolo();
+    private function inviaNotificaDiSegnalazione($id, $annuncio){
+        $tipo="segnalazione";
+        $name= $annuncio->getTitolo();
         $utenteManager = new UtenteManager();
-        $dest = $utenteManager->findUtenteById($this->getFeedbackById($id)->getIdValutato());
-        $this->setWrapperNotifica($id, $tipo, $name, array($dest));
+        $dest= $utenteManager->findUserOneInput(RuoloUtente::MODERATORE);
+        $this->setWrapperNotifica($id, $tipo, $name, $dest);
         $this->notify();
     }
 
-    public function setWrapperNotifica($idOggetto, $tipo, $nome, $listaDestinatari = null)
-    {
+    public function setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $listaDestinatari = null){
         $this->wrapperNotifica = array(
             "id_oggetto" => $idOggetto,
-            "tipo_oggetto" => $tipo,
+            "tipo_oggetto" => $tipoOggetto,
+            "tipo_notifica" => $tipoNotifica,
             "nome" => $nome,
-            "lista_mittenti" => $listaDestinatari
+            "lista_destinatari" => $listaDestinatari
         );
     }
 
-    public function getWrapperNotifica()
-    {
+    public function getWrapperNotifica(){
         return $this->wrapperNotifica;
     }
 
-    public function attach(SplObserver $observer)
-    {
+    public function attach(SplObserver $observer){
         $this->_observers->attach($observer);
     }
 
-    public function detach(SplObserver $observer)
-    {
+    public function detach(SplObserver $observer){
         $this->_observers->detach($observer);
     }
 
-    public function notify()
-    {
-        foreach ($this->_observers as $observer) {
+    public function notify(){
+        foreach($this->_observers as $observer){
             $observer->update($this);
         }
     }
