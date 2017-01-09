@@ -182,4 +182,41 @@ function getUserFullName($user, $adminData=null){
     return $user->getNome() . " " . $user->getCognome();
 }
 
+/**
+ * This fuction adapt the FeedbackListObject element for the
+ * visulization of the HTML object.
+ * @param $feedbackListObjArray
+ * @return mixed
+ */
+
+function setUserImageForFeedback($feedbackListObjArray)
+{
+    for ($i = 0; $i < count($feedbackListObjArray); $i++) {
+        $idUtente = $feedbackListObjArray[$i]['idUtente'];
+        $nomeUtente = $feedbackListObjArray[$i]['userFirstName'];
+        $cognomeUtente = $feedbackListObjArray[$i]['userLastName'];
+        $ruoloUtente = $feedbackListObjArray[$i]['UserRuolo'];
+        $immagineProfilo = $feedbackListObjArray[$i]['userProfileImage'];
+
+        $user = new Utente($idUtente,
+            $nomeUtente,
+            $cognomeUtente,
+            "telefono",
+            "data",
+            "citta",
+            "email",
+            "password",
+            ATTIVATO,
+            $ruoloUtente,
+            null,
+            $immagineProfilo,
+            null);
+
+        $feedbackListObjArray[$i]['userProfileImage'] = getUserImageBig($user,true);
+        $feedbackListObjArray[$i]['userFirstName'] = getUserFullName($user,true);
+        $feedbackListObjArray[$i]['userLastName']="";
+    }
+  return $feedbackListObjArray;
+}
+
 ?>

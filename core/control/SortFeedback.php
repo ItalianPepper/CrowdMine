@@ -7,11 +7,13 @@
  */
 
 include_once MANAGER_DIR . "FeedbackManager.php";
+include_once VIEW_DIR . "ViewUtils.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $feedbackManager = new FeedbackManager();
     $userValID = null;
     $optionValue = null;
+
 
     if(isset($_POST["id"]) && isset($_POST["optionValue"]))
     {
@@ -20,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (intval($userValID)!=0 &&(strcmp($optionValue,"data")==0 ||strcmp($optionValue,"nome")==0 ||
                 strcmp($optionValue,"valutazione")==0))
         {
-            $feedbackList = $feedbackManager->sortListaFeedback($userValID,$optionValue);
+            $feedbackList = setUserImageForFeedback($feedbackManager->sortListaFeedback($userValID,$optionValue));
             echo json_encode($feedbackList);
         }
         else
