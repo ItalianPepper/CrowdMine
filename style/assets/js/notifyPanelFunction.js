@@ -2,32 +2,46 @@
  * Created by darkv on 22/12/2016.
  */
 
-$(function poll(){
-    setTimeout(function(){
+function poll() {
+    setTimeout(function () {
         $.ajax({
             type: "POST",
             url: "pannelloNotifiche",
             dataType: "json",
-            success: function(data){
-                var listaNotifiche = document.getElementById('lista-notifiche');
-                generateNotificationsList(data, listaNotifiche);
+            success: function (data) {
+                generateNotificationsList(data);
                 poll();
             }
         });
-    }, 30000);
-}).ready();
+    }, 1000);
+}
 
-function generateNotificationsList(data, destination){
-    if(data.length > 0){
-        for(var i in data){
+$(document).ready(function(){
+    poll();
+})
+
+function generateNotificationsList(data){
+    if (data != null && data.length >0) {
+
+        $("#lista-notifiche").find("#notNotifies").remove();
+
+        for (var i in data) {
             var listaNotificheObject = [];
             listaNotificheObject.idNotifica = data[i].idNotify;
             listaNotificheObject.href = data[i].href;
             listaNotificheObject.corpo = data[i].text;
             listaNotificheObject.letto = data[i].read;
 
-            destination.children(':first').before(notificaToRowString(listaNotificheObject));
-        };
+            $("#lista-notifiche").children(':first').before(notificaToRowString(listaNotificheObject));
+            $("#notification-count").text(data.length);
+        }
+
+    }else{
+
+        if(!($("#notNotifies").length >0 )){
+            $("#notification-count").text(0);
+            $("#lista-notifiche").append($("<li>").attr("class", "list-group-item").attr("id", "notNotifies").text("Non ci sono notifiche"));
+        }
     }
 }
 

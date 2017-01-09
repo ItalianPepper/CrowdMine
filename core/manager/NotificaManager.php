@@ -1,6 +1,8 @@
 <?php
 
 include_once MODEL_DIR . "Notifica.php";
+include_once UTILS_DIR . "NotificationParsing.php";
+include_once MODEL_DIR . "Utente.php";
 
 /**
  * Created by PhpStorm.
