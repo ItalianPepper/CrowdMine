@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $listaMicro = $base->getListaMicro();
     $AnnunciMicroRef = $base->getAnnunciMicroRef();
 
-    $sideBarIconName = "annunciPreferiti";
+    $sideBarIconName = "ricercaAnnuncio";
 
     include_once VIEW_DIR . "home.php";
 }

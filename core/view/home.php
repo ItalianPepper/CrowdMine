@@ -206,7 +206,7 @@
                                             <div class="col-md-12 form-commento">
                                                 <form action="<?php echo DOMINIO_SITO;?>/commentaAnnuncioControl" method="post">
                                                     <div class="col-md-10 input-comment">
-                                                        <input type="text" class="form-control" placeholder="Scrivi un commento... <?php echo $annunci[$i]->getId();?>"
+                                                        <input type="text" class="form-control" placeholder="Scrivi un commento..."
                                                                name="commento">
                                                         <input type="hidden" name ="idAnnuncio" hidden value="<?php echo $annunci[$i]->getId();?>">
                                                     </div>
@@ -256,7 +256,7 @@
                                         <form action="<?php echo DOMINIO_SITO;?>/aggiungiCandidaturaControl" method="post">
                                             <div class="modal-body">
                                                 Inserisci Descrizione
-                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione.."></textarea>
+                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Descrizione..."></textarea>
                                                 <input type="text" value="<?php echo $annunci[$i]->getId();?>" name="idAnnuncio" hidden>
                                             </div>
                                             <div class="modal-footer">
@@ -280,6 +280,7 @@
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR;?>assets\js\notifyPanelFunction.js"></script>
 
                 <script>
                     function setModalForm(action,text){

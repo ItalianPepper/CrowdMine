@@ -56,10 +56,11 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
 <div class="app-messaging-container">
 
     <div class="app-messaging <?php
-    if (isset($_GET["idcand"])) {
-        $id_get = $_GET["idcand"];
-        echo "collapse in";
-    }
+    
+    if(isset($_SESSION['destinatario'])){
+            echo "";
+    }else echo "collapse in";
+    
     ?>" id="collapseMessaging">
         <div class="chat-group">
             <div class="heading">Conversazioni: </div>
@@ -71,7 +72,7 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
                     $id = $lista_destinatari[$indice]->getId();
                     $num_messaggi_non_letti = $manager_msg->messaggiNonLetti($id, $id_utente_connesso);
                     echo '<li class="message">' . "\n";
-                    echo '<a data-toggle="collapse"  aria-expanded="false" aria-controls="collapseMessaging">' . "\n";
+                    echo '<a data-toggle="collapse" href="#collapseMessaging" aria-expanded="false" aria-controls="collapseMessaging">' . "\n";
                     if(count($num_messaggi_non_letti)>0)
                         echo '<span id="numero_conversazione" class="badge badge-warning pull-right">'.count($num_messaggi_non_letti).'</span>' . "\n";
                     echo '<div class="message">' . "\n";

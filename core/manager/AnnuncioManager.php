@@ -26,8 +26,11 @@ include_once FILTER_DIR . "SearchByStatus.php";
  * Class AnnuncioManager
  * This Class provides the business logic for the Annuncio Management and methods for database access.
  */
-class AnnuncioManager
+class AnnuncioManager implements SplSubject
 {
+
+    private $wrapperNotifica;
+    private $_observer;
 
     private static $GET_ALL_ANNUNCI = "SELECT * FROM `annuncio`";
 
@@ -118,12 +121,12 @@ class AnnuncioManager
 
         $UPDATE_ANNUNCIO = "UPDATE `Annuncio` SET `data` = '%s', `titolo` = '%s', `luogo` = '%s', `stato` = '%s', `retribuzione` = '%s', `tipo` = '%s', `descrizione` = '%s', `id_utente` = '%s' WHERE `id` = '%s' ";
 
-        $query = sprintf($UPDATE_ANNUNCIO, $date, $title, $location, StatoAnnuncio::REVISIONE, $remuneration, $type, $description, $userid, $id);
+        $query = sprintf($UPDATE_ANNUNCIO, $date, $title, $location, StatoAnnuncio::REVISIONE_MODIFICA, $remuneration, $type, $description, $userid, $id);
         if (!Manager::getDB()->query($query)) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
-        $Annuncio = new Annuncio($id, $userid, $date, $title, $description, $location, StatoAnnuncio::REVISIONE, $remuneration, $type);
+        $Annuncio = new Annuncio($id, $userid, $date, $title, $description, $location, StatoAnnuncio::REVISIONE_MODIFICA, $remuneration, $type);
 
         /*
         *   MICROCATEGORIES
@@ -603,6 +606,9 @@ class AnnuncioManager
         if (!Manager::getDB()->query($query)) {
             throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
+
+        $annuncio = $this->getAnnuncio($idAnnuncio);
+        $this->inviaNotificaDiInserimento($idAnnuncio, "commento", $annuncio->getTitolo(), array($annuncio->getIdUtente()));
     }
 
     /**
@@ -816,68 +822,80 @@ class AnnuncioManager
 
     //metodi utili per gestione statistiche
 
-    public function getNumberAnnunciByMicrocategoriaBetweenDates($microcategoria, $fromData, $toData){
+    public function getNumberAnnunciByMicrocategoriaBetweenDates($microcategoria, $fromDate, $toDate){
         $lista = array();
-        $FIND_ANNUNCI = "
-                        SELECT annuncio.data, COUNT(annuncio.data) 
-                        FROM annuncio, riferito 
-                        WHERE riferito.id_annuncio = annuncio.id AND annuncio.id_microcategoria = '%s'
-                        BETWEEN '%s' AND '%s'
-                        GROUP BY annuncio.data
-                        ";
-        $query = sprintf($FIND_ANNUNCI, $microcategoria->getId(), date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
+        $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres , COUNT(annuncio.id) AS conto
+                          FROM annuncio, riferito 
+                          WHERE annuncio.id = riferito.id_annuncio AND riferito.id_microcategoria ='%s' 
+                                AND (annuncio.data BETWEEN '%s' AND '%s')
+                          GROUP BY dateres
+                          ORDER BY dateres ASC";
+        $micro = new MicrocategoriaManager();
+        $microcategoriaObj = $micro->findMicrocategoriaByNome($microcategoria);
+        $query = sprintf($FIND_ANNUNCI, $microcategoriaObj->getId(), date_format($fromDate, 'Y-m-d'), date_format($toDate, 'Y-m-d'));
         $result = Manager::getDB()->query($query);
-        if(!$result){
+        if($result){
 
-        }else{
-            foreach($result->fetch_assoc() as $r){
-                array_push($lista, $r);
+            while($r = $result->fetch_assoc()){
+                $lista[$r['dateres']] = $r['conto'];
             }
-        }return $lista;
+
+        }
+        return $lista;;
     }
 
-    public function getNumberAnnunciByMacrocategoriaBetweenDates($macrocategoria, $fromData, $toData){
+    public function getNumberAnnunciByMacrocategoriaBetweenDates($macrocategoria, $fromDate, $toDate){
         $lista = array();
-        $FIND_ANNUNCI = "
-                        SELECT annuncio.data, COUNT(annuncio.data) 
-                        FROM annuncio, riferito, microcategoria 
-                        WHERE riferito.id_annuncio = annuncio.id AND annuncio.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
-                        BETWEEN '%s' AND '%s'
-                        GROUP BY annuncio.data
-                        ";
-        $query = sprintf($FIND_ANNUNCI, $macrocategoria->getId(), date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
+        $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres , COUNT(annuncio.id) AS conto
+                          FROM annuncio,riferito,macrocategoria,microcategoria
+                          WHERE annuncio.id = riferito.id_annuncio
+                          AND riferito.id_microcategoria = microcategoria.id 
+                          AND microcategoria.id_macrocategoria = '%s'
+                          AND (annuncio.data BETWEEN '%s' AND '%s')
+                          GROUP BY dateres
+                          ORDER BY dateres ASC";
+        $macro = new MacroCategoriaManager();
+        $macrocategoriaObj = $macro->getMacroByName($macrocategoria);
+        $query = sprintf($FIND_ANNUNCI,$macrocategoriaObj->getId(), date_format($fromDate,'Y-m-d'), date_format($toDate,'Y-m-d'));
         $result = Manager::getDB()->query($query);
-        if(!$result){
 
-        }else{
-            foreach($result->fetch_assoc() as $r){
-                array_push($lista, $r);
+       if($result){
+
+            while($r = $result->fetch_assoc()) {
+
+                $lista[$r['dateres']] = $r['conto'];
+
             }
-        }return $lista;
+        }
+        return $lista;
     }
 
     public function getNumberAnnunciPublishedInAMounth(){
         $lista = array();
-        $fromData = date("Y-m-d");
-        $toData = data("Y-m-d", strtotime('+1 month'));
-        $FIND_ANNUNCI = "SELECT annuncio.data, COUNT(annuncio.data) 
-                        FROM annuncio
-                        BETWEEN '%s' AND '%s'
-                        GROUP BY annuncio.data";
+        $toData = date("Y-m-d");
+        $fromData = date('-1 month', strtotime($toData));
+
+        $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres, COUNT(annuncio.id) AS conto
+                         FROM annuncio
+                         WHERE (annuncio.data BETWEEN '%s' AND '%s')
+                         GROUP BY dateres";
+
         $query = sprintf($FIND_ANNUNCI, date('Y-m-d', strtotime(str_replace('-', '/', $fromData))), date('Y-m-d', strtotime(str_replace('-', '/', $toData))));
         $result = Manager::getDB()->query($query);
-        if(!$result){
-
-        }else{
-            foreach($result->fetch_assoc() as $r){
-                array_push($lista, $r);
+        if($result){
+            while($r = $result->fetch_assoc()){
+                $sqlDate = strtotime($r['dateres']);
+                $resultDate = date("Y-m-d",$sqlDate);
+                $lista[$resultDate] = $r['conto'];
             }
-        }return $lista;
+            return $lista;
+        }
+        return false;
     }
 
     public function getNumberAnnunciPubblishedToday(){
         $lista = array();
-        $data = data("Y-m-d");
+        $data = date("Y-m-d");
         $FIND_ANNUNCI = "SELECT COUNT(annuncio.data) FROM annuncio WHERE annuncio.data = '%s'";
         $query = sprintf($FIND_ANNUNCI, $data);
         $result = Manager::getDB()->query($query);
@@ -890,4 +908,49 @@ class AnnuncioManager
         }return $lista;
     }
 
+    private function inviaNotificaDiInserimento($idOggetto, $tipoOggetto, $nome, $destinatari){
+        $tipoNotifica = "inserimento";
+        $this->setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $destinatari);
+        $this->notify();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWrapperNotifica()
+    {
+        return $this->wrapperNotifica;
+    }
+
+    /**
+     * @param mixed $wrapperNotifica
+     */
+    public function setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $listaDestinatari = null){
+        $this->wrapperNotifica = array(
+            "id_oggetto" => $idOggetto,
+            "tipo_oggetto" => $tipoOggetto,
+            "tipo_notifica" => $tipoNotifica,
+            "nome" => $nome,
+            "lista_destinatari" => $listaDestinatari
+        );
+    }
+
+
+
+    public function attach(SplObserver $observer)
+    {
+        $this->_observers->attach($observer);
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        $this->_observers->detach($observer);
+    }
+
+    public function notify()
+    {
+        foreach ($this->_observers as $observer) {
+            $observer->update($this);
+        }
+    }
 }
