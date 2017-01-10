@@ -32,10 +32,12 @@ define('DEBUG', true);
 
 try {
     if (DEBUG == true) {
+        define('UPLOAD_FOLDER', 'c:/xampp/htdocs/CrowdMine/uploads' . DIRECTORY_SEPARATOR);
         ini_set("max_execution_time", '30');
         ini_set('display_errors', 'on');
         error_reporting(E_ALL);
     } else {
+        define('UPLOAD_FOLDER', '/membri/crowdmine/uploads' . DIRECTORY_SEPARATOR);
         ini_set('display_errors', 'off');
     }
 

@@ -12,12 +12,13 @@ include_once MANAGER_DIR . "UtenteManager.php";
 include_once MODEL_DIR . "Utente.php";
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 include_once MODEL_DIR . "FeedbackListObject.php";
+include_once VIEW_DIR . "ViewUtils.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $feedbackManger = new FeedbackManager();
     $userManager = new UtenteManager();
 
     $feedbackListObjArray = array();
-    $feedbackListObjArray = $feedbackManger->getFeedbackAdmin();
+    $feedbackListObjArray = setUserImageForFeedback($feedbackManger->getFeedbackAdmin());
 
     echo json_encode($feedbackListObjArray);
 
