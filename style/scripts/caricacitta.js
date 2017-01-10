@@ -7877,25 +7877,65 @@ var arrComuni = Array(
         Array("M203", "ZUNGOLI"),
         Array("M204", "ZUNGRI")
         );
-var lista = document.getElementById("listacitta");
-var elencoComuni = "<option>Seleziona città...</option>";
-for (i = 0; i < arrComuni.length; i++) {
-    var splitted = arrComuni[i][1].split(" ");
-    var value = splitted[0].substring(0, 1) + "" + splitted[0].substring(1).toLowerCase();
-    if (splitted[1]) {
-        value = value + " " + splitted[1].substring(0, 1) + "" + splitted[1].substring(1).toLowerCase();
-    }
-    if (splitted[2]) {
-        value = value + " " + splitted[2].substring(0, 1) + "" + splitted[2].substring(1).toLowerCase();
-    }
-    if (splitted[3]) {
-        value = value + " " + splitted[3].substring(0, 1) + "" + splitted[3].substring(1).toLowerCase();
-    }
-    if (splitted[4]) {
-        value = value + " " + splitted[4].substring(0, 1) + "" + splitted[4].substring(1).toLowerCase();
-    }
 
-    elencoComuni += "<option value='" + value + "'>" + value + "</option>";
+function capitalize(str) {
+    strVal = '';
+    str = str.split(' ');
+    for (var chr = 0; chr < str.length; chr++) {
+        strVal += str[chr].substring(0, 1) + str[chr].substring(1, str[chr].length).toLowerCase() + ' '
+    }
+    return strVal
 }
-lista.innerHTML = elencoComuni;
+
+data=$.map(arrComuni, function(item) {
+    var txt = capitalize(item[1]);
+    return { id: txt, text: txt };
+});
+
+beginsWith = function(needle, haystack){
+    return (haystack.substr(0, needle.length) == needle);
+}
+
+var select = $('#listacitta').select2({
+
+    ajax:{},
+    // For demonstration purposes we first make
+    // a huge array of demo data (20 000 items)
+    // Heads up; for the _.map and _.filter function i use underscore (actually lo-dash) here
+    // text for loading more
+    data:data.slice(0,20),
+
+    formatLoadMore   : 'Loading more...',
+    query            : function (q) {
+        // pageSize is number of results to show in dropdown
+        var pageSize,
+            results;
+        pageSize = 20;
+        results = [];
+
+        for(i=0;i<data.length;i++) {
+
+            var e = data[i];
+            if (!q.term || q.term === "" || beginsWith(q.term.toUpperCase(),e.id.toUpperCase()) == true){
+                results.push(e);
+            }else{
+                if(results.length>0)
+                    break;
+            }
+        }
+
+        if (!("page" in q)) {
+            q.page = 1;
+        }
+
+
+        q.callback({
+            results: results.slice((q.page - 1) * pageSize, q.page * pageSize),
+            // retrieve more when user hits bottom
+            pagination: {
+                more: results.length >= q.page * pageSize
+            }
+        });
+    }
+});
 
