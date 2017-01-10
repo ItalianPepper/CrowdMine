@@ -169,7 +169,7 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
         header = $("#num_messaggi");
         headerNumber = header.html();
         if((headerNumber-numero) == 0){
-            header.remove();
+            header.();
         }
         else{
             header.html(headerNumber-numero);
@@ -372,3 +372,4 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
 
 <script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/app.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/headerUtils.js"></script>
