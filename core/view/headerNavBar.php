@@ -131,14 +131,16 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
                         <div class="title">Notifiche</div>
-                        <div class="count">10</div>
+                        <div id="notification-count" class="count">0</div>
                     </a>
                     <div class="dropdown-menu">
                         <ul>
                             <li class="dropdown-header">Notifiche</li>
+                            <li>
                                 <ul id="lista-notifiche">
 
                                 </ul>
+                            </li>
                             <li class="dropdown-footer">
                                 <a href="<?php echo DOMINIO_SITO;?>/notificheUtente">Visualizza Tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                             </li>

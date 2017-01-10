@@ -273,6 +273,7 @@
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR;?>assets\js\notifyPanelFunction.js"></script>
 
                 <script>
                     function setModalForm(action,text){
