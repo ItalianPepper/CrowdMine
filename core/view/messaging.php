@@ -170,9 +170,10 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
         header = $("#num_messaggi");
         headerNumber = header.html();
         if((headerNumber-numero) == 0){
-            header.();
+            header.hide();
         }
         else{
+            header.show();
             header.html(headerNumber-numero);
         }
     }
