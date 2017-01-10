@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <noscript><?php include_once VIEW_DIR."noscriptView.php";?></noscript>
+
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>
@@ -757,7 +759,7 @@
                         </div>
                     </div>
                 </div>
-
+                <script type="text/javascript">var dominio = "<?php echo DOMINIO_SITO;?>";</script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
                 <script type="text/javascript"
