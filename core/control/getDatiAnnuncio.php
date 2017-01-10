@@ -79,10 +79,10 @@ include_once EXCEPTION_DIR . "IllegalArgumentException.php";
     if (empty($descrizione) || !preg_match(Patterns::$NAME_GENERIC, $descrizione) || strlen($descrizione) > 300) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo descrizione annuncio contine carratteri spaciali o è vuoto o ha una lunghezza di più di 300 caratteri";
-        header("Location:"  . "/visitaProfiloUtente");
+        header("Location:" . getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo descrizione non corretto");
     }
-    if (empty($retribuzione) && intval($retribuzione) != 0 && $retribuzione < 0) {
+    if (empty($retribuzione) || intval($retribuzione) != 0 || $retribuzione < 0) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo retribuzione non corretto deve essere un numero maggiore o uguale a zero";
         header("Location:" . getReferer(DOMINIO_SITO));
