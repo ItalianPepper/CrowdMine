@@ -9,8 +9,10 @@ include_once MANAGER_DIR . "Manager.php";
  * Date: 30/11/2016
  * Time: 11.24
  */
-class MessaggioManager extends Manager
-{
+class MessaggioManager extends Manager implements SplSubject {
+
+    private $_observer;
+    private $wrapperNotifica;
 
     /**
      * MessaggioManager constructor.
@@ -184,6 +186,11 @@ class MessaggioManager extends Manager
             } else
                 throw new ApplicationException(ErrorUtils::$INSERIMENTO_FALLITO, Controller::getDB()->error, Controller::getDB()->errno);
         }
+
+        $annuncioManager = new AnnuncioManager();
+        $annuncio = $annuncioManager->getAnnuncio($idAnnuncio);
+        $this->inviaNotificaDiInserimento($idAnnuncio, "candidatura", $annuncio->getTitolo(), array($annuncio->getIdUtente()));
+
         return true;
     }
 
@@ -409,4 +416,50 @@ class MessaggioManager extends Manager
         }
     }
 
+
+    private function inviaNotificaDiInserimento($idOggetto, $tipoOggetto, $nome, $destinatari){
+        $tipoNotifica = "inserimento";
+        $this->setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $destinatari);
+        $this->notify();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWrapperNotifica()
+    {
+        return $this->wrapperNotifica;
+    }
+
+    /**
+     * @param mixed $wrapperNotifica
+     */
+    public function setWrapperNotifica($idOggetto, $tipoOggetto, $tipoNotifica, $nome, $listaDestinatari = null){
+        $this->wrapperNotifica = array(
+            "id_oggetto" => $idOggetto,
+            "tipo_oggetto" => $tipoOggetto,
+            "tipo_notifica" => $tipoNotifica,
+            "nome" => $nome,
+            "lista_destinatari" => $listaDestinatari
+        );
+    }
+
+
+
+    public function attach(SplObserver $observer)
+    {
+        $this->_observers->attach($observer);
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        $this->_observers->detach($observer);
+    }
+
+    public function notify()
+    {
+        foreach ($this->_observers as $observer) {
+            $observer->update($this);
+        }
+    }
 }

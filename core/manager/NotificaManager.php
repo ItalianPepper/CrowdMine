@@ -1,6 +1,8 @@
 <?php
 
 include_once MODEL_DIR . "Notifica.php";
+include_once UTILS_DIR . "NotificationParsing.php";
+include_once MODEL_DIR . "Utente.php";
 
 /**
  * Created by PhpStorm.
@@ -139,7 +141,7 @@ class NotificaManager extends Manager implements SplObserver
         $wrapperNotifica = $subject->getWrapperNotifica();
 
         $tipoNotifica = $wrapperNotifica["tipo_notifica"];
-        $destinatari = $wrapperNotifica["lista_utenti"];
+        $destinatari = $wrapperNotifica["lista_destinatari"];
 
         if ($tipoNotifica == tipoNotifica::INSERIMENTO) {
 
