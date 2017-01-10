@@ -223,7 +223,7 @@ class UtenteManager extends Manager implements SplSubject
     {
         $users = array();
         if (!empty($input)) {
-            $getListUsers = "SELECT * FROM utente WHERE  nome LIKE '%s' OR cognome LIKE '%s' OR email LIKE '%s' ;";
+            $getListUsers = "SELECT * FROM utente WHERE  nome LIKE '%s' OR cognome LIKE '%s' OR email LIKE '%s' OR ruolo LIKE '%s';";
             $in = "%" . $input . "%";
             $query = sprintf($getListUsers, $in, $in, $in);
         } else {
@@ -616,7 +616,7 @@ class UtenteManager extends Manager implements SplSubject
             "id_oggetto" => $idOggetto,
             "tipo_oggetto" => $tipo,
             "nome" => $nome,
-            "lista_mittenti" => $listaDestinatari
+            "lista_destinatari" => $listaDestinatari
         );
     }
 }

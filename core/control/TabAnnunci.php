@@ -40,11 +40,11 @@ include_once MANAGER_DIR . "MicrocategoriaManager.php";
                 $now = new DateTime();
 
                 if ($todatemacro > $now) {
-                    $atdatemacro = $now;
+                    $todatemacro = $now;
                 }
 
-                if ($fromdatemicro > $now) {
-                    $fromdatemicro = $now;
+                if ($fromdatemacro > $now) {
+                    $fromdatemacro = $now;
                 }
 
                 $macro = $_POST["macrocategoria"];
