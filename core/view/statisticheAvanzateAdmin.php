@@ -262,7 +262,7 @@
 
     function appendMacroElements(arrayMacroElements) {
       $.each(arrayMacroElements, function (i,item){
-          $("#selectMacro").append($("<option>").text(item).attr("value",item));
+          $("#selectMacro").append($("<option>").text(item.macroName).attr("value",item.macroName));
       });
     }
 
@@ -283,7 +283,7 @@
 
     function appendMicroElements(arrayMicroElements) {
         $.each(arrayMicroElements, function (i,item){
-            $("#selectMicro").append($("<option>").text(item).attr("value",item));
+            $("#selectMicro").append($("<option>").text(item.microName).attr("value",item.microName));
         });
     }
 
@@ -508,9 +508,13 @@
             dataType: "json",
             data:{type:type,macro:nameMacro,maxPage:"dimensionPaging"},
             success:function (response) {
-                var dimensionPaging = response;
-                $("#pagination").attr("dimension-paging",dimensionPaging);
-                appendingPaging(page,type,nameMacro);
+                var dimensionPaging = response/10;
+
+                if(dimensionPaging > 1) {
+                    $("#pagination").attr("dimension-paging", dimensionPaging);
+                    appendingPaging(page, type, nameMacro);
+                }
+
             }
         });
     }
@@ -667,7 +671,7 @@
         var ctxGenerale = document.getElementById("graficoGeneraleAnnunci").getContext("2d");
 
         var generaleData = {
-            labels: dates,
+            labels:dates,
             datasets: [
                 {
                     label:"Generale",
@@ -684,7 +688,7 @@
             options: {
                 pointHitRadius: 3,
                 responsive: true,
-                tooltipEvents: [],
+                tooltipEvents:[],
                 showTooltips: true,
                 onAnimationComplete: function () {
                     this.showTooltip(this.segments, true);
@@ -696,12 +700,12 @@
     }
 
 
-    function drawMacroDateChart(dates, values) {
+    function drawMacroDateChart(dates,values) {
 
         var ctxMacro = document.getElementById("macroCategoriaGrafico").getContext("2d");
 
         var macroData = {
-            labels: dates,
+            labels:dates,
             datasets: [
                 {
                     label:$("#selectMacro").val(),
@@ -711,7 +715,6 @@
                     borderWidth: 1
                 }
             ]
-
         };
 
         var macroChart = new Chart.Line(ctxMacro, {
@@ -739,7 +742,7 @@
             datasets: [
                 {
                     label: $("#selectMicro").val(),
-                    data: values, //dati micro
+                    data: values,
                     backgroundColor: "rgba(0, 0, 255, 0.3)",
                     borderColor: "rgba(0, 0, 255, 0.3)",
                     borderWidth: 1

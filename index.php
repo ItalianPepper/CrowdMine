@@ -363,6 +363,7 @@ try {
                 include_once CONTROL_DIR . "modificaAnnuncio.php";
                 break;
             case 'modificaAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "getDatiAnnuncioModificato.php";
                 break;
             case 'aggiungiPreferitiControl';

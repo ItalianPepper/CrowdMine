@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $macroCategoriaManager = new MacroCategoriaManager();
 
-            $resultMacroAnnunci = $macroCategoriaManager->findBestMacrocategoriaCompetente();
+            $resultMacroAnnunci = $macroCategoriaManager->findBestMacrocategoriaRiferito();
 
             header("Content-Type:application/json");
             echo json_encode($resultMacroAnnunci);

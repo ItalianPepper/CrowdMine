@@ -248,7 +248,7 @@ class MacroCategoriaManager extends Manager
              WHERE microcategoria.id = competente.id_microcategoria AND macrocategoria.id IN (SELECT microcategoria.id_macrocategoria FROM macrocategoria) 
              GROUP BY macrocategoria.nome;";
         $result = self::getDB()->query($FIND_LIST_MACROCATEGORIA);
-        if(result != 0){
+        if($result){
             foreach($result->fetch_assoc() as $l){
                 array_push($lista, $l);
             }return $lista;
@@ -258,15 +258,33 @@ class MacroCategoriaManager extends Manager
     public function findBestMacrocategoriaCompetente(){
         $lista = array();
         $FIND_BEST_USER_BY_MACROCATEGORIA =
-            "SELECT macrocategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto
-             FROM microcategoria, macrocategoria, competente
-             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = macrocategoria.id
-             GROUP BY competente.id_microcategoria
-             ;";
+            "SELECT macrocategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto 
+             FROM macrocategoria, competente, microcategoria 
+             WHERE competente.id_microcategoria = microcategoria.id AND macrocategoria.id = microcategoria.id_macrocategoria 
+             GROUP BY macrocategoria.id 
+             ORDER BY conto DESC
+             ";
         $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
-        if(result != 0){
-            foreach($result->fetch_assoc() as $l){
-                array_push($lista, $l);
+        if($result){
+            while($l = $result->fetch_assoc()){
+                array_push($lista, $l['nome']);
+            }return $lista;
+        }return false;
+    }
+
+    public function findBestMacrocategoriaRiferitoGraphics(){
+        $lista = array();
+        $FIND_BEST_USER_BY_MACROCATEGORIA =
+            "SELECT macrocategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto 
+             FROM macrocategoria, riferito, microcategoria 
+             WHERE riferito.id_microcategoria = microcategoria.id AND macrocategoria.id = microcategoria.id_macrocategoria 
+             GROUP BY macrocategoria.id 
+             ORDER BY conto DESC
+             ";
+        $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
+        if($result){
+            while($l = $result ->fetch_assoc()){
+                $lista[$l['nome']] = $l['conto'];
             }return $lista;
         }return false;
     }
@@ -274,15 +292,16 @@ class MacroCategoriaManager extends Manager
     public function findBestMacrocategoriaRiferito(){
         $lista = array();
         $FIND_BEST_USER_BY_MACROCATEGORIA =
-            "SELECT macrocategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto
-             FROM microcategoria, macrocategoria, riferito
-             WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = macrocategoria.id
-             GROUP BY riferito.id_microcategoria
-             ;";
+            "SELECT macrocategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto 
+             FROM macrocategoria, riferito, microcategoria 
+             WHERE riferito.id_microcategoria = microcategoria.id AND macrocategoria.id = microcategoria.id_macrocategoria 
+             GROUP BY macrocategoria.id 
+             ORDER BY conto DESC
+             ";
         $result = self::getDB()->query($FIND_BEST_USER_BY_MACROCATEGORIA);
-        if(result != 0){
-            foreach($result->fetch_assoc() as $l){
-                array_push($lista, $l);
+        if($result){
+            while($l = $result ->fetch_assoc()){
+                array_push($lista, $l['nome']);
             }return $lista;
         }return false;
     }
