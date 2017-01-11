@@ -183,7 +183,7 @@ class MessaggioManagerTest extends PHPUnit_Framework_TestCase{
     }
 
 
-    
+
 
 
     //isInviaCollaborazione()
