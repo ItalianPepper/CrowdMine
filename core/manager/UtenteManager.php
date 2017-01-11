@@ -445,21 +445,20 @@ class UtenteManager extends Manager implements SplSubject
     {
         $ADD_MICROCATEGORIA = "INSERT INTO competente (id_utente, id_microcategoria) VALUES('%s', '%s');";
         $query = sprintf($ADD_MICROCATEGORIA, $user->getId(), $microcategoria->getId());
-        $result = mysqli_query(self::getDB(), $query);
-        //$result = self::getDB()->query($query);
+        $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
         }
     }
 
     /**
-     * @param $user
-     * @param $microcategoria
+     * @param $userId
+     * @param $microcategoriaId
      */
-    public function removeMicroCategoria($user, $microcategoria)
+    public function removeMicroCategoria($userId, $microcategoriaId)
     {
         $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
-        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
+        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoriaId, $userId);
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
