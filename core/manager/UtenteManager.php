@@ -223,7 +223,7 @@ class UtenteManager extends Manager implements SplSubject
     {
         $users = array();
         if (!empty($input)) {
-            $getListUsers = "SELECT * FROM utente WHERE  nome LIKE '%s' OR cognome LIKE '%s' OR email LIKE '%s' ;";
+            $getListUsers = "SELECT * FROM utente WHERE  nome LIKE '%s' OR cognome LIKE '%s' OR email LIKE '%s' OR ruolo LIKE '%s';";
             $in = "%" . $input . "%";
             $query = sprintf($getListUsers, $in, $in, $in);
         } else {
@@ -443,8 +443,8 @@ class UtenteManager extends Manager implements SplSubject
      */
     public function addMicroCategoria($user, $microcategoria)
     {
-        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_microcategoria, id_utente) VALUES('%s', '%s');";
-        $query = sprintf($ADD_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
+        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_utente, id_microcategoria) VALUES('%s', '%s');";
+        $query = sprintf($ADD_MICROCATEGORIA, $user->getId(), $microcategoria->getId());
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
@@ -452,13 +452,13 @@ class UtenteManager extends Manager implements SplSubject
     }
 
     /**
-     * @param $user
-     * @param $microcategoria
+     * @param $userId
+     * @param $microcategoriaId
      */
-    public function removeMicroCategoria($user, $microcategoria)
+    public function removeMicroCategoria($userId, $microcategoriaId)
     {
         $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
-        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoria, $user);
+        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoriaId, $userId);
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
@@ -561,11 +561,12 @@ class UtenteManager extends Manager implements SplSubject
         $GET_CATEGORY_BY_ID = "SELECT microcategoria.id, microcategoria.nome, microcategoria.id_macrocategoria FROM microcategoria, competente WHERE competente.id_utente = '%s' AND microcategoria.id = competente.id_microcategoria";
         $query = sprintf($GET_CATEGORY_BY_ID, $idUtente);
         $result = self::getDB()->query($query);
-        foreach ($result->fetch_assoc() as $m) {
-            $microManager = new MicrocategoriaManager();
+        $microManager = new MicrocategoriaManager();
+        while ($m = $result->fetch_assoc()) {
             $micro = $microManager->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
             array_push($list, $micro);
         }
+
         return $list;
     }
 
@@ -614,7 +615,7 @@ class UtenteManager extends Manager implements SplSubject
             "id_oggetto" => $idOggetto,
             "tipo_oggetto" => $tipo,
             "nome" => $nome,
-            "lista_mittenti" => $listaDestinatari
+            "lista_destinatari" => $listaDestinatari
         );
     }
 }

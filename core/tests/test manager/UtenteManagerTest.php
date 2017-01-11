@@ -9,16 +9,23 @@
 
 require_once(__DIR__  .  '/../../../index.php');
 require_once(__DIR__ .  '/../../manager/UtenteManager.php');
+require_once(__DIR__ .  '/../../manager/MicrocategoriaManager.php');
+require_once(__DIR__ .  '/../../manager/MacroCategoriaManager.php');
 require_once(__DIR__ .  '/../../model/Utente.php');
+require_once(__DIR__ .  '/../../model/MicroCategoria.php');
 
 
 class UtenteManagerTest extends PHPUnit_Framework_TestCase
 {
     protected $utenteManager;
+    protected $microcategoriaManager;
+    protected $macrocategoriaManger;
     protected $connection;
 
     protected function setUp(){
         $this->utenteManager = new UtenteManager();
+        $this->microcategoriaManager = new MicrocategoriaManager();
+        $this->macrocategoriaManger = new MacroCategoriaManager();
         $this->connection = UtenteManager::getDB();
     }
 
@@ -131,10 +138,109 @@ class UtenteManagerTest extends PHPUnit_Framework_TestCase
     }
 
     public function testGetAdminStateUtente(){
-        
+        $users = $this->initialize();
+
+        $admin = new Utente(null, "nome", "cognome", "telefono", "1994-11-11", "citta",
+            "email", "password", StatoUtente::AMMINISTRATORE, RuoloUtente::UTENTE);
+
+        $this->utenteManager->register(array_values($users)[0]);
+        $this->utenteManager->register(array_values($users)[1]);
+        $this->utenteManager->register($admin);
+
+        $found = $this->utenteManager->getAdminStateUtente();
+
+        self::assertEquals(StatoUtente::AMMINISTRATORE, array_values($found)[0]->getStato());
+    }
+
+    public function testGetBannedUtente(){
+        $users = $this->initialize();
+
+        $banned = new Utente(null, "nome", "cognome", "telefono", "1994-11-11", "citta",
+            "email", "password", StatoUtente::BANNATO, RuoloUtente::UTENTE);
+
+        $this->utenteManager->register(array_values($users)[0]);
+        $this->utenteManager->register(array_values($users)[1]);
+        $this->utenteManager->register($banned);
+
+        $found = $this->utenteManager->getBannedUtente();
+
+        self::assertEquals(StatoUtente::BANNATO, array_values($found)[0]->getStato());
+    }
+
+    public function testGetAppealUtente(){
+        $users = $this->initialize();
+
+        $banned = new Utente(null, "nome", "cognome", "telefono", "1994-11-11", "citta",
+            "emailBanned", "password", StatoUtente::BANNATO, RuoloUtente::UTENTE);
+        $ricorso = new Utente(null, "nome", "cognome", "telefono", "1994-11-11", "citta",
+            "emailRicorso", "password", StatoUtente::RICORSO, RuoloUtente::UTENTE);
+
+        $this->utenteManager->register(array_values($users)[0]);
+        $this->utenteManager->register(array_values($users)[1]);
+        $this->utenteManager->register($banned);
+        $this->utenteManager->register($ricorso);
+
+
+        $found = $this->utenteManager->getAppealUtente();
+
+        self::assertEquals(StatoUtente::BANNATO, array_values($found)[0]->getStato());
+        self::assertEquals(StatoUtente::RICORSO, array_values($found)[1]->getStato());
+    }
+
+    public function testCheckEmail(){
+        $users = $this->initialize();
+
+        $this->utenteManager->register(array_values($users)[0]);
+        $this->utenteManager->register(array_values($users)[1]);
+
+        self::assertTrue($this->utenteManager->checkEmail("email1"));
+        self::assertTrue($this->utenteManager->checkEmail("email2"));
+        self::assertFalse($this->utenteManager->checkEmail("email3"));
+    }
+
+    public function testCheckPassword(){
+        $users = $this->initialize();
+
+        $this->utenteManager->register(array_values($users)[0]);
+        $this->utenteManager->register(array_values($users)[1]);
+
+        $found = $this->utenteManager->findAll();
+
+        foreach ($found as $utente){
+            self::assertTrue($this->utenteManager->checkPassword($utente->getId(), $utente->getPassword()));
+            self::assertFalse($this->utenteManager->checkPassword($utente->getId(), "p"));
+        }
+    }
+
+    public function testUserMicrocategory(){
+        $users = $this->initialize();
+
+        $this->utenteManager->register(array_values($users)[0]);
+        $this->utenteManager->register(array_values($users)[1]);
+
+        $idMacro = $this->macrocategoriaManger->addMacrocategoria("nomeMacro");
+        $macro = new MacroCategoria($idMacro, "nomeMacro");
+
+        $micro = new MicroCategoria($macro->getId(), "nomeMicro");
+        $idMicro = $this->microcategoriaManager->addMicrocategoria($micro);
+        $micro = new MicroCategoria($macro->getId(), "nomeMicro", $idMicro);
+        $this->utenteManager->addMicroCategoria(array_values($users)[0], $micro);
+        $found = $this->utenteManager->getMicrocategoryByUtente(array_values($users)[0]);
+
+        self::assertEquals("nomeMicro", array_values($found)[0]->getNome());
+
+        $this->utenteManager->removeMicroCategoria(array_values($users)[0], $micro);
+        $found = $this->utenteManager->getMicrocategoryByUtente(array_values($users)[0]);
+
+        self::assertEmpty($found);
     }
 
     private function initialize(){
+        if(mysqli_query($this->connection, 'delete from competente;'))
+            echo "database initialized successfully\n";
+        else
+            echo "error deleting records\n";
+
         if(mysqli_query($this->connection, 'delete from bloccato;'))
             echo "database initialized successfully\n";
         else
@@ -145,10 +251,20 @@ class UtenteManagerTest extends PHPUnit_Framework_TestCase
         else
             echo "error deleting records\n";
 
+        if(mysqli_query($this->connection, 'delete from macrocategoria;'))
+            echo "database initialized successfully\n";
+        else
+            echo "error deleting records\n";
+
+        if(mysqli_query($this->connection, 'delete from microcategoria;'))
+            echo "database initialized successfully\n";
+        else
+            echo "error deleting records\n";
+
         $user_1 = new Utente(null, "nome1", "cognome1", "telefono1", "1994-11-11", "citta1",
-            "email1", "password1", StatoUtente::ATTIVO, RuoloUtente::UTENTE);
+            "email1", "password1", StatoUtente::ATTIVO, RuoloUtente::UTENTE, "descrizione1", "immagine1", "partitaIva1");
         $user_2 = new Utente(null, "nome2", "cognome2", "telefono2", "1994-11-11", "citta2",
-            "email2", "password2", StatoUtente::BANNATO, RuoloUtente::AMMINISTRATORE);
+            "email2", "password2", StatoUtente::ATTIVO, RuoloUtente::AMMINISTRATORE, "descrizione2", "immagine2", "partitaIva2");
 
         $users=array();
         array_push($users, $user_1);

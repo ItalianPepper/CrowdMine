@@ -1,6 +1,6 @@
 <?php
 
-include_once MODEL_DIR . "NotifyViewListObject";
+include_once MODEL_DIR . "NotifyViewListObject.php";
 include_once MODEL_DIR . "Notifica.php";
 class NotificationParsing
 {
