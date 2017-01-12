@@ -1,22 +1,22 @@
 /**
- * Created by LongSky on 07/01/2017.
+ * Created by LongSky on 12/01/2017.
  */
+
 
 function call() {
     "use strict";
     console.log("inizio call");
     clearjQueryCache();
     $.ajax({
-        url: "/CrowdMine/updateMessIcon",
-        dataType: 'json',
+        url: "/CrowdMine/updateChat",
+        dataType: 'text',
         async: true,
         success: function (data) {
-            //console.log(data);
-            if(data == 0){
-                $("#mess").hide();
-            }else{
-                $("#mess").show();
-                $("#mess").html(data);
+            console.log("__"+data+"__");
+            if(data!="") {
+                $('#messaggi_inviati').empty()
+                $('#messaggi_inviati').append(data);
+                $('#messaggi_inviati').animate({scrollTop: $('#messaggi_inviati').prop("scrollHeight")}, 0);
             }
         },
         error: function (data) {
@@ -31,7 +31,7 @@ $(document).ready(function(){
     console.log("inizio poll");
     setInterval(function(){
         call();
-    },5000);
+    },3000);
 });
 
 function clearjQueryCache() {
@@ -39,5 +39,3 @@ function clearjQueryCache() {
         delete jQuery.cache[x];
     }
 }
-
-

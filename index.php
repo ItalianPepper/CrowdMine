@@ -88,6 +88,10 @@ try {
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "updateNumberMessIcon.php";
                 break;
+            case 'updateChat':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "messagingLiveUpdate.php";
+                break;
 
             case 'visualizzaStatisticheMacroCategorie':
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
