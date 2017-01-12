@@ -28,8 +28,10 @@ $(document).ready(function () {
 });
 
 function generateFeedbackList(data, role, destination) {
+    console.log(data);
     if (data.length > 0) {
         for (var i in data) {
+
             var feedbackListObj = [];
 
             feedbackListObj.feedbackID = data[i].feedbackID;
@@ -89,7 +91,7 @@ function feedbackRowToString(feedbackListObj, role,dominio) {
         '                                                                <div class="media social-post">' +
         '                                                                    <div class="media-left">' +
         '                                                                        <a href="'+dominio+'/ProfiloUtente/'+ feedbackListObj.idUtente +'">' +
-        '                                                                         <img src="'+dominio+'/style/img/' + feedbackListObj.userProfileImage + '"> ' +
+        '                                                                         <img src="'+ feedbackListObj.userProfileImage + '"> ' +
         '                                                                        </a>' +
         '                                                                    </div>' +
         '                                                                    <div class="section">' +

@@ -130,4 +130,93 @@ function randomColorLabel($hash, $content){
     echo "<span class='label label-primary' style='background-color:".colorByHash($hash)."';>".$content."</span>";
 }
 
+/**
+ * get the user's image path in big format (150x150)
+ * @param $user Utente object
+ * @param null $adminData if true retrieves the admin profile data
+ * @return string
+ */
+function getUserImageBig($user, $adminData=null){
+    return getUserImage($user,150,150,$adminData);
+}
+
+/**
+* get the user's image path in defined format
+ * @param $user Utente object
+ * @param $width int width of image folder
+ * @param $height int height of image folder
+ * @param null $adminData if true retrieves the admin profile data
+ * @return string
+ */
+function getUserImage($user,$width,$height,$adminData=null){
+
+    if(isset($user)){
+
+        if($user->getRuolo() == RuoloUtente::AMMINISTRATORE && $adminData){
+            return STYLE_DIR . "img/Favicon_1.png";
+        }
+
+        if(!empty($user->getImmagineProfilo())) {
+            return UPLOADS_DIR . "images/profile/".$width."x".$height."/" . $user->getImmagineProfilo();
+        }
+
+    }
+
+    return UPLOADS_DIR . "images/profile/user-standard.png";
+
+}
+
+/**
+ * return the User's fullname (firstname + surname)
+ *  if adminData is enabled, retrieves the admin fullname
+ *
+ * @param $user
+ * @param null $adminData
+ * @return string
+ */
+function getUserFullName($user, $adminData=null){
+
+    if($user->getRuolo() == RuoloUtente::AMMINISTRATORE && $adminData){
+        return "Crowdmine";
+    }
+    return $user->getNome() . " " . $user->getCognome();
+}
+
+/**
+ * This fuction adapt the FeedbackListObject element for the
+ * visulization of the HTML object.
+ * @param $feedbackListObjArray
+ * @return mixed
+ */
+
+function setUserImageForFeedback($feedbackListObjArray)
+{
+    for ($i = 0; $i < count($feedbackListObjArray); $i++) {
+        $idUtente = $feedbackListObjArray[$i]['idUtente'];
+        $nomeUtente = $feedbackListObjArray[$i]['userFirstName'];
+        $cognomeUtente = $feedbackListObjArray[$i]['userLastName'];
+        $ruoloUtente = $feedbackListObjArray[$i]['UserRuolo'];
+        $immagineProfilo = $feedbackListObjArray[$i]['userProfileImage'];
+
+        $user = new Utente($idUtente,
+            $nomeUtente,
+            $cognomeUtente,
+            "telefono",
+            "data",
+            "citta",
+            "email",
+            "password",
+            ATTIVATO,
+            $ruoloUtente,
+            null,
+            $immagineProfilo,
+            null);
+
+        $feedbackListObjArray[$i]['userProfileImage'] = getUserImageBig($user,true);
+        $feedbackListObjArray[$i]['userFirstName'] = getUserFullName($user,true);
+        $feedbackListObjArray[$i]['userLastName']="";
+    }
+  return $feedbackListObjArray;
+}
+
 ?>

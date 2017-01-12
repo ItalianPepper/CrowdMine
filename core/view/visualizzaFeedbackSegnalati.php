@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <?php include_once VIEW_DIR."ViewUtils.php";?>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         .navbar-collapse.in {

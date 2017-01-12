@@ -76,11 +76,6 @@
 
     </style>
 
-    <?php
-        if(isset($user))
-        $fullname = $user->getNome()." ".$user->getCognome();
-    ?>
-
 </head>
 <body>
 <div class="app app-default">
@@ -107,16 +102,14 @@
                                             <div class="card-title" style="float: left">
 
                                                 <div class="media" style="width: 20%; float: left">
-                                                    <a href="<?php echo DOMINIO_SITO."\ProfiloUtente\\".$u->getId(); ?>">
-                                                        <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                    <a href="<?php echo DOMINIO_SITO."/ProfiloUtente/".$u->getId(); ?>">
+                                                        <img src="<?php echo getUserImageBig($u,true);?>" width="100%;"/>
                                                     </a>
                                                 </div>
 
                                                 <div style="float: left; margin-left: 5%;">
                                                     <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">
-                                                        <?php
-
-                                                        echo $u->getNome() . " " . $u->getCognome() ?>
+                                                        <?php echo getUserFullName($u,true) ?>
                                                     </h1>
                                                     <h1><?php echo $annunci[$i]->getTitolo();?></h1>
 
@@ -171,7 +164,7 @@
                                                             <h4 class="title">
                                                                 <?php
                                                                 $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
-                                                                echo $u->getNome()." ".$u->getCognome()
+                                                                echo getUserFullName($u,true);
                                                                 ?>
                                                             </h4>
                                                             <h5 class="timeing"><?php

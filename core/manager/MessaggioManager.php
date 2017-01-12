@@ -19,7 +19,9 @@ class MessaggioManager extends Manager implements SplSubject {
      */
     public function __construct()
     {
-
+        $this->_observer = new SplObjectStorage();
+        $notificaManager = new NotificaManager();
+        $this->attach($notificaManager);
     }
 
     /**
@@ -451,17 +453,17 @@ class MessaggioManager extends Manager implements SplSubject {
 
     public function attach(SplObserver $observer)
     {
-        $this->_observers->attach($observer);
+        $this->_observer->attach($observer);
     }
 
     public function detach(SplObserver $observer)
     {
-        $this->_observers->detach($observer);
+        $this->_observer->detach($observer);
     }
 
     public function notify()
     {
-        foreach ($this->_observers as $observer) {
+        foreach ($this->_observer as $observer) {
             $observer->update($this);
         }
     }

@@ -17,6 +17,7 @@ class FeedbackListObject implements JsonSerializable
     private $userProfileImage;
     private $feedbackRating;
     private $idUtente;
+    private $userRole;
 
 
     /**
@@ -31,7 +32,8 @@ class FeedbackListObject implements JsonSerializable
      * @param $userId
      */
     public function __construct($feedbackID, $feedbackTitle, $feedbackDesc, $userFirstName,
-                                $userLastName, $userProfileImage, $feedbackRating,$userId)
+                                $userLastName, $userProfileImage, $feedbackRating,$userId,
+                                $userRole)
     {
         $this->feedbackID = $feedbackID;
         $this->feedbackTitle = $feedbackTitle;
@@ -41,6 +43,7 @@ class FeedbackListObject implements JsonSerializable
         $this->userProfileImage = $userProfileImage;
         $this->feedbackRating = $feedbackRating;
         $this->idUtente = $userId;
+        $this->userRole = $userRole;
 
 
     }
@@ -59,6 +62,22 @@ class FeedbackListObject implements JsonSerializable
     public function setUserID($userID)
     {
         $this->idUtente=$userID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRole()
+    {
+        return $this->userRole;
+    }
+
+    /**
+     * @param mixed $userRole
+     */
+    public function setUserRole($userRole)
+    {
+        $this->userRole = $userRole;
     }
 
 
@@ -177,6 +196,10 @@ class FeedbackListObject implements JsonSerializable
     }
 
 
+
+
+
+
     /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -194,7 +217,8 @@ class FeedbackListObject implements JsonSerializable
             'userLastName' => $this->getUserLastName(),
             'userProfileImage' => $this->getUserProfileImage(),
             'feedbackRating' => $this->getFeedbackRating(),
-            'idUtente' => $this->getUserID()
+            'idUtente' => $this->getUserID(),
+            'UserRuolo'=>$this->getUserRole()
         ];
     }
 }

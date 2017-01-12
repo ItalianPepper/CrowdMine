@@ -1,3 +1,10 @@
+<?php
+    if(isset($user)) {
+        $fullname = getUserFullName($user);
+        $profileImg = getUserImageBig($user);
+    }
+?>
+
 <nav class="navbar navbar-default" id="navbar">
     <div class="container-fluid">
         <div class="navbar-collapse collapse in" style="background:#2b2b33;">
@@ -11,9 +18,15 @@
                     <a class="navbar-brand" href="#"><span class="highlight"><?php echo $fullname; ?></span></a>
                 </li>
                 <li>
-                    <button type="button" class="navbar-toggle">
-                        <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
-                    </button>
+                    <?php if(isset($user)){?>
+                        <button type="button" class="navbar-toggle">
+                            <img class="profile-img" src="<?php echo $profileImg; ?>">
+                        </button>
+                    <?php }else{?>
+                        <button type="button" class="navbar-toggle" style="color:white">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    <?php }?>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-left col-md-8 col-lg-9" style="padding: 0;">
@@ -43,7 +56,10 @@
                     </form>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <?php
+                if(isset($user)){
+                    ?>
+                <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown notification">
                     <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3" class="dropdown-toggle" data-toggle="dropdown" onclick="location.href='<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3';">
                         <div class="icon"><i class="fa fa-folder-open-o" aria-hidden="true"></i></div>
@@ -134,7 +150,7 @@
                 </li>
                 <li class="dropdown profile">
                     <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale" class="dropdown-toggle" data-toggle="dropdown" onclick="location.href='<?php echo DOMINIO_SITO;?>/ProfiloPersonale';">
-                        <img class="profile-img" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                        <img class="profile-img" src="<?php echo $profileImg; ?>">
                         <div class="title">Profile</div>
                     </a>
                     <div class="dropdown-menu">
@@ -171,6 +187,15 @@
                     </div>
                 </li>
             </ul>
+            <?php
+                }else{
+                    ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="<?php echo DOMINIO_SITO;?>/auth"><span class="fa fa-sign-out"></span> Accedi</a></li>
+                </ul>
+            <?php
+                }
+                ?>
         </div>
     </div>
 </nav>
