@@ -11,9 +11,11 @@ include_once MODEL_DIR . 'Feedback.php';
 include_once MODEL_DIR . 'MicroCategoria.php';
 include_once MODEL_DIR . 'FeedbackListObject.php';
 include_once MODEL_DIR . 'Candidatura.php';
+
 include_once MANAGER_DIR . 'Manager.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 include_once MANAGER_DIR . 'AnnuncioManager.php';
+include_once MANAGER_DIR . 'NotificaManager.php';
 
 /**
  * Class FeedbackManager
@@ -22,7 +24,7 @@ include_once MANAGER_DIR . 'AnnuncioManager.php';
 class FeedbackManager extends Manager implements SplSubject
 {
 
-    private $_observers;
+    private $_observer;
     private $wrapperNotifica;
 
     /**
@@ -30,7 +32,9 @@ class FeedbackManager extends Manager implements SplSubject
      */
     public function __construct()
     {
-        $this->_observers = new SplObjectStorage();
+        $this->_observer = new SplObjectStorage();
+        $notificaManager = new NotificaManager();
+        $this->attach($notificaManager);
     }
 
     public function insertFeedback($id = null, $idUtente, $idAnnuncio, $idValutato, $valutazione, $corpo, $data, $stato, $titolo)
@@ -461,15 +465,15 @@ class FeedbackManager extends Manager implements SplSubject
     }
 
     public function attach(SplObserver $observer){
-        $this->_observers->attach($observer);
+        $this->_observer->attach($observer);
     }
 
     public function detach(SplObserver $observer){
-        $this->_observers->detach($observer);
+        $this->_observer->detach($observer);
     }
 
     public function notify(){
-        foreach($this->_observers as $observer){
+        foreach($this->_observer as $observer){
             $observer->update($this);
         }
     }
