@@ -19,7 +19,7 @@ class MessaggioManager extends Manager implements SplSubject {
      */
     public function __construct()
     {
-
+        $this->_observers = new SplObjectStorage();
     }
 
     /**

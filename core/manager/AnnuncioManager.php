@@ -39,7 +39,7 @@ class AnnuncioManager implements SplSubject
      */
     public function __construct()
     {
-
+        $this->_observers = new SplObjectStorage();
     }
 
     /**
