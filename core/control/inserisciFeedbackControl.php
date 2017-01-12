@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo nome feedback non settato";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo titolo feedback non settato");
     }
 
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo descrizione feedback non settato";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo descrizione feedback non settato");
     }
     if (isset($_POST['rating'])) {
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo rating non settato";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo rating non settato");
     }
     if (isset($_POST['annuncio-id'])) {
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
     if (isset($_POST['user-annuncio-id'])) {
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
     if (isset($_POST['user-submit-id'])) {
@@ -73,46 +73,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
 
     if (empty($feedbackName) || !preg_match(Patterns::$NAME_GENERIC, $feedbackName)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo  nome feedback contiene caratteri speciali o è vuoto";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo name non corretto");
     }
 
     if (empty($feedbackDescription) || !preg_match(Patterns::$NAME_GENERIC, $feedbackDescription) || strlen($feedbackDescription) > 300) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo descrizione feedback contine carratteri spaciali o è vuoto o ha una lunghezza di più di 300 caratteri";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo descrizione non corretto");
     }
 
-    if (empty($feedbackRating)) {
+    if (empty($feedbackRating) || floatval($feedbackRating) == 0 || floatval($feedbackRating)<0 || floatval($feedbackRating)>5) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo rating non corretto";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo rating non corretto");
     }
-    if (empty($adsID) && intval($adsID)!=0) {
+    if (empty($adsID) || intval($adsID)== 0 ) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio 1";
+        header("Location:" . getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
-    if (empty($userValId) && intval($userValId)!=0) {
+    if (empty($userValId) || intval($userValId)== 0 ) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio 1";
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
-    if (empty($userSubID) && intval($userSubID)!=0) {
+    if (empty($userSubID) || intval($userSubID)== 0 ) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio 1";
+        header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
 
@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         ATTIVATO,$feedbackName);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "Feedback inserito con successo";
-        header("Location:" . DOMINIO_SITO . "/visitaProfiloUtente");
+        header("Location:" .getReferer(DOMINIO_SITO));
     //}
 
 

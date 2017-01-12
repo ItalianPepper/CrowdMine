@@ -134,7 +134,7 @@ class FeedbackManager extends Manager implements SplSubject
         $GET_FEEDBACK_BY_USER = "SELECT feedback.id,feedback.titolo,feedback.corpo,
             feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo,utente.ruolo
             FROM feedback, utente WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente
-            AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))";
+            AND feedback.stato='attivato'";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER);
         return $this->feedbackLOToArray($resSet);
@@ -155,7 +155,7 @@ class FeedbackManager extends Manager implements SplSubject
     public function sortListaFeedback($idUtente,$param){
         $GET_FEEDBACK_BY_USER_PARAM = "SELECT feedback.id,feedback.titolo,feedback.corpo,feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo,utente.ruolo
             FROM feedback, utente 
-            WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente  AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))
+            WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente  AND (feedback.stato='attivato')
             ORDER BY $param DESC";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER_PARAM);
@@ -166,9 +166,10 @@ class FeedbackManager extends Manager implements SplSubject
     public function getFeedbackSegnalati()
     {
         $stato = SEGNALATO;
-        $GET_REPORTED_FEEDBACK = "SELECT feedback.*, utente.nome, utente.cognome, utente.immagine_profilo,utente.ruolo
+        $GET_REPORTED_FEEDBACK = "SELECT feedback.id,feedback.titolo,feedback.corpo,
+            feedback.valutazione,feedback.id_utente, utente.nome, utente.cognome, utente.immagine_profilo,utente.ruolo
                                   FROM feedback,utente 
-                                  WHERE feedback.stato ='$stato' AND feedback.id_valutato = utente.id";
+                                  WHERE feedback.stato ='$stato' AND feedback.id_utente = utente.id";
         $resSet = self::getDB()->query($GET_REPORTED_FEEDBACK);
         return $this->feedbackLOToArray($resSet);
     }
@@ -177,9 +178,10 @@ class FeedbackManager extends Manager implements SplSubject
     {
         $stato = AMMINISTRATORE;
         $segnalato = SEGNALATO;
-        $GET_REPORTED_FEEDBACK = "SELECT feedback.*,utente.nome, utente.cognome, utente.immagine_profilo,utente.ruolo
+        $GET_REPORTED_FEEDBACK = "SELECT feedback.id,feedback.titolo,feedback.corpo,
+            feedback.valutazione,feedback.id_utente,utente.nome, utente.cognome, utente.immagine_profilo,utente.ruolo
                                   FROM feedback,utente 
-                                  WHERE (feedback.stato = '$stato' OR feedback.stato = '$segnalato'  )AND feedback.id_valutato = utente.id";
+                                  WHERE (feedback.stato = '$stato' OR feedback.stato = '$segnalato'  )AND feedback.id_utente = utente.id";
         return $this->feedbackLOToArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
     }
 
