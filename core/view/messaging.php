@@ -170,9 +170,10 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
         header = $("#num_messaggi");
         headerNumber = header.html();
         if((headerNumber-numero) == 0){
-            header.remove();
+            header.hide();
         }
         else{
+            header.show();
             header.html(headerNumber-numero);
         }
     }
@@ -210,33 +211,29 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
     //INVIA UN MESSAGGIO 
     function inviamessaggio(event)
     {
-
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.onreadystatechange = function ()
-        {
-            if ((httpRequest.readyState === XMLHttpRequest.DONE) && (httpRequest.status === 200))
-            {
-                document.getElementById('messaggi_inviati').innerHTML = httpRequest.responseText;
-                $('#messaggi_inviati').animate({scrollTop: $('#messaggi_inviati').prop("scrollHeight")}, 0);
-            }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);  
-        };
-
-
-        //var modulo = new FormData(document.getElementById('myForm'));
-        var id = event.target.id;
-        var params = "id=" + id;
-
-        var testo = document.getElementById("area").value;
-        var params = params + "&testo=" + testo;
-        //alert(params);
-        httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/inviaMessaggio"; ?>", true);
-        httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        httpRequest.send(params);
-        
         textbox = document.getElementById('area');
-        textbox.value = "";
-        
-       
+        if(textbox.value!="") {
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = function () {
+                if ((httpRequest.readyState === XMLHttpRequest.DONE) && (httpRequest.status === 200)) {
+                    document.getElementById('messaggi_inviati').innerHTML = httpRequest.responseText;
+                    $('#messaggi_inviati').animate({scrollTop: $('#messaggi_inviati').prop("scrollHeight")}, 0);
+                }//else  alert("error: " + httpRequest.readyState + "STATUS: " + httpRequest.status);
+            };
+
+
+            //var modulo = new FormData(document.getElementById('myForm'));
+            var id = event.target.id;
+            var params = "id=" + id;
+
+            var testo = document.getElementById("area").value;
+            var params = params + "&testo=" + testo;
+            //alert(params);
+            httpRequest.open("POST", "<?php echo DOMINIO_SITO . "/inviaMessaggio"; ?>", true);
+            httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            httpRequest.send(params);
+            textbox.value = "";
+        }
     }
 
 
@@ -373,3 +370,5 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
 
 <script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/vendor.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/app.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/headerUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR ?>/assets/js/messagingUpdate.js"></script>

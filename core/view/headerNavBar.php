@@ -65,9 +65,7 @@
                     <a href="<?php echo DOMINIO_SITO;?>/messaging" class="dropdown-toggle" data-toggle="dropdown" onclick="location.href='<?php echo DOMINIO_SITO;?>/messaging';">
                         <div class="icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
                         <div class="title">Messaggi</div>
-                        <?php
-                        ?>
-                        
+                        <div class="count" style="display:none" id="mess"></div>
                     </a>
                    <!-- <div class="dropdown-menu">
                         <ul>
