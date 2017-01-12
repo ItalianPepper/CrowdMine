@@ -137,9 +137,7 @@
                         <ul>
                             <li class="dropdown-header">Notifiche</li>
                             <li>
-                                <ul id="lista-notifiche">
-
-                                </ul>
+                                <ul id="lista-notifiche"></ul>
                             </li>
                             <li class="dropdown-footer">
                                 <a href="<?php echo DOMINIO_SITO;?>/notificheUtente">Visualizza Tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>

@@ -99,7 +99,7 @@ class NotificaManager extends Manager implements SplObserver
         $result = self::getDB()->query($query);
         if ($result) {
             while($n = $result->fetch_assoc()){
-                $notifica = new Notifica($n['id'], $n['date'], $n['tipo'], $n['letto'], $n['info']);
+                $notifica = new Notifica($n['date'], $n['tipo'], $n['info'], $n['letto'], $n['id']);
                 $listNotifica[] = $notifica;
             }
         }
@@ -107,20 +107,21 @@ class NotificaManager extends Manager implements SplObserver
     }
 
     /**
-     * 
-     * @param $idNotifica
+     *
+     * @param Utente $user
      * @return Notifica
+     * @internal param $idNotifica
      */
     public function getNotificaNotVisualized($user){
         $parser = new NotificationParsing();
         $listNotifica = array();
-        $LOAD_NOTIFICHE = "SELECT * FROM notifica, dispatcher_notifica WHERE dispatcher_notifica.id_utente = '%s' AND notifica.letto=0 AND dispatcher_notifica.id_notifica = notifica.id";
+        $LOAD_NOTIFICHE = "SELECT * FROM notifica, dispatcher_notifica WHERE dispatcher_notifica.id_utente = '%s' AND notifica.letto = '0' AND dispatcher_notifica.id_notifica = notifica.id";
         $query = sprintf($LOAD_NOTIFICHE, $user->getId());
 
         $result = Manager::getDB()->query($query);
         if ($result) {
             while($n = $result->fetch_assoc()) {
-                $notifica = new Notifica($n['id'], $n['date'], $n['tipo'], $n['letto'], $n['info']);
+                $notifica = new Notifica($n['date'], $n['tipo'], $n['info'], $n['letto'], $n['id']);
                 $listNotifica[] = $notifica;
             }
         }
@@ -193,7 +194,6 @@ class NotificaManager extends Manager implements SplObserver
     public function notifyInserimento($tipoNotifica, $idOggetto,$tipoOggetto,$nomeOggetto,$data,$destinatari){
         $arrayJson = array(ElementiInfoNotifica::ID_OGGETTO => $idOggetto, ElementiInfoNotifica::TIPO_OGGETTO => $tipoOggetto, ElementiInfoNotifica::NOME_OGGETTO => $nomeOggetto);
         $info = json_encode($arrayJson);
-        echo $info;
         $idNotifica = $this->insertNotifica($data,$tipoNotifica,false, $info);
         $this->sendToDispatcher($destinatari, $idNotifica);
     }

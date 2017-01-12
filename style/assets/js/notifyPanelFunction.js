@@ -13,7 +13,7 @@ function poll() {
                 poll();
             }
         });
-    }, 1000);
+    }, 20000);
 }
 
 $(document).ready(function(){
@@ -21,7 +21,7 @@ $(document).ready(function(){
 })
 
 function generateNotificationsList(data){
-    if (data != null && data.length >0) {
+    if (data != null && data.length > 0) {
 
         $("#lista-notifiche").find("#notNotifies").remove();
 
@@ -32,7 +32,7 @@ function generateNotificationsList(data){
             listaNotificheObject.corpo = data[i].text;
             listaNotificheObject.letto = data[i].read;
 
-            $("#lista-notifiche").children(':first').before(notificaToRowString(listaNotificheObject));
+            $("#lista-notifiche").append(notificaToRowString(listaNotificheObject));
             $("#notification-count").text(data.length);
         }
 
