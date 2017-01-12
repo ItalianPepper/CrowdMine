@@ -940,7 +940,7 @@
                                         <form action="<?php echo DOMINIO_SITO;?>/inviaMessaggioPrivato" method="post">
                                             <div class="modal-body">
                                                 Testo del messaggio
-                                                <textarea name="descrizione" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
+                                                <textarea name="messaggio" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
                                                 <input type="text" value="<?php echo $visitedUser->getId();?>" name="idUtente" hidden>
                                             </div>
                                             <div class="modal-footer">
