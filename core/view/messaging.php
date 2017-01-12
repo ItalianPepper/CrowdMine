@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php include_once VIEW_DIR."ViewUtils.php";?>
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>
@@ -31,6 +32,8 @@
 <?php
 include_once MODEL_DIR . "Utente.php";
 include_once MODEL_DIR . "Messaggio.php";
+include_once MANAGER_DIR . "Manager.php";
+include_once MANAGER_DIR . "NotificaManager.php";
 include_once MANAGER_DIR . "MessaggioManager.php";
 
 #RECUPERO INFORMAZIONI DALL'UTENTE
