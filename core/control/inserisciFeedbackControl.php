@@ -99,25 +99,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (empty($adsID) || intval($adsID)== 0 ) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio 1";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio ";
         header("Location:" . getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
     if (empty($userValId) || intval($userValId)== 0 ) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio 1";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio ";
         header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
     if (empty($userSubID) || intval($userSubID)== 0 ) {
         $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio 1";
+        $_SESSION['toast-message'] = "Errore inaspettato ci scusiamo per il disagio ";
         header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
     }
 
-    //if($feedbackManager->checkCollaboration($userSubID,$adsID))
-    //{
+    if($feedbackManager->checkCollaboration($userSubID,$adsID))
+    {
         $data =  date("Y-m-d H:i:s");
         $feedbackManager->insertFeedback(null,$userSubID,$adsID,
                                         $userValId,$feedbackRating,
@@ -126,7 +126,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "Feedback inserito con successo";
         header("Location:" .getReferer(DOMINIO_SITO));
-    //}
+    }
+    else
+    {
+        $_SESSION['toast-type'] = "error";
+        $_SESSION['toast-message'] = "Il feedback non puù essere lasciato ad una persons con la qualenon si è collaborato!";
+        header("Location:" .getReferer(DOMINIO_SITO));
+        throw new IllegalArgumentException("Errore inaspettato ci scusiamo per il disagio");
+
+    }
 
 
 

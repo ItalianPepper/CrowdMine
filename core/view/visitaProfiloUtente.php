@@ -515,11 +515,11 @@
                                                                     <div class="section">
                                                                         <div class="section-title">
                                                                             <?php
-                                                                                echo getUserFullName($u,true);
+                                                                                echo getUserFullName($user,true);
                                                                             ?>
                                                                         </div>
                                                                         <div class="section-body __indent">
-                                                                            <img src="<?php echo getUserImageBig($u,true);
+                                                                            <img src="<?php echo getUserImageBig($user,true);
                                                                             ?>" class="img-responsive">
                                                                             <!--Put here use profile image-->
                                                                         </div>
