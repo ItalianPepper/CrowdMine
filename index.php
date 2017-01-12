@@ -156,6 +156,11 @@ try {
             case 'livesearch':
                 include_once CONTROL_DIR . "SearchController.php";
                 break;
+            
+            case 'inviaMessaggioPrivato':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "inviaMessaggioPrivato.php";
+                break;
             case 'macroCategorieStat':
                 StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "StatisticheMacroCategorie.php";
@@ -405,6 +410,11 @@ try {
                 break;
             case 'asynAnnunci';
                 include_once AJAX_DIR . "asynAnnunci.php";
+                break;
+            
+            case 'visitaProfiloUtente';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once VIEW_DIR . "visitaProfiloUtente.php";
                 break;
             case 'visualizzaAnnunciRicercati';
                 include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
