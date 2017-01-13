@@ -674,26 +674,16 @@
                         <!--Statistiche-->
                         <div role="tabpanel" class="tab-pane" id="tab4">
                             <div class="row">
-                                <div class="col-lg3 col-md-3 col-xs-12 col-sm-12">
-                                    <div class="section">
-                                        <div class="section-title">
-                                            Your user name
-                                        </div>
-                                        <div class="section-body __indent">
-                                            <img src="http://placehold.it/100x100" class="img-responsive">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="section">
                                         <div class="section-title">Statistica Feedback Totale</div>
                                         <div class="section-body">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <div style="width:600px; height:600px;">
-                                                    <canvas id="statisticheUtente"></canvas>
-                                                </div>
+                                            <div align="center" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <canvas id="statisticheUtente"></canvas>
                                             </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div align="center" style="margin-top:5%;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <h4>Micro Categoria di Competenza</h4>
+                                                <hr>
                                                 <table id="feedbackTable" class="table">
                                                     <thead>
                                                     <tr>
@@ -905,23 +895,29 @@
 
 
                     function appendingResultToTable(elements){
+                        if(elements.length > 0) {
+                            var count = 1;
+                            for (var i in elements) {
 
-                        $.each(elements, function(i,el){
+                                $("#feedbackTable").find("tbody")
 
-                            $("#feedbackTable").find("tbody")
+                                    .append($("<tr>")
+                                        .append($("<th></th>")
+                                            .attr("scope", "row")
+                                            .text(count))
+                                        .append($("<td>")
+                                            .text(elements[i].microcategoria))
+                                        .append($("<td>")
+                                            .text(elements[i].feedbackpositivi))
+                                        .append($("<td>")
+                                            .text(elements[i].feedbacknegativi))
+                                    )
+                                count++;
+                            }
+                        }else{
+                            $("#feedbackTable").empty();
+                        }
 
-                                .append($("<tr>")
-                                    .append($("<th></th>")
-                                        .attr("scope", "row")
-                                        .text(i + 1))
-                                    .append($("<td>")
-                                        .text(el[i].microcategoria))
-                                    .append($("<td>")
-                                        .text(el[i].feedbackpositivi))
-                                    .append($("<td>")
-                                        .text(el[i].feedbacknegativi))
-                                )
-                        });
                     }
 
                 </script>

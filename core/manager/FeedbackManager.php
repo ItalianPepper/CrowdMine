@@ -16,6 +16,7 @@ include_once MANAGER_DIR . 'Manager.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 include_once MANAGER_DIR . 'AnnuncioManager.php';
 include_once MANAGER_DIR . 'NotificaManager.php';
+include_once MODEL_DIR . 'StatisticheProfiloUtenteListObject.php';
 
 /**
  * Class FeedbackManager
@@ -257,7 +258,7 @@ class FeedbackManager extends Manager implements SplSubject
         if ($result) {
             $list = array();
             while ($r = $result->fetch_assoc()) {
-                $listElement = new StatisticheProfiloUtenteListObject($r['nome'], $r['positivi'], null);
+                $listElement = new StatisticheProfiloUtenteListObject($r['nome'], $r['positivi'], " ");
                 array_push($list, $listElement);
             }
             return $list;
@@ -289,7 +290,7 @@ class FeedbackManager extends Manager implements SplSubject
         if ($result) {
             $list = array();
             while ($r = $result->fetch_assoc()) {
-                $listElement = new StatisticheProfiloUtenteListObject($r['nome'], null, $r['negativi']);
+                $listElement = new StatisticheProfiloUtenteListObject($r['nome'], " ", $r['negativi']);
                 array_push($list, $listElement);
             }
             return $list;
@@ -317,7 +318,7 @@ class FeedbackManager extends Manager implements SplSubject
 
         if($resultPositive != false && $resultNegative != false) {
 
-            array_merge($resultTable,$resultNegative);
+            $resultTable = array_merge($resultTable,$resultNegative);
 
             for ($i = 0; $i < sizeof($resultPositive); $i++) {
 
@@ -337,16 +338,16 @@ class FeedbackManager extends Manager implements SplSubject
             }
         }else if($resultPositive==false && $resultNegative!=false){
 
-            array_merge($resultTable, $resultNegative);
+            $result = array_merge($resultTable, $resultNegative);
 
         }else if($resultPositive!=false && $resultNegative==false){
 
-            array_merge($resultTable, $resultPositive);
+            $result = array_merge($resultTable, $resultPositive);
 
         }else if($resultPositive==false && $resultNegative==false){
-            return false;
+            return $result = array();
         }
-        return $resultTable;
+        return $result;
 
 
     }
