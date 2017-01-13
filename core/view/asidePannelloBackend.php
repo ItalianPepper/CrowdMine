@@ -27,10 +27,10 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="UtentiSegnalati">Utenti</a></li>
-                        <li><a href="annunciSegnalati">Annunci</a></li>
-                        <li><a href="visualizzaFeedbackSegnalati">Feedback</a></li>
-                        <li><a href="visualizzaCommentiSegnalati">Commenti</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/UtentiSegnalati">Utenti</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/annunciSegnalati">Annunci</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/paginaPrincipaleModeratore">Feedback</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/visualizzaCommentiSegnalati">Commenti</a></li>
                     </ul>
                 </div>
             </li>
@@ -57,11 +57,11 @@
                 </a>
                 <div class="dropdown-menu">
                     <ul>
-                        <li><a href="UtentiBannati">Lista Utenti Bannati</a></li>
-                        <li><a href="annunciReclamati">Annunci reclamati</a></li>
-                        <li><a href="annunciRevisione">Annunci in revisione</a></li>
-                        <li><a href="annunciModificati">Annunci modificati</a></li>
-                        <li><a href="statisticheAvanzateAdmin">Statistiche</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/UtentiBannati">Lista Utenti Bannati</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/annunciReclamati">Annunci reclamati</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/annunciRevisione">Annunci in revisione</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/annunciModificati">Annunci modificati</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/statisticheAvanzateAdmin">Statistiche</a></li>
                     </ul>
                 </div>
             </li>
