@@ -46,8 +46,8 @@
                 </a>
             </li>
 
-            <li class="">
-                <a href="">
+            <li id="paginaStatistiche" class="">
+                <a href="paginaStatistiche">
                     <div class="icon">
                         <i class="fa fa-bar-chart" aria-hidden="true"></i>
                     </div>
