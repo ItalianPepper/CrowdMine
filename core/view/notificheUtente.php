@@ -47,7 +47,7 @@
                                                         </a>
                                                     </li>';
                                         }
-                                        echo html;
+                                        echo $html;
                                     }
                                 }
                             ?>

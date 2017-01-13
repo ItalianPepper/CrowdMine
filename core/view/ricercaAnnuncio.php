@@ -137,7 +137,7 @@
 
         $.ajax(
             {
-                url: "getMacrosForInsertAnnuncio",
+                url: "<?php echo DOMINIO_SITO;?>/getMacrosForInsertAnnuncio",
                 type: "POST",
                 dataType: "JSON",
                 async: true,
@@ -173,7 +173,7 @@
         $("#micro").prop("disabled", false);
         $.ajax(
             {
-                url: "getMicrosByMacroForInsertAnnuncio",
+                url: "<?php echo DOMINIO_SITO;?>/getMicrosByMacroForInsertAnnuncio",
                 type: "POST",
                 data: {"macroId": idMacro},
                 dataType: "JSON",

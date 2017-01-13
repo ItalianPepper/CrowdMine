@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flat Admin V.3 - Free flat-design bootstrap administrator templates</title>
+    <title>CrowdMine | Feedback</title>
 
     <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap\css\bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets\css\vendor.css">
@@ -23,7 +23,7 @@
 <body>
 <div class="app app-default">
 
-    <?php include "asidePannelloModeratore.php" ?>
+    <?php include_once VIEW_DIR . "asidePannelloModeratore.php" ?>
 
     <script type="text/ng-template" id="sidebar-dropdown.tpl.html">
         <div class="dropdown-background">

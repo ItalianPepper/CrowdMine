@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="row" style="padding: 15px">
                         <div class="card-header" style="padding: 30px;">Inserisci un Annuncio</div>
-                        <form action="modificaAnnuncioControl" method="post" style="padding: 30px">
+                        <form action="<?php echo DOMINIO_SITO;?>/modificaAnnuncioControl" method="post" style="padding: 30px">
 
                             <div class="col-md-6">
 
@@ -151,7 +151,7 @@
         $("#micro").prop("disabled", false);
         $.ajax(
             {
-                url: "getMicrosByMacroForInsertAnnuncio",
+                url: "<?php echo DOMINIO_SITO;?>/getMicrosByMacroForInsertAnnuncio",
                 type: "POST",
                 data: {"macroId": idMacro},
                 dataType: "JSON",
@@ -197,7 +197,6 @@
             }
         }
         $("#listaMicroJson").val(JSON.stringify(microListObjectArray));
-        console.log(microListObjectArray);
     }
 
 
@@ -223,7 +222,6 @@
         if (!duplicate) {
             microListObjectArray[microCountArray] = obj;
             var label = randomColorLabel(obj.nomeMacro, obj.nomeMicro);
-            console.log(label);
 
             microCountArray++;
             var html = "<div class='row' id='" + obj.idMicro + "-micro'>" +
@@ -260,7 +258,7 @@
 
         $.ajax(
             {
-                url: "getMacrosForInsertAnnuncio",
+                url: "<?php echo DOMINIO_SITO;?>/getMacrosForInsertAnnuncio",
                 type: "POST",
                 dataType: "JSON",
                 async: true,
