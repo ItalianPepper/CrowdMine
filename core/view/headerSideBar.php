@@ -47,7 +47,7 @@
             </li>
 
             <li id="paginaStatistiche" class="">
-                <a href="paginaStatistiche">
+                <a href="<?php echo DOMINIO_SITO;?>/paginaStatistiche">
                     <div class="icon">
                         <i class="fa fa-bar-chart" aria-hidden="true"></i>
                     </div>
