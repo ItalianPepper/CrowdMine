@@ -82,7 +82,7 @@ include_once EXCEPTION_DIR . "IllegalArgumentException.php";
         header("Location:" . getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo descrizione non corretto");
     }
-    if (empty($retribuzione) || intval($retribuzione) != 0 || $retribuzione < 0) {
+    if (empty($retribuzione) || floatval($retribuzione) == 0 || floatval($retribuzione) < 0) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Campo retribuzione non corretto deve essere un numero maggiore o uguale a zero";
         header("Location:" . getReferer(DOMINIO_SITO));
