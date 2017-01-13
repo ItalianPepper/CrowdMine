@@ -90,10 +90,11 @@ class FeedbackManager extends Manager implements SplSubject
     {
         $GET_FEEDBACK_BY_NAME = "SELECT feedback.* FROM feedback WHERE feedback.id=$id";
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_NAME);
-        if (!$resSet) {
+
             $obj = mysqli_fetch_assoc($resSet);
-            $f = new Feedback($obj['id'], $obj['id_annuncio'], $obj['id_utente'], $obj['id_valutato'], $obj['corpo'], $obj['data'], $obj['stato'], $obj['valutazione'], $obj['titolo']);
-        }
+            $f = new Feedback($obj['id'], $obj['id_annuncio'], $obj['id_utente'], $obj['id_valutato'], $obj['corpo'],
+                $obj['data'], $obj['stato'], $obj['valutazione'], $obj['titolo']);
+
         return $f;
     }
 

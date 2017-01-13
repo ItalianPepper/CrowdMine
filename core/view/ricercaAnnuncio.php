@@ -27,7 +27,7 @@
                 <div class="card">
                     <div class="row" style="padding: 15px">
                         <div class="card-header" style="padding: 30px;">Ricerca un Annuncio</div>
-                        <form action="ricercaAnnuncioControl" method="post" style="padding: 30px">
+                        <form action="<?php echo DOMINIO_SITO;?>/ricercaAnnuncioControl" method="post" style="padding: 30px">
 
                             <div class="col-md-6">
 
@@ -46,10 +46,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <input id="form_name" type="text" name="luogo" class="form-control"
-                                           placeholder="Luogo"
-                                    >
-
+                                    <div class="input-group">
+                                        <select class="form-control select2" name="luogo" id="listacitta"  required>
+                                            <option selected disabled>Seleziona un comune</option>
+                                        </select>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-map-marker"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 15px">
                                     <div class="selectContainer">
@@ -120,6 +124,7 @@
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\styleUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>/scripts/caricacitta.js"></script>
 
 
 <script type="text/javascript">

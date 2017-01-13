@@ -11,7 +11,7 @@
         <ul class="sidebar-nav">
 
             <li id="inserisciAnnuncio">
-                <a href="inserisciAnnuncio">
+                <a href="<?php echo DOMINIO_SITO;?>/inserisciAnnuncio">
                     <div class="icon">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </div>
@@ -20,7 +20,7 @@
             </li>
 
             <li class="">
-                <a href="ProfiloPersonale#tab3">
+                <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale#tab3">
                     <div class="icon">
                         <i class="fa fa-server" aria-hidden="true"></i>
                     </div>
@@ -29,7 +29,7 @@
             </li>
 
             <li id="annunciPreferiti">
-                <a href="annunciPreferiti">
+                <a href="<?php echo DOMINIO_SITO;?>/annunciPreferiti">
                     <div class="icon">
                         <i class="fa fa-star" aria-hidden="true"></i>
                     </div>
@@ -38,7 +38,7 @@
             </li>
 
             <li id="ricercaAnnuncio" class="">
-                <a href="ricercaAnnuncio">
+                <a href="<?php echo DOMINIO_SITO;?>/ricercaAnnuncio">
                     <div class="icon">
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </div>
@@ -46,8 +46,8 @@
                 </a>
             </li>
 
-            <li class="">
-                <a href="">
+            <li id="paginaStatistiche" class="">
+                <a href="<?php echo DOMINIO_SITO;?>/paginaStatistiche">
                     <div class="icon">
                         <i class="fa fa-bar-chart" aria-hidden="true"></i>
                     </div>

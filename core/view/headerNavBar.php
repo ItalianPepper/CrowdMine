@@ -15,7 +15,7 @@
                     </button>
                 </li>
                 <li class="logo">
-                    <a class="navbar-brand" href="#"><span class="highlight"><?php echo $fullname; ?></span></a>
+                    <span class="navbar-brand"><span class="highlight"><?php echo $fullname; ?></span></span>
                 </li>
                 <li>
                     <?php if(isset($user)){?>
@@ -60,30 +60,15 @@
                 if(isset($user)){
                     ?>
                 <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown notification">
-                    <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3" class="dropdown-toggle" data-toggle="dropdown" onclick="location.href='<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3';">
-                        <div class="icon"><i class="fa fa-folder-open-o" aria-hidden="true"></i></div>
-                        <div class="title">I miei annunci</div>
-                        <div class="count">0</div>
-                    </a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li class="dropdown-header">I miei annunci</li>
-                            <li class="dropdown-empty">Nessun annuncio</li>
-                            <li class="dropdown-footer">
-                                <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale/#tab3">Visualizza Tutti <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown notification warning">
-        
+
+                <li class="dropdown notification warning no-drop">
+
                     <a href="<?php echo DOMINIO_SITO;?>/messaging" class="dropdown-toggle" data-toggle="dropdown" onclick="location.href='<?php echo DOMINIO_SITO;?>/messaging';">
                         <div class="icon"><i class="fa fa-comments" aria-hidden="true"></i></div>
                         <div class="title">Messaggi</div>
                         <div class="count" style="display:none" id="mess"></div>
                     </a>
-                   <!-- <div class="dropdown-menu">
+                   <div class="dropdown-menu">
                         <ul>
                             <li class="dropdown-header">Messaggi</li>
                             <li>
@@ -126,19 +111,20 @@
                                 <a href="#">Visualizza Tutti <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                             </li>
                         </ul>
-                    </div> -->
+                    </div>
                 </li>
                 <li class="dropdown notification danger">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <div class="icon"><i class="fa fa-bell" aria-hidden="true"></i></div>
                         <div class="title">Notifiche</div>
-                        <div id="notification-count" class="count">0</div>
+                        <div id="notification-count" class="count" style="display:none">0</div>
                     </a>
                     <div class="dropdown-menu">
                         <ul>
                             <li class="dropdown-header">Notifiche</li>
                             <li>
-                                <ul id="lista-notifiche"></ul>
+                                <ul id="lista-notifiche">
+                                </ul>
                             </li>
                             <li class="dropdown-footer">
                                 <a href="<?php echo DOMINIO_SITO;?>/notificheUtente">Visualizza Tutte <i class="fa fa-angle-right" aria-hidden="true"></i></a>
@@ -164,11 +150,6 @@
                             <li>
                                 <a href="<?php echo DOMINIO_SITO;?>/annunciPreferiti">
                                     I miei preferiti
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Statistiche
                                 </a>
                             </li>
                             <li>

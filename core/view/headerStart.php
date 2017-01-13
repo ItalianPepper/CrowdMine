@@ -1,7 +1,6 @@
 
-<title>Crowdmine</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="<?php echo STYLE_DIR; ?>img/icon_crowdmine.png" type="image/x-icon" />
 
     <link rel="stylesheet" href="<?php echo STYLE_DIR; ?>bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo STYLE_DIR; ?>assets/css/vendor.css">
@@ -31,6 +30,17 @@
         body .app-container.no-sidebar .app-head{
             height:0px;
         }
+
+        .navbar .navbar-collapse .navbar-nav > li.dropdown.no-drop:hover:after ,
+        .navbar .navbar-collapse .navbar-nav > li.dropdown.no-drop:hover .dropdown-menu{
+            display: none;
+        }
+
+        .navbar ul li ul{
+            list-style: none;
+            padding: 0;
+        }
+
 
         @media (min-width: 767px) {
             .navbar {

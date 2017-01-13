@@ -687,6 +687,13 @@
         var generaleChart = new Chart.Line(ctxGenerale, {
             data: generaleData,
             options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
                 pointHitRadius: 3,
                 responsive: true,
                 tooltipEvents:[],
@@ -721,6 +728,13 @@
         var macroChart = new Chart.Line(ctxMacro, {
             data: macroData,
             options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
                 pointHitRadius: 3,
                 responsive: true,
                 tooltipEvents: [],
@@ -754,6 +768,13 @@
         var microChart = new Chart.Line(ctxMicro, {
             data: microData,
             options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
                 pointHitRadius: 3,
                 responsive: true,
                 tooltipEvents: [],

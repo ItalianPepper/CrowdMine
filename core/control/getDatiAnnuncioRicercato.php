@@ -23,8 +23,8 @@ include_once MODEL_DIR . "/Commento.php";
     $commenti = array();
     $arrayCommenti = array();
 
-    if (($_POST['titolo']) != null) {
-        $titolo = $_POST['titolo'];
+    if (isset($_POST['titolo']) && ($_POST['titolo']) != null) {
+        $titolo = testInput($_POST['titolo']);
         $titoloObj = new SearchByTitleFilter($titolo);
         array_push($filters, $titoloObj);
 
@@ -32,8 +32,8 @@ include_once MODEL_DIR . "/Commento.php";
         $titolo = null;
     }
 
-    if (($_POST['luogo']) != null) {
-        $luogo = $_POST['luogo'];
+    if (isset($_POST['luogo']) && ($_POST['luogo']) != null) {
+        $luogo = testInput($_POST['luogo']);
         $luogoObj = new SearchByLocationFilter($luogo);
         array_push($filters, $luogoObj);
 
@@ -42,7 +42,7 @@ include_once MODEL_DIR . "/Commento.php";
     }
 
     if(isset($_POST['tipologia']) && ($_POST['tipologia']) != null) {
-            $tipologia = $_POST['tipologia'];
+            $tipologia = testInput($_POST['tipologia']);
             $tipologiaObj = new SearchByTypeFilter($tipologia);
             array_push($filters, $tipologiaObj);
         } else {
@@ -50,7 +50,7 @@ include_once MODEL_DIR . "/Commento.php";
     }
 
     if (isset($_POST['utente']) && ($_POST['utente']) != null) {
-        $utenteInput = $_POST["utente"];
+        $utenteInput = testInput($_POST["utente"]);
         $utente = $managerUtente->findUserOneInput($utenteInput);
         for ($i = 0; $i < count($utente); $i++) {
             $utenteObj = new SearchByUserIdFilter($utente[$i]->getId());
@@ -60,8 +60,8 @@ include_once MODEL_DIR . "/Commento.php";
         $idUtente = null;
     }
 
-    if (($_POST['data']) != null) {
-        $dataPost = $_POST['data'];
+    if (isset($_POST['utente']) && ($_POST['data']) != null) {
+        $dataPost = testInput($_POST['data']);
         $dataObj = new SearchByDateInterval($dataPost, date("Y-m-d"));
         array_push($filters, $dataObj);
     } else {
@@ -69,7 +69,7 @@ include_once MODEL_DIR . "/Commento.php";
     }
 
     if (isset($_POST['macro'])) {
-        $macro = $_POST['macro'];
+        $macro = testInput($_POST['macro']);
         $macroObj = new SearchByMacroFilter($macro);
         array_push($filters, $macro);
     } else {
@@ -77,7 +77,7 @@ include_once MODEL_DIR . "/Commento.php";
     }
 
     if (isset($_POST['micro'])) {
-    $micro = $_POST['micro'];
+    $micro = testInput($_POST['micro']);
     $microObj = new SearchByMicroFilter($micro);
     array_push($filters, $micro);
 } else {

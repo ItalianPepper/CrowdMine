@@ -38,6 +38,7 @@ $blockedUsers = $utenteManager->getBlockedForUser($user->getId());
 
 $filters= Array(new SearchByUserIdFilter($user->getId()), new SearchByNotStatus(StatoAnnuncio::DISATTIVATO), new SearchByNotStatus(StatoAnnuncio::ELIMINATO));
 
+
 $base = new annuncioBaseControl($managerAnnuncio,$filters,true,true,true);
 
 $annunci = $base->getAnnunci();

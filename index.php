@@ -101,6 +101,7 @@ try {
                 break;
 
             case 'visualizzaStatisticheMacroCategorie':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
                 break;
             case 'annuncioModeratore':
@@ -114,6 +115,7 @@ try {
                 include_once VIEW_DIR ."404.html";
                 break;
             case 'paginaStatistiche':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "paginaStatistiche.php";
                 break;
             case 'conversazionePrivata':
@@ -179,7 +181,7 @@ try {
                 include_once CONTROL_DIR . "inviaMessaggioPrivato.php";
                 break;
             case 'macroCategorieStat':
-                StringUtils::checkPermission(Permissions::ALL);
+                StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "StatisticheMacroCategorie.php";
                 break;
             case 'tabGenerale':
@@ -303,7 +305,7 @@ try {
                 break;
             case 'paginaPrincipaleModeratore':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
-                include_once VIEW_DIR . "paginaPrincipaleModeratore.php";
+                include_once VIEW_DIR . "visualizzaFeedbackSegnalati.php";
                 break;
             case 'visualizzaAnnunciSegnalati':
                 $user=StringUtils::checkPermission(Permissions::MODERATORE);
@@ -461,17 +463,14 @@ try {
                 $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "annunciRevisione.php";
                 break;
-            case 'annuncio';
-                include_once VIEW_DIR . "annuncioStileNuovo.php";
+            case 'annuncioNew';
+                include_once VIEW_DIR . "annuncioNew.php";
                 break;
             case 'immprofilo';
                 include_once CORE_DIR . "/template/assets/images/profile.png";
                 break;
             case 'segnalaCommento';
                 include_once CONTROL_DIR . "segnalaCommento.php";
-                break;
-            case 'annuncioNew';
-                include_once VIEW_DIR . "annuncioNew.php";
                 break;
             case 'headerStart';
                 include_once VIEW_DIR . "headerStart.php";
