@@ -7,7 +7,6 @@
      
    
         <div class="col-md-6">
-           <br>
             <br>
             <img class="img-responsive" style="height: 55%; max-width: 100%" src="<?php echo STYLE_DIR ?>/img/Logo_Crowdmine_3.png" />
              <span style="color: white"><strong> CrowdMine &copy; 2016 <a href="#"></a>.</strong> All rights reserved.</span>
@@ -17,6 +16,4 @@
     </div>  
     
 </footer>
-</body>
-</html>
 

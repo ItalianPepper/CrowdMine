@@ -33,10 +33,10 @@
 
                 <li>
                     <a href="<?php echo DOMINIO_SITO; ?>" class="hidden-lg hidden-md hidden-xs" style="margin-left: -40px;">
-                        <img style="height: 70px; max-width: 100%; " src="<?php echo STYLE_DIR ?>/img/Favicon_3.png" />
+                        <img style="height: 70px; max-width: 100%; " src="<?php echo STYLE_DIR ?>img/Favicon_3.png" />
                     </a>
                     <a href="<?php echo DOMINIO_SITO; ?>" class="hidden-sm">
-                        <img class="img-responsive" style=" max-width: 100%" src="<?php echo STYLE_DIR ?>/img/Logo_Crowdmine_3.png" />
+                        <img class="img-responsive" style=" max-width: 100%" src="<?php echo STYLE_DIR ?>img/Logo_Crowdmine_3.png" />
                     </a>
                 </li>
                 <li class="navbar-search col-lg-9">
@@ -51,7 +51,7 @@
                             <a href="<?php echo DOMINIO_SITO;?>/ricercaAnnuncio" class="text-center " >Avanzata</a>
                         </div>
                     </div>
-                    <form id="form-ricercaAnnunci" method="post" action="cercaAnnunciNavBar">
+                    <form id="form-ricercaAnnunci" method="post" action="<?php echo DOMINIO_SITO;?>/cercaAnnunciNavBar">
                         <input type="hidden" value="" id="value-to-send" name="form-text">
                     </form>
                 </li>
