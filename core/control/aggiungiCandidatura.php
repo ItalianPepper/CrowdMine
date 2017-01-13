@@ -2,7 +2,7 @@
 include_once MANAGER_DIR . "/AnnuncioManager.php";
 include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 include_once CONTROL_DIR."ControlUtils.php";
-
+include_once MANAGER_DIR."MessaggioManager.php";
 
 $idUtente = $user->getId();
 $descrizione = null;
