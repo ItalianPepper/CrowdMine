@@ -51,31 +51,21 @@
 
         var colors = rgbaRandom(numOfMacro);
 
-        var i=0;
-        function createElements() {
-           var allElement = [];
-            for (var key in result) {
-                var grafics = {
-                    label: key,
-                    data: [result[key]],
-                    backgroundColor: colors[i],
-                    borderColor: colors[i],
-                    borderWidth: 1,
-                }
-                allElement.push(grafics);
-                i++;
-            }
-            return allElement;
-        };
-
         var macroChartData = {
-            labels:[], //va lasciato vuoto
-            datasets: createElements()
+            labels:[],
+            datasets: createElements(result,colors)
         };
 
         var macroChart = new Chart.Bar(ctx, {
             data: macroChartData,
             options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
                 pointHitRadius: 3,
                 responsive: true,
                 tooltipEvents: [],
@@ -110,7 +100,22 @@
         return resultSetColors;
     }
 
-
+    function createElements(result,colors) {
+        var i=0;
+        var allElement = [];
+        $.map(result,function(item,key){
+            var grafics = {
+                label:key,
+                data:[item],
+                backgroundColor: colors[i],
+                borderColor: colors[i],
+                borderWidth: 1
+            };
+            allElement.push(grafics);
+            i++;
+        });
+        return allElement;
+    }
 </script>
 
 </html>

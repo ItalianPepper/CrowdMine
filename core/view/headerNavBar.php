@@ -167,11 +167,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    Statistiche
-                                </a>
-                            </li>
-                            <li>
                                 <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale#tab2">
                                     Impostazioni
                                 </a>
