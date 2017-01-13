@@ -105,16 +105,16 @@
 
 
                                 <div class="form-group">
-                                    <input id="form_name" type="text" name="titolo-annuncio" class="form-control"
+                                    <input id="annuncio-title" type="text" name="titolo-annuncio" class="form-control"
                                            placeholder="Titolo" required="required"
                                     >
 
                                 </div>
 
                                 <div class="form-group">
-                                    <input id="form_lastname" type="number" name="retribuzione-euro" class="form-control"
-                                           placeholder="Inserisci retribuzione in euro" required="required"
-                                           data-error="Lastname is required.">
+                                    <input type="number" name="retribuzione-euro" class="form-control"
+                                           placeholder="Inserisci retribuzione in euro" min="0" required="required"
+                                           >
                                 </div>
 
                                 <div class="form-group">
@@ -148,10 +148,10 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                                    <textarea id="form_message" name="descrizione" class="form-control"
+                                                    <textarea id="annuncio-textarea" name="descrizione" class="form-control"
                                                               placeholder="Inserisci descrizione" rows="4"
                                                               required="required"
-                                                              data-error="Please,leave us a message."></textarea>
+                                                              ></textarea>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div>
@@ -169,7 +169,12 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="lista-Micro" value="" id="listaMicroJson">
-                                <button type="submit" class="btn btn-primary btn-md">Inserisci Annuncio</button>
+                                <button type="submit" class="btn btn-primary btn-md" id="button-add-annuncio">Inserisci Annuncio</button>
+                                <div class="alert alert-danger  alert-dismissible"
+                                     role="alert"
+                                     id="annuncio-erros" style="display: none">
+
+                                </div>
                             </div>
 
                             <div class="col-lg-12 col-md-12 col-xs-12" id="micro-destination">
@@ -190,6 +195,8 @@
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\styleUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\AnnuncioCheckUtils.js"></script>
+
 
 <script type="text/javascript">
 

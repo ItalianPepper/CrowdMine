@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <noscript><?php include_once VIEW_DIR."noscriptView.php";?></noscript>
+
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>
@@ -521,11 +523,11 @@
                                                                     <div class="section">
                                                                         <div class="section-title">
                                                                             <?php
-                                                                                echo getUserFullName($u,true);
+                                                                                echo getUserFullName($user,true);
                                                                             ?>
                                                                         </div>
                                                                         <div class="section-body __indent">
-                                                                            <img src="<?php echo getUserImageBig($u,true);
+                                                                            <img src="<?php echo getUserImageBig($user,true);
                                                                             ?>" class="img-responsive">
                                                                             <!--Put here use profile image-->
                                                                         </div>
@@ -765,7 +767,7 @@
                         </div>
                     </div>
                 </div>
-
+                <script type="text/javascript">var dominio = "<?php echo DOMINIO_SITO;?>";</script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
                 <script type="text/javascript"

@@ -2,7 +2,8 @@
 
 include_once MODEL_DIR . "Messaggio.php";
 include_once MODEL_DIR . "Candidatura.php";
-include_once MANAGER_DIR . "Manager.php"; 
+include_once MANAGER_DIR . "Manager.php";
+include_once MANAGER_DIR . "NotificaManager.php";
 /**
  * Created by PhpStorm.
  * User: Andrea Sarto
