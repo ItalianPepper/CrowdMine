@@ -226,7 +226,8 @@ class UtenteManager extends Manager implements SplSubject
         if (!empty($input)) {
             $getListUsers = "SELECT * FROM utente WHERE  nome LIKE '%s' OR cognome LIKE '%s' OR email LIKE '%s' OR ruolo LIKE '%s';";
             $in = "%" . $input . "%";
-            $query = sprintf($getListUsers, $in, $in, $in);
+            $query = sprintf($getListUsers,$in,$in,$in,$in);
+
         } else {
             $query = "SELECT * FROM utente WHERE 1;";
         }
