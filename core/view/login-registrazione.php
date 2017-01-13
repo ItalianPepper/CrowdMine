@@ -50,6 +50,17 @@
                 bottom: 0;
                 right: 0;
             }
+
+            table.table > tbody > tr td, table.table > tbody > tr th, table.table > thead > tr td, table.table > thead > tr th {
+                font-size: 12px;
+                padding: 2px 10px;
+            }
+
+            table.table > thead > tr th.datepicker-switch, table.table > thead > tr th.next, table.table > thead > tr th.prev {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+
         </style>
 
     </head>
@@ -154,8 +165,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
-                                <div class="input-group date">
-                                    <input type="date" class="form-control pull-right" name="datanascita" id="datepicker" placeholder="Data di nascita*" required>
+                                <div class="input-group date" data-provide="datepicker-inline">
+                                    <input type="text" class="form-control pull-right" name="datanascita" id="datepicker" placeholder="Data di nascita*" required>
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar" onclick="document.getElementById('datepicker').focus()"></i>
                                     </div>
@@ -217,6 +228,8 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4 col-md-offset-4">
                             <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block btn-flat">Registrati</button>
                         </div>

@@ -99,7 +99,7 @@
                 <div class="card">
                     <div class="row" style="padding: 15px">
                         <div class="card-header" style="padding: 30px;">Inserisci un Annuncio</div>
-                        <form action="inserisciAnnuncioControl" method="post" style="padding: 30px">
+                        <form action="<?php echo DOMINIO_SITO;?>/inserisciAnnuncioControl" method="post" style="padding: 30px">
 
                             <div class="col-md-6">
 
@@ -189,13 +189,13 @@
 </div>
 
 
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\styleUtils.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\AnnuncioCheckUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins/toastr/toastr.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackList.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackCheckUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/styleUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/AnnuncioCheckUtils.js"></script>
 
 
 <script type="text/javascript">
@@ -213,7 +213,7 @@
 
         $.ajax(
             {
-                url: "getMacrosForInsertAnnuncio",
+                url: "<?php echo DOMINIO_SITO;?>/getMacrosForInsertAnnuncio",
                 type: "POST",
                 dataType: "JSON",
                 async: true,
@@ -249,7 +249,7 @@
         $("#micro").prop("disabled", false);
         $.ajax(
             {
-                url: "getMicrosByMacroForInsertAnnuncio",
+                url: "<?php echo DOMINIO_SITO;?>/getMicrosByMacroForInsertAnnuncio",
                 type: "POST",
                 data: {"macroId": idMacro},
                 dataType: "JSON",

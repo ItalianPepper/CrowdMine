@@ -103,8 +103,8 @@
 </div>
 </div>
 
-<script type="text/javascript" src="./assets/js/vendor.js"></script>
-<script type="text/javascript" src="./assets/js/app.js"></script>
+<script type="text/javascript" src="<?php echo DOMINIO_SITO;?>/assets/js/vendor.js"></script>
+<script type="text/javascript" src="<?php echo DOMINIO_SITO;?>/assets/js/app.js"></script>
 
   
   
