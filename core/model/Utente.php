@@ -1,11 +1,9 @@
 <?php
-
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 class StatoUtente{
     const REVISIONE = "revisione";
     const ATTIVO = "attivo";
@@ -16,15 +14,12 @@ class StatoUtente{
     const AMMINISTRATORE = "amministratore";
     const REVISIONE_MODIFICA = "revisione_modifica";
 }
-
 class RuoloUtente{
     const UTENTE = "utente";
     const MODERATORE = "moderatore";
     const AMMINISTRATORE = "amministratore";
 }
-
 class Utente {
-
     private $id;
     private $nome;
     private $cognome;
@@ -70,7 +65,6 @@ class Utente {
         $this->immagineProfilo = $immagineProfilo;
         $this->partitaIva = $partitaIva;
     }
-
     /**
      * @return mixed
      */
@@ -78,7 +72,6 @@ class Utente {
     {
         return $this->id;
     }
-
     /**
      * @return mixed
      */
@@ -86,7 +79,6 @@ class Utente {
     {
         return $this->nome;
     }
-
     /**
      * @return mixed
      */
@@ -94,7 +86,6 @@ class Utente {
     {
         return $this->cognome;
     }
-
     /**
      * @return mixed
      */
@@ -110,7 +101,6 @@ class Utente {
     {
         return $this->telefono;
     }
-
     /**
      * @return mixed
      */
@@ -118,7 +108,6 @@ class Utente {
     {
         return $this->dataNascita;
     }
-
     /**
      * @return mixed
      */
@@ -126,7 +115,6 @@ class Utente {
     {
         return $this->citta;
     }
-
     /**
      * @return mixed
      */
@@ -134,7 +122,6 @@ class Utente {
     {
         return $this->email;
     }
-
     /**
      * @return mixed
      */
@@ -142,7 +129,6 @@ class Utente {
     {
         return $this->password;
     }
-
     /**
      * @return mixed
      */
@@ -150,7 +136,6 @@ class Utente {
     {
         return $this->stato;
     }
-
     /**
      * @return mixed
      */
@@ -158,7 +143,6 @@ class Utente {
     {
         return $this->ruolo;
     }
-
     /**
      * @return mixed
      */
@@ -166,7 +150,6 @@ class Utente {
     {
         return $this->immagineProfilo;
     }
-
     /**
      * @param mixed $nome
      */
@@ -174,7 +157,6 @@ class Utente {
     {
         $this->nome = $nome;
     }
-
     /**
      * @return null
      */
@@ -198,7 +180,6 @@ class Utente {
     {
         $this->cognome = $cognome;
     }
-
     /**
      * @param mixed $descrizione
      */
@@ -214,7 +195,6 @@ class Utente {
     {
         $this->telefono = $telefono;
     }
-
     /**
      * @param mixed $dataNascita
      */
@@ -222,7 +202,6 @@ class Utente {
     {
         $this->dataNascita = $dataNascita;
     }
-
     /**
      * @param mixed $citta
      */
@@ -230,7 +209,6 @@ class Utente {
     {
         $this->citta = $citta;
     }
-
     /**
      * @param mixed $email
      */
@@ -238,7 +216,6 @@ class Utente {
     {
         $this->email = $email;
     }
-
     /**
      * @param mixed $password
      */
@@ -246,7 +223,6 @@ class Utente {
     {
         $this->password = $password;
     }
-
     /**
      * @param mixed $stato
      */
@@ -254,7 +230,6 @@ class Utente {
     {
         $this->stato = $stato;
     }
-
     /**
      * @param mixed $ruolo
      */
@@ -262,7 +237,6 @@ class Utente {
     {
         $this->ruolo = $ruolo;
     }
-
     /**
      * @param mixed $immagineProfilo
      */
@@ -270,5 +244,4 @@ class Utente {
     {
         $this->immagineProfilo = $immagineProfilo;
     }
-
 }

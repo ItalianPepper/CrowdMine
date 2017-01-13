@@ -40,9 +40,9 @@ class UtenteManager extends Manager implements SplSubject
      * @param $ruolo
      * @param $immagineProfilo
      */
-    public function createUser($id, $nome, $cognome, $descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo)
+    private function createUser($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $descrizione, $immagineProfilo, $partitaIva)
     {
-        return new Utente($id, $nome, $cognome, $descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo);
+        return new Utente($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $descrizione, $immagineProfilo, $partitaIva);
     }
 
 
@@ -53,7 +53,7 @@ class UtenteManager extends Manager implements SplSubject
     private function createUserFromRow($row)
     {
         if ($row == null) return null;
-        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['descrizione'], $row['immagine_profilo'], $row['partita_iva']);
+        return new Utente($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['descrizione'], $row['immagine_profilo'], $row['partita_iva']);
     }
 
     /**
@@ -320,8 +320,8 @@ class UtenteManager extends Manager implements SplSubject
         $users = array();
         $FIND_ALL = "SELECT * FROM utente;";
         $result = self::getDB()->query($FIND_ALL);
-        foreach ($result->fetch_assoc() as $u) {
-            $user = $this->createUserFromRow($u);
+        while ($row = $result->fetch_assoc()) {
+            $user = $this->createUserFromRow($row);
             array_push($users, $user);
         }
         return $users;
@@ -444,8 +444,8 @@ class UtenteManager extends Manager implements SplSubject
      */
     public function addMicroCategoria($user, $microcategoria)
     {
-        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_microcategoria, id_utente) VALUES('%s', '%s');";
-        $query = sprintf($ADD_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
+        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_utente, id_microcategoria) VALUES('%s', '%s');";
+        $query = sprintf($ADD_MICROCATEGORIA, $user->getId(), $microcategoria->getId());
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
@@ -453,13 +453,13 @@ class UtenteManager extends Manager implements SplSubject
     }
 
     /**
-     * @param $user
-     * @param $microcategoria
+     * @param $userId
+     * @param $microcategoriaId
      */
-    public function removeMicroCategoria($user, $microcategoria)
+    public function removeMicroCategoria($userId, $microcategoriaId)
     {
         $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
-        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoria, $user);
+        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoriaId, $userId);
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
@@ -562,11 +562,12 @@ class UtenteManager extends Manager implements SplSubject
         $GET_CATEGORY_BY_ID = "SELECT microcategoria.id, microcategoria.nome, microcategoria.id_macrocategoria FROM microcategoria, competente WHERE competente.id_utente = '%s' AND microcategoria.id = competente.id_microcategoria";
         $query = sprintf($GET_CATEGORY_BY_ID, $idUtente);
         $result = self::getDB()->query($query);
-        foreach ($result->fetch_assoc() as $m) {
-            $microManager = new MicrocategoriaManager();
+        $microManager = new MicrocategoriaManager();
+        while ($m = $result->fetch_assoc()) {
             $micro = $microManager->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
             array_push($list, $micro);
         }
+
         return $list;
     }
 

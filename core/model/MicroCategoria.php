@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: giorgio
@@ -11,7 +10,6 @@ class MicroCategoria implements JsonSerializable
     private $id;
     private $idMacrocategoria;
     private $nome;
-
     /**
      * MicroCategoria constructor.
      * @param $idMacrocategoria
@@ -24,7 +22,6 @@ class MicroCategoria implements JsonSerializable
         $this->nome = $nome;
         $this->idMacrocategoria = $idMacrocategoria;
     }
-
     /**
      * @return mixed
      */
@@ -32,7 +29,6 @@ class MicroCategoria implements JsonSerializable
     {
         return $this->id;
     }
-
     /**
      * @return mixed
      */
@@ -40,7 +36,6 @@ class MicroCategoria implements JsonSerializable
     {
         return $this->nome;
     }
-
     /**
      * @return mixed
      */
@@ -48,7 +43,6 @@ class MicroCategoria implements JsonSerializable
     {
         return $this->idMacrocategoria;
     }
-
     /**
      * @param mixed $nome
      */
