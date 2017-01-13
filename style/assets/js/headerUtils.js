@@ -1,43 +1,41 @@
 /**
  * Created by LongSky on 07/01/2017.
  */
+function MessagesUpdate(url) {
 
-function call() {
-    "use strict";
-    console.log("inizio call");
-    clearjQueryCache();
-    $.ajax({
-        url: "/CrowdMine/updateMessIcon",
-        dataType: 'json',
-        async: true,
-        success: function (data) {
-            //console.log(data);
-            if(data == 0){
-                $("#mess").hide();
-            }else{
-                $("#mess").show();
-                $("#mess").html(data);
+    this.call = function() {
+        "use strict";
+        console.log("inizio call");
+        clearjQueryCache();
+        $.ajax({
+            url: url+"updateMessIcon",
+            dataType: 'json',
+            async: true,
+            success: function (data) {
+                //console.log(data);
+                if (data == 0) {
+                    $("#mess").hide();
+                } else {
+                    $("#mess").show();
+                    $("#mess").html(data);
+                }
+            },
+            error: function (data) {
+                console.log("error");
+                console.log(data);
             }
-        },
-        error: function (data) {
-            console.log ("error");
-            console.log (data);
-        }
-    });
-}
+        });
+    };
 
-
-$(document).ready(function(){
+    this.call();
     console.log("inizio poll");
-    setInterval(function(){
-        call();
-    },5000);
-});
+    setInterval(this.call, 5000);
+
+}
 
 function clearjQueryCache() {
     for (var x in jQuery.cache) {
         delete jQuery.cache[x];
     }
 }
-
 
