@@ -13,7 +13,7 @@ function poll() {
                 poll();
             }
         });
-    }, 1000);
+    }, 15000);
 }
 
 $(document).ready(function(){
@@ -21,19 +21,22 @@ $(document).ready(function(){
 })
 
 function generateNotificationsList(data){
-    if (data != null && data.length >0) {
+    if (data != null && data.length > 0) {
 
         $("#lista-notifiche").find("#notNotifies").remove();
 
         for (var i in data) {
             var listaNotificheObject = [];
-            listaNotificheObject.idNotifica = data[i].idNotify;
-            listaNotificheObject.href = data[i].href;
-            listaNotificheObject.corpo = data[i].text;
-            listaNotificheObject.letto = data[i].read;
+            var idNotify = data[i].idNotify;
+            if(!($("#"+idNotify).length > 0)){
+                listaNotificheObject.idNotifica = data[i].idNotify;
+                listaNotificheObject.href = data[i].href;
+                listaNotificheObject.corpo = data[i].text;
+                listaNotificheObject.letto = data[i].read;
 
-            $("#lista-notifiche").children(':first').before(notificaToRowString(listaNotificheObject));
-            $("#notification-count").text(data.length);
+                $("#lista-notifiche").append(notificaToRowString(listaNotificheObject));
+                $("#notification-count").text(data.length);
+            }
         }
 
     }else{
@@ -91,5 +94,5 @@ $("#lista-notifiche-all").click(function(event){
     }
 
 
-});
 
+});

@@ -17,7 +17,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $notificaManager = new NotificaManager();
 
     $res = $utenteManager->findUtenteById($user->getId());
-    $listaNotifiche = null; $notificaManager->getNotificaNotVisualized($res);
+    $listaNotifiche = null;
+    $listaNotifiche = $notificaManager->getNotificaNotVisualized($res);
 
     header("Content/application: json");
     echo json_encode($listaNotifiche);

@@ -12,6 +12,7 @@ include_once MODEL_DIR . 'Candidatura.php';
 include_once MODEL_DIR . 'Utente.php';
 include_once MODEL_DIR . 'MicroCategoria.php';
 include_once MANAGER_DIR . 'Manager.php';
+include_once MANAGER_DIR . 'NotificaManager.php';
 
 include_once FILTER_DIR . "FilterUtils.php";
 include_once FILTER_DIR ."SearchByIdFilter.php";
@@ -30,7 +31,7 @@ class AnnuncioManager implements SplSubject
 {
 
     private $wrapperNotifica;
-    private $_observer;
+    private $observer;
 
     private static $GET_ALL_ANNUNCI = "SELECT * FROM `annuncio`";
 
@@ -39,7 +40,9 @@ class AnnuncioManager implements SplSubject
      */
     public function __construct()
     {
-
+        $this->observer = new SplObjectStorage();
+        $notificaManager = new NotificaManager();
+        $this->attach($notificaManager);
     }
 
     /**
@@ -167,14 +170,20 @@ class AnnuncioManager implements SplSubject
 
     public function temporaryTableSearchAnnunci($filters){
 
-        $query = " CREATE OR REPLACE TEMPORARY TABLE searchedAnnunci AS (
+        $query = " DROP TEMPORARY TABLE IF EXISTS searchedAnnunci; CREATE TEMPORARY TABLE searchedAnnunci AS (
                     select * FROM annuncio ";
 
         FilterUtils::applyFilters($filters, $query);
 
-        $res=Manager::getDB()->query($query.");");
-
-        if ($res==false) {
+        $res=Manager::getDB()->multi_query($query.");");
+        if ($res) {
+            do {
+                /* store first result set */
+                if ($result = Manager::getDB()->store_result()) {
+                    $result->free();
+                }
+            } while (Manager::getDB()->more_results() && Manager::getDB()->next_result());
+        }else{
             throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
@@ -194,14 +203,18 @@ class AnnuncioManager implements SplSubject
     public function getUsersInSearchedAnnunci($inCandidacies=false,$inComments=false)
     {
 
-        $query = "CREATE OR REPLACE TEMPORARY TABLE A1 AS (SELECT * FROM searchedAnnunci);";
-        $res=Manager::getDB()->query($query);
-        if ($res==false) {
-            throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
-        }
-        $query = "CREATE OR REPLACE TEMPORARY TABLE A2 AS (SELECT * FROM searchedAnnunci);";
-        $res=Manager::getDB()->query($query);
-        if ($res==false) {
+        $query = "DROP TEMPORARY TABLE IF EXISTS A1; CREATE TEMPORARY TABLE A1 AS (SELECT * FROM searchedAnnunci); ";
+        $query .= "DROP TEMPORARY TABLE IF EXISTS A2; CREATE TEMPORARY TABLE A2 AS (SELECT * FROM searchedAnnunci); ";
+
+        $res=Manager::getDB()->multi_query($query);
+        if ($res) {
+            do {
+                /* store first result set */
+                if ($result = Manager::getDB()->store_result()) {
+                    $result->free();
+                }
+            } while (Manager::getDB()->more_results() && Manager::getDB()->next_result());
+        }else{
             throw new ApplicationException(ErrorUtils::$ARGOMENTO_NON_TROVATO, Manager::getDB()->error, Manager::getDB()->errno);
         }
 
@@ -927,20 +940,18 @@ class AnnuncioManager implements SplSubject
 
 
 
-    public function attach(SplObserver $observer)
-    {
-        $this->_observers->attach($observer);
+    public function attach(SplObserver $obs){
+        $this->observer->attach($obs);
     }
 
-    public function detach(SplObserver $observer)
+    public function detach(SplObserver $obs)
     {
-        $this->_observers->detach($observer);
+        $this->observer->detach($obs);
     }
 
-    public function notify()
-    {
-        foreach ($this->_observers as $observer) {
-            $observer->update($this);
+    public function notify(){
+        foreach ($this->observer as $o) {
+            $o->update($this);
         }
     }
 }

@@ -17,7 +17,6 @@
     $testo_messaggio = $_POST["testo"];
     
     ## MANAGER ##
-    
     $manager_msg = new MessaggioManager();
     $manager_utente = new UtenteManager();
     
@@ -34,6 +33,7 @@
     if($risultato){
         //echo '<meta http-equiv="refresh" content="0;URL=http://localhost/CrowdMine/messaging?id='.$id_destinatario.'">';
         $lista_messaggio = $manager_msg->loadConversation($user->getId(), $id_destinatario);
+        
         foreach ($lista_messaggio as $indice => $value) {
 
             if ($lista_messaggio[$indice]->getIdUtenteDestinatario() == $user->getId()) {
@@ -60,4 +60,3 @@
 
 ?>
      
-

@@ -52,7 +52,6 @@ class NotificationParsing
 
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
 
-
                         $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
                         $href = sprintf($href, $idobj);
                         $text = NotificationParsing::INSERIMENTO_ANNUNCIO;

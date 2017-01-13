@@ -2,6 +2,7 @@
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'MicrocategoriaManager.php';
+include_once MANAGER_DIR . 'NotificaManager.php';
 
 /**
  * Created by PhpStorm.
@@ -12,15 +13,16 @@ include_once MANAGER_DIR . 'MicrocategoriaManager.php';
 class UtenteManager extends Manager implements SplSubject
 {
 
-    private $_observers;
+    private $_observer;
     private $wrapperNotifica;
 
     /**
      * UtenteManager constructor.
      */
-    public function __construct()
-    {
-        $this->_observers = new SplObjectStorage();
+    public function __construct(){
+        $this->_observer = new SplObjectStorage();
+        $notificaManager = new NotificaManager();
+        $this->attach($notificaManager);
     }
 
     /**
@@ -578,17 +580,17 @@ class UtenteManager extends Manager implements SplSubject
 
     public function attach(SplObserver $observer)
     {
-        $this->_observers->attach($observer);
+        $this->_observer->attach($observer);
     }
 
     public function detach(SplObserver $observer)
     {
-        $this->_observers->detach($observer);
+        $this->_observer->detach($observer);
     }
 
     public function notify()
     {
-        foreach ($this->_observers as $observer) {
+        foreach ($this->_observer as $observer) {
             $observer->update($this);
         }
     }

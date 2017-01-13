@@ -33,7 +33,7 @@
     $(document).ready(function () {
         $.ajax({
             type: "POST",
-            url: "macroCategorieStat",
+            url: "<?php echo DOMINIO_SITO;?>/macroCategorieStat",
             dataType: "json",
             data: {},
             success:function(response){

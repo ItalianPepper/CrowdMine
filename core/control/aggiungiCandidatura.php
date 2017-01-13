@@ -6,6 +6,8 @@ include_once CONTROL_DIR."ControlUtils.php";
 
 $idUtente = $user->getId();
 $descrizione = null;
+$x = null;
+
 if($_SERVER["REQUEST_METHOD"]=="POST") {
     if (isset($_POST['descrizione'])) {
         $descrizione = $_POST["descrizione"];
@@ -22,6 +24,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         throw new IllegalArgumentException("Campo non settato correttamente");
     }
     $manager = new AnnuncioManager(); /* Declaration and initialization a manager variable */
+    $manager_msg = new MessaggioManager(); /* Declaration and initialization a manager variable */
+
     $idAnnuncio = $_POST["idAnnuncio"];
     $databean = new DateTime();
     $data = $databean->format("Y-m-d H:i:s");
@@ -35,18 +39,21 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
             throw new IllegalArgumentException("Candidatura già inviata");
         }
     }
-    try {
-        $manager->addCandidatura($idAnnuncio, $idUtente, $descrizione, $data);
-        $_SESSION['toast-type'] = "success";
-        $_SESSION['toast-message'] = "Candidatura inviata";
-        header("Location:" .getReferer(DOMINIO_SITO));
-    } catch (ApplicationException $a){
-        $_SESSION['toast-type'] = "error";
-        $_SESSION['toast-message'] = "Problemi con l'invio della candidatura";
-        header("Location:" .getReferer(DOMINIO_SITO));
-        throw new IllegalArgumentException("Candidatura già inviata");
+
+    if ($x == null) {
+        try {
+            //$manager->addCandidatura($idAnnuncio, $idUtente, $descrizione, $data);
+            $manager_msg->createCandidatura(null, $idUtente, $idAnnuncio, $descrizione, "", "");
+            $manager_msg->sendMessaggio(null, $descrizione, "", 0, $user->getID(), $manager->getAnnuncio($idAnnuncio)->getIdUtente());
+            //$manager_msg->sendMessaggio(null, $descrizione, "", 0, $idUtente,    );
+            $_SESSION['toast-type'] = "success";
+            $_SESSION['toast-message'] = "Candidatura inviata";
+            include_once CONTROL_DIR . "visualizzaHome.php";
+        } catch (ApplicationException $a) {
+            $_SESSION['toast-type'] = "error";
+            $_SESSION['toast-message'] = "Problemi con l'invio della candidatura";
+            include_once CONTROL_DIR . "visualizzaHome.php";
         }
-
-
+    }
 }
 ?>
