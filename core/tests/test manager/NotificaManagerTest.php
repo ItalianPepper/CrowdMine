@@ -43,8 +43,9 @@ class NotificaManagerTest extends PHPUnit_Framework_TestCase{
 
     //createNotifica()
     public function testCreateNotifica(){
-        $data = date("Y-m-d H:i:s");
-        $n = $this->notificaManager->createNotifica($data, self::tipo, self::info, self::letto);
+        $data = date("Y-m-d");
+        $id = null;
+        $n = $this->notificaManager->createNotifica($data, self::tipo, self::info, self::letto, $id);
         $notifica[] = $n;
         $this->verificaParametriNotifica($notifica, $data, self::tipo, self::letto, self::info, 0);
         return $n;
@@ -55,21 +56,21 @@ class NotificaManagerTest extends PHPUnit_Framework_TestCase{
     //updateNotifica()
     //getNotificaById()
     public function testNotifica(){
-        $data = date("Y-m-d H:i:s");
+        $data = date("Y-m-d");
         $n = $this->testCreateNotifica();
         //insertNotifica()
-        $this->notificaManager->insertNotifica($data, $n->getTipo(), $n->getInfo(), $n->getLetto());
-        print_r($n);
-        $n = $this->getNotifica();
+        $this->notificaManager->insertNotifica($data, $n->getTipo(), $n->getLetto(), $n->getInfo());
+        //print_r($n);
+        //$n = $this->getNotifica();
         $notifiche[]= $n;
-        $this->verificaParametriNotifica($notifiche, $data, self::tipo, self::info, self::letto, 0);
+        $this->verificaParametriNotifica($notifiche, $data, self::tipo, self::letto,  self::info, 0);
         //updateNotifica()
         $n->setLetto(true);
         $this->notificaManager->updateNotifica($n);
         //getNotifica()
-        $notifica1 = $this->notificaManager->getNotificaById($n->getId());
+        $notifica1 = $this->getNotifica();
         $notifi[] = $notifica1;
-        $this->verificaParametriNotifica($notifi, $data, self::tipo, self::info, self::letto, 0);
+        $this->verificaParametriNotifica($notifi, $data, self::tipo, self::letto,  self::info, 0);
     }
 
 
@@ -91,7 +92,7 @@ class NotificaManagerTest extends PHPUnit_Framework_TestCase{
         $result = Manager::getDB()->query($QUERY);
         if ($result) {
             $obj = $result->fetch_assoc();
-            return $id = $obj['id'];
-        }
+            $notifica = new Notifica($obj['date'], $obj['tipo'], $obj['info'], $obj['letto'], $obj['id']);
+        }return $notifica;
     }
 }
