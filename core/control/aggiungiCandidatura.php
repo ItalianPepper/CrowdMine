@@ -6,7 +6,7 @@ include_once CONTROL_DIR."ControlUtils.php";
 
 $idUtente = $user->getId();
 $descrizione = null;
-$x = null;
+
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
     if (isset($_POST['descrizione'])) {
@@ -34,26 +34,26 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     for ($i = 0; $i <count($candidature); $i++) {
         if ($candidature[$i]->getIdUtente() == $idUtente) {
             $_SESSION['toast-type'] = "error";
-            $_SESSION['toast-message'] = "Candidatura già inviata";
+            $_SESSION['toast-message'] = "Candidatura gi&agrave; inviata";
             header("Location:" .getReferer(DOMINIO_SITO));
             throw new IllegalArgumentException("Candidatura già inviata");
         }
     }
 
-    if ($x == null) {
         try {
-            //$manager->addCandidatura($idAnnuncio, $idUtente, $descrizione, $data);
+
             $manager_msg->createCandidatura(null, $idUtente, $idAnnuncio, $descrizione, "", "");
             $manager_msg->sendMessaggio(null, $descrizione, "", 0, $user->getID(), $manager->getAnnuncio($idAnnuncio)->getIdUtente());
-            //$manager_msg->sendMessaggio(null, $descrizione, "", 0, $idUtente,    );
             $_SESSION['toast-type'] = "success";
             $_SESSION['toast-message'] = "Candidatura inviata";
-            include_once CONTROL_DIR . "visualizzaHome.php";
+            header("Location:" .getReferer(DOMINIO_SITO));
+            throw new IllegalArgumentException("Candidatura già inviata");
         } catch (ApplicationException $a) {
             $_SESSION['toast-type'] = "error";
             $_SESSION['toast-message'] = "Problemi con l'invio della candidatura";
-            include_once CONTROL_DIR . "visualizzaHome.php";
+            header("Location:" .getReferer(DOMINIO_SITO));
+            throw new IllegalArgumentException("Candidatura già inviata");
         }
-    }
+
 }
 ?>
