@@ -119,6 +119,7 @@
                                         <?php
                                     } elseif (($visitedUser->getRuolo() == RuoloUtente::MODERATORE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
                                         ?>
+                                        
                                         <div class="profile-action">
                                             <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/destituisciModeratore','Sei sicuro di voler destituire <strong><?php echo $visitedFullname ?></strong> dal ruolo di moderatore?' )"
                                                     class="btn btn-danger btn btn-default btn-xs"
@@ -126,13 +127,20 @@
                                                 Destituisci Moderatore
                                             </button>
                                         </div>
-
+                                                
                                         <?php
                                     }
                                 }
+                                
+                                
                                 ?>
-
-                                <?php
+                                <div class="profile-action">
+                                            <button class="btn btn-success btn btn-default btn-xs" data-toggle="modal" data-target="#myModalMessaggio" >
+                                                Invia messaggio
+                                            </button>
+                                </div>
+                    
+                            <?php
                                 if (($user->getRuolo() == RuoloUtente::MODERATORE) || ($user->getRuolo() == RuoloUtente::AMMINISTRATORE)) {
                                     if ($visitedUser->getStato() != StatoUtente::BANNATO && $visitedUser->getStato() != StatoUtente::RICORSO) {
                                         ?>
@@ -920,3 +928,26 @@
 </body>
 
 </html>
+
+
+                            <div class="modal fade" id="myModalMessaggio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">INVIA MESSAGGIO</h4>
+                                        </div>
+                                        <form action="<?php echo DOMINIO_SITO;?>/inviaMessaggioPrivato" method="post">
+                                            <div class="modal-body">
+                                                Testo del messaggio
+                                                <textarea name="messaggio" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
+                                                <input type="text" value="<?php echo $visitedUser->getId();?>" name="idUtente" hidden>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                                <button type="submit" class="btn btn-sm btn-success">Invia Messaggio</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>

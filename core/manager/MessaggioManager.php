@@ -139,7 +139,7 @@ class MessaggioManager extends Manager implements SplSubject {
     }
 
     /**
-     * Ritorna un array di MESSAGGIO; con tutti i messaggi non letti con quel destinatario
+     * Ritorna un array di MESSAGGIO; con tutti i messaggi non letti
      * @param $idMittente
      * @param $idDestinatario
      * @return array
@@ -326,8 +326,11 @@ class MessaggioManager extends Manager implements SplSubject {
      * @return array
      */
     public function isCandidato ($id_utente, $id_destinatario){
-        $LOAD_CANDIDATURE = "SELECT c.* FROM candidatura c, annuncio a WHERE c.id_utente = $id_destinatario AND a.id = c.id_annuncio AND a.id_utente = $id_utente";
+        //$LOAD_CANDIDATURE = "SELECT DISTINCT c.* FROM candidatura c WHERE c.id_annuncio in (SELECT a.id FROM annuncio a WHERE a.id_utente = $id_destinatario OR a.id_utente = $id_utente) and c.id_utente = $id_destinatario or c.id_utente = $id_utente"; 
+        $LOAD_CANDIDATURE = "SELECT DISTINCT c.* FROM candidatura c WHERE (c.id_utente = $id_destinatario or c.id_utente = $id_utente)AND c.id_annuncio in (SELECT a.id FROM annuncio a WHERE a.id_utente = $id_destinatario OR a.id_utente = $id_utente)";
+        //echo $LOAD_CANDIDATURE;
         $result = Manager::getDB()->query($LOAD_CANDIDATURE);
+   
         $candidature = array();
         if ($result) {
             while ($obj = $result->fetch_assoc()) {

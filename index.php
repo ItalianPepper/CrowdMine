@@ -85,6 +85,16 @@ try {
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "ProfiloPersonaleControl.php";
                 break;
+
+            case 'updateMessIcon':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "updateNumberMessIcon.php";
+                break;
+            case 'updateChat':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "messagingLiveUpdate.php";
+                break;
+
             case 'visualizzaStatisticheMacroCategorie':
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
                 break;
@@ -121,6 +131,7 @@ try {
 //                include_once "standard.html";
 //                break;
             case 'ricercaAnnuncio':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "ricercaAnnuncio.php";
                 break;
             case 'banned':
@@ -156,6 +167,11 @@ try {
                 break;
             case 'livesearch':
                 include_once CONTROL_DIR . "SearchController.php";
+                break;
+            
+            case 'inviaMessaggioPrivato':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "inviaMessaggioPrivato.php";
                 break;
             case 'macroCategorieStat':
                 StringUtils::checkPermission(Permissions::ALL);
@@ -382,6 +398,7 @@ try {
                 include_once CONTROL_DIR . "rimuoviPreferiti.php";
                 break;
             case 'aggiungiCandidaturaControl';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "aggiungiCandidatura.php";
                 break;
             case 'segnalaAnnuncioControl';
@@ -405,6 +422,11 @@ try {
                 break;
             case 'asynAnnunci';
                 include_once AJAX_DIR . "asynAnnunci.php";
+                break;
+            
+            case 'visitaProfiloUtente';
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once VIEW_DIR . "visitaProfiloUtente.php";
                 break;
             case 'visualizzaAnnunciRicercati';
                 include_once VIEW_DIR . "visualizzaAnnunciRicercati.php";
