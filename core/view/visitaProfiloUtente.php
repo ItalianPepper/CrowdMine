@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <noscript><?php include_once VIEW_DIR."noscriptView.php";?></noscript>
+
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>
@@ -78,9 +80,8 @@
 
 
     <?php
-
-        $fullname = $user->getNome()." ".$user->getCognome();
-        $visitedFullname = $visitedUser->getNome()." ".$visitedUser->getCognome();
+        $visitedFullname = getUserFullName($visitedUser);
+        $visitedProfileImg = getUserImageBig($visitedUser);
     ?>
 
 
@@ -96,7 +97,7 @@
                 <div class="card">
                     <div class="card-body app-heading no-flex">
                         <div class="pull-left" style="display: flex;">
-                            <img class="profile-img pull-left" src="<?php echo STYLE_DIR; ?>assets\images\profile.png">
+                            <img class="profile-img pull-left" src="<?php echo $visitedProfileImg; ?>">
                             <div class="app-title pull-left">
                                 <div class="title"><span class="highlight"><?php echo $visitedFullname;?></span></div>
                                 <div class="description"><?php echo $visitedUser->getDescrizione();?></div>
@@ -120,6 +121,7 @@
                                         <?php
                                     } elseif (($visitedUser->getRuolo() == RuoloUtente::MODERATORE) && ($visitedUser->getStato() != StatoUtente::BANNATO)) {
                                         ?>
+                                        
                                         <div class="profile-action">
                                             <button onclick="setModalForm('<?php echo DOMINIO_SITO; ?>/destituisciModeratore','Sei sicuro di voler destituire <strong><?php echo $visitedFullname ?></strong> dal ruolo di moderatore?' )"
                                                     class="btn btn-danger btn btn-default btn-xs"
@@ -127,13 +129,20 @@
                                                 Destituisci Moderatore
                                             </button>
                                         </div>
-
+                                                
                                         <?php
                                     }
                                 }
+                                
+                                
                                 ?>
-
-                                <?php
+                                <div class="profile-action">
+                                            <button class="btn btn-success btn btn-default btn-xs" data-toggle="modal" data-target="#myModalMessaggio" >
+                                                Invia messaggio
+                                            </button>
+                                </div>
+                    
+                            <?php
                                 if (($user->getRuolo() == RuoloUtente::MODERATORE) || ($user->getRuolo() == RuoloUtente::AMMINISTRATORE)) {
                                     if ($visitedUser->getStato() != StatoUtente::BANNATO && $visitedUser->getStato() != StatoUtente::RICORSO) {
                                         ?>
@@ -357,7 +366,8 @@
                             <?php
                             for ($i = 0; $i < count($annunci); $i++) {
                                 $aId = $annunci[$i]->getId();
-                            ?>
+                                $u = $listaUtenti[$annunci[$i]->getIdUtente()];
+                                ?>
 
                             <div class="col-md-10 col-sm-10" style="margin-top: 5%">
 
@@ -369,15 +379,14 @@
 
                                             <div class="media" style="width: 20%; float: left">
                                                 <a href="#">
-                                                    <img src="<?php echo STYLE_DIR; ?>img\logojet.jpg" width="100%;"/>
+                                                    <img src="<?php echo getUserImageBig($u,true); ?>" width="100%;"/>
                                                 </a>
                                             </div>
 
                                             <div style="float: left; margin-left: 5%;">
                                                 <h1 style="border-bottom: 1px solid #eee; padding-bottom: 5%">
                                                         <?php
-                                                        $u = $listaUtenti[$annunci[$i]->getIdUtente()];
-                                                        echo $u->getNome() . " " . $u->getCognome() ?>
+                                                        echo getUserFullName($u,true);?>
                                                 </h1>
                                                 <h1><?php echo $annunci[$i]->getTitolo();?></h1>
 
@@ -432,7 +441,7 @@
                                                         <h4 class="title">
                                                             <?php
                                                             $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
-                                                            echo $u->getNome()." ".$u->getCognome()
+                                                            echo getUserFullName($u,true);
                                                             ?>
                                                         </h4>
                                                         <h5 class="timeing"><?php
@@ -514,25 +523,11 @@
                                                                     <div class="section">
                                                                         <div class="section-title">
                                                                             <?php
-                                                                            if(isset($user)) {
-                                                                            echo $user->getNome()." ".$user->getCognome();
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                echo "Devi aver effettuato il login altrimenti\n
-                                                                                il ssitema non ti permettera di inserire un feedback\n";
-                                                                            }?>
+                                                                                echo getUserFullName($user,true);
+                                                                            ?>
                                                                         </div>
                                                                         <div class="section-body __indent">
-                                                                            <img src="<?php echo DOMINIO_SITO?>/style/img/<?php
-                                                                            if(isset($user)) {
-                                                                                echo $user->getImmagineProfilo();
-                                                                            }
-                                                                            else
-                                                                            {
-
-                                                                            }
-
+                                                                            <img src="<?php echo getUserImageBig($user,true);
                                                                             ?>" class="img-responsive">
                                                                             <!--Put here use profile image-->
                                                                         </div>
@@ -772,7 +767,7 @@
                         </div>
                     </div>
                 </div>
-
+                <script type="text/javascript">var dominio = "<?php echo DOMINIO_SITO;?>";</script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
                 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
                 <script type="text/javascript"
@@ -935,3 +930,26 @@
 </body>
 
 </html>
+
+
+                            <div class="modal fade" id="myModalMessaggio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">INVIA MESSAGGIO</h4>
+                                        </div>
+                                        <form action="<?php echo DOMINIO_SITO;?>/inviaMessaggioPrivato" method="post">
+                                            <div class="modal-body">
+                                                Testo del messaggio
+                                                <textarea name="messaggio" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
+                                                <input type="text" value="<?php echo $visitedUser->getId();?>" name="idUtente" hidden>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                                <button type="submit" class="btn btn-sm btn-success">Invia Messaggio</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>

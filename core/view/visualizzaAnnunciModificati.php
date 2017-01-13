@@ -76,7 +76,7 @@
                         <?php
                         for ($i = 0; $i < count($annunci); $i++) {
                             $aId = $annunci[$i]->getId();
-
+                            $u = $listaUtenti[$annunci[$i]->getIdUtente()];
                             ?>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
@@ -84,8 +84,7 @@
                                     <div class="media social-post">
                                         <div class="media-left">
                                             <a href="<?php echo DOMINIO_SITO; ?>/ProfiloUtente/<?php echo $annunci[$i]->getIdUtente(); ?>">
-                                                <img src="<?php echo STYLE_DIR; ?>img\<?php echo
-                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getImmagineProfilo();
+                                                <img src="<?php echo getUserImageBig($u);
                                                 ?>"/>
                                             </a>
                                         </div>
@@ -93,8 +92,7 @@
                                             <div class="section-body">
                                                 <div class="media-body">
                                                     <div class="media-heading">
-                                                        <h4 class="title"><?php echo $listaUtenti[$annunci[$i]->getIdUtente()]->getNome() . " " .
-                                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
+                                                        <h4 class="title"><?php echo getUserFullName($u); ?></h4>
                                                     </div>
                                                     <h4><b><?php echo $annunci[$i]->getTitolo(); ?></b></h4>
 

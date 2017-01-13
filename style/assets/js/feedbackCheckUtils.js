@@ -43,7 +43,7 @@ $(document).ready(function () {
             $("#button-add-feedback").prop("disabled", true); // I use this for disable button if lenght ismore than 300 characters
         }
         else if (regExp.test(textAreaInput) || textAreaInput.length  <= 300 ) {
-            $("#feedback-erros").fadeOut().css("display", "none");
+            $("#feedback-erros").fadeOut();
             $("#button-add-feedback").prop("disabled", false);
         }
     })
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
         if (regExp.test(inputTitle)) {
 
-            $("#feedback-erros").fadeOut().css("display", "none");
+            $("#feedback-erros").fadeOut();
             $("#button-add-feedback").prop("disabled", false);
         }
         else if (!regExp.test(inputTitle)) {

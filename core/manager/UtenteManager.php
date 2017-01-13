@@ -2,7 +2,7 @@
 
 include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'MicrocategoriaManager.php';
-include_once MANAGER_DIR  .  'Manager.php';
+include_once MANAGER_DIR . 'NotificaManager.php';
 
 /**
  * Created by PhpStorm.
@@ -13,15 +13,16 @@ include_once MANAGER_DIR  .  'Manager.php';
 class UtenteManager extends Manager implements SplSubject
 {
 
-    private $_observers;
+    private $_observer;
     private $wrapperNotifica;
 
     /**
      * UtenteManager constructor.
      */
-    public function __construct()
-    {
-        $this->_observers = new SplObjectStorage();
+    public function __construct(){
+        $this->_observer = new SplObjectStorage();
+        $notificaManager = new NotificaManager();
+        $this->attach($notificaManager);
     }
 
     /**
@@ -39,9 +40,9 @@ class UtenteManager extends Manager implements SplSubject
      * @param $ruolo
      * @param $immagineProfilo
      */
-    private function createUser($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $descrizione, $immagineProfilo, $partitaIva)
+    public function createUser($id, $nome, $cognome, $descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo)
     {
-        return new Utente($id, $nome, $cognome, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $descrizione, $immagineProfilo, $partitaIva);
+        return new Utente($id, $nome, $cognome, $descrizione, $telefono, $dataNascita, $citta, $email, $password, $stato, $ruolo, $immagineProfilo);
     }
 
 
@@ -52,7 +53,7 @@ class UtenteManager extends Manager implements SplSubject
     private function createUserFromRow($row)
     {
         if ($row == null) return null;
-        return new Utente($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['descrizione'], $row['immagine_profilo'], $row['partita_iva']);
+        return $this->createUser($row['id'], $row['nome'], $row['cognome'], $row['telefono'], $row['data_nascita'], $row['citta'], $row['email'], $row['password'], $row['stato'], $row['ruolo'], $row['descrizione'], $row['immagine_profilo'], $row['partita_iva']);
     }
 
     /**
@@ -319,8 +320,8 @@ class UtenteManager extends Manager implements SplSubject
         $users = array();
         $FIND_ALL = "SELECT * FROM utente;";
         $result = self::getDB()->query($FIND_ALL);
-        while ($row = $result->fetch_assoc()) {
-            $user = $this->createUserFromRow($row);
+        foreach ($result->fetch_assoc() as $u) {
+            $user = $this->createUserFromRow($u);
             array_push($users, $user);
         }
         return $users;
@@ -443,8 +444,8 @@ class UtenteManager extends Manager implements SplSubject
      */
     public function addMicroCategoria($user, $microcategoria)
     {
-        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_utente, id_microcategoria) VALUES('%s', '%s');";
-        $query = sprintf($ADD_MICROCATEGORIA, $user->getId(), $microcategoria->getId());
+        $ADD_MICROCATEGORIA = "INSERT INTO competente (id_microcategoria, id_utente) VALUES('%s', '%s');";
+        $query = sprintf($ADD_MICROCATEGORIA, $microcategoria->getId(), $user->getId());
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
@@ -452,13 +453,13 @@ class UtenteManager extends Manager implements SplSubject
     }
 
     /**
-     * @param $userId
-     * @param $microcategoriaId
+     * @param $user
+     * @param $microcategoria
      */
-    public function removeMicroCategoria($userId, $microcategoriaId)
+    public function removeMicroCategoria($user, $microcategoria)
     {
         $REMOVE_MICROCATEGORIA = "DELETE FROM competente WHERE id_microcategoria='%s' AND id_utente='%s'";
-        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoriaId, $userId);
+        $query = sprintf($REMOVE_MICROCATEGORIA, $microcategoria, $user);
         $result = self::getDB()->query($query);
         if (!$result) {
             throw new ApplicationException(ErrorUtils::$AGGIORNAMENTO_FALLITO, Manager::getDB()->error, Manager::getDB()->errno);
@@ -561,12 +562,11 @@ class UtenteManager extends Manager implements SplSubject
         $GET_CATEGORY_BY_ID = "SELECT microcategoria.id, microcategoria.nome, microcategoria.id_macrocategoria FROM microcategoria, competente WHERE competente.id_utente = '%s' AND microcategoria.id = competente.id_microcategoria";
         $query = sprintf($GET_CATEGORY_BY_ID, $idUtente);
         $result = self::getDB()->query($query);
-        $microManager = new MicrocategoriaManager();
-        while ($m = $result->fetch_assoc()) {
+        foreach ($result->fetch_assoc() as $m) {
+            $microManager = new MicrocategoriaManager();
             $micro = $microManager->createMicrocategoria($m['id'], $m['nome'], $m['id_macrocategoria']);
             array_push($list, $micro);
         }
-
         return $list;
     }
 
@@ -580,17 +580,17 @@ class UtenteManager extends Manager implements SplSubject
 
     public function attach(SplObserver $observer)
     {
-        $this->_observers->attach($observer);
+        $this->_observer->attach($observer);
     }
 
     public function detach(SplObserver $observer)
     {
-        $this->_observers->detach($observer);
+        $this->_observer->detach($observer);
     }
 
     public function notify()
     {
-        foreach ($this->_observers as $observer) {
+        foreach ($this->_observer as $observer) {
             $observer->update($this);
         }
     }

@@ -53,7 +53,7 @@
                                     <div class="media social-post">
                                         <div class="media-left">
                                             <a href="<?php echo DOMINIO_SITO.'/ProfiloUtente/'.$utente->getId()?>">
-                                                <img src="<?php echo STYLE_DIR; ?>assets\images\profile.png"/>
+                                                <img src="<?php echo getUserImageBig($utente);?>"/>
                                             </a>
                                         </div>
                                         <div class="section">
@@ -61,7 +61,7 @@
                                                 <div class="media-body">
                                                     <div class="pull-left">
                                                         <div class="media-heading">
-                                                            <h4 class="title"><?php echo $utente->getNome()." ".$utente->getCognome(); ?></h4>
+                                                            <h4 class="title"><?php echo getUserFullName($utente); ?></h4>
                                                             <div class="description"><?php echo $utente->getDescrizione() ?></div>
                                                         </div>
                                                     </div>

@@ -1,10 +1,15 @@
 /**
  * Created by Giovanni Leo on 17/12/2016.
  */
-
+/**
+ * IMPORTANT:
+ * dominio is a  global variable then you can see this variable
+ * in each views that needs to show a list of feedback or
+ * perform some action on it.
+ */
 function retriveAdminFeedback() {
     $.ajax({
-            url: "/CrowdMine/adminFedbackListRetrive",
+            url: dominio+"/adminFedbackListRetrive",
             type: "POST",
             dataType: 'json',
             async: true,
@@ -23,7 +28,7 @@ function retriveAdminFeedback() {
 
 function retriveModeratorFeedback() {
     $.ajax({
-            url: "/CrowdMine/reportedFedbackListRetrive",
+            url: dominio+"/reportedFedbackListRetrive",
             type: "POST",
             dataType: 'json',
             async: true,

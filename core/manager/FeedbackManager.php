@@ -11,9 +11,11 @@ include_once MODEL_DIR . 'Feedback.php';
 include_once MODEL_DIR . 'MicroCategoria.php';
 include_once MODEL_DIR . 'FeedbackListObject.php';
 include_once MODEL_DIR . 'Candidatura.php';
+
 include_once MANAGER_DIR . 'Manager.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 include_once MANAGER_DIR . 'AnnuncioManager.php';
+include_once MANAGER_DIR . 'NotificaManager.php';
 
 /**
  * Class FeedbackManager
@@ -22,7 +24,7 @@ include_once MANAGER_DIR . 'AnnuncioManager.php';
 class FeedbackManager extends Manager implements SplSubject
 {
 
-    private $_observers;
+    private $_observer;
     private $wrapperNotifica;
 
     /**
@@ -30,7 +32,9 @@ class FeedbackManager extends Manager implements SplSubject
      */
     public function __construct()
     {
-        $this->_observers = new SplObjectStorage();
+        $this->_observer = new SplObjectStorage();
+        $notificaManager = new NotificaManager();
+        $this->attach($notificaManager);
     }
 
     public function insertFeedback($id = null, $idUtente, $idAnnuncio, $idValutato, $valutazione, $corpo, $data, $stato, $titolo)
@@ -132,9 +136,9 @@ class FeedbackManager extends Manager implements SplSubject
     public function getListaFeedback($idUtente)
     {
         $GET_FEEDBACK_BY_USER = "SELECT feedback.id,feedback.titolo,feedback.corpo,
-            feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo 
+            feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo,utente.ruolo
             FROM feedback, utente WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente
-            AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))";
+            AND feedback.stato='attivato'";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER);
         return $this->feedbackLOToArray($resSet);
@@ -152,11 +156,10 @@ class FeedbackManager extends Manager implements SplSubject
         return $this->feedbackToArray(self::getDB()->query($GET_FEEDBACK_BY_USER_MICRO));
     }
 
-    public function sortListaFeedback($idUtente, $param)
-    {
-        $GET_FEEDBACK_BY_USER_PARAM = "SELECT feedback.id,feedback.titolo,feedback.corpo,feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo 
+    public function sortListaFeedback($idUtente,$param){
+        $GET_FEEDBACK_BY_USER_PARAM = "SELECT feedback.id,feedback.titolo,feedback.corpo,feedback.valutazione,feedback.id_utente,utente.nome,utente.cognome,utente.immagine_profilo,utente.ruolo
             FROM feedback, utente 
-            WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente  AND ((feedback.stato='attivato')OR(feedback.stato='segnalato'))
+            WHERE feedback.id_valutato=$idUtente AND utente.id=feedback.id_utente  AND (feedback.stato='attivato')
             ORDER BY $param DESC";
 
         $resSet = self::getDB()->query($GET_FEEDBACK_BY_USER_PARAM);
@@ -167,9 +170,10 @@ class FeedbackManager extends Manager implements SplSubject
     public function getFeedbackSegnalati()
     {
         $stato = SEGNALATO;
-        $GET_REPORTED_FEEDBACK = "SELECT feedback.*, utente.nome, utente.cognome, utente.immagine_profilo 
+        $GET_REPORTED_FEEDBACK = "SELECT feedback.id,feedback.titolo,feedback.corpo,
+            feedback.valutazione,feedback.id_utente, utente.nome, utente.cognome, utente.immagine_profilo,utente.ruolo
                                   FROM feedback,utente 
-                                  WHERE feedback.stato ='$stato' AND feedback.id_valutato = utente.id";
+                                  WHERE feedback.stato ='$stato' AND feedback.id_utente = utente.id";
         $resSet = self::getDB()->query($GET_REPORTED_FEEDBACK);
         return $this->feedbackLOToArray($resSet);
     }
@@ -178,9 +182,10 @@ class FeedbackManager extends Manager implements SplSubject
     {
         $stato = AMMINISTRATORE;
         $segnalato = SEGNALATO;
-        $GET_REPORTED_FEEDBACK = "SELECT feedback.*,utente.nome, utente.cognome, utente.immagine_profilo 
+        $GET_REPORTED_FEEDBACK = "SELECT feedback.id,feedback.titolo,feedback.corpo,
+            feedback.valutazione,feedback.id_utente,utente.nome, utente.cognome, utente.immagine_profilo,utente.ruolo
                                   FROM feedback,utente 
-                                  WHERE (feedback.stato = '$stato' OR feedback.stato = '$segnalato'  )AND feedback.id_valutato = utente.id";
+                                  WHERE (feedback.stato = '$stato' OR feedback.stato = '$segnalato'  )AND feedback.id_utente = utente.id";
         return $this->feedbackLOToArray(self::getDB()->query($GET_REPORTED_FEEDBACK));
     }
 
@@ -220,7 +225,8 @@ class FeedbackManager extends Manager implements SplSubject
                     $obj['cognome'],
                     $obj['immagine_profilo'],
                     $obj['valutazione'],
-                    $obj['id_utente']);
+                    $obj['id_utente'],
+                    $obj['ruolo']);
                 $us[] = $u->jsonSerialize();
             }
         }
@@ -461,15 +467,15 @@ class FeedbackManager extends Manager implements SplSubject
     }
 
     public function attach(SplObserver $observer){
-        $this->_observers->attach($observer);
+        $this->_observer->attach($observer);
     }
 
     public function detach(SplObserver $observer){
-        $this->_observers->detach($observer);
+        $this->_observer->detach($observer);
     }
 
     public function notify(){
-        foreach($this->_observers as $observer){
+        foreach($this->_observer as $observer){
             $observer->update($this);
         }
     }

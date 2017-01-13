@@ -16,7 +16,7 @@ class tipoNotifica{
 class ElementiInfoNotifica{
     const TIPO_OGGETTO = "tipo_oggetto";
     const ID_OGGETTO = "id_oggetto";
-    const NOME_OGGETTO = "nome_oggetto";
+    const NOME_OGGETTO = "nome";
     const ESITO_OGGETTO = "esito_oggetto";
     const TIPO_PER_DECISIONE = "tipo_decisione";
 }

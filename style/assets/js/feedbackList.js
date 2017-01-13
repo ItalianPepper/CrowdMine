@@ -1,14 +1,19 @@
 /**
  * Created by Giovanni Leo on 06/12/2016.
  */
-
+/**
+ * IMPORTANT:
+ * dominio is a  global variable , you can see this variable
+ * in each views that needs to show a list of feedback or
+ * perform some action on it.
+ */
 
 $(document).ready(function () {
     "use strict";
     var id =$("#user-feedback-id").attr("value");
     $("#feedback-tab-3").click(function () {
         $.ajax({
-            url: "/CrowdMine/feedbackListRetrive",
+            url: dominio+"/feedbackListRetrive",
             type: "POST",
             data: {'id': id},
             dataType: 'json',
@@ -30,6 +35,7 @@ $(document).ready(function () {
 function generateFeedbackList(data, role, destination) {
     if (data.length > 0) {
         for (var i in data) {
+
             var feedbackListObj = [];
 
             feedbackListObj.feedbackID = data[i].feedbackID;
@@ -41,7 +47,7 @@ function generateFeedbackList(data, role, destination) {
             feedbackListObj.feedbackRating = data[i].feedbackRating;
             feedbackListObj.idUtente = data[i].idUtente;
 
-            destination.append(feedbackRowToString(feedbackListObj, role,"/CrowdMine"));
+            destination.append(feedbackRowToString(feedbackListObj, role,dominio));
             setRatingStar(feedbackListObj.feedbackID, feedbackListObj.feedbackRating);
         }
     }
@@ -89,7 +95,7 @@ function feedbackRowToString(feedbackListObj, role,dominio) {
         '                                                                <div class="media social-post">' +
         '                                                                    <div class="media-left">' +
         '                                                                        <a href="'+dominio+'/ProfiloUtente/'+ feedbackListObj.idUtente +'">' +
-        '                                                                         <img src="'+dominio+'/style/img/' + feedbackListObj.userProfileImage + '"> ' +
+        '                                                                         <img src="'+ feedbackListObj.userProfileImage + '"> ' +
         '                                                                        </a>' +
         '                                                                    </div>' +
         '                                                                    <div class="section">' +

@@ -78,7 +78,7 @@
                                 <?php
                                 for ($i = 0; $i < count($annunciAdmin); $i++) {
                                     $aId = $annunciAdmin[$i]->getId();
-
+                                    $u = $listaUtentiAdmin[$annunciAdmin[$i]->getIdUtente()];
                                     ?>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-xs-12">
@@ -86,17 +86,14 @@
                                             <div class="media social-post">
                                                 <div class="media-left">
                                                     <a href="<?php echo DOMINIO_SITO; ?>/ProfiloUtente/<?php echo $annunciAdmin[$i]->getIdUtente(); ?>">
-                                                        <img src="<?php echo STYLE_DIR; ?>img\<?php echo
-                                                        $listaUtentiAdmin[$annunciAdmin[$i]->getIdUtente()]->getImmagineProfilo();
-                                                        ?>"/>
+                                                        <img src="<?php echo getUserImageBig($u)?>"/>
                                                     </a>
                                                 </div>
                                                 <div class="section">
                                                     <div class="section-body">
                                                         <div class="media-body">
                                                             <div class="media-heading">
-                                                                <h4 class="title"><?php echo $listaUtentiAdmin[$annunci[$i]->getIdUtente()]->getNome() . " " .
-                                                                        $listaUtentiAdmin[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
+                                                                <h4 class="title"><?php echo getUserFullName($user); ?></h4>
                                                             </div>
                                                             <h4><b><?php echo $annunciAdmin[$i]->getTitolo(); ?></b></h4>
 
@@ -246,7 +243,7 @@
                         <?php
                         for ($i = 0; $i < count($annunci); $i++) {
                             $aId = $annunci[$i]->getId();
-
+                            $u = $listaUtenti[$annunci[$i]->getIdUtente()];
                             ?>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
@@ -254,17 +251,14 @@
                                     <div class="media social-post">
                                         <div class="media-left">
                                             <a href="<?php echo DOMINIO_SITO; ?>/ProfiloUtente/<?php echo $annunci[$i]->getIdUtente(); ?>">
-                                                <img src="<?php echo STYLE_DIR; ?>img\<?php echo
-                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getImmagineProfilo();
-                                                ?>"/>
+                                                <img src="<?php echo getUserImageBig($u); ?>"/>
                                             </a>
                                         </div>
                                         <div class="section">
                                             <div class="section-body">
                                                 <div class="media-body">
                                                     <div class="media-heading">
-                                                        <h4 class="title"><?php echo $listaUtenti[$annunci[$i]->getIdUtente()]->getNome() . " " .
-                                                                $listaUtenti[$annunci[$i]->getIdUtente()]->getCognome() ?></h4>
+                                                        <h4 class="title"><?php echo getUserFullName($u ) ?></h4>
                                                     </div>
                                                     <h4><b><?php echo $annunci[$i]->getTitolo(); ?></b></h4>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <?php include_once VIEW_DIR."ViewUtils.php";?>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         .navbar-collapse.in {
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-
+    <script type="text/javascript">var dominio = "<?php echo DOMINIO_SITO;?>";</script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackBackEnd.js"></script>
