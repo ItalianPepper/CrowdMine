@@ -216,7 +216,7 @@
     $("#tab1").ready(function () {
         $.ajax({
             type: "POST",
-            url: "tabGenerale",
+            url: "<?php echo DOMINIO_SITO;?>/tabGenerale",
             dataType: "json",
             data: {option:"graphics"},
             success: function(response){
@@ -230,7 +230,7 @@
     $("#tab1").ready(function () {
         $.ajax({
             type: "POST",
-            url:"tabGenerale",
+            url:"<?php echo DOMINIO_SITO;?>/tabGenerale",
             dataType: "json",
             data:  {option:"adsNumber"},
             success: function(response){
@@ -249,7 +249,7 @@
     $("#tab2").ready(function () {
         $.ajax({
             type: "POST",
-            url: "tabAnnunci",
+            url: "<?php echo DOMINIO_SITO;?>/tabAnnunci",
             dataType: "json",
             data: {option:"selectMacro"},
             success: function (response) {
@@ -270,7 +270,7 @@
     $("#tab2").ready(function () {
         $.ajax({
             type: "POST",
-            url: "tabAnnunci",
+            url: "<?php echo DOMINIO_SITO;?>/tabAnnunci",
             dataType: "json",
             data: {option:"selectMicro"},
             success: function (response) {
@@ -296,7 +296,7 @@
 
         $.ajax({
             type: "POST",
-            url: "tabAnnunci",
+            url: "<?php echo DOMINIO_SITO;?>/tabAnnunci",
             dataType: "json",
             data: {macrocategoria:macro,fromdatemacro:from, todatemacro:to},
             success: function(response){
@@ -316,7 +316,7 @@
 
         $.ajax({
             type: "POST",
-            url: "tabAnnunci",
+            url: "<?php echo DOMINIO_SITO;?>/tabAnnunci",
             dataType: "json",
             data: {microcategoria:micro,fromdatemicro:from,todatemicro:to},
             success: function(response){
@@ -364,7 +364,7 @@
     $("#tab3").ready(function () {
         $.ajax({
             type: "POST",
-            url: "tabUtenti",
+            url: "<?php echo DOMINIO_SITO;?>/tabUtenti",
             dataType: "json",
             data: {macrocategorie:"utenti"},
             success: function (response) {
@@ -403,7 +403,7 @@
         var type="Utenti";
         $.ajax({
             type: "POST",
-            url: "tabUtenti",
+            url: "<?php echo DOMINIO_SITO;?>/tabUtenti",
             dataType: "json",
             data:{macroCategoriaUtenti: nameButton,initpage:initialPage},
             success: function (response) {
@@ -419,7 +419,7 @@
     $("#tab3").ready(function () {
         $.ajax({
             type: "POST",
-            url: "tabUtenti",
+            url: "<?php echo DOMINIO_SITO;?>/tabUtenti",
             dataType: "json",
             data: {macrocategorie:"annunci"},
             success: function (response) {
@@ -457,7 +457,7 @@
         var type = "Annunci";
         $.ajax({
             type: "POST",
-            url: "tabUtenti",
+            url: "<?php echo DOMINIO_SITO;?>/tabUtenti",
             dataType: "json",
             data:{macroCategoriaAnnunci:nameButton,initpage:initialPage},
             success: function (response) {
@@ -505,7 +505,7 @@
 
         $.ajax({
             type: "POST",
-            url: "tabUtenti",
+            url: "<?php echo DOMINIO_SITO;?>/tabUtenti",
             dataType: "json",
             data:{type:type,macro:nameMacro,maxPage:"dimensionPaging"},
             success:function (response) {
@@ -639,7 +639,7 @@
 
         $.ajax({
             type: "POST",
-            url: "tabUtenti",
+            url: "<?php echo DOMINIO_SITO;?>/tabUtenti",
             dataType: "json",
             data:{type:type, macrocategoria:nameMacro, pagination:numberPage},
             success: function (response) {
