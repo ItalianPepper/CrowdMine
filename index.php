@@ -101,6 +101,7 @@ try {
                 break;
 
             case 'visualizzaStatisticheMacroCategorie':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
                 break;
             case 'annuncioModeratore':
@@ -114,6 +115,7 @@ try {
                 include_once VIEW_DIR ."404.html";
                 break;
             case 'paginaStatistiche':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "paginaStatistiche.php";
                 break;
             case 'conversazionePrivata':
@@ -179,7 +181,7 @@ try {
                 include_once CONTROL_DIR . "inviaMessaggioPrivato.php";
                 break;
             case 'macroCategorieStat':
-                StringUtils::checkPermission(Permissions::ALL);
+                StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "StatisticheMacroCategorie.php";
                 break;
             case 'tabGenerale':
