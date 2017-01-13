@@ -682,8 +682,10 @@
                                                 <canvas id="statisticheUtente"></canvas>
                                             </div>
                                             <div align="center" style="margin-top:5%;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <h4>Micro Categoria di Competenza</h4>
-                                                <hr>
+                                                <div id="title-micro">
+                                                    <h4>Micro Categoria di Competenza</h4>
+                                                    <hr>
+                                                </div>
                                                 <table id="feedbackTable" class="table">
                                                     <thead>
                                                     <tr>
@@ -916,6 +918,7 @@
                             }
                         }else{
                             $("#feedbackTable").empty();
+                            $("#title-micro").empty();
                         }
 
                     }
