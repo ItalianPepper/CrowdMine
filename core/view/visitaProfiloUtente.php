@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <noscript><?php include_once VIEW_DIR."noscriptView.php";?></noscript>
-
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>

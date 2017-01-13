@@ -7,19 +7,27 @@
  * Time: 08:58
  */
 define('ROOT_DIR', dirname(__FILE__)); //costante root dir
-define('DOMINIO_SITO', "/CrowdMine"); //costante root dir
-define('CORE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR); //costante core directory
-define('VIEW_DIR', CORE_DIR . "view" . DIRECTORY_SEPARATOR); //ecc
-define('TEMPLATE_DIR', CORE_DIR . "template" . DIRECTORY_SEPARATOR); //ecc
-define('EXCEPTION_DIR', CORE_DIR . "exception" . DIRECTORY_SEPARATOR);
-define('MODEL_DIR', CORE_DIR . "model" . DIRECTORY_SEPARATOR);
-define('MANAGER_DIR', CORE_DIR . "manager" . DIRECTORY_SEPARATOR);
-define('FILTER_DIR', CORE_DIR. "filter". DIRECTORY_SEPARATOR);
-define('CONTROL_DIR', CORE_DIR . "control" . DIRECTORY_SEPARATOR);
+define('DEBUG', true);
+
+if (DEBUG == true) {
+    define('DOMINIO_SITO', "/CrowdMine"); //costante root dir
+    define('UPLOAD_FOLDER', 'c:/xampp/htdocs/CrowdMine/uploads/');
+} else {
+    define('DOMINIO_SITO', "crowdmine.altervista.org"); //costante root dir
+    define('UPLOAD_FOLDER', '/membri/crowdmine/uploads/');
+}
+define('CORE_DIR', ROOT_DIR . '/core/'); //costante core directory
+define('VIEW_DIR', CORE_DIR . "view/"); //ecc
+define('TEMPLATE_DIR', CORE_DIR . "template/"); //ecc
+define('EXCEPTION_DIR', CORE_DIR . "exception/");
+define('MODEL_DIR', CORE_DIR . "model/");
+define('MANAGER_DIR', CORE_DIR . "manager/");
+define('FILTER_DIR', CORE_DIR. "filter/");
+define('CONTROL_DIR', CORE_DIR . "control/");
 define('UPLOADS_DIR', DOMINIO_SITO . "/uploads/");
-define('STYLE_DIR', DOMINIO_SITO . DIRECTORY_SEPARATOR . "style" . DIRECTORY_SEPARATOR);
-define('AJAX_DIR', CORE_DIR . DIRECTORY_SEPARATOR . "ajax" . DIRECTORY_SEPARATOR);
-define('UTILS_DIR', CORE_DIR . "utils" . DIRECTORY_SEPARATOR);
+define('STYLE_DIR', DOMINIO_SITO . "/style/");
+define('AJAX_DIR', CORE_DIR . "/ajax/");
+define('UTILS_DIR', CORE_DIR . "utils/");
 define('ATTIVATO',"attivato");
 define('SEGNALATO',"segnalato");
 define('ELIMINATO',"eliminato");
@@ -28,16 +36,13 @@ define('DISATTIVATO',"disattivato");
 define('AMMINISTRATORE',"amministratore");
 define('REVISIONE_MODIFICA',"revisione_modifica");
 define('RICORSO',"ricorso");
-define('DEBUG', true);
 
 try {
     if (DEBUG == true) {
-        define('UPLOAD_FOLDER', 'c:/xampp/htdocs/CrowdMine/uploads' . DIRECTORY_SEPARATOR);
         ini_set("max_execution_time", '30');
         ini_set('display_errors', 'on');
         error_reporting(E_ALL);
     } else {
-        define('UPLOAD_FOLDER', '/membri/crowdmine/uploads' . DIRECTORY_SEPARATOR);
         ini_set('display_errors', 'off');
     }
 
@@ -373,6 +378,7 @@ try {
                 include_once CONTROL_DIR . "getDatiAnnuncioRicercato.php";
                 break;
             case 'notificheUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "notificheUtente.php";
                 break;
             case 'modificaAnnuncio';
