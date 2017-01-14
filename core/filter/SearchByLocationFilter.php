@@ -14,7 +14,7 @@ class SearchByLocationFilter extends Filter{
 
     public function setLocation($location)
     {
-        parent::setFilterString(" `annuncio`.`luogo` LIKE '".$location."' ");
+        parent::setFilterString(" `annuncio`.`luogo` LIKE '%".$location."%' ");
     }
 
 }

@@ -473,6 +473,7 @@ try {
                 include_once CORE_DIR . "/template/assets/images/profile.png";
                 break;
             case 'segnalaCommento';
+                $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "segnalaCommento.php";
                 break;
             case 'headerStart';
@@ -540,6 +541,15 @@ try {
             case 'commentiSegnalati':
                 $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "commentiSegnalati.php";
+                break;
+            case 'attivaCommentoControl':
+                include_once CONTROL_DIR . "attivaCommentoControl.php";
+                break;
+            case 'disattivaCommentoControl':
+                include_once CONTROL_DIR . "disattivaCommentoControl.php";
+                break;
+            case 'inviaCommentoAdmin':
+                include_once CONTROL_DIR . "inviaCommentoAdmin.php";
                 break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');

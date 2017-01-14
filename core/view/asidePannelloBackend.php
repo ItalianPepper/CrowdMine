@@ -30,7 +30,7 @@
                         <li><a href="<?php echo DOMINIO_SITO;?>/UtentiSegnalati">Utenti</a></li>
                         <li><a href="<?php echo DOMINIO_SITO;?>/annunciSegnalati">Annunci</a></li>
                         <li><a href="<?php echo DOMINIO_SITO;?>/paginaPrincipaleModeratore">Feedback</a></li>
-                        <li><a href="<?php echo DOMINIO_SITO;?>/visualizzaCommentiSegnalati">Commenti</a></li>
+                        <li><a href="<?php echo DOMINIO_SITO;?>/commentiSegnalati">Commenti</a></li>
                     </ul>
                 </div>
             </li>
