@@ -568,6 +568,19 @@ class AnnuncioManager implements SplSubject
         );
     }
 
+    public function getReportedCommento(){
+        $lista = array();
+        $FIND_REPORTED = "SELECT * FROM commento WHERE stato = '%s'";
+        $query = sprintf($FIND_REPORTED, statoCommento::SEGNALATO);
+        $result = Manager::getDB()->query($query);
+        if($result){
+            while ($obj = $result->fetch_assoc()) {
+                $commento = new Commento($obj['id'], $obj['id_annuncio'], $obj['id_utente'], $obj['corpo'], $obj['data'], $obj['stato']);
+                array_push($lista, $commento);
+            }
+        }
+        return $lista;
+    }
 
     /**
      * Get all the candidacies for the Annuncio
@@ -636,14 +649,6 @@ class AnnuncioManager implements SplSubject
         }
         return $commenti;
     }
-
-
-
-
-
-
-
-
 
     /**
      * @param $idAnnuncio

@@ -11,6 +11,7 @@ include_once MODEL_DIR.'MicroCategoria.php';
 
 include_once VIEW_DIR . "ViewUtils.php";
 include_once CONTROL_DIR . "ControlUtils.php";
+include_once FILTER_DIR . "SearchByNotStatus.php";
 include_once MANAGER_DIR . "AnnuncioManager.php";
 include_once MANAGER_DIR . "UtenteManager.php";
 include_once MANAGER_DIR  .  'MacroCategoriaManager.php';
@@ -35,7 +36,15 @@ if (isset($_URL) && isset($_URL[1])) {
         $macroListUtente = $macroManager->getUserMacros($visitedUser->getId());
         $microListUtente = $microManager->getUserMicros($visitedUser->getId());
 
-        $filters= Array(new SearchByUserIdFilter($visitedUserId), new SearchByStatus(StatoAnnuncio::ATTIVO));
+        $filters= Array(
+                new SearchByUserIdFilter($visitedUserId),
+                new SearchByNotStatus(StatoAnnuncio::ELIMINATO),
+                new SearchByNotStatus(StatoAnnuncio::DISATTIVATO),
+                new SearchByNotStatus(StatoAnnuncio::AMMINISTRATORE),
+                new SearchByNotStatus(StatoAnnuncio::REVISIONE),
+                new SearchByNotStatus(StatoAnnuncio::REVISIONE_MODIFICA),
+                new SearchByNotStatus(StatoAnnuncio::RICORSO),
+        );
 
         $base = new annuncioBaseControl($managerAnnuncio,$filters,false,true,true);
 

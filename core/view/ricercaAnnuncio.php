@@ -27,7 +27,7 @@
                 <div class="card">
                     <div class="row" style="padding: 15px">
                         <div class="card-header" style="padding: 30px;">Ricerca un Annuncio</div>
-                        <form action="ricercaAnnuncioControl" method="post" style="padding: 30px">
+                        <form action="<?php echo DOMINIO_SITO;?>/ricercaAnnuncioControl" method="post" style="padding: 30px">
 
                             <div class="col-md-6">
 
@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <select class="form-control select2" name="luogo" id="listacitta"  required>
-
+                                            <option selected disabled>Seleziona un comune</option>
                                         </select>
                                         <div class="input-group-addon">
                                             <i class="fa fa-map-marker"></i>

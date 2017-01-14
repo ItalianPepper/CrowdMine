@@ -361,17 +361,12 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
         httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         httpRequest.send(params);
     }
-   
-   
-   
+
    
 </script>
 
 
-
-
-
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>assets/js/vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>assets/js/app.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>assets/js/headerUtils.js"></script>
+<?php include_once VIEW_DIR."footerStart.php"?>
 <script type="text/javascript" src="<?php echo STYLE_DIR ?>assets/js/messagingUpdate.js"></script>
+<?php include_once VIEW_DIR."footerEnd.php"?>
+

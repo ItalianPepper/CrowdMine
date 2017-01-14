@@ -176,6 +176,8 @@ function getUserImage($user,$width,$height,$adminData=null){
  */
 function getUserFullName($user, $adminData=null){
 
+    if(!isset($user)) return "";
+
     if($user->getRuolo() == RuoloUtente::AMMINISTRATORE && $adminData){
         return "Crowdmine";
     }

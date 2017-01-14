@@ -2,97 +2,111 @@
  * Created by darkv on 22/12/2016.
  */
 
-function poll() {
-    setTimeout(function () {
+function NotifyPanel(url) {
+
+    var This = this;
+
+    this.panelRetrieve = function () {
+
         $.ajax({
             type: "POST",
-            url: "pannelloNotifiche",
+            url: url+"pannelloNotifiche",
             dataType: "json",
             success: function (data) {
-                generateNotificationsList(data);
-                poll();
+                console.log(data);
+                This.generateNotificationsList(data);
             }
         });
-    }, 15000);
-}
+    };
 
-$(document).ready(function(){
-    poll();
-})
+    this.poll = function() {
+        //call every 15 seconds
+        setInterval(This.panelRetrieve, 15000);
+    };
 
-function generateNotificationsList(data){
-    if (data != null && data.length > 0) {
+    this.generateNotificationsList = function(data) {
+        if (data != null && data.length > 0) {
 
-        $("#lista-notifiche").find("#notNotifies").remove();
+            $("#lista-notifiche").find("#notNotifies").remove();
 
-        for (var i in data) {
-            var listaNotificheObject = [];
-            var idNotify = data[i].idNotify;
-            if(!($("#"+idNotify).length > 0)){
-                listaNotificheObject.idNotifica = data[i].idNotify;
-                listaNotificheObject.href = data[i].href;
-                listaNotificheObject.corpo = data[i].text;
-                listaNotificheObject.letto = data[i].read;
+            for (var i in data) {
+                var listaNotificheObject = [];
+                var idNotify = data[i].idNotify;
+                if (!($("#" + idNotify).length > 0)) {
+                    listaNotificheObject.idNotifica = data[i].idNotify;
+                    listaNotificheObject.href = data[i].href;
+                    listaNotificheObject.corpo = data[i].text;
+                    listaNotificheObject.letto = data[i].read;
 
-                $("#lista-notifiche").append(notificaToRowString(listaNotificheObject));
-                $("#notification-count").text(data.length);
+                    $("#lista-notifiche").append(This.notificaToRowString(listaNotificheObject));
+                    $("#notification-count").text(data.length);
+                    $("#notification-count").show();
+                }
+            }
+
+        } else {
+
+            if (!($("#notNotifies").length > 0 )) {
+                $("#notification-count").hide();
+                $("#lista-notifiche").append(This.notificaToRowString({idNotifica:"notNotifies",href:'#',corpo:"Non ci sono notifiche"}));
+            }else{
+                $("#notification-count").show();
             }
         }
+    };
 
-    }else{
+    this.notificaToRowString = function(listaNotificheObject) {
+        return '<li id="' + listaNotificheObject.idNotifica + '">' +
+            '<a href="' + listaNotificheObject.href +
+            '"><div class="message"><div class="content"><div class="title">' +
+            listaNotificheObject.corpo + '</div></div></div></a></li>';
+    };
 
-        if(!($("#notNotifies").length >0 )){
-            $("#notification-count").text(0);
-            $("#lista-notifiche").append($("<li>").attr("class", "list-group-item").attr("id", "notNotifies").text("Non ci sono notifiche"));
+     $("#lista-notifiche").click(function (event) {
+
+        var target = $(event.target);
+
+        if (target.is("li")) {
+
+            var idNotifica = target.id;
+
+            $.ajax({
+                type: "POST",
+                url: url+"pannelloNotifiche",
+                dataType: "json",
+                data: {idnotifica: idNotifica},
+                success: function () {
+                    $("#lista-notifiche").find("#" + idNotifca).remove();
+                }
+            })
         }
-    }
+    });
+
+
+    $("#lista-notifiche-all").click(function (event) {
+
+        var target = $(event.target);
+
+        if (target.is("li")) {
+
+            var idNotifica = target.id;
+
+            $.ajax({
+                type: "POST",
+                url: url+"pannelloNotifiche",
+                dataType: "json",
+                data: {idnotifica: idNotifica},
+                success: function () {
+                    $("#lista-notifiche").find("#" + idNotifca).css("background-color", "");
+                }
+            })
+        }
+
+
+    });
+
+    //first call
+    this.panelRetrieve();
+    //start polling after 15 seconds
+    this.poll();
 }
-
-function notificaToRowString(listaNotificheObject){
-    return '<li class="list-group-item" style="background-color: #3399FF" id="'+listaNotificheObject.idNotifica+'"><a href="'+listaNotificheObject.href+'">'+listaNotificheObject.corpo+'</a></li>';
-}
-
-
-$("#lista-notifiche").click(function(event){
-
-    var target = $(event.target);
-
-    if(target.is("li")) {
-
-        var idNotifica = target.id;
-
-        $.ajax({
-            type: "POST",
-            url: "pannelloNotifiche",
-            dataType: "json",
-            data: {idnotifica:idNotifica},
-            success: function () {
-                $("#lista-notifiche").find("#"+idNotifca).remove();
-            }
-        })
-    }
-});
-
-
-$("#lista-notifiche-all").click(function(event){
-
-    var target = $(event.target);
-
-    if(target.is("li")) {
-
-        var idNotifica = target.id;
-
-        $.ajax({
-            type: "POST",
-            url: "pannelloNotifiche",
-            dataType: "json",
-            data: {idnotifica:idNotifica},
-            success: function () {
-                $("#lista-notifiche").find("#"+idNotifca).css("background-color","");
-            }
-        })
-    }
-
-
-
-});

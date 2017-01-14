@@ -24,7 +24,7 @@ class OrderType{
 abstract class OrderFilter extends Filter
 {
     public function setFilter(&$query){
-        $query.=" ORDER BY ".$this->filterString . "DESC";
+        $query.=" ORDER BY ".$this->filterString;
     }
 
     /**
