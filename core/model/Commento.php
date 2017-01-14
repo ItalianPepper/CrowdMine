@@ -6,6 +6,13 @@
  * Date: 27/11/2016
  * Time: 20:15
  */
+class statoCommento {
+    const ATTIVO = "attivato";
+    const SEGNALATO = "segnalato";
+    const ELIMINATO = "eliminato";
+    const AMMINISTRATORE = "amministratore";
+}
+
 class Commento
 {
 
