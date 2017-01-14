@@ -47,11 +47,9 @@ function NotifyPanel(url) {
         } else {
 
             if (!($("#notNotifies").length > 0 )) {
-                $("#notification-count").hide();
                 $("#lista-notifiche").append(This.notificaToRowString({idNotifica:"notNotifies",href:'#',corpo:"Non ci sono notifiche"}));
-            }else{
-                $("#notification-count").show();
             }
+            $("#notification-count").hide();
         }
     };
 

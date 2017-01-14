@@ -87,7 +87,7 @@
                                 </div>
                                 <div>
                                     <div class="radio radio-inline">
-                                        <input type="radio" name="tipologia" id="radio5" value="Domanda" checked>
+                                        <input type="radio" name="tipologia" id="radio5" value="Domanda">
                                         <label for="radio5">
                                             Domanda
                                         </label>
