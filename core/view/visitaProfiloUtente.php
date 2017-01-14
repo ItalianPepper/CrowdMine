@@ -535,45 +535,45 @@
                                                                         </div>
                                                                         <div class="section-body">
                                                                             <div class="rating">
-                                                                                <input type="radio" id="star5" name="rating"
+                                                                                <input type="radio" id="star5-<?php echo $aId;?>" name="rating"
                                                                                        value="5"/><label
-                                                                                    class="full" for="star5"
+                                                                                    class="full" for="star5-<?php echo $aId;?>"
                                                                                     title="Awesome - 5 stars"></label>
-                                                                                <input type="radio" id="star4half" name="rating"
+                                                                                <input type="radio" id="star4half-<?php echo $aId;?>" name="rating"
                                                                                        value="4.5"/><label
-                                                                                    class="half" for="star4half"
+                                                                                    class="half" for="star4half-<?php echo $aId;?>"
                                                                                     title="Pretty good - 4.5 stars"></label>
-                                                                                <input type="radio" id="star4" name="rating"
+                                                                                <input type="radio" id="star4-<?php echo $aId;?>" name="rating"
                                                                                        value="4"/><label
-                                                                                    class="full" for="star4"
+                                                                                    class="full" for="star4-<?php echo $aId;?>"
                                                                                     title="Pretty good - 4 stars"></label>
-                                                                                <input type="radio" id="star3half" name="rating"
+                                                                                <input type="radio" id="star3half-<?php echo $aId;?>" name="rating"
                                                                                        value="3.5"/><label
-                                                                                    class="half" for="star3half"
+                                                                                    class="half" for="star3half-<?php echo $aId;?>"
                                                                                     title="Meh - 3.5 stars"></label>
-                                                                                <input type="radio" id="star3" name="rating"
+                                                                                <input type="radio" id="star3-<?php echo $aId;?>" name="rating"
                                                                                        value="3"/><label
-                                                                                    class="full" for="star3"
+                                                                                    class="full" for="star3-<?php echo $aId;?>"
                                                                                     title="Meh - 3 stars"></label>
-                                                                                <input type="radio" id="star2half" name="rating"
+                                                                                <input type="radio" id="star2half-<?php echo $aId;?>" name="rating"
                                                                                        value="2.5"/><label
-                                                                                    class="half" for="star2half"
+                                                                                    class="half" for="star2half-<?php echo $aId;?>"
                                                                                     title="Kinda bad - 2.5 stars"></label>
                                                                                 <input type="radio" id="star2" name="rating"
                                                                                        value="2"/><label
-                                                                                    class="full" for="star2"
+                                                                                    class="full" for="star2-<?php echo $aId;?>"
                                                                                     title="Kinda bad - 2 stars"></label>
-                                                                                <input type="radio" id="star1half" name="rating"
+                                                                                <input type="radio" id="star1half-<?php echo $aId;?>" name="rating"
                                                                                        value="1.5"/><label
-                                                                                    class="half" for="star1half"
+                                                                                    class="half" for="star1half-<?php echo $aId;?>"
                                                                                     title="Meh - 1.5 stars"></label>
-                                                                                <input type="radio" id="star1" name="rating"
+                                                                                <input type="radio" id="star1-<?php echo $aId;?>" name="rating"
                                                                                        value="1"/><label
-                                                                                    class="full" for="star1"
+                                                                                    class="full" for="star1-<?php echo $aId;?>"
                                                                                     title="Sucks big time - 1 star"></label>
-                                                                                <input type="radio" id="starhalf" name="rating"
+                                                                                <input type="radio" id="starhalf-<?php echo $aId;?>" name="rating"
                                                                                        value="0.5"/><label
-                                                                                    class="half" for="starhalf"
+                                                                                    class="half" for="starhalf-<?php echo $aId;?>"
                                                                                     title="Sucks big time - 0.5 stars"></label>
                                                                             </div>
                                                                         </div>

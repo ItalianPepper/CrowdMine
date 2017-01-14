@@ -473,6 +473,7 @@ try {
                 include_once CORE_DIR . "/template/assets/images/profile.png";
                 break;
             case 'segnalaCommento';
+                $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "segnalaCommento.php";
                 break;
             case 'headerStart';
