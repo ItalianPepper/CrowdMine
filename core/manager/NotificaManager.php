@@ -94,7 +94,7 @@ class NotificaManager extends Manager implements SplObserver
     public function getNotificaByUtente($user){
         $parser = new NotificationParsing();
         $listNotifica = array();
-        $LOAD_NOTIFICHE = "SELECT notifica FROM notifica, dispatcher_notifica WHERE dispatcher_notifica.id_utente = '%s'";
+        $LOAD_NOTIFICHE = "SELECT notifica.* FROM notifica, dispatcher_notifica WHERE dispatcher_notifica.id_utente = '%s'";
         $query = sprintf($LOAD_NOTIFICHE, $user->getId());
         $result = self::getDB()->query($query);
         if ($result) {

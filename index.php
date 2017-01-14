@@ -540,6 +540,10 @@ try {
                 $user = StringUtils::checkPermission(Permissions::ALL);
                 include_once CONTROL_DIR . "pannelloNotifiche.php";
                 break;
+            case 'pannelloNotificheUtente':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "pannelloNotificheUtente.php";
+                break;
             case 'commentiSegnalati':
                 $user = StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "commentiSegnalati.php";
