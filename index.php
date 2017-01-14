@@ -400,9 +400,6 @@ try {
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "aggiungiPreferiti.php";
                 break;
-            case 'ricercaAnnuncio';
-                include_once CONTROL_DIR . "ricercaAnnuncio.php";
-                break;
             case 'annunciPreferiti';
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "visualizzaPreferiti.php";
@@ -418,9 +415,11 @@ try {
                 include_once CONTROL_DIR . "segnalaAnnuncio.php";
                 break;
             case 'attivaAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "attivaAnnuncio.php";
                 break;
             case 'disattivaAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "disattivaAnnuncio.php";
                 break;
             case 'commentaAnnuncioControl';
@@ -448,6 +447,7 @@ try {
                 include_once VIEW_DIR . "nothingFound.php";
                 break;
             case 'inviaAnnuncioAdmin';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "inviaAnnuncioAdmin.php";
                 break;
             case 'visualizzaAnnunciConflitto';
