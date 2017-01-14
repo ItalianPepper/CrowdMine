@@ -16,14 +16,19 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <div class="card">
-                            <div class="card-header">Ricerca Utenti</div>
+                            <div class="card-header" style="padding: 24px 28px;">Ricerca Utenti</div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                                         <form action="<?php echo DOMINIO_SITO;?>/ricercaUtente" method="post">
-                                            <input type="text" class="form-control" placeholder="Nome, Cognome, Email..." name="inputSearch">
-                                            <div align="center">
-                                                <button type="submit" class="btn btn-primary">Ricerca</button>
+                                            <div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Nome, Cognome, Email..." name="inputSearch"
+                                                       value="<?php echo isset($input)?$input:'';?>">
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                <div class="push-left">
+                                                    <button type="submit" class="btn btn-primary">Ricerca</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -32,52 +37,59 @@
                         </div>
                     </div>
                 </div>
-                <?php if(isset($listaUtenti)){?>
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-xs-12">
-                            <div class="card">
-                                <div class="card-header">Risultati Ricerca</div>
-                                <div class="card-body">
-                                    <?php
-                                    foreach ($listaUtenti as $user) {
-                                        ?>
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <div class="media social-post">
-                                                    <div class="media-left">
-                                                        <a href="#">
-                                                            <img src="<?php if($user->getImmagineProfilo()!=null){
-                                                                echo $user->getImmagineProfilo();
-                                                            }; ?>"/>
-                                                        </a>
-                                                    </div>
-                                                    <div class="section">
-                                                        <div class="section-body">
-                                                            <div class="media-body">
-                                                                <div class="pull-left">
-                                                                    <div class="media-heading">
-                                                                        <h4 class="title"><?php echo $user->getNome()." ".$user->getCognome(); ?></h4>
-                                                                        <div class="description"><?php echo $user->getDescrizione();?></div>
-                                                                    </div>
-                                                                </div>
+            </div>
+        </div>
+
+        <?php if(isset($listaUtenti)){?>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">Risultati Ricerca</div>
+                        <div class="card-body">
+                            <?php
+                            for ($i = 0; $i < count($listaUtenti); $i++) {
+                                $utente = $listaUtenti[$i];
+                                ?>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 <?php echo ($i == 0) ? '' : 'overlined-row' ?>">
+                                        <div class="media social-post">
+                                            <div class="media-left">
+                                                <a href="<?php echo DOMINIO_SITO . '/ProfiloUtente/' . $utente->getId() ?>">
+                                                    <img src="<?php echo getUserImageBig($utente);?>"/>
+                                                </a>
+                                            </div>
+                                            <div class="">
+                                                <div class="section-body">
+                                                    <div class="media-body">
+                                                        <div class="pull-left">
+                                                            <div class="media-heading">
+                                                                <a href="<?php echo DOMINIO_SITO . '/ProfiloUtente/' . $utente->getId() ?>">
+                                                                <h4 class="title"><?php echo $utente->getNome() . " " . $utente->getCognome() ?></h4>
+                                                                </a>
+                                                                    <div class="description"><?php echo $utente->getCitta() ?></div>
+                                                                <br>
+                                                                <div class="description"><?php echo $utente->getDescrizione() ?></div>
                                                             </div>
                                                         </div>
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php } ?>
+                                    </div>
                                 </div>
-                            </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
-                <?php } ?>
+                </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 </div>
 <?php include_once VIEW_DIR."footerStart.php"?>
+<?php include_once VIEW_DIR."footerEnd.php"?>
 </body>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+
 </html>

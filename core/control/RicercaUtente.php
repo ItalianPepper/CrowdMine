@@ -10,7 +10,7 @@ include_once MODEL_DIR . 'Utente.php';
 include_once MANAGER_DIR . 'UtenteManager.php';
 
 $manager = new UtenteManager();
-
+$input = null;
 
 if($_SERVER["REQUEST_METHOD"]=="POST") {
 
