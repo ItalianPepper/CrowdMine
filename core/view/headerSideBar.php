@@ -42,7 +42,16 @@
                     <div class="icon">
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </div>
-                    <div class="title">Ricerca</div>
+                    <div class="title">Ricerca Annuncio</div>
+                </a>
+            </li>
+
+            <li id="ricercaUtenti" class="">
+                <a href="<?php echo DOMINIO_SITO;?>/ricercaUtente">
+                    <div class="icon">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </div>
+                    <div class="title">Ricerca Utenti</div>
                 </a>
             </li>
 

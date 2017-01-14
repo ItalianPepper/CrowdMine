@@ -300,6 +300,7 @@ try {
                 include_once CONTROL_DIR . "ListaUtentiBannati.php";
                 break;
             case "ricercaUtente":
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "RicercaUtente.php";
                 break;
             case "cercaAnnunciNavBar":
@@ -334,6 +335,7 @@ try {
                 include_once VIEW_DIR . "visualizzaIndexStatistiche.php";
                 break;
             case 'risultatoRicercaUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "RisultatiRicercaUtente.php";
                 break;
             case 'visualizzaRicorsiAlBan':

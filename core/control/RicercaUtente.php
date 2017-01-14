@@ -12,26 +12,25 @@ include_once MANAGER_DIR . 'UtenteManager.php';
 $manager = new UtenteManager();
 
 
-//il nome dipende dalla barra di ricerca
-$input = $_POST['input'];
+if($_SERVER["REQUEST_METHOD"]=="POST") {
 
-$arrayInput = explode(" ", $input);;
+    if(isset($_POST["inputSearch"])) {
 
-if(count($arrayInput)==1){
-    $listResultFindUser = $manager->findUserOneInput($arrayInput[0]);
+        $input = $_POST["inputSearch"];
 
-    $_SESSION['listResultFindUser'] = serialize($listResultFindUser);
+        $arrayInput = explode(" ", $input);
 
-    header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR."risultatoRicercaUtente");
+        if (count($arrayInput) == 1) {
+
+            $listaUtenti = $manager->findUserOneInput($arrayInput[0]);
+
+
+        } else if (count($arrayInput) > 1) {
+
+            $listaUtenti = $manager->findUserTwoInput($arrayInput[0], $arrayInput[1]);
+
+        }
+    }
 }
-elseif (count($arrayInput)>1){
 
-    $listResultFindUser = $manager->findUserTwoInput($arrayInput[0],$arrayInput[1]);
-
-    $_SESSION['listResultFindUser'] = serialize($listResultFindUser);
-
-    header("location: " . DOMINIO_SITO.DIRECTORY_SEPARATOR."risultatoRicercaUtente");
-}
-else{
-    header("location: " . DOMINIO_SITO);
-}
+include_once VIEW_DIR ."RisultatiRicercaUtente.php";
