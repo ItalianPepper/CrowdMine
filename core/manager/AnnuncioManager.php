@@ -570,8 +570,8 @@ class AnnuncioManager implements SplSubject
 
     public function getReportedCommento(){
         $lista = array();
-        $FIND_REPORTED = "SELECT * FROM commento WHERE stato = '%s'";
-        $query = sprintf($FIND_REPORTED, statoCommento::SEGNALATO);
+        $FIND_REPORTED = "SELECT * FROM commento WHERE stato = '%s' OR stato = '%s'";
+        $query = sprintf($FIND_REPORTED, statoCommento::SEGNALATO,statoCommento::AMMINISTRATORE);
         $result = Manager::getDB()->query($query);
         if($result){
             while ($obj = $result->fetch_assoc()) {

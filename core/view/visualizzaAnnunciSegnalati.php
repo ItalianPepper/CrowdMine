@@ -93,7 +93,7 @@
                                                     <div class="section-body">
                                                         <div class="media-body">
                                                             <div class="media-heading">
-                                                                <h4 class="title"><?php echo getUserFullName($user); ?></h4>
+                                                                <h4 class="title"><?php echo getUserFullName($u); ?></h4>
                                                             </div>
                                                             <h4><b><?php echo $annunciAdmin[$i]->getTitolo(); ?></b></h4>
 
@@ -124,16 +124,6 @@
                                                                      style="font-size: 18px"></i>
                                                                 Elimina
                                                                 </button>
-                                                                <?php if ($user->getRuolo() == "moderatore") { ?>
-                                                                    <button class="btn btn-link"><i
-                                                                                class="fa fa-check-circle"
-                                                                                data-toggle="modal"
-                                                                                data-target="#myModal4-<?php echo $annunciAdmin[$i]->getId(); ?>"
-                                                                                style="font-size: 18px"></i>
-                                                                        invia all'amministratore
-                                                                    </button>
-                                                                <?php } ?>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -141,7 +131,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="modal fade" id="myModal2-<?php echo $annunci[$i]->getId(); ?>"
+                                        <div class="modal fade" id="myModal2-<?php echo $annunciAdmin[$i]->getId(); ?>"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="myModalLabel">
                                             <div class="modal-dialog">
@@ -152,10 +142,10 @@
                                                                     aria-hidden="true">×</span></button>
                                                         <h4 class="modal-title">Attivare l'annuncio?</h4>
                                                     </div>
-                                                    <form action="attivaAnnuncioControl" method="post">
+                                                    <form action="<?php echo DOMINIO_SITO; ?>/attivaAnnuncioControl" method="post">
                                                         <div class="modal-footer">
                                                             <input type="text" name="idAnnuncio" hidden
-                                                                   value="<?php echo $annunci[$i]->getId(); ?>">
+                                                                   value="<?php echo $annunciAdmin[$i]->getId(); ?>">
                                                             <button type="button" class="btn btn-sm btn-default"
                                                                     data-dismiss="modal">
                                                                 Chiudi
@@ -169,7 +159,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="modal fade" id="myModal3-<?php echo $annunci[$i]->getId(); ?>"
+                                        <div class="modal fade" id="myModal3-<?php echo $annunciAdmin[$i]->getId(); ?>"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="myModalLabel">
                                             <div class="modal-dialog">
@@ -180,43 +170,16 @@
                                                                     aria-hidden="true">×</span></button>
                                                         <h4 class="modal-title">Disattivare l'annuncio?</h4>
                                                     </div>
-                                                    <form action="disattivaAnnuncioControl" method="post">
+                                                    <form action="<?php echo DOMINIO_SITO; ?>/disattivaAnnuncioControl" method="post">
                                                         <div class="modal-footer">
                                                             <input type="text" name="idAnnuncio" hidden
-                                                                   value="<?php echo $annunci[$i]->getId(); ?>">
+                                                                   value="<?php echo $annunciAdmin[$i]->getId(); ?>">
                                                             <button type="button" class="btn btn-sm btn-default"
                                                                     data-dismiss="modal">
                                                                 Chiudi
                                                             </button>
                                                             <button type="submit" class="btn btn-sm btn-success">
                                                                 Disattiva
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal fade" id="myModal4-<?php echo $annunci[$i]->getId(); ?>"
-                                             tabindex="-1" role="dialog"
-                                             aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close"><span
-                                                                    aria-hidden="true">×</span></button>
-                                                        <h4 class="modal-title">Inviare all'amministratore?</h4>
-                                                    </div>
-                                                    <form action="inviaAnnuncioAdmin" method="post">
-                                                        <div class="modal-footer">
-                                                            <input type="text" name="idAnnuncio" hidden
-                                                                   value="<?php echo $annunci[$i]->getId(); ?>">
-                                                            <button type="button" class="btn btn-sm btn-default"
-                                                                    data-dismiss="modal">
-                                                                Chiudi
-                                                            </button>
-                                                            <button type="submit" class="btn btn-sm btn-success">Invia
                                                             </button>
                                                         </div>
                                                     </form>
@@ -287,14 +250,11 @@
                                                                                                                                  style="font-size: 18px"></i>
                                                         Elimina
                                                         </button>
-                                                        <?php if ($user->getRuolo() == "moderatore") { ?>
-                                                            <button class="btn btn-link"><i class="fa fa-check-circle"
-                                                                                            data-toggle="modal"
-                                                                                            data-target="#myModal4-<?php echo $annunci[$i]->getId(); ?>"
-                                                                                            style="font-size: 18px"></i>
-                                                                invia all'amministratore
-                                                            </button>
-                                                        <?php } ?>
+                                                        <button class="btn btn-link"data-toggle="modal"
+                                                                data-target="#myModal4-<?php echo $annunci[$i]->getId(); ?>"><i class="fa fa-check-circle"
+                                                                                                                                style="font-size: 18px"></i>
+                                                            invia all'amministratore
+                                                        </button>
 
                                                     </div>
                                                 </div>
@@ -313,7 +273,7 @@
                                                         aria-hidden="true">×</span></button>
                                                 <h4 class="modal-title">Attivare l'annuncio?</h4>
                                             </div>
-                                            <form action="attivaAnnuncioControl" method="post">
+                                            <form action="<?php echo DOMINIO_SITO; ?>/attivaAnnuncioControl" method="post">
                                                 <div class="modal-footer">
                                                     <input type="text" name="idAnnuncio" hidden
                                                            value="<?php echo $annunci[$i]->getId(); ?>">
@@ -338,7 +298,7 @@
                                                         aria-hidden="true">×</span></button>
                                                 <h4 class="modal-title">Disattivare l'annuncio?</h4>
                                             </div>
-                                            <form action="disattivaAnnuncioControl" method="post">
+                                            <form action="<?php echo DOMINIO_SITO; ?>/disattivaAnnuncioControl" method="post">
                                                 <div class="modal-footer">
                                                     <input type="text" name="idAnnuncio" hidden
                                                            value="<?php echo $annunci[$i]->getId(); ?>">
@@ -364,7 +324,7 @@
                                                         aria-hidden="true">×</span></button>
                                                 <h4 class="modal-title">Inviare all'amministratore?</h4>
                                             </div>
-                                            <form action="inviaAnnuncioAdmin" method="post">
+                                            <form action="<?php echo DOMINIO_SITO; ?>/inviaAnnuncioAdmin" method="post">
                                                 <div class="modal-footer">
                                                     <input type="text" name="idAnnuncio" hidden
                                                            value="<?php echo $annunci[$i]->getId(); ?>">

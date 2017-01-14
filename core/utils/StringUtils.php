@@ -29,7 +29,7 @@ class StringUtils {
     }
 
     /**
-     * @param Permissions $level Required role for access, ex. MODERATORE
+     * @param String $level Required role for access, ex. MODERATORE
      * @param string $redirect if user does not match role, redirect to this URL
      * @return mixed instance of Utente, if user is logged
      */
