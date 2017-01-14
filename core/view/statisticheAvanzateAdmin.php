@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title>CrowdMine | Statistiche Avanzate</title>
     <?php include_once VIEW_DIR."ViewUtils.php";?>
     <?php include_once VIEW_DIR."headerStart.php";?>
 </head>
@@ -203,10 +205,8 @@
         </div>
     </div>
 </div>
-</body>
 
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+<?php include_once VIEW_DIR."footerStart.php";?>
 <script src="<?php echo STYLE_DIR; ?>assets\js\Chart.min.js"></script>
 
 <script type="text/javascript">
@@ -787,4 +787,8 @@
         });
     }
 </script>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
+
+</body>
 </html>

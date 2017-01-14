@@ -20,6 +20,10 @@
     <style>
         /*da qui*/
 
+        body .app-container{
+            min-height: 900px;
+        }
+
         body .app-container.no-sidebar{
             padding-left: 0px;
         }
@@ -41,6 +45,10 @@
             padding: 0;
         }
 
+        footer{
+            position: absolute;
+            width: 100%;
+        }
 
         @media (min-width: 767px) {
             .navbar {

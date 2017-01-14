@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+    <title>Crowdmine | Commenti Segnalati</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <script>
         $(document).ready(function(){
@@ -373,11 +374,9 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+        <?php include_once VIEW_DIR."footerStart.php";?>
 
         <script type="text/javascript">
             function toggleMe(a) {
@@ -429,19 +428,9 @@
                 });
             });
         </script>
-        <?php
-
-        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-            ?>
-            <script>
-                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-            </script>
-            <?php
-            unset($_SESSION['toast-type']);
-            unset($_SESSION['toast-message']);
-        }
-        ?>
 
 </body>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 
 </html>

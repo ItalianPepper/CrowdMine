@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title>Crowdmine | Statistiche Macrocategorie</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
 </head>
 
@@ -24,8 +26,8 @@
     </div>
 </div>
 </body>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+
+<?php include_once VIEW_DIR."footerStart.php";?>
 <script src="<?php echo STYLE_DIR; ?> assets\js\Chart.min.js"></script>
 
 <script type="text/javascript">
@@ -117,5 +119,7 @@
         return allElement;
     }
 </script>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 
 </html>

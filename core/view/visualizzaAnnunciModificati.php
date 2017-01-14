@@ -2,6 +2,7 @@
 
 <head>
 
+    <title>Crowdmine | Annunci Modificati</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <script>
@@ -147,7 +148,7 @@
                                                         aria-hidden="true">×</span></button>
                                                 <h4 class="modal-title">Attivare l'annuncio?</h4>
                                             </div>
-                                            <form action="attivaAnnuncioControl" method="post">
+                                            <form action="<?php echo DOMINIO_SITO; ?>/attivaAnnuncioControl" method="post">
                                                 <div class="modal-footer">
                                                     <input type="text" name="idAnnuncio" hidden
                                                            value="<?php echo $annunci[$i]->getId(); ?>">
@@ -172,7 +173,7 @@
                                                         aria-hidden="true">×</span></button>
                                                 <h4 class="modal-title">Disattivare l'annuncio?</h4>
                                             </div>
-                                            <form action="disattivaAnnuncioControl" method="post">
+                                            <form action="<?php echo DOMINIO_SITO; ?>/disattivaAnnuncioControl" method="post">
                                                 <div class="modal-footer">
                                                     <input type="text" name="idAnnuncio" hidden
                                                            value="<?php echo $annunci[$i]->getId(); ?>">
@@ -198,7 +199,7 @@
                                                         aria-hidden="true">×</span></button>
                                                 <h4 class="modal-title">Inviare all'amministratore?</h4>
                                             </div>
-                                            <form action="inviaAnnuncioAdmin" method="post">
+                                            <form action="<?php echo DOMINIO_SITO; ?>/inviaAnnuncioAdmin" method="post">
                                                 <div class="modal-footer">
                                                     <input type="text" name="idAnnuncio" hidden
                                                            value="<?php echo $annunci[$i]->getId(); ?>">
@@ -218,11 +219,10 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+        <?php include_once VIEW_DIR."footerStart.php";?>
 
         <script type="text/javascript">
             function toggleMe(a) {
@@ -274,19 +274,8 @@
             });
         </script>
 
-        <?php
-
-        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-            ?>
-            <script>
-                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-            </script>
-            <?php
-            unset($_SESSION['toast-type']);
-            unset($_SESSION['toast-message']);
-        }
-        ?>
-
 </body>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 
 </html>

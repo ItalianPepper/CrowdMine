@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>CrowdMine | Statistiche</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
 </head>
 <body>
@@ -36,6 +37,7 @@
     </div>
 </div>
 </body>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+
+<?php include_once VIEW_DIR."footerStart.php";?>
+<?php include_once VIEW_DIR."footerEnd.php";?>
 </html>

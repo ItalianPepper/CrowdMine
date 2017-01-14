@@ -267,6 +267,8 @@
             ?>
         </div>
     </div>
+</div>
+
 
     <?php include_once VIEW_DIR."footerStart.php"?>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackList.js"></script>
@@ -327,7 +329,8 @@
 
     </script>
 
-    <?php include_once VIEW_DIR."footerEnd.php"?>
+<?php include_once VIEW_DIR."footerEnd.php"?>
 </body>
+
 
 </html>

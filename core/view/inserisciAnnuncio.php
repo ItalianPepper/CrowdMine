@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-
+    <title>CrowdMine | Inserimento Annuncio</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         div.section .profile {
@@ -193,15 +193,11 @@
     </div>
 </div>
 
-
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/app.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins/toastr/toastr.js"></script>
+<?php include_once VIEW_DIR."footerStart.php"?>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackList.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/styleUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/AnnuncioCheckUtils.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>/scripts/caricacitta.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>scripts/caricacitta.js"></script>
 
 <script type="text/javascript">
 
@@ -353,18 +349,8 @@ if(isset($sideBarIconName)) {
 
 $('[data-toggle="tooltip"]').tooltip();
 </script>
-<?php
 
-if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-    ?>
-    <script>
-        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-    </script>
-    <?php
-    unset($_SESSION['toast-type']);
-    unset($_SESSION['toast-message']);
-}
-?>
+<?php include_once VIEW_DIR."footerEnd.php"?>
 
 </body>
 

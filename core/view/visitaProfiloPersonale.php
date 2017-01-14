@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php
 
+    <title>CrowdMine | Profilo Personale</title>
+
+    <?php
     include_once VIEW_DIR."headerStart.php";
     $fullname = $user->getNome()." ".$user->getCognome();
     ?>
@@ -1649,9 +1651,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+<?php include_once VIEW_DIR."footerStart.php";?>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\passwordCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\microCheckUtils.js"></script>
 
@@ -1744,17 +1744,7 @@
 
 </script>
 
-<?php
-if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-    ?>
-    <script>
-        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-    </script>
-    <?php
-    unset($_SESSION['toast-type']);
-    unset($_SESSION['toast-message']);
-}
-?>
+<?php include_once VIEW_DIR."footerEnd.php";?>
 
 
 </body>

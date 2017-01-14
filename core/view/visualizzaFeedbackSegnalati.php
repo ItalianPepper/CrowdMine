@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include_once VIEW_DIR."ViewUtils.php";?>
+
+    <title>Crowdmine | Feedback Segnalati</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         .navbar-collapse.in {
@@ -66,14 +67,12 @@
         </div>
     </div>
     <script type="text/javascript">var dominio = "<?php echo DOMINIO_SITO;?>";</script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+    <?php include_once VIEW_DIR."footerStart.php";?>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackBackEnd.js"></script>
     <script type="text/javascript"
             src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackSort.js"></script>
     <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
     <script>
         $(document).ready(
             function () {
@@ -103,4 +102,6 @@
     </script>
 
 </body>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 </html>

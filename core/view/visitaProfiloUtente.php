@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title>Crowdmine | Profilo Utente</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>
@@ -85,8 +87,8 @@
 
 </head>
 <body>
-<div class="app app-default">
-    <div class="app-container no-sidebar">
+    <div class="app app-default">
+        <div class="app-container no-sidebar">
 
         <?php include_once VIEW_DIR."headerNavBar.php";?>
         <div class="app-head"></div>
@@ -757,13 +759,10 @@
                         </div>
                     </div>
                 </div>
+
+                <?php include_once VIEW_DIR."footerStart.php";?>
                 <script type="text/javascript">var dominio = "<?php echo DOMINIO_SITO;?>";</script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-                <script type="text/javascript"
-                        src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackList.js"></script>
 
                 <script>
                     function setModalForm(action,text){
@@ -808,26 +807,16 @@
 
                 </script>
                 <script type="text/javascript"
-                        src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackSort.js"></script>
+                        src="<?php echo STYLE_DIR; ?>assets/js/valutazioneFeedback.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackSort.js"></script>
 
-                <?php
-
-                if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-                    ?>
-                    <script>
-                        $(document).ready(function () {
-                            "use strict";
-                            $("#feedback-tab").click();
-                            $("#feedback-collapse-panel").click();
-                        });
-                        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-                    </script>
-                    <?php
-                    unset($_SESSION['toast-type']);
-                    unset($_SESSION['toast-message']);
-                }
-                ?>
+                <script>
+                    $(document).ready(function () {
+                        "use strict";
+                        $("#feedback-tab").click();
+                        $("#feedback-collapse-panel").click();
+                    });
+                </script>
 
                 <script>
                     $("#tab4").ready(function () {
@@ -924,29 +913,36 @@
                     }
 
                 </script>
+
+                <div class="modal fade" id="myModalMessaggio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">INVIA MESSAGGIO</h4>
+                            </div>
+                            <form action="<?php echo DOMINIO_SITO;?>/inviaMessaggioPrivato" method="post">
+                                <div class="modal-body">
+                                    Testo del messaggio
+                                    <textarea name="messaggio" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
+                                    <input type="text" value="<?php echo $visitedUser->getId();?>" name="idUtente" hidden>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <button type="submit" class="btn btn-sm btn-success">Invia Messaggio</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </div>
 </body>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 
 </html>
 
-
-                            <div class="modal fade" id="myModalMessaggio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">INVIA MESSAGGIO</h4>
-                                        </div>
-                                        <form action="<?php echo DOMINIO_SITO;?>/inviaMessaggioPrivato" method="post">
-                                            <div class="modal-body">
-                                                Testo del messaggio
-                                                <textarea name="messaggio" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
-                                                <input type="text" value="<?php echo $visitedUser->getId();?>" name="idUtente" hidden>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                                <button type="submit" class="btn btn-sm btn-success">Invia Messaggio</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title>Crowdmine | Utenti Segnalati</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         .navbar-collapse.in {
@@ -41,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <?php if ($user->getRuolo() == RuoloUtente::AMMINISTRATORE){?>
+        <?php if ($user->getRuolo() == RuoloUtente::AMMINISTRATORE && isset($usersAdmin) && count($usersAdmin)>0){?>
             <div class="row" >
                 <div class="col-lg-12 col-md-12 col-xs-12" >
                     <div class="card" >
@@ -212,9 +214,8 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-        <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+
+        <?php include_once VIEW_DIR."footerStart.php";?>
 
         <script>
             /*evidenzio segnalazioni nella barra laterale*/
@@ -228,19 +229,10 @@
             }
 
         </script>
-
-        <?php
-        if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-            ?>
-            <script>
-                toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-            </script>
-            <?php
-            unset($_SESSION['toast-type']);
-            unset($_SESSION['toast-message']);
-        }
-        ?>
     </div>
 </div>
 </body>
+
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 </html>
