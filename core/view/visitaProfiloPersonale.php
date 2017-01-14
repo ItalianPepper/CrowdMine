@@ -1447,18 +1447,128 @@
                                                                     }
                                                                 ?>
                                                             </div>
+                                                            <div class="media-comment" style="">
+                                                                <button class="btn btn-link<?php echo $annunci[$i]->getId(); ?>">
+                                                                    <i class="fa fa-comments-o"></i> <?php echo isset($listaCommenti[$aId]) ? count($listaCommenti[$aId]) : 0 ?>
+                                                                    commenti
+                                                                </button>
+                                                                <button type="button"
+                                                                        class="btn btn-warning<?php echo $annunci[$i]->getId(); ?>"><?php echo isset($listaCandidature[$aId]) ? count($listaCandidature[$aId]) : 0 ?>
+                                                                    candidature
+                                                                </button>
+                                                            </div>
+
                                                             <div class="row">
                                                                 <div class="col-lg-12 col-md-12 col-xs-12 simple-row">
-                                                                    <div class="form-footer">
-                                                                        <div class="form-group">
-                                                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                                <button class="btn btn-danger pull-right">
-                                                                                    Reclama
-                                                                                </button>
+                                                                    <form action="<?php echo DOMINIO_SITO;?>/reclamaAnnuncio" method="post">
+                                                                        <div class="form-footer">
+                                                                            <div class="form-group">
+                                                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                                    <input type="text" name="idAnnuncio" hidden value="<?php echo$annunci[$i]->getId();?>">
+                                                                                    <button type="submit" class="btn btn-danger pull-right">
+                                                                                        Reclama
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </form>
                                                                 </div>
+                                                            </div>
+
+
+                                                            <div
+                                                                class="row col-md-12 col-sm-12 card contenitore<?php echo $annunci[$i]->getId(); ?>"
+                                                                style="margin-left: 0; display: none">
+                                                                <?php
+                                                                if (isset($listaCommenti[$aId]))
+                                                                    for ($z = 0; $z < count($listaCommenti[$aId]); $z++) {
+                                                                        $u = $listaUtenti[$listaCommenti[$aId][$z]->getIdUtente()];
+                                                                        ?>
+                                                                        <div class="row col-md-12 col-sm-12 comment-body"
+                                                                             style="border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%">
+                                                                            <div class="col-md-1 col-sm-1 media-left"
+                                                                                 style="margin-top: 1%">
+                                                                                <a href="#">
+                                                                                    <img src="<?php echo getUserImageBig($u, true); ?>"
+                                                                                         width="100%;"/>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="media-heading">
+                                                                                <h4 class="title">
+                                                                                    <?php
+                                                                                    echo getUserFullName($u, true);
+                                                                                    ?>
+                                                                                </h4>
+                                                                                <h5 class="timeing"><?php
+                                                                                    echo $listaCommenti[$aId][$z]->getData();
+                                                                                    ?>
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="media-content">
+                                                                                <?php
+                                                                                echo $listaCommenti[$aId][$z]->getCorpo();
+                                                                                ?>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                ?>
+                                                            </div>
+
+                                                            <div class="row col-md-12 col-sm-12 card candidature<?php echo $aId; ?>"
+                                                                 style="margin-left: 0; display: none">
+
+                                                                <?php
+                                                                if (isset($listaCandidature[$aId]))
+                                                                    for ($z = 0; $z < count($listaCandidature[$aId]); $z++) {
+                                                                        $u = $listaUtenti[$listaCandidature[$aId][$z]->getIdUtente()];
+                                                                        ?>
+                                                                        <div class="row col-md-12 col-sm-12 candidature-body"
+                                                                             style="margin-left: 0">
+
+                                                                            <div class="media-left col-md-12 col-sm-12 candidato-body"
+                                                                                 style="margin-left: 0; border-bottom: solid 1px #eee; margin-top: 2%; margin-bottom: 1%;">
+                                                                                <img class="col-md-2 col-sm-2"
+                                                                                     src="<?php echo getUserImageBig($u, true); ?>"
+                                                                                     style="margin-left: -5%">
+                                                                                <h4 class="title" style="margin-top: 3%">
+                                                                                    <?php
+                                                                                    echo getUserFullName($u, true);
+                                                                                    ?>
+                                                                                </h4>
+                                                                                <div class="col-md-5 col-sm-5 options"
+                                                                                     style="float: right; margin-top: -8%; margin-right: -23%">
+                                                                                    <form method="POST" action="paginaAlfredo">
+                                                                                        <input name="idAnnuncio" style="display: none"
+                                                                                               value="<?php echo $aId; ?>">
+                                                                                        <input name="idUtenteCandidato"
+                                                                                               style="display: none"
+                                                                                               value="<?php echo $listaCandidature[$aId][$z]->getIdUtente(); ?>">
+                                                                                        <input name="idUtenteProprietario"
+                                                                                               style="display: none"
+                                                                                               value="<?php echo $user->getId(); ?>">
+                                                                                        <button type="submit"
+                                                                                                style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                                                                            <i class="fa fa-mail-reply-all"></i>
+                                                                                        </button>
+                                                                                    </form
+                                                                                    <a href="<?php echo DOMINIO_SITO; ?>/rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId(); ?>">
+                                                                                        <button
+                                                                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
+                                                                                            <i class="fa fa-close"></i>
+                                                                                        </button>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="media-content">
+                                                                                    <?php echo $listaCandidature[$aId][$z]->getCorpo(); ?>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    <?php } ?>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1477,7 +1587,7 @@
                                                                 aria-hidden="true">×</span></button>
                                                         <h4 class="modal-title">Attivare l'annuncio?</h4>
                                                     </div>
-                                                    <form action="attivaAnnuncioControl" method="post">
+                                                    <form action="<?php echo DOMINIO_SITO;?>/attivaAnnuncioControl" method="post">
                                                         <div class="modal-footer">
                                                             <input type="text" name="idAnnuncio" hidden
                                                                    value="<?php echo $annunci[$i]->getId(); ?>">
@@ -1505,7 +1615,7 @@
                                                                 aria-hidden="true">×</span></button>
                                                         <h4 class="modal-title">Disattivare l'annuncio?</h4>
                                                     </div>
-                                                    <form action="disattivaAnnuncioControl" method="post">
+                                                    <form action="<?php echo DOMINIO_SITO;?>/disattivaAnnuncioControl" method="post">
                                                         <div class="modal-footer">
                                                             <input type="text" name="idAnnuncio" hidden
                                                                    value="<?php echo $annunci[$i]->getId(); ?>">
@@ -1533,7 +1643,7 @@
                                                                 aria-hidden="true">×</span></button>
                                                         <h4 class="modal-title">Inviare all'amministratore?</h4>
                                                     </div>
-                                                    <form action="inviaAnnuncioAdmin" method="post">
+                                                    <form action="<?php echo DOMINIO_SITO;?>/inviaAnnuncioAdmin" method="post">
                                                         <div class="modal-footer">
                                                             <input type="text" name="idAnnuncio" hidden
                                                                    value="<?php echo $annunci[$i]->getId(); ?>">

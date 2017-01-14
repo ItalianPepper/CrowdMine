@@ -712,7 +712,7 @@ class AnnuncioManager implements SplSubject
     public function sendClaim($idAnnuncio, $message)
     {
         /* TODO: tabella Ricorso ???*/
-        $this->updateStatus($idAnnuncio, StatoAnnuncio::RICORSO, StatoAnnuncio::DISATTIVATO);
+        $this->updateStatus($idAnnuncio, StatoAnnuncio::RICORSO, StatoAnnuncio::SEGNALATO);
     }
 
     /**

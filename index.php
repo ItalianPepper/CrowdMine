@@ -99,7 +99,6 @@ try {
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "messagingLiveUpdate.php";
                 break;
-
             case 'visualizzaStatisticheMacroCategorie':
                 $user = StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "visualizzaStatisticheMacroCategorie.php";
@@ -140,6 +139,10 @@ try {
             case 'ricercaAnnuncio':
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "ricercaAnnuncio.php";
+                break;
+            case 'reclamaAnnuncio':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "reclamaAnnuncio.php";
                 break;
             case 'banned':
                 $user=StringUtils::checkPermission(Permissions::BANNED_ONLY);
