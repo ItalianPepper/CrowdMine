@@ -13,6 +13,7 @@ function NotifyPanel(url) {
             url: url+"pannelloNotifiche",
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 This.generateNotificationsList(data);
             }
         });
@@ -37,8 +38,9 @@ function NotifyPanel(url) {
                     listaNotificheObject.corpo = data[i].text;
                     listaNotificheObject.letto = data[i].read;
 
-                    $("#lista-notifiche").append(notificaToRowString(listaNotificheObject));
+                    $("#lista-notifiche").append(This.notificaToRowString(listaNotificheObject));
                     $("#notification-count").text(data.length);
+                    $("#notification-count").show();
                 }
             }
 
