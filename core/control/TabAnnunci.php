@@ -70,7 +70,7 @@ include_once MANAGER_DIR . "MicrocategoriaManager.php";
             } else if ($_POST["option"] == "selectMicro") {
 
                 $microCategoriaManager = new MicrocategoriaManager();
-                $listMicroOptions = $microCategoriaManager->findAll();
+                $listMicroOptions = $microCategoriaManager->getListaMicroCategorie();
 
                 header("Content-Type : application/json");
                 echo json_encode($listMicroOptions);

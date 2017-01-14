@@ -1376,35 +1376,11 @@
                                                                     echo getUserFullName($u, true);
                                                                     ?>
                                                                 </h4>
-                                                                <div class="col-md-5 col-sm-5 options"
-                                                                     style="float: right; margin-top: -8%; margin-right: -23%">
-                                                                    <form method="POST" action="paginaAlfredo">
-                                                                        <input name="idAnnuncio" style="display: none"
-                                                                               value="<?php echo $aId; ?>">
-                                                                        <input name="idUtenteCandidato"
-                                                                               style="display: none"
-                                                                               value="<?php echo $listaCandidature[$aId][$z]->getIdUtente(); ?>">
-                                                                        <input name="idUtenteProprietario"
-                                                                               style="display: none"
-                                                                               value="<?php echo $user->getId(); ?>">
-                                                                        <button type="submit"
-                                                                                style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                            <i class="fa fa-mail-reply-all"></i>
-                                                                        </button>
-                                                                    </form
-                                                                    <a href="<?php echo DOMINIO_SITO; ?>/rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId(); ?>">
-                                                                        <button
-                                                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                            <i class="fa fa-close"></i>
-                                                                        </button>
-                                                                    </a>
-                                                                </div>
                                                                 <div class="media-content">
                                                                     <?php echo $listaCandidature[$aId][$z]->getCorpo(); ?>
                                                                 </div>
 
                                                             </div>
-
                                                         </div>
                                                     <?php } ?>
 
@@ -1537,29 +1513,6 @@
                                                                                     echo getUserFullName($u, true);
                                                                                     ?>
                                                                                 </h4>
-                                                                                <div class="col-md-5 col-sm-5 options"
-                                                                                     style="float: right; margin-top: -8%; margin-right: -23%">
-                                                                                    <form method="POST" action="paginaAlfredo">
-                                                                                        <input name="idAnnuncio" style="display: none"
-                                                                                               value="<?php echo $aId; ?>">
-                                                                                        <input name="idUtenteCandidato"
-                                                                                               style="display: none"
-                                                                                               value="<?php echo $listaCandidature[$aId][$z]->getIdUtente(); ?>">
-                                                                                        <input name="idUtenteProprietario"
-                                                                                               style="display: none"
-                                                                                               value="<?php echo $user->getId(); ?>">
-                                                                                        <button type="submit"
-                                                                                                style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                                            <i class="fa fa-mail-reply-all"></i>
-                                                                                        </button>
-                                                                                    </form
-                                                                                    <a href="<?php echo DOMINIO_SITO; ?>/rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId(); ?>">
-                                                                                        <button
-                                                                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                                            <i class="fa fa-close"></i>
-                                                                                        </button>
-                                                                                    </a>
-                                                                                </div>
                                                                                 <div class="media-content">
                                                                                     <?php echo $listaCandidature[$aId][$z]->getCorpo(); ?>
                                                                                 </div>
