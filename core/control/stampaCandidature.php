@@ -112,7 +112,7 @@ if ($lista_candidature != null) {
             </div>
             <div class="media-body">
                 <div class="media-heading">
-                    <h4 class="title"> <?php echo $utente_destinatario->getNome() . "    "; ?>  si e' candidato al tuo annuncio <b><?php echo $id_annuncio; ?></h4>
+                    <h4 class="title"> <?php echo $utente_destinatario->getNome() . "    "; ?>  si e' candidato al tuo annuncio <b><?php echo $annuncio_manager->getAnnuncio($id_annuncio)->getTitolo(); ?></h4>
                     <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato candidatura: ".getCand($stato)." il ". $data?> </h5>
                 </div>       
                 <div class="media-content" style="font-size: small;  font-weight: 100"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>
@@ -139,7 +139,7 @@ if ($lista_candidature != null) {
                     </div>
                     <div class="media-body">
                         <div class="media-heading">
-                            <h4 class="title">Ti sei candidato all'annuncio di <?php echo $utente_destinatario->getNome() . "    "; ?> <b><?php echo $id_annuncio; ?></h4>
+                            <h4 class="title">Ti sei candidato all'annuncio di <?php echo $utente_destinatario->getNome() . "    "; ?> <b><?php echo $annuncio_manager->getAnnuncio($id_annuncio)->getTitolo(); ?></h4>
                             <h5 class="timeing" style="color: <?php echo getColor($stato); ?>;font-size: small; opacity: 100"><?php echo "Stato candidatura: ".getCand($stato)." il ". $data?></h5>
                         </div>       
                         <div class="media-content" style="font-size: small;  font-weight: 100"> <?php echo $lista_candidature[$indice]->getCorpo(); ?>   </div>

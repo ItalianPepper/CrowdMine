@@ -35,10 +35,13 @@ include_once MODEL_DIR . "Messaggio.php";
 include_once MANAGER_DIR . "Manager.php";
 include_once MANAGER_DIR . "NotificaManager.php";
 include_once MANAGER_DIR . "MessaggioManager.php";
+include_once MANAGER_DIR . "UtenteManager.php";
 
 #RECUPERO INFORMAZIONI DALL'UTENTE
 $id_utente_connesso = $user->getId();
 $manager_msg = new MessaggioManager();
+$utenteManager = new UtenteManager();
+
 $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //array di utenti
 
 //RECUPERO L'ID DEL DESTINATARIO
@@ -72,14 +75,17 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
                 <!-- LISTA DESTINATARI -->
                 <?php
                 foreach ($lista_destinatari as $indice => $elemento) {
+                    
                     $id = $lista_destinatari[$indice]->getId();
+                    $profileImg = getUserImageBig($utenteManager->findUtenteById($id));
+                    $src = "src=\"$profileImg\"";
                     $num_messaggi_non_letti = $manager_msg->messaggiNonLetti($id, $id_utente_connesso);
                     echo '<li class="message">' . "\n";
                     echo '<a data-toggle="collapse" href="#collapseMessaging" aria-expanded="false" aria-controls="collapseMessaging">' . "\n";
                     if(count($num_messaggi_non_letti)>0)
                         echo '<span id="numero_conversazione" class="badge badge-warning pull-right">'.count($num_messaggi_non_letti).'</span>' . "\n";
                     echo '<div class="message">' . "\n";
-                    echo '<img class="profile" src="https://placehold.it/100x100">' . "\n";
+                    echo "<img class=\"profile\" $src>" . "\n";
                     echo '<div class="content">' . "\n";
                     echo '<div class="title"' . ' id="' . $id . '"' . ' onclick="stampa(event)">' . $lista_destinatari[$indice]->getNome() . " " . $lista_destinatari[$indice]->getCognome() . '</div>' . "\n";
                     echo '</div>' . "\n";
@@ -367,6 +373,6 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
 
 
 <?php include_once VIEW_DIR."footerStart.php"?>
-<script type="text/javascript" src="<?php echo STYLE_DIR ?>assets/js/messagingUpdate.js"></script>
+
 <?php include_once VIEW_DIR."footerEnd.php"?>
 
