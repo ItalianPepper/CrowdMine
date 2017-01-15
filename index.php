@@ -465,7 +465,7 @@ try {
                 include_once CONTROL_DIR . "annunciModificati.php";
                 break;
             case 'annunciRevisione';
-                $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "annunciRevisione.php";
                 break;
             case 'annuncioNew';
