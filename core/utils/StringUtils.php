@@ -32,9 +32,10 @@ class StringUtils {
     /**
      * @param String $level Required role for access, ex. MODERATORE
      * @param string $redirect if user does not match role, redirect to this URL
+     * @param string $notUpdate boolean flag, if true do not retrieve userdata from DB
      * @return mixed instance of Utente, if user is logged
      */
-    public static function checkPermission($level, $redirect=null)
+    public static function checkPermission($level, $redirect=null, $notUpdate = null)
     {
 
         /*default value for redirect, authentication page*/
@@ -45,10 +46,13 @@ class StringUtils {
 
             //redirect to home page, user is already logged*/
             $redirect = DOMINIO_SITO . "/";
-            $utenteManager = new UtenteManager();
             $user = unserialize($_SESSION['user']);
-            //update logged user data from db
-            $user = $utenteManager->findUtenteById($user->getId());
+
+            if($notUpdate!=null) {
+                //update logged user data from db
+                $utenteManager = new UtenteManager();
+                $user = $utenteManager->findUtenteById($user->getId());
+            }
             $stato = $user->getStato();
 
             /*if user is not enabled, redirect to ban page*/

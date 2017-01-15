@@ -92,11 +92,11 @@ try {
                 break;
 
             case 'updateMessIcon':
-                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                $user = StringUtils::checkPermission(Permissions::UTENTE,null,true);
                 include_once CONTROL_DIR . "updateNumberMessIcon.php";
                 break;
             case 'updateChat':
-                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                $user = StringUtils::checkPermission(Permissions::UTENTE,null,true);
                 include_once CONTROL_DIR . "messagingLiveUpdate.php";
                 break;
             case 'visualizzaStatisticheMacroCategorie':
@@ -537,11 +537,11 @@ try {
                 include_once CONTROL_DIR . "listaNotifiche.php";
                 break;
             case 'pannelloNotifiche':
-                $user = StringUtils::checkPermission(Permissions::ALL);
+                $user = StringUtils::checkPermission(Permissions::ALL,null,true);
                 include_once CONTROL_DIR . "pannelloNotifiche.php";
                 break;
             case 'pannelloNotificheUtente':
-                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                $user = StringUtils::checkPermission(Permissions::UTENTE,null,true);
                 include_once CONTROL_DIR . "pannelloNotificheUtente.php";
                 break;
             case 'commentiSegnalati':
