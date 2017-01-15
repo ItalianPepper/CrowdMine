@@ -834,7 +834,7 @@ class AnnuncioManager implements SplSubject
         $lista = array();
         $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres , COUNT(annuncio.id) AS conto
                           FROM annuncio, riferito 
-                          WHERE annuncio.id = riferito.id_annuncio AND riferito.id_microcategoria ='%s' 
+                          WHERE annuncio.id = riferito.id_annuncio AND riferito.id_microcategoria ='%s'
                                 AND (annuncio.data BETWEEN '%s' AND '%s')
                           GROUP BY dateres
                           ORDER BY dateres ASC";
@@ -857,8 +857,10 @@ class AnnuncioManager implements SplSubject
         $FIND_ANNUNCI = "SELECT CAST(annuncio.data AS DATE) AS dateres , COUNT(annuncio.id) AS conto
                           FROM annuncio,riferito,macrocategoria,microcategoria
                           WHERE annuncio.id = riferito.id_annuncio
-                          AND riferito.id_microcategoria = microcategoria.id 
+                          AND riferito.id_microcategoria = microcategoria.id
+                          AND microcategoria.nome != macrocategoria.nome
                           AND microcategoria.id_macrocategoria = '%s'
+                          AND macrocategoria.id = microcategoria.id_macrocategoria
                           AND (annuncio.data BETWEEN '%s' AND '%s')
                           GROUP BY dateres
                           ORDER BY dateres ASC";
