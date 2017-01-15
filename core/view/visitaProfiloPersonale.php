@@ -130,7 +130,8 @@
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
                                                             <form class="form form-horizontal" id="edit-tel-input"
-                                                                  style="display:none">
+                                                                  style="display:none" action="<?php echo DOMINIO_SITO;?>/CambiaNumeroControl"
+                                                                  method="post">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
@@ -142,10 +143,11 @@
                                                                                    aria-hidden="true"></i>
 																			</span>
                                                                         <input id="numberTelephoneChange" type="text"
-                                                                               class="form-control"
+                                                                               class="form-control" name="nuovoNumero"
                                                                                placeholder="Nuovo Numero"
                                                                                aria-describedby="basic-addon1"
-                                                                               value="<?php echo $user->getTelefono() ?>">
+                                                                               value="<?php if (isset($user))
+                                                                               {echo $user->getTelefono();} ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">

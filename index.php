@@ -557,6 +557,10 @@ try {
             case 'inviaCommentoAdmin':
                 include_once CONTROL_DIR . "inviaCommentoAdmin.php";
                 break;
+            case 'CambiaNumeroControl':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "CambiaNumeroControl.php";
+                break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');
                 exit;

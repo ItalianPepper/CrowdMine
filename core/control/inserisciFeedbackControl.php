@@ -125,6 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         ATTIVATO,$feedbackName);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "Feedback inserito con successo";
+
         header("Location:" .getReferer(DOMINIO_SITO));
     }
     else
