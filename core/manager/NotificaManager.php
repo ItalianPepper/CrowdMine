@@ -62,8 +62,8 @@ class NotificaManager extends Manager implements SplObserver
         $query = sprintf($FIND_BY__ID, $idNotifica);
         $result = self::getDB()->query($query);
         $notifica = null;
-        while($r = $result){
-            $notifica = new Notifica($r['data'], $r['tipo'], $r['info'], $r['letto'], $r['id']);
+        while($r = $result->fetch_assoc()){
+            $notifica = new Notifica($r['date'], $r['tipo'], $r['info'], $r['letto'], $r['id']);
         }return $notifica;
     }
 

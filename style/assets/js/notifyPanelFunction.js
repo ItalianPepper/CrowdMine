@@ -37,12 +37,32 @@ function NotifyPanel(url) {
                     listaNotificheObject.href = data[i].href;
                     listaNotificheObject.corpo = data[i].text;
                     listaNotificheObject.letto = data[i].read;
-
                     $("#lista-notifiche").append(This.notificaToRowString(listaNotificheObject));
                     $("#notification-count").text(data.length);
                     $("#notification-count").show();
                 }
             }
+
+            $("#lista-notifiche > li").click(function (event) {
+
+                target = $(event.currentTarget);
+
+                if (target.is("li")) {
+
+                    var idNotifica = target.attr("id");
+                    var hrefUrl = target.attr("href-url");
+                    $.ajax({
+                        type: "POST",
+                        url: url+"pannelloNotifiche",
+                        dataType: "json",
+                        data: {idnotifica: idNotifica},
+                        success: function () {
+                            $("#lista-notifiche").find("#" + idNotifica).remove();
+                            window.location = hrefUrl;
+                        },
+                    })
+                }
+            });
 
         } else {
 
@@ -54,31 +74,10 @@ function NotifyPanel(url) {
     };
 
     this.notificaToRowString = function(listaNotificheObject) {
-        return '<li id="' + listaNotificheObject.idNotifica + '">' +
-            '<a href="' + listaNotificheObject.href +
-            '"><div class="message"><div class="content"><div class="title">' +
+        return '<li id="' + listaNotificheObject.idNotifica + '"href-url="'  +listaNotificheObject.href+'">' +
+            '<a href="#"><div class="message"><div class="content"><div class="title">' +
             listaNotificheObject.corpo + '</div></div></div></a></li>';
     };
-
-     $("#lista-notifiche").click(function (event) {
-
-        var target = $(event.target);
-
-        if (target.is("li")) {
-
-            var idNotifica = target.id;
-
-            $.ajax({
-                type: "POST",
-                url: url+"pannelloNotifiche",
-                dataType: "json",
-                data: {idnotifica: idNotifica},
-                success: function () {
-                    $("#lista-notifiche").find("#" + idNotifca).remove();
-                }
-            })
-        }
-    });
 
 
     $("#lista-notifiche-all").click(function (event) {
@@ -96,6 +95,7 @@ function NotifyPanel(url) {
                 data: {idnotifica: idNotifica},
                 success: function () {
                     $("#lista-notifiche").find("#" + idNotifca).css("background-color", "");
+
                 }
             })
         }
