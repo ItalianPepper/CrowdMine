@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             }
 
         } else {
+            $message["result"] = "Nome non settato";
             echo json_encode($message);exit();
         }
 
