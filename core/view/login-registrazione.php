@@ -262,6 +262,7 @@
             $('#submit').removeAttr('disabled');
         },
         onComplete : function(event,xhr) {
+            console.log(data);
             var data = JSON.parse(xhr.response);
             console.log(data);
             if(data && data.result){

@@ -91,16 +91,10 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             echo json_encode($message);exit();
         }
         if (isset($_POST['citta']) && !empty($_POST['citta'])) {
-            $userCity = $_POST["citta"];
-
-            if (!preg_match(Patterns::$NAME_GENERIC, $userCity)) {
-                $message["result"] = "Nome citta' non valido";
-                echo json_encode($message);exit();
-            }
-
+            $userCity =  testInput($_POST["citta"]);
         } else {
             $message["result"] = "Campo citta' non settato";
-            throw new IllegalArgumentException("Campo citta' non settato");
+            echo json_encode($message);exit();
         }
 
         if (isset($_POST['email']) && !empty($_POST['email'])) {
@@ -142,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
                 echo json_encode($message);exit();
             }
         } else {
+            $message["result"] ="Seconda password non inserita";
             echo json_encode($message);exit();
         }
 
