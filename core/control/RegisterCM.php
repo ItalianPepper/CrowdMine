@@ -11,6 +11,8 @@ include_once EXCEPTION_DIR . "IllegalArgumentException.php";
 
 include_once UTILS_DIR . "ImageUpload.php";
 
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"]== "POST"){
     
     $utenteManager = new UtenteManager();
@@ -153,6 +155,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             echo json_encode($message);exit();
         }
 
+        ob_start();
         if (isset($_FILES['image'])) {
             if ($_FILES['image']['size'] < $max_file_size) {
 
@@ -189,6 +192,8 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         $userToReg = new Utente(null, $userName, $userSurname, $userPhone, $userDateOfBirth, $userCity, $userMail, $userPassword, StatoUtente::ATTIVO, RuoloUtente::UTENTE, $userDescription, $userImage, $userPI);
         $utenteManager->register($userToReg);
         $user = $utenteManager->login($userMail, $userPassword);
+
+        ob_end_clean();
 
         // verificare il valore di ritorno nel manager
         if ($user != false) {

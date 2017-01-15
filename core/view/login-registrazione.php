@@ -267,7 +267,7 @@
             console.log(data);
             if(data && data.result){
                 if (data.result == "ok"){
-                    window.location.href = <?php echo '"' . DOMINIO_SITO . '/auth";';?>
+                    window.location.href = <?php echo '"' . DOMINIO_SITO . '";';?>
                 }else{
                     toastr["clear"]();
                     toastr["error"](data.result);
