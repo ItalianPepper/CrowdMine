@@ -8,6 +8,7 @@
  * @since 30/05/16
  */
 include_once MODEL_DIR . 'Utente.php';
+include_once MANAGER_DIR . "UtenteManager.php";
 
 class Permissions extends RuoloUtente{
     const BANNED_ONLY = "banned_only";
@@ -44,11 +45,14 @@ class StringUtils {
 
             //redirect to home page, user is already logged*/
             $redirect = DOMINIO_SITO . "/";
+            $utenteManager = new UtenteManager();
             $user = unserialize($_SESSION['user']);
+            //update logged user data from db
+            $user = $utenteManager->findUtenteById($user->getId());
             $stato = $user->getStato();
 
             /*if user is not enabled, redirect to ban page*/
-            if($stato != StatoUtente::ATTIVO && $stato != StatoUtente::REVISIONE){
+            if($stato != StatoUtente::ATTIVO && $stato != StatoUtente::SEGNALATO && $stato != StatoUtente::AMMINISTRATORE && $stato != StatoUtente::REVISIONE){
 
                 if($level == Permissions::BANNED_ONLY ){
                     return $user;

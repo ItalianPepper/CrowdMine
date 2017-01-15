@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
 
     //updating session
     $user->setStato(StatoUtente::RICORSO);
+    $utenteManager->updateStatusUtente($user,StatoUtente::RICORSO);
     $_SESSION["user"] = serialize($user);
 
     $_SESSION['toast-type'] = "success";
