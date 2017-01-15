@@ -262,11 +262,15 @@
             $('#submit').removeAttr('disabled');
         },
         onComplete : function(event,xhr) {
-            if (xhr.response == "ok"){
-                window.location.href = <?php echo '"' . DOMINIO_SITO . '/auth";';?>
-            }else{
-                toastr["clear"]();
-                toastr["error"](xhr.response);
+            var data = JSON.parse(xhr.response);
+            console.log(data);
+            if(data && data.result){
+                if (data.result == "ok"){
+                    window.location.href = <?php echo '"' . DOMINIO_SITO . '/auth";';?>
+                }else{
+                    toastr["clear"]();
+                    toastr["error"](data.result);
+                }
             }
         },
         maxWidth: 150,

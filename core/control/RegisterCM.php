@@ -34,62 +34,72 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     // thumbnail sizes
     $sizes = array(150 => 150,20 => 20);
 
-    try {
+    $message["result"] = "errore nella registrazione";
 
         if (isset($_POST['nome']) && !empty($_POST['nome'])) {
             $userName = $_POST["nome"];
 
             if (empty($userName) || !preg_match(Patterns::$NAME_GENERIC, $userName)) {
-                throw new IllegalArgumentException("Nome non valido");
+                $message["result"] = "Nome non valido";
+                echo json_encode($message);exit();
             }
 
         } else {
-            throw new IllegalArgumentException("Campo nome non settato");
+            echo json_encode($message);exit();
         }
 
         if (isset($_POST['cognome']) && !empty($_POST['cognome'])) {
             $userSurname = $_POST["cognome"];
             if (empty($userSurname) || !preg_match(Patterns::$NAME_GENERIC, $userSurname)) {
-                throw new IllegalArgumentException("Cognome non valido");
+                $message["result"] = "Cognome non valido";
+                echo json_encode($message);exit();
             }
         } else {
-            throw new IllegalArgumentException("Campo cognome non settato");
+            $message["result"] = "Cognome non settato";
+            echo json_encode($message);exit();
         }
 
         if (isset($_POST['partitaIva']) && !empty($_POST['partitaIva'])) {
             $userPI = $_POST["partitaIva"];
             if (!preg_match(Patterns::$PI_GENERIC, $userPI)) {
-                throw new IllegalArgumentException("Partita iva non valida, inserire 11 cifre");
+                $message["result"] = "Partita iva non valida, inserire 11 cifre";
+                echo json_encode($message);exit();
             }
         }
         if (isset($_POST['telefono']) && !empty($_POST['telefono'])) {
             $userPhone = $_POST["telefono"];
             if (!preg_match(Patterns::$TELEPHONE, $userPhone)) {
-                throw new IllegalArgumentException("Recapito telefonico non valido");
+                $message["result"] = "Recapito telefonico non valido";
+                echo json_encode($message);exit();
             }
 
         } else {
-            throw new IllegalArgumentException("Campo telefono non settato");
+            $message["result"] = "Campo telefono non settato";
+            echo json_encode($message);exit();
         }
 
         if (isset($_POST['datanascita']) && !empty($_POST['datanascita'])) {
 
             $userDateOfBirth = $_POST["datanascita"];
             if (!preg_match(Patterns::$GENERIC_DATE, $userDateOfBirth)) {
-                throw new IllegalArgumentException("Data di nascita non valida, inserire la data di nascita nel formato: dd/mm/yyyy");
+                $message["result"] = "Data di nascita non valida, inserire la data di nascita nel formato: dd/mm/yyyy";
+                echo json_encode($message);exit();
             }
 
         } else {
-            throw new IllegalArgumentException("Campo data di nascita non settato");
+            $message["result"] = "Campo data di nascita non settato";
+            echo json_encode($message);exit();
         }
         if (isset($_POST['citta']) && !empty($_POST['citta'])) {
             $userCity = $_POST["citta"];
 
             if (!preg_match(Patterns::$NAME_GENERIC, $userCity)) {
-                throw new IllegalArgumentException("Nome citta' non valido");
+                $message["result"] = "Nome citta' non valido";
+                echo json_encode($message);exit();
             }
 
         } else {
+            $message["result"] = "Campo citta' non settato";
             throw new IllegalArgumentException("Campo citta' non settato");
         }
 
@@ -97,35 +107,42 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             $userMail = $_POST["email"];
 
             if (!preg_match(Patterns::$EMAIL, $userMail)) {
-                throw new IllegalArgumentException("Email non valida, inserire l'email nel formato: name@exemple.com");
+                $message["result"] = "Email non valida, inserire l'email nel formato: name@exemple.com";
+                echo json_encode($message);exit();
             }
 
             if (($utenteManager->checkEmail($userMail)) == true) {
-                throw new IllegalArgumentException("Email già collegata ad un'altro account");
+                $message["result"] = "Email già collegata ad un'altro account";
+                echo json_encode($message);exit();
             }
 
         } else {
-            throw new IllegalArgumentException("Campo email non settato");
+            $message["result"] = "Campo email non settato";
+            echo json_encode($message);exit();
         }
 
         if (isset($_POST['password']) && !empty($_POST['password'])) {
             $userPassword = $_POST["password"];
 
             if (!preg_match(Patterns::$PASSWORD, $userPassword)) {
-                throw new IllegalArgumentException("Password non valida");
+                $message["result"] = "Password non valida";
+                echo json_encode($message);exit();
             }
         } else {
-            throw new IllegalArgumentException("Campo password non settato");
+
+            $message["result"] ="Campo password non settato";
+            echo json_encode($message);exit();
         }
 
         if (isset($_POST['passwordretyped']) && !empty($_POST['passwordretyped'])) {
             $userPasswordRetyped = $_POST["passwordretyped"];
 
             if ($userPasswordRetyped != $userPassword) {
-                throw new IllegalArgumentException("Le password devono essere uguali");
+                $message["result"] = "Le password devono essere uguali";
+                echo json_encode($message);exit();
             }
         } else {
-            throw new IllegalArgumentException("Reinserire la password");
+            echo json_encode($message);exit();
         }
 
         if (isset($_POST['tipologia'])) {
@@ -136,7 +153,8 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             $userDescription = testInput($_POST["descrizione"]);
         }
         if (!isset($_POST['accetto'])) {
-            throw new IllegalArgumentException("Bisogna autorizzare il trattamento dei dati per potersi registrare!");
+            $message["result"] = "Bisogna autorizzare il trattamento dei dati per potersi registrare!";
+            echo json_encode($message);exit();
         }
 
         if (isset($_FILES['image'])) {
@@ -163,10 +181,12 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
                         $userImage = resize($w, $h, $filename, $path);
                     }
                 } else {
-                    throw new IllegalArgumentException("Immagine non supportata");
+                    $message["result"] = "Immagine non supportata";
+                    echo json_encode($message);exit();
                 }
             } else {
-                throw new IllegalArgumentException("Caricare una immagine con dimensioni inferiori a 1MB");
+                $message["result"] = "Caricare una immagine con dimensioni inferiori a 1MB";
+                echo json_encode($message);exit();
             }
         }
 
@@ -181,9 +201,8 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             $_SESSION['toast-type'] = "success";
             $_SESSION['toast-message'] = "Benvenuto " . $user->getNome() . " :)";
 
-            echo "ok";
+            $message["result"] = "ok";
         }
-    }catch(Exception $e){
-        echo $e->getMessage();
-    }
+
+    echo json_encode($message);
 }
