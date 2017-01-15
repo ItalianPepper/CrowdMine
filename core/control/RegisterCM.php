@@ -55,6 +55,13 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         } else {
             throw new IllegalArgumentException("Campo cognome non settato");
         }
+
+        if (isset($_POST['partitaIva']) && !empty($_POST['partitaIva'])) {
+            $userPI = $_POST["partitaIva"];
+            if (!preg_match(Patterns::$PI_GENERIC, $userPI)) {
+                throw new IllegalArgumentException("Partita iva non valida, inserire 11 cifre");
+            }
+        }
         if (isset($_POST['telefono']) && !empty($_POST['telefono'])) {
             $userPhone = $_POST["telefono"];
             if (!preg_match(Patterns::$TELEPHONE, $userPhone)) {
@@ -119,13 +126,6 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             }
         } else {
             throw new IllegalArgumentException("Reinserire la password");
-        }
-
-        if (isset($_POST['partitaIva']) && !empty($_POST['partitaIva'])) {
-            $userPI = $_POST["partitaIva"];
-            if (!preg_match(Patterns::$PI_GENERIC, $userPI)) {
-                throw new IllegalArgumentException("Partita iva non valida");
-            }
         }
 
         if (isset($_POST['tipologia'])) {
