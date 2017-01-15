@@ -373,6 +373,6 @@ $lista_destinatari = $manager_msg->listaDestinatari($id_utente_connesso); //arra
 
 
 <?php include_once VIEW_DIR."footerStart.php"?>
-
+<script type="text/javascript" src="<?php echo STYLE_DIR ?>assets/js/messagingUpdate.js"></script>
 <?php include_once VIEW_DIR."footerEnd.php"?>
 
