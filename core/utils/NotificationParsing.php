@@ -2,6 +2,8 @@
 
 include_once MODEL_DIR . "NotifyViewListObject.php";
 include_once MODEL_DIR . "Notifica.php";
+include_once MANAGER_DIR . "AnnuncioManager.php";
+
 class NotificationParsing
 {
     const RISOLUZIONE_POSITIVA = "Il tuo %s è stato valutato con esito postivo.";
@@ -42,7 +44,7 @@ class NotificationParsing
 
                 $type = $notifyObjects[$i]->getTipo();
                 $read = $notifyObjects[$i]->getLetto();
-
+                $annuncio = new AnnuncioManager();
                 $infoNotify = json_decode($notifyObjects[$i]->getInfo(), true);
 
                 if ($type == tipoNotifica::INSERIMENTO) {
@@ -53,7 +55,7 @@ class NotificationParsing
                     if ($obj == SoggettiNotifiche::ANNUNCIO) {
 
                         $href = $this->rounting(SoggettiNotifiche::ANNUNCIO);
-                        $href = sprintf($href, $idobj);
+                        $href = sprintf($href, $annuncio->getAnnuncio($idobj)->getIdUtente(),$idobj);
                         $text = NotificationParsing::INSERIMENTO_ANNUNCIO;
 
                         $resObject = new NotifyViewListObject($idNotify,$href,$text,$read);
@@ -62,8 +64,9 @@ class NotificationParsing
 
                     } else if ($obj == SoggettiNotifiche::COMMENTO) {
 
+
                         $href = $this->rounting(SoggettiNotifiche::COMMENTO);
-                        $href = sprintf($href, $idobj);
+                        $href = sprintf($href, $annuncio->getAnnuncio($idobj)->getIdUtente(), $idobj);
 
                         $referName = $infoNotify[ElementiInfoNotifica::NOME_OGGETTO];
                         $text = sprintf(NotificationParsing::INSERIMENTO_COMMENTO, $referName);
@@ -310,16 +313,16 @@ class NotificationParsing
     private function rounting($destination)
     {
         if ($destination == SoggettiNotifiche::ANNUNCIO) {
-            return DOMINIO_SITO . "/Annuncio&id=%s";
+            return DOMINIO_SITO . "/ProfiloUtente/%s#tab2#%s";
 
         } else if ($destination == SoggettiNotifiche::COMMENTO) {
-            return DOMINIO_SITO . "/Annuncio&id=%s";
+            return DOMINIO_SITO . "/ProfiloUtente/%s#tab2#%s";
 
         } else if ($destination == SoggettiNotifiche::FEEDBACK) {
-            return DOMINIO_SITO . "/Feedback&id=%s";
+            return DOMINIO_SITO . "ProfiloUtente/%s#tab3#%s";
 
         } else if ($destination == SoggettiNotifiche::CANDIDATURA) {
-            return DOMINIO_SITO . "/Annuncio=%s";
+            return DOMINIO_SITO . "/messaging";
 
         } else if ($destination == SoggettiNotifiche::UTENTE) {
             return DOMINIO_SITO . "/VisitaProfiloUtente&id=%s";
