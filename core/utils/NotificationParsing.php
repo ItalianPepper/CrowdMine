@@ -33,7 +33,7 @@ class NotificationParsing
     {
         $size = sizeof($notifyObjects);
 
-        if ($typeUser == RuoloUtente::UTENTE) {
+        if ($typeUser == RuoloUtente::UTENTE || $typeUser == RuoloUtente::MODERATORE || $typeUser == RuoloUtente::AMMINISTRATORE) {
             $result = array();
 
             for ($i = 0; $i < $size; $i++) {
@@ -177,7 +177,7 @@ class NotificationParsing
             }
             return $result;
 
-        } else if ($typeUser == RuoloUtente::MODERATORE) {
+        } else if ($typeUser == RuoloUtente::MODERATORE || $typeUser == RuoloUtente::AMMINISTRATORE) {
 
             $result = array();
 
