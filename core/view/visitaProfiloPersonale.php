@@ -579,16 +579,12 @@
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-map-marker"
-                                                                                   aria-hidden="true"></i>
-																			</span>
-                                                                        <input type="text" name="location"
-                                                                               class="form-control"
-                                                                               placeholder="Nuova Localit&agrave;"
-                                                                               aria-describedby="basic-addon1"
-                                                                        >
+                                                                        <select class="form-control select2" name="location" id="listacitta"  required>
+
+                                                                        </select>
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-map-marker"></i>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -1747,6 +1743,7 @@
 </script>
 
 <?php include_once VIEW_DIR."footerEnd.php";?>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>scripts/caricacitta.js"></script>
 
 
 </body>
