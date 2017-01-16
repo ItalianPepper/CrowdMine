@@ -13,8 +13,7 @@ function call() {
         async: true,
         success: function (data) {
             console.log("__"+data+"__");
-            if(data!="") {
-                $('#messaggi_inviati').empty()
+            if(!empty(data)) {
                 $('#messaggi_inviati').append(data);
                 $('#messaggi_inviati').animate({scrollTop: $('#messaggi_inviati').prop("scrollHeight")}, 0);
             }

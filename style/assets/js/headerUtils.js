@@ -5,7 +5,7 @@ function MessagesUpdate(url) {
 
     this.call = function() {
         "use strict";
-        console.log("inizio call");
+        //console.log("inizio call");
         clearjQueryCache();
         $.ajax({
             url: url+"updateMessIcon",
