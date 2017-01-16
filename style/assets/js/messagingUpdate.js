@@ -14,6 +14,7 @@ function call() {
         success: function (data) {
             console.log("__"+data+"__");
             if(data!=' ') {
+                $('#messaggi_inviati').empty();
                 $('#messaggi_inviati').append(data);
                 $('#messaggi_inviati').animate({scrollTop: $('#messaggi_inviati').prop("scrollHeight")}, 0);
             }
