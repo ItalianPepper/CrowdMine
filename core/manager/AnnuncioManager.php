@@ -905,9 +905,10 @@ class AnnuncioManager implements SplSubject
 
     public function getNumberAnnunciPubblishedToday(){
         $lista = array();
-        $data = date("Y-m-d");
-        $FIND_ANNUNCI = "SELECT COUNT(annuncio.data) FROM annuncio WHERE annuncio.data = '%s'";
-        $query = sprintf($FIND_ANNUNCI, $data);
+        $data = date("Y-m-d H:i:s",mktime(0,0,0));
+        $datadaymax = date("Y-m-d H:i:s",mktime(23,59,59));
+        $FIND_ANNUNCI = "SELECT COUNT(annuncio.data) FROM annuncio WHERE (annuncio.data BETWEEN '%s' AND '%s')";
+        $query = sprintf($FIND_ANNUNCI, $data,$datadaymax);
         $result = Manager::getDB()->query($query);
         if(!$result){
 

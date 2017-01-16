@@ -11,7 +11,7 @@ define('DEBUG', true);
 
 if (DEBUG == true) {
     define('DOMINIO_SITO', "/CrowdMine"); //costante root dir
-    define('UPLOAD_FOLDER', 'c:/xampp/htdocs/CrowdMine/uploads/');
+    define('UPLOAD_FOLDER', 'D:/Programmi/xamp/htdocs/CrowdMine/uploads/');
 } else {
     define('DOMINIO_SITO', "crowdmine.altervista.org"); //costante root dir
     define('UPLOAD_FOLDER', '/membri/crowdmine/uploads/');
