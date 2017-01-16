@@ -34,9 +34,10 @@ class MessaggioManager extends Manager implements SplSubject {
      */
     public function sendMessaggio($id, $corpo, $data, $letto, $idMittente, $idDestinatario){
         $data = date("Y/n/d H:i:s");
-        $INSERT_MESSAGGIO = "INSERT INTO `Messaggio` (`id`, `corpo`, `data`, `letto`, `id_utente_mittente`, `id_utente_destinatario`, `stato`) VALUES (NULL, '$corpo', '$data', '0', '$idMittente', '$idDestinatario', '');";
+        $INSERT_MESSAGGIO = "INSERT INTO `Messaggio` (`id`, `corpo`, `data`, `letto`, `id_utente_mittente`, `id_utente_destinatario`, `stato`) VALUES (NULL, '$corpo', '$data', '0', '$idMittente', '$idDestinatario', 'attivato');";
         $query = sprintf($INSERT_MESSAGGIO, $id, $corpo, $letto, $data, $idMittente, $idDestinatario);
         if (!Manager::getDB()->query($query)) {
+            echo $query;
             if (Manager::getDB()->errno == 1062) {
                 throw new ApplicationException(ErrorUtils::$EMAIL_ESISTE, Controller::getDB()->error, Controller::getDB()->errno);
             } else
