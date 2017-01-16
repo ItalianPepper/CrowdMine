@@ -20,7 +20,7 @@ if (isset($_POST['formName'])) {
     $formName = $_POST['formName'];
     switch ($formName) {
         case "name" :
-            if ($_POST['name']) {
+            if (isset($_POST['name'])) {
                 $name = $_POST['name'];
                 if ($name != "" && !empty($name) && preg_match(Patterns::$NAME_GENERIC, $name) && strlen($name) < 255
                     && strlen($name) >= 2) {
@@ -38,7 +38,7 @@ if (isset($_POST['formName'])) {
             }
             break;
         case "surname" :
-            if ($_POST['surname']) {
+            if (isset($_POST['surname'])) {
                 $surname = $_POST['surname'];
                 if ($surname != "" && !empty($surname) && preg_match(Patterns::$NAME_GENERIC, $surname) && strlen($surname) < 255
                     && strlen($surname) >= 2) {
@@ -56,7 +56,7 @@ if (isset($_POST['formName'])) {
             }
             break;
         case "birthdate" :
-            if ($_POST['birthdate']) {
+            if (isset($_POST['birthdate'])){
                 $birthdate = $_POST['birthdate'];
                 if ($birthdate != "" && !empty($birthdate) && preg_match(Patterns::$GENERIC_DATE, $birthdate) ) {
                     $user->setDataNascita($birthdate);
@@ -73,7 +73,7 @@ if (isset($_POST['formName'])) {
             }
             break;
         case "location" :
-            if ($_POST['location']) {
+            if (isset($_POST['location'])) {
                 $location = $_POST['location'];
                 if ($location != "") {
                     $user->setCitta($location);
@@ -83,7 +83,7 @@ if (isset($_POST['formName'])) {
             }
             break;
         case "description" :
-            if ($_POST['description'] ) {
+            if (isset($_POST['description'])) {
                 $description = $_POST['description'];
                 if ($description != "" && preg_match(Patterns::$NAME_GENERIC, $description) && strlen($description) < 255 && !empty($description)
                     && strlen($description) >= 2) {
@@ -101,7 +101,7 @@ if (isset($_POST['formName'])) {
             }
             break;
         case "partitaIva" :
-            if ($_POST['partitaIva']) {
+            if (isset($_POST['partitaIva'])){
                 $partitaIva = $_POST['partitaIva'];
                 if ($partitaIva != "" && preg_match(Patterns::$PI_GENERIC, $partitaIva) && !empty($partitaIva)) {
                     $user->setPartitaIva($partitaIva);
