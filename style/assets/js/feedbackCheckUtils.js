@@ -16,7 +16,7 @@ $(document).ready(function () {
     "use strict";
     $("#feedback-textarea").keyup(function () {
 
-        var regExp = /^[a-zA-Z0-9_]+$/g;
+        var regExp = /^[a-zA-Z0-9_ èàòù,.]+$/g;
         var textAreaInput = $("#feedback-textarea").val();
 
         if (textAreaInput.length >= 300) {
@@ -54,7 +54,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     "use strict";
     $("#feedback-title").keyup(function () {
-        var regExp = /^[a-zA-Z0-9_]+$/g;
+        var regExp = /^[a-zA-Z0-9_ èàòù,.]+$/g;
         var inputTitle = $("#feedback-title").val();
 
 
