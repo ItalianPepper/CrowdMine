@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+    <title>CrowdMine | Modifica Annuncio</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         .form-control {
@@ -27,7 +28,7 @@
 
                 <div class="card">
                     <div class="row" style="padding: 15px">
-                        <div class="card-header" style="padding: 30px;">Inserisci un Annuncio</div>
+                        <div class="card-header" style="padding: 30px;">Modifica l'Annuncio</div>
                         <form action="<?php echo DOMINIO_SITO;?>/modificaAnnuncioControl" method="post" style="padding: 30px">
 
                             <div class="col-md-6">
@@ -50,11 +51,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <input id="form_name" type="text" name="luogo-annuncio" class="form-control"
-                                           placeholder="Luogo" required="required"
-                                           value = "<?php echo $annuncio->getLuogo();?>"
-                                    >
+                                    <div class="input-group">
+                                        <select class="form-control select2" name="luogo-annuncio" id="listacitta" value = "<?php echo $annuncio->getLuogo();?>" required>
 
+                                        </select>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-map-marker"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 15px">
                                     <div class="selectContainer">
@@ -122,13 +126,11 @@
     </div>
 </div>
 
-
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+<?php include_once VIEW_DIR."footerStart.php"?>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\styleUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/AnnuncioCheckUtils.js"></script>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>scripts/caricacitta.js"></script>
 
 <script type="text/javascript">
 
@@ -287,18 +289,8 @@
 
 
 </script>
-<?php
 
-if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-    ?>
-    <script>
-        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-    </script>
-    <?php
-    unset($_SESSION['toast-type']);
-    unset($_SESSION['toast-message']);
-}
-?>
+<?php include_once VIEW_DIR."footerEnd.php"?>
 
 </body>
 

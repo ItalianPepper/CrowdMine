@@ -15,12 +15,21 @@ $managerAnnuncio = new AnnuncioManager();
 $managerUtente = new UtenteManager();
 
 $listaCommentiSegnalati = $managerAnnuncio->getReportedCommento();
+
 $listaUtentiCommenti = array();
 $listaAnnunciCommenti = array();
 
-foreach ($listaCommentiSegnalati as $c){
-    array_push($listaUtentiCommenti, $managerUtente->findUtenteById($c->getIdUtente()));
-    array_push($listaAnnunciCommenti, $managerAnnuncio->getAnnuncio($c->getIdAnnuncio()));
+$UtentiCommentiAdmin = array();
+$AnnunciCommentiAdmin = array();
+
+foreach ($listaCommentiSegnalati as $c) {
+    if ($c->getStato() == statoCommento::AMMINISTRATORE && $user->getRuolo() == RuoloUtente::AMMINISTRATORE) {
+        $UtentiCommentiAdmin[$c->getId()]= $managerUtente->findUtenteById($c->getIdUtente());
+        $AnnunciCommentiAdmin[$c->getId()]= $managerAnnuncio->getAnnuncio($c->getIdAnnuncio());
+    } else {
+        $listaUtentiCommenti[$c->getId()]= $managerUtente->findUtenteById($c->getIdUtente());
+        $listaAnnunciCommenti[$c->getId()]= $managerAnnuncio->getAnnuncio($c->getIdAnnuncio());
+    }
 }
 
 include_once VIEW_DIR . "visualizzaCommentiSegnalati.php";

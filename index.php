@@ -92,11 +92,11 @@ try {
                 break;
 
             case 'updateMessIcon':
-                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                $user = StringUtils::checkPermission(Permissions::UTENTE,null,true);
                 include_once CONTROL_DIR . "updateNumberMessIcon.php";
                 break;
             case 'updateChat':
-                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                $user = StringUtils::checkPermission(Permissions::UTENTE,null,true);
                 include_once CONTROL_DIR . "messagingLiveUpdate.php";
                 break;
             case 'visualizzaStatisticheMacroCategorie':
@@ -300,6 +300,7 @@ try {
                 include_once CONTROL_DIR . "ListaUtentiBannati.php";
                 break;
             case "ricercaUtente":
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "RicercaUtente.php";
                 break;
             case "cercaAnnunciNavBar":
@@ -334,6 +335,7 @@ try {
                 include_once VIEW_DIR . "visualizzaIndexStatistiche.php";
                 break;
             case 'risultatoRicercaUtente':
+                $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once VIEW_DIR . "RisultatiRicercaUtente.php";
                 break;
             case 'visualizzaRicorsiAlBan':
@@ -398,9 +400,6 @@ try {
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "aggiungiPreferiti.php";
                 break;
-            case 'ricercaAnnuncio';
-                include_once CONTROL_DIR . "ricercaAnnuncio.php";
-                break;
             case 'annunciPreferiti';
                 $user=StringUtils::checkPermission(Permissions::UTENTE);
                 include_once CONTROL_DIR . "visualizzaPreferiti.php";
@@ -416,9 +415,11 @@ try {
                 include_once CONTROL_DIR . "segnalaAnnuncio.php";
                 break;
             case 'attivaAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "attivaAnnuncio.php";
                 break;
             case 'disattivaAnnuncioControl';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "disattivaAnnuncio.php";
                 break;
             case 'commentaAnnuncioControl';
@@ -446,6 +447,7 @@ try {
                 include_once VIEW_DIR . "nothingFound.php";
                 break;
             case 'inviaAnnuncioAdmin';
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "inviaAnnuncioAdmin.php";
                 break;
             case 'visualizzaAnnunciConflitto';
@@ -463,7 +465,7 @@ try {
                 include_once CONTROL_DIR . "annunciModificati.php";
                 break;
             case 'annunciRevisione';
-                $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
+                $user=StringUtils::checkPermission(Permissions::MODERATORE);
                 include_once CONTROL_DIR . "annunciRevisione.php";
                 break;
             case 'annuncioNew';
@@ -473,6 +475,7 @@ try {
                 include_once CORE_DIR . "/template/assets/images/profile.png";
                 break;
             case 'segnalaCommento';
+                $user=StringUtils::checkPermission(Permissions::AMMINISTRATORE);
                 include_once CONTROL_DIR . "segnalaCommento.php";
                 break;
             case 'headerStart';
@@ -534,8 +537,12 @@ try {
                 include_once CONTROL_DIR . "listaNotifiche.php";
                 break;
             case 'pannelloNotifiche':
-                $user = StringUtils::checkPermission(Permissions::ALL);
+                $user = StringUtils::checkPermission(Permissions::ALL,null,true);
                 include_once CONTROL_DIR . "pannelloNotifiche.php";
+                break;
+            case 'pannelloNotificheUtente':
+                $user = StringUtils::checkPermission(Permissions::UTENTE,null,true);
+                include_once CONTROL_DIR . "pannelloNotificheUtente.php";
                 break;
             case 'commentiSegnalati':
                 $user = StringUtils::checkPermission(Permissions::MODERATORE);
@@ -549,6 +556,10 @@ try {
                 break;
             case 'inviaCommentoAdmin':
                 include_once CONTROL_DIR . "inviaCommentoAdmin.php";
+                break;
+            case 'CambiaNumeroControl':
+                $user = StringUtils::checkPermission(Permissions::UTENTE);
+                include_once CONTROL_DIR . "CambiaNumeroControl.php";
                 break;
             default:
                 header('Location: ' . DOMINIO_SITO . '/');

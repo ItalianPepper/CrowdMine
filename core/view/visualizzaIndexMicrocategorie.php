@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title>Crowdmine | Microcategorie</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <!-- iCheck -->
@@ -158,35 +160,24 @@
 			</div>
 		</div>
     </div>
+    </div>
 
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-    <script src="<?php echo STYLE_DIR; ?>plugins/datepicker/bootstrap-datepicker.js"></script>
-    <script src="<?php echo STYLE_DIR; ?>plugins/toastr/toastr.js"></script>
-	
-	<script>
-		/*evidenzio altro nella barra laterale*/
-		$("#categorie").toggleClass("active");
-		$('[data-toggle="tooltip"]').tooltip(); 
-		
-		/*toggle element and toggle self element*/
-		$.fn.toggleWith = function(id) {
-			$(id).toggle('fast');
-			$(this).toggle('fast');
-		};
-	</script>
+        <?php include_once VIEW_DIR."footerStart.php";?>
+        <script src="<?php echo STYLE_DIR; ?>plugins/datepicker/bootstrap-datepicker.js"></script>
 
-    <?php
-    if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-        ?>
         <script>
-            toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
+            /*evidenzio altro nella barra laterale*/
+            $("#categorie").toggleClass("active");
+            $('[data-toggle="tooltip"]').tooltip();
+
+            /*toggle element and toggle self element*/
+            $.fn.toggleWith = function(id) {
+                $(id).toggle('fast');
+                $(this).toggle('fast');
+            };
         </script>
-        <?php
-        unset($_SESSION['toast-type']);
-        unset($_SESSION['toast-message']);
-    }
-    ?>
 
 </body>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 </html>

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php
 
+    <title>CrowdMine | Profilo Personale</title>
+
+    <?php
     include_once VIEW_DIR."headerStart.php";
     $fullname = $user->getNome()." ".$user->getCognome();
     ?>
@@ -128,7 +130,8 @@
                                                         <!-- FORM MODIFICA !-->
                                                         <div class="row">
                                                             <form class="form form-horizontal" id="edit-tel-input"
-                                                                  style="display:none">
+                                                                  style="display:none" action="<?php echo DOMINIO_SITO;?>/CambiaNumeroControl"
+                                                                  method="post">
                                                                 <div class="col-lg-2 col-md-2 hidden-sm hidden-xs overlined-row">
 
                                                                 </div>
@@ -140,10 +143,11 @@
                                                                                    aria-hidden="true"></i>
 																			</span>
                                                                         <input id="numberTelephoneChange" type="text"
-                                                                               class="form-control"
+                                                                               class="form-control" name="nuovoNumero"
                                                                                placeholder="Nuovo Numero"
                                                                                aria-describedby="basic-addon1"
-                                                                               value="<?php echo $user->getTelefono() ?>">
+                                                                               value="<?php if (isset($user))
+                                                                               {echo $user->getTelefono();} ?>">
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -575,16 +579,12 @@
                                                                 </div>
                                                                 <div class="col-lg-5 col-md-6 col-xs-12 overlined-row">
                                                                     <div class="input-group">
-																			<span class="input-group-addon"
-                                                                                  id="basic-addon1">
-																				<i class="fa fa-map-marker"
-                                                                                   aria-hidden="true"></i>
-																			</span>
-                                                                        <input type="text" name="location"
-                                                                               class="form-control"
-                                                                               placeholder="Nuova Localit&agrave;"
-                                                                               aria-describedby="basic-addon1"
-                                                                        >
+                                                                        <select class="form-control select2" name="location" id="listacitta"  required>
+
+                                                                        </select>
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-map-marker"></i>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="form-footer">
                                                                         <div class="form-group">
@@ -1376,35 +1376,11 @@
                                                                     echo getUserFullName($u, true);
                                                                     ?>
                                                                 </h4>
-                                                                <div class="col-md-5 col-sm-5 options"
-                                                                     style="float: right; margin-top: -8%; margin-right: -23%">
-                                                                    <form method="POST" action="paginaAlfredo">
-                                                                        <input name="idAnnuncio" style="display: none"
-                                                                               value="<?php echo $aId; ?>">
-                                                                        <input name="idUtenteCandidato"
-                                                                               style="display: none"
-                                                                               value="<?php echo $listaCandidature[$aId][$z]->getIdUtente(); ?>">
-                                                                        <input name="idUtenteProprietario"
-                                                                               style="display: none"
-                                                                               value="<?php echo $user->getId(); ?>">
-                                                                        <button type="submit"
-                                                                                style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                            <i class="fa fa-mail-reply-all"></i>
-                                                                        </button>
-                                                                    </form
-                                                                    <a href="<?php echo DOMINIO_SITO; ?>/rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId(); ?>">
-                                                                        <button
-                                                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                            <i class="fa fa-close"></i>
-                                                                        </button>
-                                                                    </a>
-                                                                </div>
                                                                 <div class="media-content">
                                                                     <?php echo $listaCandidature[$aId][$z]->getCorpo(); ?>
                                                                 </div>
 
                                                             </div>
-
                                                         </div>
                                                     <?php } ?>
 
@@ -1537,29 +1513,6 @@
                                                                                     echo getUserFullName($u, true);
                                                                                     ?>
                                                                                 </h4>
-                                                                                <div class="col-md-5 col-sm-5 options"
-                                                                                     style="float: right; margin-top: -8%; margin-right: -23%">
-                                                                                    <form method="POST" action="paginaAlfredo">
-                                                                                        <input name="idAnnuncio" style="display: none"
-                                                                                               value="<?php echo $aId; ?>">
-                                                                                        <input name="idUtenteCandidato"
-                                                                                               style="display: none"
-                                                                                               value="<?php echo $listaCandidature[$aId][$z]->getIdUtente(); ?>">
-                                                                                        <input name="idUtenteProprietario"
-                                                                                               style="display: none"
-                                                                                               value="<?php echo $user->getId(); ?>">
-                                                                                        <button type="submit"
-                                                                                                style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                                            <i class="fa fa-mail-reply-all"></i>
-                                                                                        </button>
-                                                                                    </form
-                                                                                    <a href="<?php echo DOMINIO_SITO; ?>/rimuoviCandidatura?id=<?php echo $listaCandidature[$aId][$z]->getId(); ?>">
-                                                                                        <button
-                                                                                            style="background-color: Transparent;background-repeat:no-repeat; border: none;cursor:pointer; overflow: hidden; outline:none;">
-                                                                                            <i class="fa fa-close"></i>
-                                                                                        </button>
-                                                                                    </a>
-                                                                                </div>
                                                                                 <div class="media-content">
                                                                                     <?php echo $listaCandidature[$aId][$z]->getCorpo(); ?>
                                                                                 </div>
@@ -1696,9 +1649,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-<script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
+<?php include_once VIEW_DIR."footerStart.php";?>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\passwordCheckUtils.js"></script>
 <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\microCheckUtils.js"></script>
 
@@ -1791,17 +1742,8 @@
 
 </script>
 
-<?php
-if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-    ?>
-    <script>
-        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-    </script>
-    <?php
-    unset($_SESSION['toast-type']);
-    unset($_SESSION['toast-message']);
-}
-?>
+<?php include_once VIEW_DIR."footerEnd.php";?>
+<script type="text/javascript" src="<?php echo STYLE_DIR; ?>scripts/caricacitta.js"></script>
 
 
 </body>

@@ -142,6 +142,13 @@
                             <h4 class="username"><?php echo $fullname; ?></h4>
                         </div>
                         <ul class="action">
+                            <?php if($user->getRuolo() == RuoloUtente::AMMINISTRATORE || $user->getRuolo()==RuoloUtente::MODERATORE){?>
+                            <li>
+                                <a href="<?php echo DOMINIO_SITO?>/UtentiSegnalati">
+                                    Gestione del sito
+                                </a>
+                            </li>
+                            <?php } ?>
                             <li>
                                 <a href="<?php echo DOMINIO_SITO;?>/ProfiloPersonale">
                                     Profilo

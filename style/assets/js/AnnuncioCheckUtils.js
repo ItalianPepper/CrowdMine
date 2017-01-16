@@ -6,7 +6,7 @@ $(document).ready(function () {
     $("#annuncio-textarea").keyup(function () {
         console.log("Posso di qua");
 
-        var regExp = /^[a-zA-Z0-9_ èàòù]+$/g;
+        var regExp = /^[a-zA-Z0-9_ èàòù,.]+$/g;
         var textAreaInput = $("#annuncio-textarea").val();
         console.log(textAreaInput);
 
@@ -15,7 +15,7 @@ $(document).ready(function () {
             $("#annuncio-erros").fadeOut();
             $("#button-add-annuncio").prop("disabled", false);
         }
-        else if (!regExp.test(textAreaInput)) {
+        else if (!regExp.test(textAreaInput) && textAreaInput != "") {
 
             var htmlSpecialCharError = '<button type="button" class="close" data-dismiss="alert"' +
                 '                                                            aria-label="Close">' +
@@ -34,7 +34,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     "use strict";
     $("#annuncio-title").keyup(function () {
-        var regExp = /^[a-zA-Z0-9_ èàòù]+$/g;
+        var regExp = /^[a-zA-Z0-9_ èàòù,.]+$/g;
         var inputTitle = $("#annuncio-title").val();
 
 

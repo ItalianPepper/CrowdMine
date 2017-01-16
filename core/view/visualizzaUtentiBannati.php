@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title>Crowdmine | Utenti Bannati</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
     <style>
         .navbar-collapse.in {
@@ -99,13 +101,15 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-    <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
+
+    <?php include_once VIEW_DIR."footerStart.php";?>
 
     <script>
         /*evidenzio altro nella barra laterale*/
         $("#altro").toggleClass("active");
     </script>
+
+    <?php include_once VIEW_DIR."footerEnd.php";?>
 
 </body>
 </html>

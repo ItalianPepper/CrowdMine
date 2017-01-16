@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <title>Crowdmine | Profilo Utente</title>
     <?php include_once VIEW_DIR."headerStart.php";?>
 
     <style>
@@ -85,8 +87,8 @@
 
 </head>
 <body>
-<div class="app app-default">
-    <div class="app-container no-sidebar">
+    <div class="app app-default">
+        <div class="app-container no-sidebar">
 
         <?php include_once VIEW_DIR."headerNavBar.php";?>
         <div class="app-head"></div>
@@ -535,45 +537,45 @@
                                                                         </div>
                                                                         <div class="section-body">
                                                                             <div class="rating">
-                                                                                <input type="radio" id="star5" name="rating"
+                                                                                <input type="radio" id="star5-<?php echo $aId;?>" name="rating"
                                                                                        value="5"/><label
-                                                                                    class="full" for="star5"
+                                                                                    class="full" for="star5-<?php echo $aId;?>"
                                                                                     title="Awesome - 5 stars"></label>
-                                                                                <input type="radio" id="star4half" name="rating"
+                                                                                <input type="radio" id="star4half-<?php echo $aId;?>" name="rating"
                                                                                        value="4.5"/><label
-                                                                                    class="half" for="star4half"
+                                                                                    class="half" for="star4half-<?php echo $aId;?>"
                                                                                     title="Pretty good - 4.5 stars"></label>
-                                                                                <input type="radio" id="star4" name="rating"
+                                                                                <input type="radio" id="star4-<?php echo $aId;?>" name="rating"
                                                                                        value="4"/><label
-                                                                                    class="full" for="star4"
+                                                                                    class="full" for="star4-<?php echo $aId;?>"
                                                                                     title="Pretty good - 4 stars"></label>
-                                                                                <input type="radio" id="star3half" name="rating"
+                                                                                <input type="radio" id="star3half-<?php echo $aId;?>" name="rating"
                                                                                        value="3.5"/><label
-                                                                                    class="half" for="star3half"
+                                                                                    class="half" for="star3half-<?php echo $aId;?>"
                                                                                     title="Meh - 3.5 stars"></label>
-                                                                                <input type="radio" id="star3" name="rating"
+                                                                                <input type="radio" id="star3-<?php echo $aId;?>" name="rating"
                                                                                        value="3"/><label
-                                                                                    class="full" for="star3"
+                                                                                    class="full" for="star3-<?php echo $aId;?>"
                                                                                     title="Meh - 3 stars"></label>
-                                                                                <input type="radio" id="star2half" name="rating"
+                                                                                <input type="radio" id="star2half-<?php echo $aId;?>" name="rating"
                                                                                        value="2.5"/><label
-                                                                                    class="half" for="star2half"
+                                                                                    class="half" for="star2half-<?php echo $aId;?>"
                                                                                     title="Kinda bad - 2.5 stars"></label>
                                                                                 <input type="radio" id="star2" name="rating"
                                                                                        value="2"/><label
-                                                                                    class="full" for="star2"
+                                                                                    class="full" for="star2-<?php echo $aId;?>"
                                                                                     title="Kinda bad - 2 stars"></label>
-                                                                                <input type="radio" id="star1half" name="rating"
+                                                                                <input type="radio" id="star1half-<?php echo $aId;?>" name="rating"
                                                                                        value="1.5"/><label
-                                                                                    class="half" for="star1half"
+                                                                                    class="half" for="star1half-<?php echo $aId;?>"
                                                                                     title="Meh - 1.5 stars"></label>
-                                                                                <input type="radio" id="star1" name="rating"
+                                                                                <input type="radio" id="star1-<?php echo $aId;?>" name="rating"
                                                                                        value="1"/><label
-                                                                                    class="full" for="star1"
+                                                                                    class="full" for="star1-<?php echo $aId;?>"
                                                                                     title="Sucks big time - 1 star"></label>
-                                                                                <input type="radio" id="starhalf" name="rating"
+                                                                                <input type="radio" id="starhalf-<?php echo $aId;?>" name="rating"
                                                                                        value="0.5"/><label
-                                                                                    class="half" for="starhalf"
+                                                                                    class="half" for="starhalf-<?php echo $aId;?>"
                                                                                     title="Sucks big time - 0.5 stars"></label>
                                                                             </div>
                                                                         </div>
@@ -757,13 +759,10 @@
                         </div>
                     </div>
                 </div>
+
+                <?php include_once VIEW_DIR."footerStart.php";?>
                 <script type="text/javascript">var dominio = "<?php echo DOMINIO_SITO;?>";</script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\vendor.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\app.js"></script>
-                <script type="text/javascript"
-                        src="<?php echo STYLE_DIR; ?>assets\js\feedbackCheckUtils.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>plugins\toastr\toastr.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackList.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackList.js"></script>
 
                 <script>
                     function setModalForm(action,text){
@@ -808,26 +807,16 @@
 
                 </script>
                 <script type="text/javascript"
-                        src="<?php echo STYLE_DIR; ?>assets\js\valutazioneFeedback.js"></script>
-                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets\js\feedbackSort.js"></script>
+                        src="<?php echo STYLE_DIR; ?>assets/js/valutazioneFeedback.js"></script>
+                <script type="text/javascript" src="<?php echo STYLE_DIR; ?>assets/js/feedbackSort.js"></script>
 
-                <?php
-
-                if (isset($_SESSION['toast-type']) && isset($_SESSION['toast-message'])) {
-                    ?>
-                    <script>
-                        $(document).ready(function () {
-                            "use strict";
-                            $("#feedback-tab").click();
-                            $("#feedback-collapse-panel").click();
-                        });
-                        toastr["<?php echo $_SESSION['toast-type'] ?>"]("<?php echo $_SESSION['toast-message'] ?>");
-                    </script>
-                    <?php
-                    unset($_SESSION['toast-type']);
-                    unset($_SESSION['toast-message']);
-                }
-                ?>
+                <script>
+                    $(document).ready(function () {
+                        "use strict";
+                        $("#feedback-tab").click();
+                        $("#feedback-collapse-panel").click();
+                    });
+                </script>
 
                 <script>
                     $("#tab4").ready(function () {
@@ -924,29 +913,36 @@
                     }
 
                 </script>
+
+                <div class="modal fade" id="myModalMessaggio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">INVIA MESSAGGIO</h4>
+                            </div>
+                            <form action="<?php echo DOMINIO_SITO;?>/inviaMessaggioPrivato" method="post">
+                                <div class="modal-body">
+                                    Testo del messaggio
+                                    <textarea name="messaggio" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
+                                    <input type="text" value="<?php echo $visitedUser->getId();?>" name="idUtente" hidden>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
+                                    <button type="submit" class="btn btn-sm btn-success">Invia Messaggio</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </div>
 </body>
+
+<?php include_once VIEW_DIR."footerEnd.php";?>
 
 </html>
 
-
-                            <div class="modal fade" id="myModalMessaggio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">INVIA MESSAGGIO</h4>
-                                        </div>
-                                        <form action="<?php echo DOMINIO_SITO;?>/inviaMessaggioPrivato" method="post">
-                                            <div class="modal-body">
-                                                Testo del messaggio
-                                                <textarea name="messaggio" rows="3" class="form-control" placeholder="Scrivi il tuo messaggio..."></textarea>
-                                                <input type="text" value="<?php echo $visitedUser->getId();?>" name="idUtente" hidden>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Chiudi</button>
-                                                <button type="submit" class="btn btn-sm btn-success">Invia Messaggio</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>

@@ -13,11 +13,11 @@ if(isset($_GET["id"])){
         $managerAnnuncio->reportCommento($idCommento);
         $_SESSION['toast-type'] = "success";
         $_SESSION['toast-message'] = "Segnalazione inviata";
-        include_once VIEW_DIR . "home.php";
+        header("Location:" . DOMINIO_SITO );
     } catch (ApplicationException $a){
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "Segnalazione non inviata";
-        include_once VIEW_DIR . "home.php";
+        header("Location:" . DOMINIO_SITO);
     }
 } else {
     echo "qui ci va la pagina 404 di errore";

@@ -273,8 +273,9 @@ class MicrocategoriaManager extends Manager
 
         $FIND_BEST_USER_BY_MICROCATEGORIA =
             "SELECT microcategoria.nome AS nome, COUNT(competente.id_microcategoria) AS conto 
-             FROM competente, microcategoria 
-             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = %s
+             FROM competente, microcategoria JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id
+             WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = %s AND macrocategoria.nome != microcategoria.nome
              GROUP BY microcategoria.id
              ORDER BY conto DESC
              LIMIT 10 OFFSET %s
@@ -301,8 +302,9 @@ class MicrocategoriaManager extends Manager
 
         $FIND_BEST_USER_BY_MICROCATEGORIA =
             "SELECT microcategoria.nome AS nome, COUNT(riferito.id_microcategoria) AS conto 
-             FROM riferito, microcategoria 
-             WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = %s
+             FROM riferito, microcategoria JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id
+             WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = %s AND macrocategoria.nome != microcategoria.nome
              GROUP BY microcategoria.id
              ORDER BY conto DESC
              LIMIT 10 OFFSET %s
@@ -323,7 +325,10 @@ class MicrocategoriaManager extends Manager
         $row = null;
         $macroManager = new MacroCategoriaManager();
         $macro = $macroManager->getMacroByName($macrocategoria);
-        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, competente WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
+        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, competente JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id 
+                                WHERE competente.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'
+                                AND macrocategoria.nome != microcategoria.nome";
         $query = sprintf($GET_NUMBER, $macro->getId());
         $result = Manager::getDB()->query($query);
         if(!$result){
@@ -337,7 +342,8 @@ class MicrocategoriaManager extends Manager
         $row = null;
         $macroManager = new MacroCategoriaManager();
         $macro = $macroManager->getMacroByName($macrocategoria);
-        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, riferito WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s'";
+        $GET_NUMBER = "SELECT COUNT(microcategoria.id) as conteggio FROM microcategoria, riferito JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id  WHERE riferito.id_microcategoria = microcategoria.id AND microcategoria.id_macrocategoria = '%s' AND macrocategoria.nome != microcategoria.nome";
         $query = sprintf($GET_NUMBER, $macro->getId());
         $result = Manager::getDB()->query($query);
         if(!$result){
@@ -345,5 +351,23 @@ class MicrocategoriaManager extends Manager
         }else{
             $row = $result->fetch_row();
         }return $row;
+    }
+
+    public function getListaMicroCategorie(){
+        $GET_MICRO = "SELECT microcategoria.* FROM microcategoria JOIN macrocategoria
+                                ON microcategoria.id_macrocategoria = macrocategoria.id
+                            WHERE macrocategoria.nome != microcategoria.nome";
+        $result = self::getDB()->query($GET_MICRO);
+
+        if($result){
+            $listaMicro = array();
+            while($r = $result->fetch_assoc()){
+                $micro = new Microcategoria($r["id_macrocategoria"], $r["nome"], $r["id"]);
+                array_push($listaMicro, $micro);
+            }
+            return $listaMicro;
+        }else{
+            return false;
+        }
     }
 }

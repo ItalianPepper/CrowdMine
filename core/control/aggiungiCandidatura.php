@@ -17,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
         header("Location:" .getReferer(DOMINIO_SITO));
         throw new IllegalArgumentException("Campo non settato correttamente");
     }
-    if (empty($descrizione) || !preg_match(Patterns::$NAME_GENERIC, $descrizione)) {
+    if (empty($descrizione)) {
         $_SESSION['toast-type'] = "error";
         $_SESSION['toast-message'] = "campo descrizione contiene caratteri speciali o è vuoto";
         header("Location:" .getReferer(DOMINIO_SITO));
