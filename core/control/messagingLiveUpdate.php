@@ -36,4 +36,4 @@ $utente_destinatario = $manager_utente->findUtenteById($id_utente_destinatario);
         }
     }
     else
-        echo trim('');
+        echo '';
